@@ -1,0 +1,27 @@
+name: Host tests
+on: [push, pull_request]
+permissions:
+  contents: read
+jobs:
+  test:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
+        include:
+          - os: ubuntu-latest
+            sanitize: 'ON'
+          - os: macos-latest
+            sanitize: 'OFF'
+          - os: windows-latest
+            sanitize: 'OFF'
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - run: cmake -S . -B build -DCMAKE_BUILD_TYPE=Release -DEURORACK_PATTERNS_SANITIZERS=${{ matrix.sanitize }}
+      - run: cmake --build build --config Release --parallel
+      - run: ctest --test-dir build -C Release --output-on-failure
+      - run: cmake --install build --config Release --prefix "${{ github.workspace }}/installed"
+      - run: cmake -S tests/consumer -B build-consumer -DCMAKE_PREFIX_PATH="${{ github.workspace }}/installed"
+      - run: cmake --build build-consumer --config Release
+      - run: ctest --test-dir build-consumer -C Release --output-on-failure

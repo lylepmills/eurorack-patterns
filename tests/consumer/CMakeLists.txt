@@ -1,0 +1,7 @@
+cmake_minimum_required(VERSION 3.16)
+project(patterns_consumer LANGUAGES CXX)
+find_package(eurorack_patterns 0.1 CONFIG REQUIRED)
+add_executable(consumer ../../examples/control_loop.cpp)
+target_link_libraries(consumer PRIVATE eurorack_patterns::eurorack_patterns)
+enable_testing()
+add_test(NAME installed_consumer COMMAND consumer)
