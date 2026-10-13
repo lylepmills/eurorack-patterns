@@ -9,3 +9,9 @@ Use [edge capture](inputs.md) for musical clocks and triggers. A button filter c
 Use a small trivially copyable, trivially default-constructible and trivially copy-assignable ID or value as `T`. The class does not allocate, but copying the chosen type still costs its size. Pass IDs rather than owning pointers; resource lifetime remains the caller's responsibility. These classes require a single owner or external synchronization. They do not synchronize an interrupt and a foreground thread.
 
 The corresponding host tests cover invalid gaps, timer wrap, zero-duration behavior, repeated events, request bursts and cancellation. These tests establish the state-machine behavior, not a hardware-specific latency or click-free audio guarantee.
+
+## Additional event paths
+
+[`PulseTimer`](pulses.md) handles logical expiry and explicit retrigger policy. [`TriggerDelay`](trigger-delay.md) preserves input identity while waiting a bounded number of caller ticks. Neither replaces acquisition or hardware output service.
+
+For retryable continuous feedback, `Peek` a `LatestRequest`, attempt enqueue, and `Take` only after acceptance. Keep those operations under one non-reentrant owner or external synchronization. The [event-path example](../examples/event_paths.cpp) tests queue rejection and retry. Latest-value replacement deliberately discards intermediates; note events and other multiplicity-sensitive work need an event queue.

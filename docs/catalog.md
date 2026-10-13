@@ -1,10 +1,10 @@
 # Eurorack micro-pattern catalog
 
-Research snapshot: 13 October 2026. A catalog of 66 small design choices that can make a module feel predictable while patching, playing, editing and recovering from mistakes. The emphasis is on reusable behavior rather than synthesis algorithms.
+Research snapshot: 13 October 2026. A catalog of 88 small design choices that can make a module feel predictable while patching, playing, editing and recovering from mistakes. The emphasis is on reusable behavior rather than synthesis algorithms.
 
 The strongest common principle is to separate **what the user or signal is doing** from **when it is safe and musically appropriate to act on it**. Jack presence, gate edges, knob movement, clock acquisition and preset loading need different policies. A blanket “debounce everything” or “smooth everything” rule breaks useful behavior.
 
-Each entry identifies **Code**, **Manual**, **Maker account**, or **Release notes** evidence. Observed behavior belongs to the cited product/version; reuse ideas and checks are proposed applications. The checks are a test backlog, not results from a hardware evaluation. Numeric constants are examples tied to their original scan rates and circuitry. This is a curated first pass, not an exhaustive survey of available modules.
+Each entry identifies **Code**, **Manual**, **Maker account**, or **Release notes** evidence. The second pass also identifies fixes, upstream tests, and unmerged branch evidence explicitly. Observed behavior belongs to the cited product/version; reuse ideas and checks are proposed applications. The checks are a test backlog, not results from a hardware evaluation. Numeric constants are examples tied to their original scan rates and circuitry. The initial survey is now extended by a [source and bug-history pass](research-pass-2.md). This remains a curated investigation, not an exhaustive module or firmware audit.
 
 ## Start with these shared contracts
 
@@ -23,13 +23,13 @@ These are candidates for reusable contracts. See [coverage](coverage.md) for the
 
 ## Browse by problem
 
-- [Jack presence and trigger capture](#jack-presence-and-trigger-capture) — A01–A06
+- [Jack presence and trigger capture](#jack-presence-and-trigger-capture) — A01–A08
 - [Analogue acquisition and filtering](#analogue-acquisition-and-filtering) — B01–B06
-- [Knobs and gestures](#knobs-and-gestures) — C01–C11
-- [Visible state and reversible actions](#visible-state-and-reversible-actions) — D01–D10
-- [Musical timing and synchronization](#musical-timing-and-synchronization) — E01–E12
-- [Audio transitions and runtime isolation](#audio-transitions-and-runtime-isolation) — F01–F10
-- [Startup storage and recovery](#startup-storage-and-recovery) — G01–G08
+- [Knobs and gestures](#knobs-and-gestures) — C01–C14
+- [Visible state and reversible actions](#visible-state-and-reversible-actions) — D01–D13
+- [Musical timing and synchronization](#musical-timing-and-synchronization) — E01–E14
+- [Audio transitions and runtime isolation](#audio-transitions-and-runtime-isolation) — F01–F19
+- [Startup storage and recovery](#startup-storage-and-recovery) — G01–G11
 - [Electrical boundaries](#electrical-boundaries) — H01–H03
 
 ## What the Beads jack detector actually does
@@ -63,6 +63,14 @@ At 48 kHz, the 4 kHz block callback and prescaler of two give a nominal 32 ms wi
 ### A06 Keep button debounce out of high-rate clock paths
 
 *Maker account.* Doepfer's A-155 manual-step debounce modification limits maximum clock rate to a few hundred Hz. **Reuse:** different event producers should have different conditioning, even when they invoke the same musical action. Check rapid external clocks while repeatedly tapping the manual step button. [Doepfer DIY, 4.2.7](https://doepfer.de/DIY/a100_diy.htm).
+
+### A07 Keep logical jack identity separate from physical pins
+
+*Code and fix.* O_C immediate reads accidentally used logical input numbers as GPIO numbers; this worked on the normal layout and failed on the flipped panel. The fix applies the board mapping to both read paths. **Reuse:** make logical IDs and hardware addresses separate domains. **Counterexample/check:** permute every pin in a fake board adapter; interrupt, sampled, immediate and diagnostic reads must still agree on jack identity. A mapping used by only one path is insufficient. [Fix](https://github.com/mxmxmx/O_C/commit/85dcb4c385b38a37b2643db76d05bec09bd8e589).
+
+### A08 Keep aggregate presence until the last source leaves
+
+*Code and tests, unmerged branch at this snapshot.* MetaModule's proposed fix derives destination presence from internal cables plus live panel/MIDI routes. **Reuse:** removing one source must not disconnect a summed destination still owned by another. **Counterexample/check:** A+B feed X; remove A, then B; X becomes unpatched only after B. Repeat with an internal cable remaining. This concerns logical routing, not electrical jack detection. The cited change was absent from main/v2.4.0 on the research date. [Predicate and tests](https://github.com/4ms/metamodule/commit/c4da22c9fe1df78c22b9f295bef10dc03cfd6af4).
 
 ## Analogue acquisition and filtering
 
@@ -136,6 +144,18 @@ At 48 kHz, the 4 kHz block callback and prescaler of two give a nominal 32 ms wi
 
 *Manual.* **Xaoc Moskwa II.** **Observed:** CV-lock disables pitch knobs and is deliberately excluded from presets. **Reuse:** stop accidental pitch changes while editing nearby functions. **Caveat:** clearly define unlocking and power-cycle behavior. **Test:** lock, move knobs, load another preset, unlock; observe every transition. (p.9) [Moskwa II / Ostankino II manual, rev.1965/2.6](https://xaocdevices.com/manuals/xaoc_moskwa2_ostankino2_manual_A4.pdf).
 
+### C12 Apply quantizer membership in every octave and direction
+
+*Code and fix.* O_C corrected masked-scale codebook generation because its descending region still included disabled notes; the fix added a host test spanning positive and negative octaves. **Reuse:** derive every region from the same allowed-note set before adding hysteresis. **Counterexample/check:** enable only two pitch classes and sweep below/above zero in both directions; every result must belong to that set. Define the empty-mask policy separately. Hysteresis cannot repair an invalid codebook. [Fix and regression](https://github.com/mxmxmx/O_C/commit/fdf829d050f2094ec4d3c77d6f696d2e419f0f9a).
+
+### C13 Tell the user when pickup cannot reach its target
+
+*Code and tests.* MetaModule checks out-of-range catch-up at physical endpoints, accounts for inverted mappings, and offers an endpoint-jump policy. **Reuse:** report impossible pickup explicitly. **Counterexample/check:** stored .9 with continuous reachable range [.2,.8] can never cross; reversed endpoints do not change that. Snapped destinations require effective-value reachability and write/readback, not just raw endpoint bounds. Our [PickupLatch](pickup.md) reports outside-range targets at arm time and never jumps automatically; that is an independent, narrower contract. [Change and inverted snapped test](https://github.com/4ms/metamodule/commit/1f053d1fd16b654940ef865ee5305a6a8cc79d1f).
+
+### C14 Re-arm when another owner changes the pickup target
+
+*Code and fix.* MetaModule added destination-value comparison when resetting catch-up, alongside physical-position comparison. **Reuse:** unchanged physical position does not prove continued control ownership. **Counterexample/check:** knob .2 controls A=.2; another bank changes A to .7; returning to the first bank must re-arm before its next small move. Explicitly notify pickup of target/binding changes. For snapping destinations, compare the accepted effective value, not merely the last requested value. [Reset change](https://github.com/4ms/metamodule/commit/0d1d5d92834d9af87a2bda77f116b24ea33278da).
+
 ## Visible state and reversible actions
 
 ### D01 Show the panel-selected state and CV-effective state separately
@@ -178,6 +198,18 @@ At 48 kHz, the 4 kHz block callback and prescaler of two give a nominal 32 ms wi
 
 *Manual.* **Expert Sleepers disting EX.** **Observed:** selected slow parameters such as wavetables wait for an encoder confirmation. **Reuse:** let browsing remain responsive and avoid loading every intermediate choice. **Caveat:** ordinary continuous controls should stay immediate. **Test:** scroll many choices, confirm once, then change again during loading. (p.15) [disting EX firmware1.26 manual](https://www.expert-sleepers.co.uk/downloads/manuals/disting_EX_user_manual_1.26.pdf).
 
+### D11 Refresh the edit target even when the clock is stopped
+
+*Code and fix.* Ansible preset selection changed its action target while leaving the grid stale when an external clock cable was connected but silent. The fix invalidates the display on selection itself. **Reuse:** direct edits must publish visible state independently of musical callbacks. **Counterexample/check:** stop clock, select B, then save: both displayed and actual target must be B. MetaModule similarly publishes a control-bank reset during patch load to synchronize its page manager. [Ansible fix](https://github.com/monome/ansible/pull/109), [MetaModule reset publication](https://github.com/4ms/metamodule/commit/d3cfb160dc5275a562fee9dee94ab56928cb47b1).
+
+### D12 Separate the pattern being edited from the pattern playing
+
+*Code and feature change.* Ansible Kria can latch an edit target while its meta sequence continues playing other patterns, and indicates the mismatch. **Reuse:** assign play, edit and display targets deliberately. **Counterexample/check:** lock editing to A, play A/B/C, edit a step; only A changes and playback continues. Test unlock and mode exit. This is a latched lock entered with a modifier gesture, not necessarily a hold-to-lock interaction. [Behavior and gesture](https://github.com/monome/ansible/pull/82).
+
+### D13 Restore focus by stable identity after rebuilding a list
+
+*Code and fix.* MetaModule changed knob-set focus restoration from vector position to panel-control identity. **Reuse:** retain the object the user chose when sorting, inserting or removing nearby entries. **Counterexample/check:** focus control 5; insert a mapping before it; the next edit must still affect control 5. If the focused object itself disappears, choose and display an explicit fallback. A surviving numeric list index is not proof the same object survived. [Identity change](https://github.com/4ms/metamodule/commit/1fe729fa7da2e81635ea55ff439737d3fb5be9e3).
+
 ## Musical timing and synchronization
 
 ### E01 Allow a gate to arrive slightly before its CV
@@ -204,6 +236,8 @@ At 48 kHz, the 4 kHz block callback and prescaler of two give a nominal 32 ms wi
 
 *Manual.* **Observed:** Pam PRO recommends a separate Run gate for presync/stop detection; its Reset-input mode needs at least two clock pulses to start. **Reuse:** distinguish transport, period acquisition and phase. **Check:** one pulse then silence, Run before/after clock, and clock while stopped; verify the first subdivision. [Pam PRO v0.4, pp.20 and 22–23](https://assets.busycircuits.com/docs/alm034-manual.pdf#page=20).
 
+*Second-pass code evidence.* Ansible seeds the first interval after reset from its last valid period, avoiding a long stopped interval becoming the first gate/ratchet duration. **Counterexample:** stop for five seconds, reset, then restart at a new tempo; using the old period gives predictable startup but one cycle of tempo lag. Fresh boot without a valid period needs a separate policy. [Implementation and tradeoff](https://github.com/monome/ansible/pull/71).
+
 ### E07 Choose clock smoothing for the musical job
 
 *Code and manual.* **Observed:** DLD offers clock-period deadbands and averaging options with different tempo-response times. **Reuse:** stabilize a delay without discarding intentional tempo modulation. **Check:** random jitter, swing, drift and abrupt tempo changes; measure settling and missed/double events. Source contains experimental modes beyond the released choices. [DLD v5 notes](https://4mscompany.com/DLD/manual/V5-Release-Notes.pdf), [clock filters](https://github.com/4ms/DLD/blob/dfc4295fc9ca71be6243217ab544c2ef71705e3b/buttons_jacks.c#L175-L287).
@@ -211,6 +245,8 @@ At 48 kHz, the 4 kHz block callback and prescaler of two give a nominal 32 ms wi
 ### E08 Hold the last tempo until deliberate takeover
 
 *Manual.* **Make Noise Mimeophon.** **Observed:** after clock disappears, established timing continues until Rate changes. **Reuse:** avoid surprising jumps during clock interruptions; support tap tempo. **Caveat:** this policy suits effects better than every transport. **Test:** missing pulses, stopped clock, cable removal, then knob movement. (p.13) [Mimeophon manual](https://www.makenoisemusic.com/wp-content/uploads/2024/03/mimeophon-manual.pdf). A different deliberate policy is QCD auto-stop: effects and trigger generators need not agree. [QCD v2, p.2](https://4mscompany.com/QCD/QCD-manual-v2.pdf#page=2).
+
+*Unresolved counterexample.* O_C issue #75 reports multiplied output continuing after its external parent clock stops; the maintainer attributes this to the internal timer. The report remained open at this snapshot. Use it to test subordinate clock stop/restart policy, not as proof of a current fix or a universal need to stop. [Report and discussion](https://github.com/mxmxmx/O_C/issues/75).
 
 ### E09 Treat a clock restart as a distinct event
 
@@ -227,6 +263,16 @@ At 48 kHz, the 4 kHz block callback and prescaler of two give a nominal 32 ms wi
 ### E12 Keep trigger pulses separate at high rates
 
 *Code.* **Observed:** In trigger mode, DLD limits clock-output high time to the lesser of half-period and its trigger-duration limit; gate mode uses half-period. **Reuse:** shorten nominally fixed pulses before they merge into a sustained gate. **Check:** sweep tempo and multiplication across the crossover, measuring both minimum high and low times against receiving modules. [DLD timer](https://github.com/4ms/DLD/blob/dfc4295fc9ca71be6243217ab544c2ef71705e3b/timekeeper.c#L49-L69).
+
+*Second-pass fix evidence.* Teletype replaced a 10 ms pulse countdown with per-output timers after pulse-width errors up to 9 ms; the PR author reports scope verification. This pass did not repeat that measurement. A logical 3 ms pulse serviced at 0 and 10 ms still lasts 10 ms physically. Test output service under load as well as the [retrigger policy](#e13-specify-whether-retriggers-extend-a-level-or-create-new-edges). [Timing fix](https://github.com/monome/teletype/pull/310).
+
+### E13 Specify whether retriggers extend a level or create new edges
+
+*Code.* Teletype restarts an output's off timer when pulsed again; an already-active output stays active. **Reuse:** name the retrigger policy instead of calling every request a delivered trigger. **Counterexample/check:** width 10, requests at 0 and 5: restart ends at 15; ignore-while-active ends at 10; neither creates an edge at 5. Our [PulseTimer](pulses.md) supports those two policies. Separate edges require a queue, minimum inactive dwell and sufficiently prompt output service. [Pulse operation](https://github.com/monome/teletype/blob/e390bacdf024f2234e2ade6a4821773b9a80a322/src/ops/hardware.c#L477-L489), [timer replacement](https://github.com/monome/teletype/blob/e390bacdf024f2234e2ade6a4821773b9a80a322/module/main.c#L1051-L1056).
+
+### E14 Preserve trigger identity throughout an acquisition delay
+
+*Code and fix.* O_C replaced a shared pending trigger mask with independent input histories. A later input could otherwise overwrite the identity attached to an earlier deadline. **Reuse:** preserve payload/identity as well as event time. **Counterexample/check:** A at tick 0, B at tick 1, delay 3 must yield A at 3 and B at 4. Our [TriggerDelay](trigger-delay.md) stores due masks by tick. Same-channel events with the same deadline coalesce; choose counters/queues if multiplicity matters. [Replacement](https://github.com/mxmxmx/O_C/commit/cc2b6985c71a5aab5de8eba7a992b191b261a511).
 
 ## Audio transitions and runtime isolation
 
@@ -264,11 +310,47 @@ At 48 kHz, the 4 kHz block callback and prescaler of two give a nominal 32 ms wi
 
 ### F09 Save a coherent state without disrupting music
 
-*Release notes.* **Observed:** Ansible fixed possible preset loss by disabling I²C during writes; disting EX v1.12 removed audio interruptions during saves. **Reuse:** serialize a stable snapshot and design explicitly around flash stalls and concurrent writers. **Check:** save while audio and external edits continue; reload a coherent result and measure any dropped-input interval. Neither change log proves transactional power-loss safety. [Ansible v3.1.0 notes within v3.1.1](https://github.com/monome/ansible/releases), [disting EX v1.12](https://www.expert-sleepers.co.uk/distingEXfirmwareupdates.html).
+*Code, fix and release notes.* Ansible pauses I²C follower reception around large flash writes after save-time lockups and reported preset loss under external commands. It restores the listening address for the current app afterward. **Reuse:** serialize a coherent snapshot and explicitly exclude or queue concurrent writers. **Counterexample/check:** send external edits throughout save, reload the result and verify command reception resumes correctly. The transport-specific pause is not a generic storage transaction. Separately, disting EX v1.12 removed save-related audio interruptions. Neither fix establishes atomic power-loss recovery. [Ansible report](https://github.com/monome/ansible/issues/86), [save fix](https://github.com/monome/ansible/pull/87), [disting release note](https://www.expert-sleepers.co.uk/distingEXfirmwareupdates.html).
 
 ### F10 Keep the executing action stable during a scene switch
 
-*Release notes.* **Observed:** Teletype fixed SCENE-related command corruption by caching commands in execution. **Reuse:** an action that replaces its own backing preset/program must retain valid state until completion. **Check:** switch scenes from inside an event callback; reject mixed old/new commands and stale references. Apply equivalent ownership rules to audio-state replacement. [Teletype v5 update notes](https://monome.org/docs/teletype/manual/).
+*Code and fix.* Teletype copies the command being interpreted before a `SCENE` operation can replace its backing scene data. **Reuse:** retain the current unit of work across a destructive state replacement; separately specify which later operations see new global state. **Counterexample/check:** a command changes scene in its first subcommand and then reads later tokens; those tokens must belong to the original command. This protects command storage, not an entire scene transaction. Deferred context needs its own policy ([F12](#f12-capture-delayed-execution-context-deliberately)). [Fix and reproducer](https://github.com/monome/teletype/pull/278), [current copy](https://github.com/monome/teletype/blob/e390bacdf024f2234e2ade6a4821773b9a80a322/src/teletype.c#L229-L292).
+
+### F11 Keep required side effects outside diagnostic macros
+
+*Code and fix.* O_C added explicit save/restore calls for builds where the logging macro removes its arguments. **Reuse:** logging and assertions must observe required work, not be the only reason it executes. **Counterexample/check:** compile with diagnostics on and off; save, cold-load and compare values and call counts. Release-only data loss can escape debug tests. This does not establish flash atomicity or real-time safety. The library's own test checks remain active with `NDEBUG`. [Fix](https://github.com/mxmxmx/O_C/commit/a8e8cc9b2beddfac6dc0ca0ee1f808c02f55a033).
+
+### F12 Capture delayed execution context deliberately
+
+*Code and fix.* Teletype fixed a delayed command losing its loop/script context by storing that context with the command. **Reuse:** specify snapshot versus live lookup for each deferred field. **Counterexample/check:** enqueue an action for output I=1, change I before it runs, and verify the documented target. Nested execution and scene changes also need explicit lifetime rules. Copying command bytes alone cannot preserve implicit context. [Report](https://github.com/monome/teletype/issues/130), [Fix](https://github.com/monome/teletype/commit/366bd7c1b169d4bc7d2bda02c83d30a76c07a08e).
+
+### F13 A due callback's slot is not yet free
+
+*Code and fix.* Teletype reserved a due delay slot while executing its callback, preventing nested enqueue from reusing a slot that the outer operation would subsequently clear. **Reuse:** distinguish queued, executing and free ownership. **Counterexample/check:** A becomes due in slot 0; A enqueues B; A finishes; B must survive exactly once. Also fill the queue and define whether child work can run in the same service pass. Copy-out dispatch is another possible design; the upstream reservation is not a universal scheduler. [Report](https://github.com/monome/teletype/issues/80), [Fix](https://github.com/monome/teletype/commit/adfd2aa0ea962639a6e48e1e7c6b777df364363b).
+
+### F14 Silence a voice without unnecessarily rewriting its pitch
+
+*Code and fix.* Ansible changed W/syn muting from a combined pitch/velocity command to velocity-only; the same fix corrected destination indexing with multiple followers. **Reuse:** use the narrowest reset operation that achieves silence, and address every intended destination. **Counterexample/check:** load a preset during a release tail at nonzero pitch; mute without a pitch-zero jump. Repeat with multiple followers. Some instruments deliberately reset pitch; define that separately from mute. [Fix and reported behavior](https://github.com/monome/ansible/pull/107).
+
+### F15 Stop new users and finish current users before teardown
+
+*Code and fix.* MetaModule paused task runners and waited for in-flight reads before patch unload after double-close/iterator-lifetime problems. A later fix disposes plugin-created GUI objects before unloading their plugin code. **Reuse:** prevent new work, drain current work, destroy dependents, then free their provider. **Counterexample/check:** hold a fake read at a barrier during reload; its file must remain alive until it exits and close exactly once. Blocking this barrier in an audio callback would introduce another failure. [Async fix](https://github.com/4ms/metamodule/commit/c48f3d1f2e24b991721a39760f12eb4f7ef414c5), [GUI/deleter fix](https://github.com/4ms/metamodule/commit/86f7d5cebf532b75e03d76fbb71655890bf23ee1).
+
+### F16 Advance last-queued state only after enqueue succeeds
+
+*Code and fix.* MetaModule feedback checks queue capacity before enqueuing and updating remembered values. **Reuse:** rejected work must remain retryable; distinguish requested, queued and delivered state. **Counterexample/check:** full queue rejects value 127; drain it; unchanged 127 must still enqueue on retry. Gate-off loss can leave a receiver sounding. A check-then-put sequence needs single-producer ownership or an atomic try-enqueue operation. Queued does not mean physically delivered. [Feedback fix](https://github.com/4ms/metamodule/commit/03677724065c4388a22c83f5fd057f524aa0806d).
+
+### F17 Define what disconnected transports discard
+
+*Code and fix.* MetaModule clears shared MIDI slots and drains generated output while disconnected, including the no-patch path, to avoid echo and stale bursts after attachment. **Reuse:** specify disconnect backlog policy and execute cleanup on early returns too. **Counterexample/check:** generate messages unplugged, reconnect, verify no old burst and that fresh messages pass. This policy is appropriate for stale performance events; durable transfers may need retry instead. [Transport fix](https://github.com/4ms/metamodule/commit/03d9e0fb7b73d4743496231ddc48b65a57b834f9).
+
+### F18 Remove every derived route when deleting its source mapping
+
+*Code and tests, unmerged branch at this snapshot.* MetaModule's proposed removal fix rebuilds panel/MIDI and summed routes from patch data. **Reuse:** invalidate every cached form of a deleted relationship. **Counterexample/check:** map pitch→X, remove it, map gate→X; pitch must stop controlling X while gate works. Preserve unrelated internal cables. A destination retaining its last value does not prove the old route is still live. This change was absent from main/v2.4.0 on the research date. [Removal and tests](https://github.com/4ms/metamodule/commit/c3f74800f8bf43b4ddc77967881cad12611b02b6).
+
+### F19 Revalidate relationships when an object is replaced in place
+
+*Code and tests.* MetaModule removes adjacent expander links when substituting a module, even when ordinary cables are retained. **Reuse:** a stable slot ID does not imply the new object supports the old protocol. **Counterexample/check:** replace B in A—B—C—D with an incompatible type; remove A—B and B—C, retain C—D. Validate each relationship by its semantics; blindly preserving or clearing the whole graph both lose useful behavior. [Replacement and test](https://github.com/4ms/metamodule/commit/70b0314b1207416ba9ae3f7f493899882e295dec).
 
 ## Startup storage and recovery
 
@@ -290,7 +372,7 @@ At 48 kHz, the 4 kHz block callback and prescaler of two give a nominal 32 ms wi
 
 ### G05 Panic must stop producers and clear outputs
 
-*Manual.* **Observed:** Teletype documents KILL clearing triggers and stopping its metronome. **Reuse:** specify a complete panic, including pending events that could reassert outputs. **Check:** panic with high gates, delayed triggers and periodic producers; outputs should remain quiescent until restart. The broader cancellation requirement is our proposed contract. [Teletype manual, KILL and update notes](https://monome.org/docs/teletype/manual/).
+*Code, manual and fixes.* Teletype KILL stops its metronome, clears delayed work and forces trigger outputs low; fixes addressed already-high outputs and active pulse timers. **Reuse:** cancel producers and pending/active work before forcing the intended idle level. **Counterexample/check:** panic during a pulse and before a delayed retrigger; advance beyond both old deadlines and verify no internal work reasserts the output. Our `PulseTimer::Cancel` covers one logical pulse; the host still owns queues, polarity, physical writes and external-input policy. [High-output fix](https://github.com/monome/teletype/commit/e88fd9d6a61f494a336a90f0fbf1d966471095b2), [active-pulse fix](https://github.com/monome/teletype/pull/310), [KILL sequence](https://github.com/monome/teletype/blob/e390bacdf024f2234e2ade6a4821773b9a80a322/src/ops/controlflow.c#L341-L352).
 
 ### G06 Wait for valid power before running fast
 
@@ -303,6 +385,18 @@ At 48 kHz, the 4 kHz block callback and prescaler of two give a nominal 32 ms wi
 ### G08 Use electrical polarity protection as well as connector cues
 
 *Maker account.* Big Honking Button includes protection diodes despite keyed power connectors. **Reuse:** keying, labels and circuit protection serve different failure paths; select protection for the real current and voltage-drop budget. Check reverse connection on a current-limited fixture and verify normal-rail headroom. [Big Honking Button, Power](https://blog.thea.codes/designing-big-honking-button/#power).
+
+### G09 Finalize partial packed settings and verify encoded sizes
+
+*Code and fix.* O_C corrected a trailing packed-nibble save and bumped its app-data version. **Reuse:** verify size, field alignment and final partial bytes for every persistent schema. **Counterexample/check:** round-trip `[U4]`, `[U4,U4]`, `[U4,U8]`, `[U8,U4]` and real layouts with guard bytes beyond the declared size. Changing the wire layout also needs migration/version policy; a passing round-trip on the new format does not establish old-data compatibility. [Fix](https://github.com/mxmxmx/O_C/commit/ebf96f32a0cdc3e34362f30c49bd124786cdb96e).
+
+### G10 Discover a journal's first valid generation before ordering it
+
+*Code and fix.* O_C fixed page scanning that rejected a valid first page unless its generation was zero. **Reuse:** bootstrap from a valid record before comparing sequence order; physical page index and generation need not match. **Counterexample/check:** valid pages with generations 17 and 18 must recover 18. Also test corrupt-first-page, gaps, sequence wrap and partial erase. A fast scan that stops at a gap can miss recoverable later pages; neither a checksum nor this fix proves power-loss safety. [Fix](https://github.com/mxmxmx/O_C/commit/1495d028e4e3062bde3eefa5ef216aea008dfbfd).
+
+### G11 Preserve semantic identifiers across enum changes
+
+*Code and fix.* Ansible fixed an omitted serialized enum label that made MIDI load the wrong app after adding another mode. **Reuse:** test stable persisted meaning against runtime enum mappings. **Counterexample/check:** load every old named value after inserting a new runtime enum member; each must still select the same behavior. Unknown names need an explicit fallback/error. String serialization helps only when the string-to-enum table remains correct; bounds checks alone cannot detect a valid but wrong mode. [Fix and schema explanation](https://github.com/monome/ansible/pull/65).
 
 ## Electrical boundaries
 

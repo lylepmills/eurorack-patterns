@@ -1,6 +1,6 @@
 # Coverage and validation
 
-The [catalog](catalog.md) contains 66 patterns. This table describes the public library's scope, not the status of any instrument. **Primitive** means a portable operation relevant to the entry exists in a header; the entry's full musical behavior still needs integration. **Recipe** means the catalog documents a design choice without a library implementation. **Measure** means the useful claim depends on a circuit, firmware schedule, UI, storage backend, or hardware test. A row can have a primitive and still require measurement. None of these rows asserts hardware qualification.
+The [catalog](catalog.md) contains 88 patterns. This table describes the public library's scope, not the status of any instrument. **Primitive** means a portable operation relevant to the entry exists in a header; the entry's full musical behavior still needs integration. **Recipe** means the catalog documents a design choice without a library implementation. **Measure** means the useful claim depends on a circuit, firmware schedule, UI, storage backend, or hardware test. A row can have a primitive and still require measurement. None of these rows asserts hardware qualification.
 
 | Family | Public header | Contract available |
 | --- | --- | --- |
@@ -9,9 +9,14 @@ The [catalog](catalog.md) contains 66 patterns. This table describes the public 
 | Controls | [`controls.h`](../include/eurorack_patterns/controls.h) | Neutral-centered bipolar mapping, motion threshold with endpoints, hysteretic step selection, and crossing/near-target pickup. Coefficients and ranges are examples, not calibrated recommendations. |
 | Gestures | [`gestures.h`](../include/eurorack_patterns/gestures.h) | A press owns one role; consumption suppresses its release action. Hidden-edit mechanics and UI indication belong to the host. |
 | Button timing | [`timing.h`](../include/eurorack_patterns/timing.h) | Debounced button state with separate on/off durations in caller-supplied milliseconds. External clock capture remains a separate path. |
+| Mapped pickup | [`pickup.h`](../include/eurorack_patterns/pickup.h) | Explicit arm/rearm, finite effective bounds, unreachable status, invalid-gap crossing reset. Destination snapping, UI and mapping remain host policy. |
+| Pulse interval | [`pulses.h`](../include/eurorack_patterns/pulses.h) | Logical expiry, restart/ignore policies and cancellation. No separate-edge or physical timing guarantee. |
+| Trigger delay | [`trigger_delay.h`](../include/eurorack_patterns/trigger_delay.h) | Fixed-capacity due masks in caller ticks. Same-bit/same-deadline events coalesce; cadence and acquisition belong to host. |
 | Pending changes | [`transitions.h`](../include/eurorack_patterns/transitions.h) | Retains the latest requested destination until the caller consumes it at a safe boundary. It does not choose that boundary or render a fade. |
 
 The code expresses mechanisms with caller-defined time and electrical units. A host must establish its scan rate, voltage scaling, thread/interrupt ownership, invalid-sample policy, event overflow response, startup behavior, and acceptance criteria. Numeric values cited in the catalog describe particular source products. They are not drop-in defaults for new hardware.
+
+See [research scope and unresolved reports](research-pass-2.md) and [executed checks versus hardware evidence](validation.md). Upstream tests cited in the catalog were read, not executed.
 
 ## Per-pattern map
 
@@ -25,6 +30,8 @@ The code expresses mechanisms with caller-defined time and electrical units. A h
 | A04 | Primitive: events | Scale thresholds to the circuit and test slow/noisy edges. |
 | A05 | Primitive: events | Sample fast enough, synchronize producer/consumer, choose overflow policy. |
 | A06 | Primitive: timing + measure | Button debounce exists; keep external clock capture on its own fast path and verify maximum rate. |
+| A07 | Recipe | Test logical-to-physical mapping across every acquisition path and board variant. |
+| A08 | Recipe; branch evidence | Aggregate internal/panel/MIDI ownership; cited fix is unmerged at snapshot. |
 | B01 | Recipe + measure | Design per-role filters and measure response at the actual update rate. |
 | B02 | Measure | Choose ADC topology and measure small CV after software attenuation. |
 | B03 | Primitive: controls | Endpoints bypass motion rejection; other filters and endpoint remaps remain host work. |
@@ -42,6 +49,9 @@ The code expresses mechanisms with caller-defined time and electrical units. A h
 | C09 | Recipe | Expose and validate configurable hold timing in the product UI. |
 | C10 | Primitive: gestures (partial) | Consume navigation modifier; channel selection and transport behavior remain host work. |
 | C11 | Recipe | Decide which guard states persist with presets. |
+| C12 | Recipe | Build every quantizer region from allowed membership; test negative/positive octaves and empty mask. |
+| C13 | Primitive: pickup | Supply true effective bounds; handle snapped destinations, feedback and recovery explicitly. |
+| C14 | Primitive: pickup (partial) | Caller must identify target/owner changes and explicitly re-arm. |
 | D01 | Recipe | Render panel-selected and CV-effective state separately. |
 | D02 | Recipe | Render stored, physical, and overridden ownership distinctly. |
 | D03 | Recipe + measure | Design redundant cues and test readability in actual lighting. |
@@ -52,7 +62,10 @@ The code expresses mechanisms with caller-defined time and electrical units. A h
 | D08 | Recipe | Define reset domains so modes and recorded content stay separate. |
 | D09 | Recipe | Build non-mutating contextual control help in the UI. |
 | D10 | Recipe | Confirm costly operations and handle loading in application code. |
-| E01 | Recipe + measure | Select CV/gate ordering delay and verify latency with real sources. |
+| D11 | Recipe | Invalidate views on edits and publish reload/bank resets without relying on musical clocks. |
+| D12 | Recipe | Keep edit/play targets separate, render mismatch and define unlock/mode-exit behavior. |
+| D13 | Recipe | Preserve stable focus identity across rebuild; choose fallback when the target disappears. |
+| E01 | Primitive: trigger delay + measure | Delay mechanism exists; choose CV/gate skew budget and verify actual acquisition on hardware. |
 | E02 | Recipe | Latch mode CV at note events; define behavior with trigger disconnected. |
 | E03 | Recipe + measure | Set source-specific refractory time; test flams and fast attacks. |
 | E04 | Recipe | Define reset/clock precedence at one processing boundary. |
@@ -63,7 +76,9 @@ The code expresses mechanisms with caller-defined time and electrical units. A h
 | E09 | Recipe | Detect long-gap restart; choose timeout for sparse patterns. |
 | E10 | Recipe | Require sustained evidence for a change in clock interpretation. |
 | E11 | Recipe | Score competing predictors and choose confidence dynamics. |
-| E12 | Recipe + measure | Generate pulses to receiving-module width limits across tempo. |
+| E12 | Primitive: pulses (partial) + measure | Logical width/expiry exists; tempo-dependent shortening and minimum physical high/low times remain host work. |
+| E13 | Primitive: pulses | Choose retrigger policy, physical output service, polarity and any required inactive dwell. |
+| E14 | Primitive: trigger delay | Supply reliable tick cadence; decide same-deadline multiplicity and reset/cancel policy. |
 | F01 | Recipe + measure | Gate derived audio behavior during codec/rate reacquisition. |
 | F02 | Primitive: transitions (partial) | Latest pending destination exists; fade serialization and audio processing remain host work. |
 | F03 | Recipe | Preserve recording tail and blend at freeze boundaries. |
@@ -74,14 +89,26 @@ The code expresses mechanisms with caller-defined time and electrical units. A h
 | F08 | Measure | Rank and verify interrupt/audio deadlines on the target. |
 | F09 | Recipe + measure | Serialize coherent saves and verify audio timing and power loss. |
 | F10 | Recipe | Keep executing action's backing state alive during scene changes. |
+| F11 | Recipe | Execute required side effects independently of disabled diagnostics; test deployed build variants. |
+| F12 | Recipe | Capture deferred command context and define scene/global lookup semantics. |
+| F13 | Recipe | Reserve in-flight work or dispatch copies; specify nested enqueue and full-queue policy. |
+| F14 | Recipe + measure | Address every destination and use protocol-specific mute without unintended pitch edits. |
+| F15 | Recipe + measure | Implement safe ownership/barriers for workers and dependent GUI/plugin objects. |
+| F16 | Primitive: transitions (partial) | Peek/try-enqueue/Take composition is tested in event_paths.cpp; queue ownership and physical delivery remain host work. |
+| F17 | Recipe | Choose per-message disconnect backlog policy and clear shared transport slots on early returns. |
+| F18 | Recipe; branch evidence | Invalidate every derived route; cited fix is unmerged at snapshot. |
+| F19 | Recipe | Revalidate adjacent protocols during replacement, preserving unrelated compatible edges. |
 | G01 | Recipe | Define usable fallback and notice for malformed imports. |
 | G02 | Recipe + measure | Report calibration fallback; verify playable and accurate modes separately. |
 | G03 | Recipe | Separate user reset from factory calibration and disclose save pauses. |
 | G04 | Recipe + measure | Version, migrate, and validate fields; test interrupted writes separately. |
-| G05 | Recipe + measure | Stop producers and clear pending/high outputs during panic. |
+| G05 | Primitive: pulses + trigger delay (partial) | Cancel/Reset clear logical work; host must stop producers, clear other queues and write physical idle outputs. |
 | G06 | Measure | Configure and verify power/brown-out behavior on actual silicon. |
 | G07 | Measure | Read back recovery protection and test factory/update path. |
 | G08 | Measure | Design and test reverse-polarity electrical protection. |
+| G09 | Recipe | Test real packed schemas, guard bytes and migration of changed wire layouts. |
+| G10 | Recipe + measure | Specify page validity, initial/wrapped generation ordering, gap scan and power-cut recovery. |
+| G11 | Recipe | Test all persisted semantic names against runtime mappings across schema versions. |
 | H01 | Measure | Specify useful and survival input ranges including powered-off behavior. |
 | H02 | Measure | Test output shorts and precision under realistic loads. |
 | H03 | Measure | Measure loaded-jack pitch voltage and fan-out error. |

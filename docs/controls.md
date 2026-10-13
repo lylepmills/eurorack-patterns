@@ -58,3 +58,7 @@ gesture. A combination can end its modifier role immediately and consume the
 remaining release before navigating. The later physical release only clears
 the latch. These headers contain no hardware drivers; tests exercise portable
 traces and boundaries, not a hardware validation claim.
+
+## Pickup after range or ownership changes
+
+The original stateless helpers above retain their 0.1 behavior. For an explicit state machine with unreachable-target status and invalid-gap history, use [`PickupLatch`](pickup.md). Its interval is supplied in the caller’s effective mapped units; discrete destinations still need their own reachability/readback policy.
