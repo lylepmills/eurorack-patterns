@@ -51,6 +51,15 @@ jobs:
           cmake -S examples/pico -B build-pico -DPICO_SDK_PATH="$RUNNER_TEMP/pico-sdk" -DPICO_BOARD=pico -DCMAKE_BUILD_TYPE=Release
           cmake --build build-pico --parallel
           arm-none-eabi-size build-pico/patterns_pico.elf
+      - name: Fetch pinned Daisy SDK and link control bench
+        run: |
+          git init "$RUNNER_TEMP/libDaisy"
+          git -C "$RUNNER_TEMP/libDaisy" remote add origin https://github.com/electro-smith/libDaisy.git
+          git -C "$RUNNER_TEMP/libDaisy" fetch --depth 1 origin e1f740a5a7fe38e6d6d41281bf99fe7a2bb3827b
+          git -C "$RUNNER_TEMP/libDaisy" checkout --detach FETCH_HEAD
+          git -C "$RUNNER_TEMP/libDaisy" submodule update --init --depth 1 Drivers/CMSIS-DSP Drivers/CMSIS_5 Drivers/CMSIS-Device/ST/STM32H7xx Drivers/STM32H7xx_HAL_Driver Middlewares/ST/STM32_USB_Device_Library
+          python3 examples/daisy/build.py --libdaisy "$RUNNER_TEMP/libDaisy" --out build-daisy
+          arm-none-eabi-size build-daisy/patterns_daisy.elf
   public-content:
     runs-on: ubuntu-latest
     steps:

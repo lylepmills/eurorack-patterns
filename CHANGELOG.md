@@ -1,5 +1,14 @@
 # Changelog
 
+## Unreleased
+
+- Add an optional Daisy Seed3 control bench with explicit ADC freshness, a
+  100k-pot acquisition configuration, buffered USB traces and Saleae markers.
+- Add pickup/gesture/gap/load scenarios, strict capture integrity checks and C++
+  trace replay, with synthetic adapter and mocked-serial regressions.
+- Cross-build the Daisy adapter in CI. Physical measurements and numerical
+  tuning remain pending; public core interfaces and behavior are unchanged.
+
 ## 0.2.1 — 2026-10-13
 
 - Add a complete pickup integration walkthrough and host-tested application adapter, with invalid samples handled before motion filtering, explicit rearming and reset.

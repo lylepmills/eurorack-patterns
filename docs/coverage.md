@@ -20,7 +20,7 @@ See [research scope and unresolved reports](research-pass-2.md) and [executed ch
 
 ## Integration examples
 
-The [shared-knob walkthrough](quickstart.md) and optional [Pico adapter](../examples/pico/README.md) compose pickup and motion acceptance with explicit validity and ownership. Host checks cover the application policy; ARM compile/link checks cover the example's build boundary. These add no hardware-qualified catalog entries.
+The [shared-knob walkthrough](quickstart.md) and optional [Pico adapter](../examples/pico/README.md) compose pickup and motion acceptance with explicit validity and ownership. Host checks cover the application policy; ARM compile/link checks cover the example's build boundary. The [Daisy control bench](validation.md#daisy-seed3-control-bench) adds fresh ADC acquisition, buffered traces, gesture/gap policies and host replay. These add no hardware-qualified catalog entries.
 
 ## Per-pattern map
 

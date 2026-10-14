@@ -44,6 +44,8 @@ class SharedControl {
     value_ = mapped;
     return changed;
   }
+  bool has_sample() const { return have_sample_; }
+  float accepted_percent() const { return accepted_; }
   float value() const { return value_; }
   eurorack_patterns::PickupLatch::State state() const { return pickup_.state(); }
  private:

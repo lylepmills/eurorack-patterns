@@ -42,3 +42,12 @@ The Raspberry Pi Pico example is original MIT application glue using the public
 API. CI fetches SDK 2.3.1 separately; SDK sources and their per-file/third-party
 licenses remain with that project and are not redistributed in this library.
 No maker endorsement or physical validation is implied.
+
+The Daisy Seed3 bench is original MIT application glue using public
+[libDaisy APIs](https://github.com/electro-smith/libDaisy/tree/e1f740a5a7fe38e6d6d41281bf99fe7a2bb3827b)
+and the SDK's STM32H7 HAL. libDaisy 7.0.1 and its pinned submodules are built
+separately in the caller's build directory; no SDK implementation is copied into
+this repository. Board wiring follows the [Seed3 datasheet](https://daisy.nyc3.cdn.digitaloceanspaces.com/products/seed3/Daisy_Seed3_datasheet.pdf).
+The long ADC acquisition setting follows [ST's ADC accuracy guidance](https://www.st.com/resource/en/application_note/an2834-how-to-get-the-best-adc-accuracy-in-stm32-microcontrollers-stmicroelectronics.pdf);
+it is an initial bench setting, not a measured recommendation. SDK and
+third-party per-file licenses remain applicable to linked firmware distributions.

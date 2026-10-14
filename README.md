@@ -12,6 +12,7 @@ A cable should not change routing repeatedly while being inserted. A slow knob m
 
 - **Explore design ideas:** browse the [88-pattern catalog](docs/catalog.md) by problem, then check its source and limits. A catalog entry is not necessarily an implemented component.
 - **Use the C++ library:** follow the [shared-knob walkthrough](docs/quickstart.md), then build the optional [Raspberry Pi Pico adapter](examples/pico/README.md).
+- **Measure controls on hardware:** use the [Daisy Seed3 bench and capture tools](docs/validation.md#daisy-seed3-control-bench). Hardware results are still pending.
 - **Contribute evidence:** report a [bug, source correction or measured trace](https://github.com/lylepmills/eurorack-patterns/issues/new/choose), or pick a [bounded contribution task](https://github.com/lylepmills/eurorack-patterns/issues?q=is%3Aissue%20is%3Aopen%20label%3A%22help%20wanted%22).
 
 ## Three small improvements
@@ -84,6 +85,9 @@ target_link_libraries(your_firmware PRIVATE eurorack_patterns::eurorack_patterns
 This full commit pin selects immutable release v0.2.1. Each [release](https://github.com/lylepmills/eurorack-patterns/releases/latest) supplies its own full commit pin; use the tested version you intend to ship. Tests default off when included as a subproject. An installed package also supports `find_package(eurorack_patterns CONFIG REQUIRED)`.
 
 ## Build and test
+
+The host checks require CMake, a C++ compiler and Python 3.9 or newer. Python is
+used for the capture/replay tests, not by the header-only library.
 
 ```sh
 cmake -S . -B build -DCMAKE_BUILD_TYPE=Release
