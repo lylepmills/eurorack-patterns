@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="920" height="302" viewBox="0 0 920 302" role="img" aria-labelledby="title desc">
+<title id="title">A consumed modifier gesture performs one action</title><desc id="desc">Synthetic cumulative action count. Press at 1; modifier edit at 3; release at 4. Orange: Edit plus release action. Blue: Consumed release suppressed.</desc>
+<rect width="920" height="302" rx="12" fill="#f7f8fa"/>
+<g font-family="system-ui, sans-serif" fill="#172334">
+<text x="28" y="34" font-size="21" font-weight="650">A consumed modifier gesture performs one action</text>
+<path d="M28 62h24" stroke="#a84b19" stroke-width="3" stroke-dasharray="6 4"/><text x="60" y="67" font-size="14">Edit plus release action</text>
+<path d="M450 62h24" stroke="#006d96" stroke-width="3"/><text x="482" y="67" font-size="14">Consumed release suppressed</text>
+<path d="M68 104H870 M68 230H870" stroke="#d5dce3" fill="none"/>
+<text x="27" y="109" font-size="13">2</text><text x="35" y="235" font-size="13">0</text>
+<path d="M68.00 230.00 H228.40 V230.00 H388.80 V230.00 H549.20 V167.00 H709.60 V104.00 H870.00 V104.00" fill="none" stroke="#a84b19" stroke-width="3" stroke-dasharray="6 4"/>
+<path d="M68.00 230.00 H228.40 V230.00 H388.80 V230.00 H549.20 V167.00 H709.60 V167.00 H870.00 V167.00" fill="none" stroke="#006d96" stroke-width="3"/>
+<text x="68" y="252" font-size="12">Sample 0</text><text x="815" y="252" font-size="12">5</text>
+<text x="28" y="284" font-size="13">Synthetic cumulative action count. Press at 1; modifier edit at 3; release at 4.</text>
+</g></svg>

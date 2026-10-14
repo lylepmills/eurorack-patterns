@@ -1,0 +1,25 @@
+name: Source correction or counterexample
+description: Improve an observation, attribution or reuse boundary.
+title: "Evidence: "
+labels: [documentation]
+body:
+  - type: input
+    id: entry
+    attributes:
+      label: Catalog ID or documentation section
+    validations:
+      required: true
+  - type: textarea
+    id: source
+    attributes:
+      label: Public primary source
+      description: URL plus source commit or manual version/page; note whether a change shipped, was merged, or remains a proposal.
+    validations:
+      required: true
+  - type: textarea
+    id: correction
+    attributes:
+      label: What should change and why?
+      description: Separate the observed behavior from the proposed recommendation. Include counterexamples or conditions.
+    validations:
+      required: true

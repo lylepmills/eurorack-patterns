@@ -25,3 +25,36 @@ jobs:
       - run: cmake -S tests/consumer -B build-consumer -DCMAKE_PREFIX_PATH="${{ github.workspace }}/installed"
       - run: cmake --build build-consumer --config Release
       - run: ctest --test-dir build-consumer -C Release --output-on-failure
+      - if: runner.os == 'Linux'
+        run: python3 tools/render_traces.py build/example_behavior_traces --check
+  embedded:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - name: Install distribution ARM toolchain
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y gcc-arm-none-eabi libstdc++-arm-none-eabi-newlib
+          arm-none-eabi-g++ --version
+      - name: Compile every public header for Cortex-M0+
+        run: |
+          cmake -S tests/embedded -B build-arm -DCMAKE_TOOLCHAIN_FILE="$GITHUB_WORKSPACE/cmake/arm-none-eabi.cmake"
+          cmake --build build-arm --parallel
+      - name: Fetch public reference SDK
+        run: |
+          git init "$RUNNER_TEMP/pico-sdk"
+          git -C "$RUNNER_TEMP/pico-sdk" remote add origin https://github.com/raspberrypi/pico-sdk.git
+          git -C "$RUNNER_TEMP/pico-sdk" fetch --depth 1 origin 079c6f39023649b154152db30f1d781e884879bc
+          git -C "$RUNNER_TEMP/pico-sdk" checkout --detach FETCH_HEAD
+      - name: Link optional Pico reference adapter
+        run: |
+          cmake -S examples/pico -B build-pico -DPICO_SDK_PATH="$RUNNER_TEMP/pico-sdk" -DPICO_BOARD=pico -DCMAKE_BUILD_TYPE=Release
+          cmake --build build-pico --parallel
+          arm-none-eabi-size build-pico/patterns_pico.elf
+  public-content:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          fetch-depth: 0
+      - run: python3 tools/check_public.py

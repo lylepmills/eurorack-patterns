@@ -1,5 +1,7 @@
 # Pickup across restricted mapped ranges
 
+New integration? Start with the [complete shared-knob walkthrough](quickstart.md).
+
 `PickupLatch` answers whether a mapped physical sample may be applied to a stored parameter. It is useful when a control bank, preset, or other owner has moved the destination while a physical knob stayed put. The caller supplies mapped values in one consistent unit: the two reachable endpoints, the stored target, and each observed sample. This helper does not perform the mapping, sample filtering, or parameter write.
 
 The caller must ensure the two endpoints bound every valid mapped sample. A curve that overshoots both endpoints needs its true reachable bounds instead. The latch has no time base, allocates no memory, starts unconfigured and unarmed, and is mutable single-owner state; serialize calls if an interrupt or another thread can touch the same instance.

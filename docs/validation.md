@@ -44,3 +44,15 @@ Do not set universal numeric thresholds from these host fixtures. Hardware tests
 When contributing a measured trace, include device/board revision, firmware commit, acquisition date and method, raw units/scaling, sample period or timestamps, calibration, dropped/duplicate-sample indicators, workload and trigger/ground-truth method. Record the expected result and why it is independent of the algorithm under test. Label generated stimuli separately from recorded samples. Remove device serial numbers, personal data and private patches.
 
 Keep both the original acquisition and a minimal replay, with a documented transformation between them. A replay can validate the pure component while a scope/logic-analyzer capture validates the adapter. Neither should silently stand in for the other.
+
+## Integration preparation in 0.2.1
+
+The release adds a host-tested shared-knob adapter, a complete takeover/reset
+walkthrough and three synthetic illustrations generated from checked executable
+traces. CI checks illustration freshness. The public core headers are unchanged.
+The host suite has 24 checks, plus installed-package consumers. A separate ARM
+build instantiates all nine headers and compiles each independently for Cortex-M0+.
+The optional Pico SDK example links a firmware ELF using the same adapter.
+These cross-builds establish compiler/SDK compatibility only: the Pico has not
+been flashed or measured as part of this release. See its [remaining bench
+checks](../examples/pico/README.md#adapter-decisions-and-checks-still-needed).

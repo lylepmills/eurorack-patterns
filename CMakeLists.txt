@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.16)
-project(eurorack_patterns VERSION 0.2.0 LANGUAGES CXX)
+project(eurorack_patterns VERSION 0.2.1 LANGUAGES CXX)
 
 add_library(eurorack_patterns INTERFACE)
 add_library(eurorack_patterns::eurorack_patterns ALIAS eurorack_patterns)
@@ -40,6 +40,9 @@ if(EURORACK_PATTERNS_BUILD_TESTS)
   endforeach()
   ep_test(example_control_loop examples/control_loop.cpp)
   ep_test(example_event_paths examples/event_paths.cpp)
+  ep_test(example_pickup_workflow examples/pickup_workflow.cpp)
+  ep_test(test_shared_control tests/test_shared_control.cpp)
+  ep_test(example_behavior_traces examples/behavior_traces.cpp)
   # Each public header must compile with only its own includes.
   file(GLOB ep_headers CONFIGURE_DEPENDS "${CMAKE_CURRENT_SOURCE_DIR}/include/eurorack_patterns/*.h")
   foreach(header IN LISTS ep_headers)

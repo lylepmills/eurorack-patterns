@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.2.1 — 2026-10-13
+
+- Add a complete pickup integration walkthrough and host-tested application adapter, with invalid samples handled before motion filtering, explicit rearming and reset.
+- Add three synthetic before/after illustrations generated from executable-checked traces.
+- Add Cortex-M0+ compilation of all headers and an optional Raspberry Pi Pico SDK adapter link build. Neither is a hardware execution or measurement claim.
+- Add contributor issue forms, public-path/local-link checks and an immutable-release checklist.
+- Preserve all public headers byte-for-byte from 0.2.0; this is an integration, documentation and validation release.
+
 ## 0.2.0 — 2026-10-13
 
 - Extend the catalog from 66 to 88 patterns through source and bug-history research into Ornament & Crime, monome Ansible/Teletype and 4ms MetaModule. Strengthen six existing entries and record counterexamples, research bounds, unresolved reports and unmerged branch evidence.

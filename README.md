@@ -1,10 +1,30 @@
 # Eurorack patterns
 
+[![Checks](https://github.com/lylepmills/eurorack-patterns/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/lylepmills/eurorack-patterns/actions/workflows/ci.yml)
+
 Small, reusable building blocks for predictable Eurorack controls and firmware, with an attributed catalog of design ideas from existing instruments.
 
 **[Read the 88-pattern catalog](docs/catalog.md)** · **[Source and bug-history research](docs/research-pass-2.md)** · **[See implementation coverage](docs/coverage.md)** · **[Attribution](ATTRIBUTION.md)** · **[Contribute](CONTRIBUTING.md)**
 
 A cable should not change routing repeatedly while being inserted. A slow knob movement should eventually register. A modifier gesture should not also fire an unrelated release action. This project collects those details and provides portable implementations where the behavior can be specified and tested independently of a particular module.
+
+## Start here
+
+- **Explore design ideas:** browse the [88-pattern catalog](docs/catalog.md) by problem, then check its source and limits. A catalog entry is not necessarily an implemented component.
+- **Use the C++ library:** follow the [shared-knob walkthrough](docs/quickstart.md), then build the optional [Raspberry Pi Pico adapter](examples/pico/README.md).
+- **Contribute evidence:** report a [bug, source correction or measured trace](https://github.com/lylepmills/eurorack-patterns/issues/new/choose), or pick a [bounded contribution task](https://github.com/lylepmills/eurorack-patterns/issues?q=is%3Aissue%20is%3Aopen%20label%3A%22help%20wanted%22).
+
+## Three small improvements
+
+These illustrations are generated from executable-checked **synthetic** sequences, not hardware recordings. Counts, thresholds and delays are illustrative.
+
+![Individual probe mismatch toggles during insertion; qualified presence changes after two complete bad windows.](docs/images/presence.svg)
+
+![Direct knob assignment jumps to 80 percent; pickup holds the stored 30 percent until the knob crosses it.](docs/images/pickup.svg)
+
+![A modifier edit followed by release causes two naive actions; consuming the gesture leaves one action.](docs/images/gesture.svg)
+
+See the [trace program](examples/behavior_traces.cpp) and [validation limits](docs/validation.md).
 
 ## Included components
 
@@ -30,22 +50,25 @@ Board adapters supply samples, validity, scaling, and time. The application deci
 
 Copy `include/eurorack_patterns/` plus `LICENSE` and `ATTRIBUTION.md` into your project and add the parent include directory. Each header works independently. See the [control-loop example](examples/control_loop.cpp) and [event-path example](examples/event_paths.cpp), including retry after queue rejection.
 
+For a shared continuous knob, start with the stateful `PickupLatch`:
+
 ```cpp
-#include <eurorack_patterns/controls.h>
+#include <eurorack_patterns/pickup.h>
 
-float physical = 80.0f; // percent of physical travel
-float stored = 30.0f;
-bool waiting = false;
-eurorack_patterns::ArmPickup(physical, stored, false, waiting);
+eurorack_patterns::PickupLatch pickup;
+// Initialization (check Configure/Arm results when using runtime values):
+pickup.Configure(0.0f, 1.0f, 0.005f);
+pickup.Arm(0.3f); // stored value changed; re-arm on each external edit
 
-const float previous = physical;
-if (eurorack_patterns::AcceptMotion(20.0f, physical)) {
-  eurorack_patterns::UpdatePickup(previous, physical, stored, false, waiting);
+// In your single-owner acquisition loop:
+if (pickup.Observe(mapped_knob_sample, sample_valid)) {
+  set_parameter(mapped_knob_sample);
 }
-// The knob crossed the target: stored is now 20 and waiting is false.
 ```
 
-The percent-based convenience functions use normalized physical travel with configurable tolerances. `PickupRequired` and `PickupCrossed` also accept arbitrary finite mapped units, allowing the caller to choose another transfer function.
+The [complete example](examples/pickup_workflow.cpp) adds initialization, validity before motion filtering, ownership changes and reset. `Observe` returns permission to apply a sample, not a changed-value event. The [walkthrough](docs/quickstart.md) explains the ordering and policies.
+
+Use `controls.h`'s lower-level predicates and percent convenience functions when your application already manages pickup state/history. They remain supported; they do not automatically break crossing history across invalid gaps. Numeric tolerances are configurable demonstration values.
 
 CMake projects can use a pinned dependency:
 
@@ -53,12 +76,12 @@ CMake projects can use a pinned dependency:
 include(FetchContent)
 FetchContent_Declare(eurorack_patterns
   GIT_REPOSITORY https://github.com/lylepmills/eurorack-patterns.git
-  GIT_TAG v0.2.0)
+  GIT_TAG d11583371156d54e569d574ee86eaa24375272ec) # v0.2.0
 FetchContent_MakeAvailable(eurorack_patterns)
 target_link_libraries(your_firmware PRIVATE eurorack_patterns::eurorack_patterns)
 ```
 
-Use a full commit ID instead of a tag when your release process requires an immutable pin. Tests default off when included as a subproject. An installed package also supports `find_package(eurorack_patterns CONFIG REQUIRED)`.
+This full commit pin selects the published v0.2.0 core, which the new examples also support. Each [release](https://github.com/lylepmills/eurorack-patterns/releases/latest) supplies its own full commit pin; use the tested version you intend to ship. Tests default off when included as a subproject. An installed package also supports `find_package(eurorack_patterns CONFIG REQUIRED)`.
 
 ## Build and test
 
@@ -76,4 +99,6 @@ The [coverage map](docs/coverage.md) separates implemented mechanisms from appli
 
 MIT, copyright 2026 Lyle Mills. Commercial use and modification are welcome; preserve the required notices. The catalog credits makers beside each observation, and [ATTRIBUTION.md](ATTRIBUTION.md) records source revisions and the distinction between inspiration, adaptation, and copied code. Linked manuals and projects retain their own licenses.
 
-Version 0.2.0 keeps the 0.1 interfaces and adds three components; the API is still pre-1.0. Pin a release and run your product's integration tests when updating. Changes to behavior or public interfaces will be described in the changelog.
+Version 0.2.1 preserves the 0.2.0 library interfaces and behavior; the API is still pre-1.0. Pin a release and run your product's integration tests when updating. Changes to behavior or public interfaces will be described in the changelog.
+
+Maintainers follow the [release checklist](docs/releasing.md), including public-content review and immutable releases.

@@ -1,0 +1,5 @@
+blank_issues_enabled: true
+contact_links:
+  - name: Contribution contracts and evidence
+    url: https://github.com/lylepmills/eurorack-patterns/blob/main/CONTRIBUTING.md
+    about: Read the scope and provenance requirements before contributing.

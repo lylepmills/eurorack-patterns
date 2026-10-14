@@ -34,3 +34,11 @@ The source and bug-history pass credits the O_C collaborators (including Patrick
 The inspected O_C trigger-delay, quantizer, settings and page-storage files contain MIT-style per-file notices; some GPIO/support files do not contain a license header, and the inspected repository has no top-level license file. This is not a blanket license conclusion about O_C. Ansible and Teletype contain top-level GPLv2 license text; MetaModule's root license specifies GPLv3 or later and distinguishes third-party dependencies. Those licenses remain attached to their respective projects. This pass incorporated factual summaries and independently specified code/tests, not upstream source or test text. Any later direct adaptation needs a fresh exact-file license review and preserved notices.
 
 Research bounds, unresolved reports and distinctions between inspected upstream tests and executed library tests are recorded in [research-pass-2.md](docs/research-pass-2.md) and [validation.md](docs/validation.md).
+
+## Optional reference-board example
+
+The Raspberry Pi Pico example is original MIT application glue using the public
+[Pico SDK](https://github.com/raspberrypi/pico-sdk/tree/079c6f39023649b154152db30f1d781e884879bc)
+API. CI fetches SDK 2.3.1 separately; SDK sources and their per-file/third-party
+licenses remain with that project and are not redistributed in this library.
+No maker endorsement or physical validation is implied.

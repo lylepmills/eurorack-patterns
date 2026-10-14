@@ -1,0 +1,5 @@
+set(CMAKE_SYSTEM_NAME Generic)
+set(CMAKE_SYSTEM_PROCESSOR arm)
+set(CMAKE_TRY_COMPILE_TARGET_TYPE STATIC_LIBRARY)
+set(CMAKE_CXX_COMPILER arm-none-eabi-g++ CACHE FILEPATH "ARM GNU C++ compiler")
+set(CMAKE_CXX_FLAGS_INIT "-mcpu=cortex-m0plus -mthumb")

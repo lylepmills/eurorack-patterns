@@ -18,6 +18,10 @@ The code expresses mechanisms with caller-defined time and electrical units. A h
 
 See [research scope and unresolved reports](research-pass-2.md) and [executed checks versus hardware evidence](validation.md). Upstream tests cited in the catalog were read, not executed.
 
+## Integration examples
+
+The [shared-knob walkthrough](quickstart.md) and optional [Pico adapter](../examples/pico/README.md) compose pickup and motion acceptance with explicit validity and ownership. Host checks cover the application policy; ARM compile/link checks cover the example's build boundary. These add no hardware-qualified catalog entries.
+
 ## Per-pattern map
 
 “Primitive” names the relevant family only; it does not claim an exact copy of the cited behavior. “Recipe” and “Measure” point to the evidence and test in the catalog. Implementation work should start with the portable primitive rows, then prioritize application policies and measurements by the intended product.

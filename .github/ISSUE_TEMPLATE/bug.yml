@@ -1,0 +1,26 @@
+name: Reproducible bug
+description: Report a contract violation or integration failure.
+title: "Bug: "
+labels: [bug]
+body:
+  - type: textarea
+    id: environment
+    attributes:
+      label: Version and environment
+      description: Release or commit, compiler and flags, host or board, and component.
+    validations:
+      required: true
+  - type: textarea
+    id: reproduce
+    attributes:
+      label: Minimal reproduction
+      description: Include input sequence, units, timestamps, validity and call ordering. Remove private code and identifiers.
+    validations:
+      required: true
+  - type: textarea
+    id: result
+    attributes:
+      label: Expected and actual behavior
+      description: Link the contract; state whether this is synthetic, measured, or observed informally.
+    validations:
+      required: true

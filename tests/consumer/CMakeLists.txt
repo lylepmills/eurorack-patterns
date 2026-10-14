@@ -8,3 +8,7 @@ add_test(NAME installed_consumer COMMAND consumer)
 add_executable(event_consumer ../../examples/event_paths.cpp)
 target_link_libraries(event_consumer PRIVATE eurorack_patterns::eurorack_patterns)
 add_test(NAME installed_event_consumer COMMAND event_consumer)
+
+add_executable(pickup_consumer ../../examples/pickup_workflow.cpp)
+target_link_libraries(pickup_consumer PRIVATE eurorack_patterns::eurorack_patterns)
+add_test(NAME installed_pickup_consumer COMMAND pickup_consumer)

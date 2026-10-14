@@ -1,0 +1,26 @@
+name: Measured trace
+description: Contribute reproducible hardware evidence.
+title: "Trace: "
+labels: [hardware-evidence]
+body:
+  - type: textarea
+    id: setup
+    attributes:
+      label: Public setup and acquisition
+      description: Board/revision, firmware commit, acquisition date/method, workload, units/scaling, calibration and sample cadence. Omit serial numbers and private projects.
+    validations:
+      required: true
+  - type: textarea
+    id: data
+    attributes:
+      label: Data and provenance
+      description: Link original recording and minimal replay, the transformation between them, and dropped/duplicate-sample indicators. State permission/license to share the data.
+    validations:
+      required: true
+  - type: textarea
+    id: oracle
+    attributes:
+      label: Independent expected result
+      description: What establishes ground truth? State the acceptance budget and observed result. Identify generated stimuli separately from recorded samples.
+    validations:
+      required: true
