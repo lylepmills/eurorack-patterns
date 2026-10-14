@@ -93,9 +93,10 @@ require a separate protected input circuit.
 Start Saleae recording before requesting a run. Use DC coupling for the wiper
 and an appropriate 3.3 V digital threshold. A digital rate of at least 1 MS/s is a
 reasonable starting point for the service/button markers; record the actual
-rate. The first D0 edge aligns the run with the USB trace, subject to the small
-GPIO/timestamp instruction offset. D0 width includes acquisition, state updates,
-record storage and synthetic foreground load; `work_us` excludes the final
+rate. The first Daisy D0 service-marker edge aligns the run with the USB trace,
+subject to the small GPIO/timestamp instruction offset. These D0/D1 names refer
+to Daisy pins, not the scope's channel numbers. D0 width includes acquisition,
+state updates, record storage and synthetic foreground load; `work_us` excludes the final
 marker write. D1 marks the action immediately after the state update. Save the
 native Saleae recording with the USB evidence. Saleae capture is currently
 operator-controlled; the Python tool captures USB, not the MSO.
@@ -161,8 +162,11 @@ private information before publishing. Each output directory must be new.
 Runs last 1–30 seconds; scheduled-fault/target scenarios require at least six.
 No USB output occurs during acquisition. Records are buffered in SDRAM, then
 transferred; allow time for the download. An unplugged host does not stop an
-in-progress window. Interrupted or malformed downloads remain incomplete and
-retain their original bytes; rerun into a new directory rather than treating a
+in-progress window. The host drains available serial data in bounded blocks and
+assembles lines in memory, avoiding one operating-system read per byte. This
+reduces receiver overhead; framing and checksum checks still determine whether
+the transfer is complete. Interrupted or malformed downloads remain incomplete
+and retain their original bytes; rerun into a new directory rather than treating a
 partial trace as a pass.
 
 The tool saves original `raw.txt`, operator/build `metadata.json`, lossless

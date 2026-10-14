@@ -109,11 +109,11 @@ class CaptureTests(unittest.TestCase):
                     self.pending = b''.join(lines[1:])
                     if disconnect: self.pending = self.pending[:-100]
                 return len(command)
-            def read_until(self, terminator, size):
+            @property
+            def in_waiting(self): return len(self.pending)
+            def read(self, size):
                 if not self.pending: raise OSError('synthetic disconnect')
                 stop = min(len(self.pending), size, 17)
-                nl = self.pending.find(b'\n', 0, stop)
-                if nl >= 0: stop = nl + 1
                 result, self.pending = self.pending[:stop], self.pending[stop:]
                 return result
         root = Path(td); binary = root / 'patterns_daisy.bin'; binary.write_bytes(b'synthetic binary')
@@ -147,11 +147,46 @@ class CaptureTests(unittest.TestCase):
 
     def test_timeout_preserves_partial_line(self):
         raw = io.BytesIO()
-        port = types.SimpleNamespace(read_until=lambda *args: b'partial')
+        port = types.SimpleNamespace(in_waiting=7, read=lambda size: b'partial')
         with patch.object(capture.time, 'monotonic', side_effect=[0, 2]):
             with self.assertRaises(TimeoutError):
-                capture.read_line(port, raw, 1)
+                capture.LineReader(port, raw).read_line(1)
         self.assertEqual(raw.getvalue(), b'partial')
+
+    def test_fragmented_and_coalesced_lines_preserved(self):
+        chunks = iter([b'fi', b'rst\nsecond\npar', b'tial'])
+        port = types.SimpleNamespace(in_waiting=64, read=lambda size: next(chunks))
+        raw = io.BytesIO(); reader = capture.LineReader(port, raw)
+        self.assertEqual(reader.read_line(float('inf')), b'first\n')
+        self.assertEqual(reader.read_line(float('inf')), b'second\n')
+        with patch.object(capture.time, 'monotonic', side_effect=[0, 2]):
+            with self.assertRaises(TimeoutError): reader.read_line(1)
+        self.assertEqual(raw.getvalue(), b'first\nsecond\npartial')
+
+    def test_large_burst_uses_block_reads_without_losing_bytes(self):
+        line = b'D,12345,12345000,139,140,32768\n'
+        payload = line * 100000
+        source = io.BytesIO(payload); reads = []
+        def read(size):
+            reads.append(size)
+            return source.read(size)
+        port = types.SimpleNamespace(in_waiting=len(payload), read=read)
+        raw = io.BytesIO(); reader = capture.LineReader(port, raw)
+        for _ in range(100000):
+            self.assertEqual(reader.read_line(float('inf')), line)
+        self.assertEqual(raw.getvalue(), payload)
+        self.assertLess(len(reads), 100)
+        self.assertFalse(reader.pending)
+
+    def test_oversized_line_preserves_received_chunk(self):
+        for malformed in (b'x' * 4096, b'x' * 4095 + b'\n'):
+            chunk = b'ok\n' + malformed
+            port = types.SimpleNamespace(in_waiting=len(chunk), read=lambda size: chunk)
+            raw = io.BytesIO(); reader = capture.LineReader(port, raw)
+            self.assertEqual(reader.read_line(float('inf')), b'ok\n')
+            with self.assertRaisesRegex(ValueError, 'oversized'):
+                reader.read_line(float('inf'))
+            self.assertEqual(raw.getvalue(), chunk)
 
     def test_unknown_firmware_never_receives_run_command(self):
         with tempfile.TemporaryDirectory() as td:

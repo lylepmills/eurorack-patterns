@@ -146,15 +146,29 @@ def load_manifest(path):
             manifest['artifacts_sha256']['patterns_daisy.bin'], 'firmware binary/manifest mismatch')
     return manifest
 
-def read_line(port, raw, deadline):
-    data = bytearray()
-    while time.monotonic() < deadline:
-        part = port.read_until(b'\n', 4096 - len(data))
-        raw.write(part) # Preserve partial reads, malformed data and failures too.
-        data.extend(part)
-        require(len(data) < 4096, 'oversized protocol line')
-        if data.endswith(b'\n'): return bytes(data)
-    raise TimeoutError('No complete response before timeout; raw data preserved')
+class LineReader:
+    """Drain USB bursts in blocks, retaining surplus bytes for the next line."""
+    def __init__(self, port, raw):
+        self.port, self.raw = port, raw
+        self.pending = bytearray()
+
+    def read_line(self, deadline):
+        while True:
+            newline = self.pending.find(b'\n')
+            size = newline + 1 if newline >= 0 else len(self.pending)
+            require(size < 4096, 'oversized protocol line')
+            if newline >= 0:
+                line = bytes(self.pending[:size])
+                del self.pending[:size]
+                return line
+            if time.monotonic() >= deadline:
+                raise TimeoutError('No complete response before timeout; raw data preserved')
+            # pyserial.read_until performs a separate read for every byte.
+            # Buffered draining avoids that overhead during multi-megabyte
+            # downloads. A one-byte read waits when no bytes are ready.
+            part = self.port.read(min(65536, max(1, self.port.in_waiting)))
+            self.raw.write(part) # Preserve every received byte before validation.
+            self.pending.extend(part)
 
 def capture(a):
     manifest = load_manifest(a.manifest)
@@ -181,8 +195,9 @@ def capture(a):
         port.port = a.port
         with port:
             with (a.out / 'raw.txt').open('wb') as raw:
+                reader = LineReader(port, raw)
                 port.write(b'?\n'); port.flush()
-                line = read_line(port, raw, time.monotonic() + 8)
+                line = reader.read_line(time.monotonic() + 8)
                 require(line.startswith(b'INFO,'), 'unexpected device response; no run requested')
                 identity = json.loads(line[5:])
                 require(identity.get('protocol') == 1 and identity.get('ready') is True and
@@ -193,16 +208,16 @@ def capture(a):
                 target = round(a.target * 1000)
                 command = f'R,{token},{scenario},{a.seconds * 1000},{target}\n'
                 port.write(command.encode('ascii')); port.flush()
-                start = read_line(port, raw, time.monotonic() + 8)
+                start = reader.read_line(time.monotonic() + 8)
                 fields = start.decode('ascii').strip().split(',')
                 require(len(fields) == 6 and fields[:5] ==
                         ['START', str(token), str(scenario), str(a.seconds * 1000), str(target)],
                         'run acknowledgement mismatch')
                 print(f'Capturing {a.seconds} seconds ({a.scenario}); perform the planned gesture now.', flush=True)
-                print('Then downloading buffered records. Scope D0 is the timing reference.', flush=True)
+                print('Then downloading buffered records. The Daisy D0 service marker is the timing reference.', flush=True)
                 deadline = time.monotonic() + a.seconds + a.download_timeout
                 while True:
-                    line = read_line(port, raw, deadline)
+                    line = reader.read_line(deadline)
                     require(not line.startswith(b'ERROR,'), line.decode('ascii').strip())
                     if line.startswith(b'END,'): break
         summary = save_analysis((a.out / 'raw.txt').read_bytes(), a.out, manifest['build_id'], a.replay)
