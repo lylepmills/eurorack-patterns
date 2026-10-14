@@ -76,12 +76,12 @@ CMake projects can use a pinned dependency:
 include(FetchContent)
 FetchContent_Declare(eurorack_patterns
   GIT_REPOSITORY https://github.com/lylepmills/eurorack-patterns.git
-  GIT_TAG d11583371156d54e569d574ee86eaa24375272ec) # v0.2.0
+  GIT_TAG b6655e71559cd003ec69f73415df5ab89b0b799b) # v0.2.1
 FetchContent_MakeAvailable(eurorack_patterns)
 target_link_libraries(your_firmware PRIVATE eurorack_patterns::eurorack_patterns)
 ```
 
-This full commit pin selects the published v0.2.0 core, which the new examples also support. Each [release](https://github.com/lylepmills/eurorack-patterns/releases/latest) supplies its own full commit pin; use the tested version you intend to ship. Tests default off when included as a subproject. An installed package also supports `find_package(eurorack_patterns CONFIG REQUIRED)`.
+This full commit pin selects immutable release v0.2.1. Each [release](https://github.com/lylepmills/eurorack-patterns/releases/latest) supplies its own full commit pin; use the tested version you intend to ship. Tests default off when included as a subproject. An installed package also supports `find_package(eurorack_patterns CONFIG REQUIRED)`.
 
 ## Build and test
 
