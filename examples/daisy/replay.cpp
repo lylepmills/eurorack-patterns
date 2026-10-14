@@ -9,6 +9,10 @@
 #include <sstream>
 #include <string>
 #include <vector>
+#ifdef _WIN32
+#include <fcntl.h>
+#include <io.h>
+#endif
 
 static bool Numbers(const std::string& text, std::vector<int64_t>& out) {
   out.clear(); std::stringstream stream(text); std::string word;
@@ -22,7 +26,7 @@ static bool Numbers(const std::string& text, std::vector<int64_t>& out) {
 }
 static bool Close(int32_t a, int64_t b) { return std::llabs(int64_t(a) - b) <= 1; }
 static int Replay(const char* path) {
-  std::ifstream file(path); if (!file) return 1;
+  std::ifstream file(path, std::ios::binary); if (!file) return 1;
   std::string line; bench::Controls controls; bool started = false, ended = false;
   uint32_t count = 0, hash = 2166136261u; int64_t token = -1;
   std::vector<int64_t> n;
@@ -78,7 +82,13 @@ static int Synthetic(unsigned scenario) {
   return 0;
 }
 int main(int argc, char** argv) {
-  if (argc == 3 && std::strcmp(argv[1], "--synthetic") == 0) return Synthetic(unsigned(std::atoi(argv[2])));
+  if (argc == 3 && std::strcmp(argv[1], "--synthetic") == 0) {
+#ifdef _WIN32
+    // Protocol checksums cover exact wire bytes, including LF line endings.
+    if (_setmode(_fileno(stdout), _O_BINARY) == -1) return 1;
+#endif
+    return Synthetic(unsigned(std::atoi(argv[2])));
+  }
   if (argc == 2) return Replay(argv[1]);
   std::cerr << "Usage: daisy_replay raw.txt | --synthetic SCENARIO_ID\n";
   return 1;

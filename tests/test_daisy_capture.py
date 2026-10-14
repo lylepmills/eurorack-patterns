@@ -41,6 +41,7 @@ class CaptureTests(unittest.TestCase):
         for scenario in range(5):
             with self.subTest(scenario=scenario), tempfile.TemporaryDirectory() as td:
                 out = Path(td); data = synthetic(scenario)
+                self.assertNotIn(b'\r', data) # Firmware emits LF on every host OS.
                 (out / 'raw.txt').write_bytes(data)
                 summary = capture.save_analysis(data, out, 'synthetic', REPLAY)
                 self.assertEqual(summary['protocol_integrity'], 'verified')
