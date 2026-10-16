@@ -62,6 +62,38 @@ class CaptureTests(unittest.TestCase):
                 self.assertEqual(summary['run']['stimulus_status'], 'not_applicable')
                 self.assertEqual(capture.result_code(summary), 0)
 
+    def test_full_long_window_with_late_movement(self):
+        data = subprocess.check_output([str(REPLAY), '--synthetic-long', '9'])
+        with tempfile.TemporaryDirectory() as td:
+            out = Path(td); (out / 'raw.txt').write_bytes(data)
+            summary = capture.save_analysis(data, out, 'synthetic', REPLAY)
+        self.assertEqual(summary['samples'], 150000)
+        self.assertEqual(summary['run']['duration_ms'], 150000)
+        self.assertGreaterEqual(summary['run']['stimulus']['trigger_us'], 120000000)
+        self.assertEqual(summary['invalid_samples'], 1000)
+        self.assertEqual(summary['run']['missed'], 0)
+        self.assertEqual(capture.result_code(summary), 0)
+        self.assertIn('PASS:', summary['replay'])
+        # Capacity is advertised, not inferred from a newer host or the manifest.
+        with self.assertRaisesRegex(ValueError, 'run configuration'):
+            capture.parse(data.replace(b'"max_records":150000', b'"max_records":30000'))
+        with self.assertRaisesRegex(ValueError, 'acquisition configuration'):
+            capture.parse(data.replace(b'"max_records":150000', b'"max_records":999999'))
+
+    def test_old_firmware_rejects_long_request_before_run_command(self):
+        with tempfile.TemporaryDirectory() as td:
+            _, writes = self.fake_capture(td, requested_seconds=150)
+            self.assertEqual(writes, [b'?\n'])
+
+    def test_mock_serial_full_long_window(self):
+        with tempfile.TemporaryDirectory() as td:
+            out, writes = self.fake_capture(td, scenario=9, long_window=True)
+            self.assertEqual(len(writes), 2)
+            self.assertIn(b',9,150000,250\n', writes[1])
+            summary = json.loads((out / 'summary.json').read_text())
+            self.assertEqual(summary['samples'], 150000)
+            self.assertEqual(summary['run']['stimulus_status'], 'completed')
+
     def test_missing_startup_is_not_replaced_with_new_run(self):
         with tempfile.TemporaryDirectory() as td:
             _, writes = self.fake_capture(td, scenario=12, startup_unavailable=True)
@@ -153,8 +185,8 @@ class CaptureTests(unittest.TestCase):
             with self.assertRaisesRegex(ValueError, 'replay failed'):
                 capture.save_analysis(data, out, replay=REPLAY)
 
-    def fake_capture(self, td, *, disconnect=False, wrong_identity=False, scenario=0, startup_pending=False, startup_unavailable=False):
-        data = synthetic(scenario)
+    def fake_capture(self, td, *, disconnect=False, wrong_identity=False, scenario=0, startup_pending=False, startup_unavailable=False, requested_seconds=None, long_window=False):
+        data = subprocess.check_output([str(REPLAY), '--synthetic-long', str(scenario)]) if long_window else synthetic(scenario)
         class Serial:
             writes = []
             def __init__(self, **kwargs): self.pending = b''
@@ -180,7 +212,7 @@ class CaptureTests(unittest.TestCase):
             def in_waiting(self): return len(self.pending)
             def read(self, size):
                 if not self.pending: raise OSError('synthetic disconnect')
-                stop = min(len(self.pending), size, 17)
+                stop = min(len(self.pending), size, 65536 if long_window else 17)
                 result, self.pending = self.pending[:stop], self.pending[stop:]
                 return result
         root = Path(td); binary = root / 'patterns_daisy.bin'; binary.write_bytes(b'synthetic binary')
@@ -190,8 +222,10 @@ class CaptureTests(unittest.TestCase):
         a = argparse.Namespace(manifest=manifest, out=root / 'capture', port='mock-only',
             scenario=next(k for k,v in capture.SCENARIOS.items() if v == scenario), seconds=20 if scenario == 12 else 6, target=0.25, pot_ohms=100000, capacitor_nf=0,
             probe='synthetic', notes='synthetic', download_timeout=5, replay=REPLAY)
+        if long_window: a.seconds = 150
+        if requested_seconds is not None: a.seconds = requested_seconds
         with patch.dict(sys.modules, {'serial': types.SimpleNamespace(Serial=Serial)}), contextlib.redirect_stdout(io.StringIO()):
-            if disconnect or wrong_identity or startup_pending or startup_unavailable:
+            if disconnect or wrong_identity or startup_pending or startup_unavailable or requested_seconds is not None:
                 with self.assertRaises((ValueError, OSError)): capture.capture(a)
             else:
                 self.assertEqual(capture.capture(a), 0)

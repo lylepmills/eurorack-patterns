@@ -2,6 +2,9 @@
 
 ## Unreleased
 
+- Allow Daisy recordings up to 150 seconds so operator-led tests can tolerate
+  delayed starts. Preserve the full waiting window, check device capacity before
+  requesting a run, and retain support for the original 30-second images/traces.
 - Add an optional Daisy Seed3 control bench with explicit ADC freshness, a
   100k-pot acquisition configuration, buffered USB traces and Saleae markers.
 - Add pickup/gesture/gap/load scenarios, strict capture integrity checks and C++

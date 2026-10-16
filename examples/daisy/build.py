@@ -55,7 +55,7 @@ def main():
                     flash_address='0x90040000', storage='bootloader SRAM application',
                     sample_period_us=1000, sample_cycles=810.5, adc_bits=16, oversampling=1,
                     pot_ohms=100000, debounce_ms=10, hold_ms=600,
-                    gap_threshold_us=10000, max_duration_ms=30000, startup_duration_ms=20000)
+                    gap_threshold_us=10000, max_duration_ms=150000, startup_duration_ms=20000)
     manifest['build_id'] = hashlib.sha256(json.dumps(manifest, sort_keys=True).encode()).hexdigest()[:24]
     out.mkdir(parents=True, exist_ok=True)
     # A failed rebuild must not leave an apparently current success manifest.

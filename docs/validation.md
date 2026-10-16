@@ -230,8 +230,18 @@ private information before publishing. Each output directory must be new.
 | `moving-target` | Crossing raw code 32768 upward edits target to 0.75 before that sample is applied. Continue upward to reacquire. |
 | `startup` | Downloads the retained 20-second automatic post-initialization capture, target 0.25. Does not start a new run. |
 
-Normal runs last 1–30 seconds; scheduled-fault/target scenarios require at least
-six. Movement-triggered scenarios use target 0.25. Event triggers use raw input
+Normal runs last 1–150 seconds on the expanded-buffer firmware; original images
+remain limited to 30 seconds. The host checks the advertised capacity before
+sending a run command. For an operator-led test, use `--seconds 150`: begin within
+the first two minutes and leave time for the complete sequence and recovery.
+Keep the entire waiting period in both recordings. This is a fixed full window,
+not a rolling or movement-started capture; the stimulus still triggers on the
+physical input. Arm the scope for the whole window plus setup margins. Longer
+windows need more capture storage and download time. The 150,000-record buffer
+uses 11.4 MB of SDRAM; the automatic startup window remains 20 seconds.
+
+Scheduled-fault/target scenarios require at least six seconds.
+Movement-triggered scenarios use target 0.25. Event triggers use raw input
 observations, independently of the gesture or pickup result under test. Start
 with button released; an initially held button does not supply a fresh press.
 The first matching edge triggers the stimulus once. Raw bounce may affect trigger

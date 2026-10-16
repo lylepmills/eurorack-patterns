@@ -54,7 +54,7 @@ int main() {
   CHECK(clock.Us(224) == 1); // Raw counter wrap before unit conversion.
   CHECK(clock.Us(480224) == 2001);
   bench::Clock full_window(0, 240000000);
-  for (uint64_t ms = 0; ms <= 30000; ++ms)
+  for (uint64_t ms = 0; ms <= bench::kMaxDurationMs; ++ms)
     CHECK(full_window.Us(uint32_t(ms * 240000)) == ms * 1000);
   bench::Clock non_integer(100, 240500000);
   CHECK(non_integer.Us(240500100) == 1000000);

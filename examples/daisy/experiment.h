@@ -17,7 +17,7 @@ struct Stimulus {
 
 // Bench stimulus scheduling, separate from the controls under test. Triggers
 // use observed raw input edges, not the gesture/pickup result being measured.
-// All times fit the bounded 30-second experiment, with -1 meaning not observed.
+// All times fit the bounded 150-second experiment, with -1 meaning not observed.
 class Experiment {
  public:
   Experiment(uint32_t scenario, bool held) : scenario_(scenario), pressed_(held) {}

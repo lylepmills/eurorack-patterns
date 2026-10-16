@@ -20,6 +20,7 @@ static UsbHandle usb;
 static GPIO button_pin, sample_marker, action_marker, led;
 static ADC_HandleTypeDef adc;
 static DSY_SDRAM_BSS bench::Record records[bench::kMaxRecords];
+static_assert(sizeof(records) <= 16 * 1024 * 1024, "Keep the trace buffer within its SDRAM budget");
 static_assert(ATOMIC_INT_LOCK_FREE == 2, "USB IRQ mailbox requires lock-free 32-bit atomics");
 static std::atomic<uint32_t> rx_head{0}, rx_tail{0}, rx_dropped{0};
 static char rx[256];
@@ -129,10 +130,10 @@ static void Identity() {
   std::snprintf(line, sizeof(line),
       "INFO,{\"protocol\":2,\"build_id\":\"%s\",\"board\":\"seed3\",\"ready\":%s,"
       "\"cpu_hz\":%u,\"timer_hz\":%u,\"adc_hz\":%u,\"mcu_revision\":%u,\"sample_cycles_x2\":1621,"
-      "\"oversampling\":1,\"period_us\":1000,\"max_records\":30000,\"startup_available\":%s,\"startup_duration_ms\":%u}\n",
+      "\"oversampling\":1,\"period_us\":1000,\"max_records\":%u,\"startup_available\":%s,\"startup_duration_ms\":%u}\n",
       EP_BUILD_ID, ready ? "true" : "false", unsigned(SystemCoreClock),
       unsigned(System::GetTickFreq()), unsigned(AdcHz()), unsigned(HAL_GetREVID()),
-      startup_available ? "true" : "false", unsigned(bench::kStartupDurationMs));
+      unsigned(bench::kMaxRecords), startup_available ? "true" : "false", unsigned(bench::kStartupDurationMs));
   Send(line);
 }
 static bool StartLine(uint32_t token) {
@@ -276,7 +277,7 @@ int main() {
         else if (StartLine(token) && Download(token)) startup_available = false;
       } else if (ready && std::sscanf(command, "R,%u,%u,%u,%u%c", &token, &scenario, &duration,
                                       &target, &extra) == 4 && scenario <= bench::kMovingTarget &&
-                 duration >= 1000 && duration <= 30000 && target <= 1000 &&
+                 duration >= 1000 && duration <= bench::kMaxDurationMs && target <= 1000 &&
                  (!(scenario >= bench::kPickupGapUp && scenario <= bench::kMovingTarget) || target == 250)) {
         if (startup_available) Send("ERROR,download_startup_first\n");
         else Run(token, scenario, duration, target);

@@ -32,6 +32,15 @@ def fnv(data, value=2166136261):
         value = ((value ^ byte) * 16777619) & 0xffffffff
     return value
 
+def acquisition_capacity(info):
+    """Accept the original and expanded buffers; reject unknown configurations."""
+    capacity = info.get('max_records')
+    require(info.get('period_us') == 1000 and capacity in (30000, 150000) and
+            (info.get('protocol') == 2 or capacity == 30000) and
+            info.get('sample_cycles_x2') == 1621 and info.get('oversampling') == 1,
+            'unexpected acquisition configuration')
+    return capacity
+
 def parse(data, build_id=None):
     """Strict, complete protocol validation, independent of the control code."""
     require(data.endswith(b'\n'), 'truncated final line')
@@ -40,16 +49,14 @@ def parse(data, build_id=None):
     info = json.loads(lines[0][5:])
     require(info.get('protocol') in (1, 2) and info.get('board') == 'seed3' and
             info.get('ready') is True, 'unsupported protocol or board not ready')
-    require(info.get('period_us') == 1000 and info.get('max_records') == 30000 and
-            info.get('sample_cycles_x2') == 1621 and info.get('oversampling') == 1,
-            'unexpected acquisition configuration')
+    capacity = acquisition_capacity(info)
     if build_id: require(info.get('build_id') == build_id, 'firmware build identity mismatch')
     protocol = info['protocol']
     start = lines[1].decode('ascii').strip().split(',')
     require(len(start) == 6 and start[0] == 'START', 'missing START')
     token, scenario, duration, target, held = map(int, start[1:])
     require(0 <= token <= 0xffffffff and scenario in SCENARIOS.values() and
-            1000 <= duration <= 30000 and 0 <= target <= 1000 and held in (0, 1),
+            1000 <= duration <= capacity and 0 <= target <= 1000 and held in (0, 1),
             'invalid run configuration')
     require(protocol == 2 or scenario <= 4, 'scenario requires protocol 2')
     require(scenario != 12 or (duration == 20000 and target == 250), 'invalid startup configuration')
@@ -65,7 +72,7 @@ def parse(data, build_id=None):
     end = lines[-1].decode('ascii').strip().split(',')
     require(len(end) == 9 and end[0] == 'END', 'missing END (capture incomplete)')
     end_token, count, missed, failures, rx_dropped, overflow, checksum, elapsed = map(int, end[1:])
-    require(end_token == token and 0 < count <= 30000 and len(lines) == count + column_index + 2,
+    require(end_token == token and 0 < count <= capacity and len(lines) == count + column_index + 2,
             'run token or record count mismatch')
     require(min(missed, failures, rx_dropped, overflow) >= 0 and elapsed >= duration * 1000,
             'invalid completion counters')
@@ -273,6 +280,8 @@ def capture(a):
                 require(identity.get('protocol') == manifest['protocol'] and identity.get('ready') is True and
                         identity.get('build_id') == manifest['build_id'],
                         'device identity mismatch or initialization failure; no run requested')
+                require(1 <= a.seconds * 1000 <= acquisition_capacity(identity),
+                        'requested duration exceeds firmware capacity; no run requested')
                 token = secrets.randbits(32)
                 scenario = SCENARIOS[a.scenario]
                 target = round(a.target * 1000)
@@ -336,7 +345,7 @@ def main():
     a = p.parse_args()
     try:
         if a.mode == 'capture':
-            require(1 <= a.seconds <= 30, 'seconds must be 1..30')
+            require(1 <= a.seconds <= 150, 'seconds must be 1..150 (subject to firmware capacity)')
             require(math.isfinite(a.target) and 0 <= a.target <= 1, 'target must be 0..1')
             require(a.pot_ohms > 0 and math.isfinite(a.capacitor_nf) and a.capacitor_nf >= 0,
                     'invalid fixture values')

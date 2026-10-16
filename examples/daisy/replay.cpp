@@ -41,7 +41,7 @@ static int Replay(const char* path) {
       line += '\n'; hash = bench::Hash(hash, line.data(), line.size());
     } else if (line.compare(0, 2, "D,") == 0) {
       if (!started || ended || !Numbers(line.substr(2), n) || n.size() != 19 ||
-          n[0] != count || n[1] < 0 || n[1] > 30000000 || n[4] < 0 || n[4] > 65535 ||
+          n[0] != count || n[1] < 0 || n[1] >= bench::kMaxDurationMs * 1000 || n[4] < 0 || n[4] > 65535 ||
           n[8] < -1 || n[8] > 1000) return 1;
       const auto r = controls.Step(uint32_t(n[1]), uint16_t(n[4]), n[5] != 0,
                                    n[7] != 0, int32_t(n[8]));
@@ -62,14 +62,14 @@ static int Replay(const char* path) {
   std::cout << "PASS: " << count << " samples replayed through the C++ adapter; not independent hardware validation\n";
   return 0;
 }
-static int Synthetic(unsigned scenario, bool force_v2 = false) {
+static int Synthetic(unsigned scenario, bool force_v2 = false, bool long_window = false) {
   if (scenario > bench::kStartup) return 1;
   // Generated stimulus. Pipeline tests only; never physical evidence.
-  const bool version2 = force_v2 || scenario >= bench::kPressStall;
+  const bool version2 = force_v2 || long_window || scenario >= bench::kPressStall;
   const bool startup = scenario == bench::kStartup;
-  const uint32_t duration = startup ? bench::kStartupDurationMs : 6000;
-  std::printf("INFO,{\"protocol\":%u,\"build_id\":\"synthetic\",\"board\":\"seed3\",\"ready\":true,\"period_us\":1000,\"max_records\":30000,\"sample_cycles_x2\":1621,\"oversampling\":1,\"startup_available\":%s}\n",
-              version2 ? 2u : 1u, startup ? "true" : "false");
+  const uint32_t duration = startup ? bench::kStartupDurationMs : long_window ? bench::kMaxDurationMs : 6000;
+  std::printf("INFO,{\"protocol\":%u,\"build_id\":\"synthetic\",\"board\":\"seed3\",\"ready\":true,\"period_us\":1000,\"max_records\":%u,\"sample_cycles_x2\":1621,\"oversampling\":1,\"startup_available\":%s}\n",
+              version2 ? 2u : 1u, long_window ? unsigned(bench::kMaxRecords) : 30000u, startup ? "true" : "false");
   std::printf("START,42,%u,%u,250,%u\n", scenario, duration, unsigned(startup));
   bench::Controls controls; controls.Reset(250, startup);
   bench::Experiment experiment(scenario, startup);
@@ -81,16 +81,18 @@ static int Synthetic(unsigned scenario, bool force_v2 = false) {
     if (us >= duration * 1000) break;
     missed += schedule.Take(us);
     const bool injected = experiment.InvalidAdc(us);
-    bool pressed = startup ? us < 800000 || (us >= 1100000 && us < 1200000) :
-                                  (us >= 200000 && us < 900000) || (us >= 1100000 && us < 1200000);
+    // The long-window case leaves two full minutes for an operator to begin.
+    const uint32_t t = long_window ? (us < 120000000 ? 0 : us - 120000000) : us;
+    bool pressed = startup ? t < 800000 || (t >= 1100000 && t < 1200000) :
+                                  (t >= 200000 && t < 900000) || (t >= 1100000 && t < 1200000);
     if (scenario >= bench::kPickupGapUp && scenario <= bench::kMovingTarget) pressed = false;
     if (scenario == bench::kReleaseStall || scenario == bench::kPressAdcGap)
-      pressed = (us >= 200000 && us < 300000) || (us >= 1100000 && us < 1200000);
-    uint16_t raw = uint16_t((us / 1000 * 37) % 65536);
+      pressed = (t >= 200000 && t < 300000) || (t >= 1100000 && t < 1200000);
+    uint16_t raw = uint16_t((t / 1000 * 37) % 65536);
     if (scenario == bench::kPickupGapUp || scenario == bench::kMovingTarget)
-      raw = uint16_t(us >= 2000000 ? 65535 : us * 65535ull / 2000000);
+      raw = uint16_t(t >= 2000000 ? 65535 : t * 65535ull / 2000000);
     if (scenario == bench::kPickupGapDown)
-      raw = uint16_t(us >= 2000000 ? 0 : 65535 - us * 65535ull / 2000000);
+      raw = uint16_t(t >= 2000000 ? 0 : 65535 - t * 65535ull / 2000000);
     if (injected) raw = 0;
     int32_t external = experiment.Observe(us, raw, !injected, pressed);
     if (scenario == bench::kTargets && us == 5000000) external = 750;
@@ -115,12 +117,14 @@ static int Synthetic(unsigned scenario, bool force_v2 = false) {
 }
 
 int main(int argc, char** argv) {
-  if (argc == 3 && (std::strcmp(argv[1], "--synthetic") == 0 || std::strcmp(argv[1], "--synthetic-v2") == 0)) {
+  if (argc == 3 && (std::strcmp(argv[1], "--synthetic") == 0 || std::strcmp(argv[1], "--synthetic-v2") == 0 ||
+                    std::strcmp(argv[1], "--synthetic-long") == 0)) {
 #ifdef _WIN32
     // Protocol checksums cover exact wire bytes, including LF line endings.
     if (_setmode(_fileno(stdout), _O_BINARY) == -1) return 1;
 #endif
-    return Synthetic(unsigned(std::atoi(argv[2])), std::strcmp(argv[1], "--synthetic-v2") == 0);
+    return Synthetic(unsigned(std::atoi(argv[2])), std::strcmp(argv[1], "--synthetic-v2") == 0,
+                     std::strcmp(argv[1], "--synthetic-long") == 0);
   }
   if (argc == 2) return Replay(argv[1]);
   std::cerr << "Usage: daisy_replay raw.txt | --synthetic SCENARIO_ID\n";

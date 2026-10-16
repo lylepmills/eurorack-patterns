@@ -11,7 +11,8 @@ namespace bench {
 constexpr uint32_t kPeriodUs = 1000;
 constexpr uint32_t kGapUs = 10000;
 constexpr uint32_t kHoldMs = 600;
-constexpr uint32_t kMaxRecords = 30000;
+constexpr uint32_t kMaxDurationMs = 150000;
+constexpr uint32_t kMaxRecords = kMaxDurationMs * 1000 / kPeriodUs;
 enum class Role { kTarget };
 struct Result {
   bool cadence_valid, debounced, changed;
