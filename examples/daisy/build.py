@@ -44,9 +44,9 @@ def main():
         modules[name] = actual
     files = list((ROOT / 'include/eurorack_patterns').glob('*.h'))
     files += [ROOT / 'examples/shared_control.h']
-    files += [HERE / name for name in ['main.cpp', 'bench.h', 'protocol.h', 'CMakeLists.txt',
+    files += [HERE / name for name in ['main.cpp', 'bench.h', 'protocol.h', 'experiment.h', 'CMakeLists.txt',
                                       'build_identity.h.in', 'build.py']]
-    manifest = dict(schema=1, kind='eurorack-patterns-daisy-bench', protocol=1,
+    manifest = dict(schema=1, kind='eurorack-patterns-daisy-bench', protocol=2,
                     status='cross-built only; hardware validation pending', board='seed3',
                     source_commit=run('git', '-C', ROOT, 'rev-parse', 'HEAD'),
                     source_sha256={str(f.relative_to(ROOT)): sha(f) for f in sorted(files)},
@@ -55,7 +55,7 @@ def main():
                     flash_address='0x90040000', storage='bootloader SRAM application',
                     sample_period_us=1000, sample_cycles=810.5, adc_bits=16, oversampling=1,
                     pot_ohms=100000, debounce_ms=10, hold_ms=600,
-                    gap_threshold_us=10000, max_duration_ms=30000)
+                    gap_threshold_us=10000, max_duration_ms=30000, startup_duration_ms=20000)
     manifest['build_id'] = hashlib.sha256(json.dumps(manifest, sort_keys=True).encode()).hexdigest()[:24]
     out.mkdir(parents=True, exist_ok=True)
     # A failed rebuild must not leave an apparently current success manifest.

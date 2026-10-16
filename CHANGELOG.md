@@ -6,8 +6,13 @@
   100k-pot acquisition configuration, buffered USB traces and Saleae markers.
 - Add pickup/gesture/gap/load scenarios, strict capture integrity checks and C++
   trace replay, with synthetic adapter and mocked-serial regressions.
-- Cross-build the Daisy adapter in CI. Physical measurements and numerical
-  tuning remain pending; public core interfaces and behavior are unchanged.
+- Preserve six complete first-pass Daisy recordings with allowlisted provenance,
+  scope-derived digital edges and measured replay regressions. Keep conclusions
+  bounded to one fixture and exclude incomplete or suspect-contact runs.
+- Add event-triggered gesture/pickup fault scenarios and a retained 20-second
+  automatic startup recorder. Protocol 2 reports/checks stimulus timing and refuses
+  to overwrite unread startup evidence. These new scenarios await physical validation.
+- Cross-build the Daisy adapter in CI; public core interfaces and behavior are unchanged.
 
 ## 0.2.1 — 2026-10-13
 

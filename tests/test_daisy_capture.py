@@ -28,7 +28,7 @@ def synthetic(scenario=0):
 def rehash(data):
     lines = data.splitlines(keepends=True)
     end = lines[-1].decode().strip().split(',')
-    end[-2] = str(capture.fnv(b''.join(lines[3:-1])))
+    end[-2] = str(capture.fnv(b''.join(x for x in lines if x.startswith((b'STIMULUS,', b'D,')))))
     lines[-1] = (','.join(end) + '\n').encode()
     return b''.join(lines)
 
@@ -52,6 +52,71 @@ class CaptureTests(unittest.TestCase):
                 self.assertEqual(summary['run']['missed'], 25 if scenario == 3 else 0)
                 self.assertEqual(summary['cadence_breaks'], 1 if scenario == 3 else 0)
                 self.assertTrue((out / 'samples.csv').is_file())
+
+    def test_original_scenarios_with_protocol_two(self):
+        for scenario in range(5):
+            data = subprocess.check_output([str(REPLAY), '--synthetic-v2', str(scenario)])
+            with self.subTest(scenario=scenario), tempfile.TemporaryDirectory() as td:
+                out = Path(td); (out / 'raw.txt').write_bytes(data)
+                summary = capture.save_analysis(data, out, 'synthetic', REPLAY)
+                self.assertEqual(summary['run']['stimulus_status'], 'not_applicable')
+                self.assertEqual(capture.result_code(summary), 0)
+
+    def test_missing_startup_is_not_replaced_with_new_run(self):
+        with tempfile.TemporaryDirectory() as td:
+            _, writes = self.fake_capture(td, scenario=12, startup_unavailable=True)
+            self.assertEqual(writes, [b'?\n'])
+
+    def test_event_and_startup_scenarios_roundtrip(self):
+        expected_actions = {5: (1, 0), 6: (1, 0), 7: (1, 0), 8: (2, 0),
+                            9: (0, 0), 10: (0, 0), 11: (0, 0), 12: (1, 0)}
+        for scenario in range(5, 13):
+            with self.subTest(scenario=scenario), tempfile.TemporaryDirectory() as td:
+                out = Path(td); data = synthetic(scenario)
+                (out / 'raw.txt').write_bytes(data)
+                summary = capture.save_analysis(data, out, 'synthetic', REPLAY)
+                self.assertEqual((summary['taps'], summary['holds']), expected_actions[scenario])
+                self.assertEqual(summary['run']['stimulus_status'], 'not_applicable' if scenario == 12 else 'completed')
+                self.assertEqual(capture.result_code(summary), 0)
+                if scenario == 12:
+                    self.assertTrue(summary['run']['startup_held'])
+                    self.assertEqual(summary['samples'], 20000)
+
+    def test_event_evidence_is_checked_and_checksummed(self):
+        data = synthetic(5)
+        corrupt = data.replace(b'STIMULUS,200000,300000,325000', b'STIMULUS,200001,300000,325000')
+        with self.assertRaisesRegex(ValueError, 'checksum'): capture.parse(corrupt)
+        with self.assertRaisesRegex(ValueError, 'trigger'): capture.parse(rehash(corrupt))
+        early = data.replace(b'STIMULUS,200000,300000,325000', b'STIMULUS,200000,299999,325000')
+        with self.assertRaisesRegex(ValueError, 'deadline'): capture.parse(rehash(early))
+        missing = data.replace(b'STIMULUS,200000,300000,325000', b'STIMULUS,-1,-1,-1')
+        with self.assertRaisesRegex(ValueError, 'trigger'): capture.parse(rehash(missing))
+
+    def test_unexercised_or_incomplete_scenario_is_not_success(self):
+        rows = [dict(time_us=0, pressed=0, adc_valid=1, raw=0),
+                dict(time_us=990000, pressed=1, adc_valid=1, raw=0)]
+        status = capture.validate_stimulus(5, [990000, -1, -1], rows, False, 1000000)
+        self.assertEqual(status, 'incomplete')
+        rows[-1]['pressed'] = 0
+        self.assertEqual(capture.validate_stimulus(5, [-1, -1, -1], rows, False, 1000000), 'not_triggered')
+        for status in ('incomplete', 'not_triggered'):
+            summary = dict(run=dict(adc_failures=0, rx_dropped=0, buffer_overflow=0, stimulus_status=status))
+            self.assertEqual(capture.result_code(summary), 3)
+
+    def test_startup_download_uses_retained_capture_command(self):
+        with tempfile.TemporaryDirectory() as td:
+            out, writes = self.fake_capture(td, scenario=12)
+            self.assertEqual(writes[0], b'?\n')
+            self.assertTrue(writes[1].startswith(b'B,'))
+            self.assertFalse(any(w.startswith(b'R,') for w in writes))
+            summary = json.loads((out / 'summary.json').read_text())
+            self.assertTrue(summary['run']['startup_held'])
+
+    def test_pending_startup_cannot_be_overwritten_by_normal_run(self):
+        with tempfile.TemporaryDirectory() as td:
+            out, writes = self.fake_capture(td, scenario=5, startup_pending=True)
+            self.assertEqual(writes, [b'?\n'])
+            self.assertEqual(json.loads((out / 'metadata.json').read_text())['status'], 'incomplete')
 
     def test_corrupt_or_incomplete_capture_rejected(self):
         lines = self.data.splitlines(keepends=True)
@@ -88,8 +153,8 @@ class CaptureTests(unittest.TestCase):
             with self.assertRaisesRegex(ValueError, 'replay failed'):
                 capture.save_analysis(data, out, replay=REPLAY)
 
-    def fake_capture(self, td, *, disconnect=False, wrong_identity=False):
-        data = self.data
+    def fake_capture(self, td, *, disconnect=False, wrong_identity=False, scenario=0, startup_pending=False, startup_unavailable=False):
+        data = synthetic(scenario)
         class Serial:
             writes = []
             def __init__(self, **kwargs): self.pending = b''
@@ -102,8 +167,10 @@ class CaptureTests(unittest.TestCase):
                 if command == b'?\n':
                     self.pending = lines[0]
                     if wrong_identity: self.pending = self.pending.replace(b'synthetic', b'unknown')
+                    if startup_pending: self.pending = self.pending.replace(b'"startup_available":false', b'"startup_available":true')
+                    if startup_unavailable: self.pending = self.pending.replace(b'"startup_available":true', b'"startup_available":false')
                 else:
-                    token = command.decode().split(',')[1]
+                    token = command.decode().strip().split(',')[1]
                     lines[1] = lines[1].replace(b'START,42,', ('START,' + token + ',').encode())
                     lines[-1] = lines[-1].replace(b'END,42,', ('END,' + token + ',').encode())
                     self.pending = b''.join(lines[1:])
@@ -118,13 +185,13 @@ class CaptureTests(unittest.TestCase):
                 return result
         root = Path(td); binary = root / 'patterns_daisy.bin'; binary.write_bytes(b'synthetic binary')
         manifest = root / 'manifest.json'
-        manifest.write_text(json.dumps(dict(kind='eurorack-patterns-daisy-bench', protocol=1,
+        manifest.write_text(json.dumps(dict(kind='eurorack-patterns-daisy-bench', protocol=2 if scenario >= 5 else 1,
             build_id='synthetic', artifacts_sha256={'patterns_daisy.bin': hashlib.sha256(binary.read_bytes()).hexdigest()})))
         a = argparse.Namespace(manifest=manifest, out=root / 'capture', port='mock-only',
-            scenario='manual', seconds=6, target=0.25, pot_ohms=100000, capacitor_nf=0,
+            scenario=next(k for k,v in capture.SCENARIOS.items() if v == scenario), seconds=20 if scenario == 12 else 6, target=0.25, pot_ohms=100000, capacitor_nf=0,
             probe='synthetic', notes='synthetic', download_timeout=5, replay=REPLAY)
         with patch.dict(sys.modules, {'serial': types.SimpleNamespace(Serial=Serial)}), contextlib.redirect_stdout(io.StringIO()):
-            if disconnect or wrong_identity:
+            if disconnect or wrong_identity or startup_pending or startup_unavailable:
                 with self.assertRaises((ValueError, OSError)): capture.capture(a)
             else:
                 self.assertEqual(capture.capture(a), 0)

@@ -4,7 +4,7 @@ Source confidence and product qualification are different. A verified fix can mo
 
 ## Executed host checks
 
-All fixtures in this release are **synthetic**. No measured hardware trace is included. The CMake tests use always-active checks in release builds, compile as C++11 with warnings as errors and no exceptions/RTTI, compile every public header independently, and exercise an installed-package consumer. The existing CI matrix covers Linux, macOS and Windows; Linux enables address and undefined-behavior sanitizers. The second pass also ran the local suite with those sanitizers on Apple Clang.
+The suite combines synthetic adversarial fixtures with the explicitly labeled [Daisy measurements below](#first-daisy-measurements). The published 0.2.1 release predates those measurements. The CMake tests use always-active checks in release builds, compile as C++11 with warnings as errors and no exceptions/RTTI, compile every public header independently, and exercise an installed-package consumer. The existing CI matrix covers Linux, macOS and Windows; Linux enables address and undefined-behavior sanitizers. The second pass also ran the local suite with those sanitizers on Apple Clang.
 
 | Mechanism | Evidence executed in this repository | What the check cannot establish |
 | --- | --- | --- |
@@ -61,10 +61,70 @@ checks](../examples/pico/README.md#adapter-decisions-and-checks-still-needed).
 
 The [firmware](../examples/daisy/main.cpp), [builder](../examples/daisy/build.py)
 and [capture tool](../examples/daisy/capture.py) prepare a reproducible control
-experiment. **Cross-built and host-tested only; no physical measurements yet.**
-The public library headers are unchanged. This adds two CTest entries (26 total);
-one runs eight Python protocol/mock-serial tests and five synthetic C++ replays.
-The firmware itself is not simulated by those tests.
+experiment. The first firmware has bounded physical evidence below. **The newer
+event-triggered scenarios and automatic startup recorder are cross-built and
+host-tested; their physical measurements remain pending.** Public library headers
+are unchanged. The host suite has 28 CTest entries, including 18 Python
+protocol/mock-serial tests, 13 synthetic protocol scenarios and six measured
+replays. The firmware itself is not simulated by those host tests.
+
+### First Daisy measurements
+
+Measured on 2026-10-14 in America/Los_Angeles (some UTC acquisitions are dated
+2026-10-15), using one Seed3, a B100k linear pot without an added capacitor,
+a normally open button and paired Saleae MSO captures. The measured firmware is
+commit `cc730b48d3284561ea4cbf9fde907be3acf4f98c`, build ID
+`1f0d42db39622ab699e03d0b`; subsequent firmware must establish its own evidence.
+
+Twelve selected complete paired runs contained 199,974 serviced observations.
+Six complete windows (136,000 observations) are included as
+[losslessly compressed wire traces](../tests/measured/daisy/2026-10-14), with
+allowlisted provenance and scope-derived button/action edges beside each file.
+These are recorded inputs; the ADC gap is explicitly a software injection.
+
+| Observation | Result and boundary |
+| --- | --- |
+| Five short taps and one approximately two-second hold | Exactly five tap actions and one hold; no action on hold release. Tap latency from physical release 10.16–11.13 ms; hold about 610.73 ms from physical press. One observed bounce cluster spanned about 109 us. |
+| Ascending and descending pickup | Acquired at 25.0752% and 24.8859% for a 25% target; no earlier overwrite. Ascending capture ended before the clockwise endpoint. The descending repeat's 99-to-1% travel took 3.151 s; it was not an actual one-second sweep. |
+| Settled endpoint | Descending repeat ended at output zero with no output changes during the last five seconds, despite raw ADC variation. Separate clockwise capture established ADC full-scale reachability. |
+| Invalid observations while tracking | 250 deliberately invalid samples did not change the owned value; tracking resumed on the next valid observation. Pot was stationary. |
+| External target edit | A stationary input did not overwrite the new 0.75 target; pickup rearmed. |
+| Initially held button | Initial hold/release ignored, then one fresh tap accepted. This was initialization at **run start**, not power-on. |
+| Deliberate stall and foreground load | Stall accounted for 26 skipped slots and a measured 27.000692 ms service interval. A separate 400 us busy-loop load had no missed slots. Neither exercised audio/interrupt load. |
+
+All twelve selected runs had complete checksummed transport, matching replay and
+scope coverage, and no unexpected missed slots or ADC failures. An earlier
+maximum-length download was incomplete; buffered host reads fixed the observed
+failure, without establishing the exact OS/USB failure mechanism. A possible
+pot contact disturbance invalidated another run for clean-fixture conclusions;
+the inspected/reseated repeat is the published descending trace. Early wiring
+and scope-coverage failures remain retained privately and excluded from passes.
+
+[The exporter](../tools/export_daisy_trace.py) preserves the original complete
+USB bytes and derives relative digital edge times from native recordings. It
+checks every service pulse and sampled button level, then copies only allowed
+metadata fields. Original and compressed hashes, firmware identity and hashes
+of native scope source files are recorded. Device identifiers, local paths and
+operator notes are excluded. Full native originals remain retained privately;
+the public edge extracts are a subset, not a complete analog recording.
+
+[The measured regression](../tests/test_daisy_measured.py) verifies hashes,
+replays the recorded input, and checks explicit outcomes and scope timing
+bounds established in the bench review. Replay tests the application adapter;
+it does not replace independent physical observations. These measurements do
+not choose universal thresholds or establish electrical disconnect detection,
+calibrated analog accuracy, jack behavior, power-cycle behavior or portability.
+
+To export another reviewed capture, use an environment containing
+`saleae-mso-api` 0.5.8; the exporter reads saved files and never opens hardware:
+
+```sh
+python tools/export_daisy_trace.py --capture CAPTURE_DIRECTORY --out-prefix tests/measured/daisy/DATE/CASE
+```
+
+The exporter deliberately accepts only the first fixture/protocol's known
+identity and wiring metadata. Extend its allowlist after reviewing a new
+fixture; add independent expectations before treating a new trace as a pass.
 
 ### Fixture and Saleae connections
 
@@ -136,11 +196,14 @@ Install pyserial in a local environment. Capture requires an explicit port and
 the matching build manifest/binary. It sends an identity query first and refuses
 to start a run on a different firmware build. It does not auto-discover boards,
 assert reset lines, write persistent settings or put the board into DFU.
+Protocol 2 firmware first records an automatic startup window; download it
+before requesting a normal run. The host also accepts archived protocol 1 traces.
 
 ```sh
 python3 -m venv build-tools
 # Activate that environment using your shell's activation command.
 python3 -m pip install pyserial==3.5
+python3 examples/daisy/capture.py capture --port PORT --manifest build-daisy/manifest.json --out build-captures/startup --scenario startup --seconds 20 --replay build/daisy_replay
 python3 examples/daisy/capture.py capture --port PORT --manifest build-daisy/manifest.json --out build-captures/stationary --seconds 20 --scenario manual --replay build/daisy_replay --notes "Stationary pot near midpoint; button untouched"
 python3 examples/daisy/capture.py analyze build-captures/stationary/raw.txt --out build-captures/stationary-replay --replay build/daisy_replay
 ```
@@ -158,8 +221,58 @@ private information before publishing. Each output directory must be new.
 | `gap` | Skips ADC acquisition from 5.000 to 5.250 seconds, explicitly marking those observations invalid; continues observing the button. |
 | `stall` | Stops foreground service for a nominal 25 ms at five seconds. Counts skipped deadlines; breaks pickup continuity and cancels a pending gesture. |
 | `load` | Adds a timed 400 µs foreground busy loop per observation. This is synthetic CPU occupancy, not audio/interrupt/storage-load qualification. |
+| `press-stall` | First observed fresh raw press schedules a nominal 25 ms service stall 100 ms later. Hold, release, then make a fresh tap: interrupted press must not act; fresh tap must work. |
+| `hold-stall` | Same, with the stall scheduled 605 ms after the raw press, around the illustrative hold boundary. |
+| `release-stall` | Stall on the next loop after the first observed release of a fresh press, before release qualification. Use a short press, then a separate fresh tap. |
+| `press-adc-gap` | First fresh raw press schedules a 250 ms ADC gap beginning 20 ms later. Button observation continues: a roughly 100 ms tap during the gap should still act once. |
+| `pickup-gap-up` | Crossing raw code 9831 (about 15%) upward schedules a one-second ADC gap at the next observation. Start below that point and move past the 25% target during the gap. Waiting pickup must not infer the missing crossing; a later observed crossing should acquire. |
+| `pickup-gap-down` | Equivalent descending test, crossing raw code 22937 (about 35%) from above before the gap. |
+| `moving-target` | Crossing raw code 32768 upward edits target to 0.75 before that sample is applied. Continue upward to reacquire. |
+| `startup` | Downloads the retained 20-second automatic post-initialization capture, target 0.25. Does not start a new run. |
 
-Runs last 1–30 seconds; scheduled-fault/target scenarios require at least six.
+Normal runs last 1–30 seconds; scheduled-fault/target scenarios require at least
+six. Movement-triggered scenarios use target 0.25. Event triggers use raw input
+observations, independently of the gesture or pickup result under test. Start
+with button released; an initially held button does not supply a fresh press.
+The first matching edge triggers the stimulus once. Raw bounce may affect trigger
+time; inspect the scope and recorded timestamps rather than assuming a clean edge.
+
+Protocol 2 adds `STIMULUS,trigger_us,begin_us,end_us` before `COLUMNS`; its bytes
+and the data records are checksummed together. `-1` means that phase was not
+observed. The host independently checks trigger edges, scheduling and recovery.
+A complete download with an untriggered or unfinished scenario returns exit code
+3 and retains its evidence; it is not a completed experiment. Completion means
+the stimulus occurred, not that the intended human interaction overlapped it or
+that behavior passed. Confirm those conditions in the scope/behavior review.
+
+### Automatic startup recording
+
+Start the scope **before** reset or power-on. The firmware initializes clocks,
+RAM, GPIO and ADC, then samples the initial button state and records 20 seconds
+without USB initialization or host commands. USB enumerates afterward; use
+`--scenario startup --seconds 20 --target 0.25` to retrieve that retained window.
+The existing marker pins and pot/button wiring are unchanged.
+
+For a held-button test, hold before reset/power-on, release several seconds into
+the service-marker window, then make one fresh tap. Also capture released-button
+boots at endpoints and midpoint. Require no unintended actions or ownership,
+then normal recovery on a fresh interaction. Keep reset and power-on observations
+separate; neither is brownout or storage-atomicity qualification.
+
+`B,TOKEN` retrieves the buffered startup window; its `START` line is emitted at
+download time, not acquisition time. Match scope coverage to service-marker
+edges. A successful firmware download consumes the startup availability flag;
+a new reset is needed for a new startup capture. A normal run is refused while
+an unread startup window remains. A failed firmware transmission retains it for
+retry; a host failure after successful transmission may require another reset.
+No persistent settings or automatic reset command is involved.
+
+This observes the application **after peripheral initialization**. It does not
+capture supply rise, ROM/bootloader execution, or clock/RAM/ADC setup. Record
+those separately if the question concerns earlier electrical/startup behavior.
+
+### Transfer integrity
+
 No USB output occurs during acquisition. Records are buffered in SDRAM, then
 transferred; allow time for the download. An unplugged host does not stop an
 in-progress window. The host drains available serial data in bounded blocks and

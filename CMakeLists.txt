@@ -43,6 +43,7 @@ if(EURORACK_PATTERNS_BUILD_TESTS)
   ep_test(example_pickup_workflow examples/pickup_workflow.cpp)
   ep_test(test_shared_control tests/test_shared_control.cpp)
   ep_test(test_daisy_bench tests/test_daisy_bench.cpp)
+  ep_test(test_daisy_experiment tests/test_daisy_experiment.cpp)
   add_executable(daisy_replay examples/daisy/replay.cpp)
   target_link_libraries(daisy_replay PRIVATE eurorack_patterns)
   set_target_properties(daisy_replay PROPERTIES CXX_STANDARD 11 CXX_STANDARD_REQUIRED YES CXX_EXTENSIONS NO)
@@ -58,6 +59,8 @@ if(EURORACK_PATTERNS_BUILD_TESTS)
   find_package(Python3 3.9 COMPONENTS Interpreter REQUIRED)
   add_test(NAME test_daisy_capture COMMAND ${Python3_EXECUTABLE}
     ${CMAKE_CURRENT_SOURCE_DIR}/tests/test_daisy_capture.py $<TARGET_FILE:daisy_replay>)
+  add_test(NAME test_daisy_measured COMMAND ${Python3_EXECUTABLE}
+    ${CMAKE_CURRENT_SOURCE_DIR}/tests/test_daisy_measured.py $<TARGET_FILE:daisy_replay>)
   ep_test(example_behavior_traces examples/behavior_traces.cpp)
   # Each public header must compile with only its own includes.
   file(GLOB ep_headers CONFIGURE_DEPENDS "${CMAKE_CURRENT_SOURCE_DIR}/include/eurorack_patterns/*.h")

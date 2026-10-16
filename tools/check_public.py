@@ -5,6 +5,7 @@ Optionally set EP_PRIVATE_TERMS to newline-separated private identifiers locally
 Never commit that list or put it in public workflow output. This check supplements
 human review; it cannot determine whether otherwise generic content is public.
 """
+import gzip
 import os
 from pathlib import Path
 import re
@@ -35,7 +36,14 @@ def main():
             continue
         scan(name, name)
         try:
-            text = path.read_text(encoding='utf-8')
+            if path.name.endswith('.txt.gz'):
+                with gzip.open(path, 'rt', encoding='utf-8') as stream:
+                    text = stream.read(16 * 1024 * 1024 + 1)
+                if len(text) > 16 * 1024 * 1024:
+                    problems.append(name + ': compressed text exceeds review limit')
+                    continue
+            else:
+                text = path.read_text(encoding='utf-8')
         except UnicodeDecodeError:
             continue
         scan(name, text)

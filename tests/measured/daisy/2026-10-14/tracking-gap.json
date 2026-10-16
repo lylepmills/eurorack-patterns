@@ -1,0 +1,43 @@
+{
+  "schema": 1,
+  "evidence": "measured physical inputs; software-injected ADC gaps remain explicitly flagged",
+  "transformation": "Original USB wire bytes, complete window, gzip with mtime=0. Scope edge times relative to first service rising edge; metadata copied only from explicit allowlist.",
+  "acquired_utc": "2026-10-15T06:18:19.496707+00:00",
+  "firmware_commit": "cc730b48d3284561ea4cbf9fde907be3acf4f98c",
+  "firmware_build_id": "1f0d42db39622ab699e03d0b",
+  "firmware_binary_sha256": "bd70675b1076f69dca044aee85a7946d09f8c670be2b99072528deeb0436dee3",
+  "raw_sha256": "6d22530955d96a9e63a8f0014930cb44729f4258fc8798f9cb4e3470dbb90822",
+  "compressed_sha256": "4061b94ca8814ca322b6974793b8fe82557edd6d21bbd94f0eeaab8740a83adc",
+  "samples": 8000,
+  "scenario": 2,
+  "fixture": {
+    "board": "Daisy Seed3",
+    "pot_ohms": 100000,
+    "capacitor_nf": 0,
+    "service_hz": 1000,
+    "adc_bits": 16,
+    "sample_cycles": 810.5,
+    "probe_attenuation": 10,
+    "scope_api": "saleae-mso-api 0.5.8",
+    "analog_sample_rate_hz": 1000000
+  },
+  "scope": {
+    "service_pulses": 8000,
+    "sampled_button_disagreements": 0,
+    "button_initial_high": true,
+    "button_edges_s": [],
+    "action_edges_s": [],
+    "action_service_windows_s": []
+  },
+  "native_scope_file_sha256": [
+    "e7db64ba90c33614f5dc570f9e94ecb307c4e81a4656bf088d321f0164f4aec0",
+    "4ee52e0d39fb4abb562fe2c1c279f3cf3b95140207ef20837f797865e60ce74f",
+    "cec82eddfb246476b90a2707a9005acf22814769eae3f74c4b0c7aa7461ae7f5",
+    "23c2943c6527247d421c6e1e121886d8d62e63798832e5e4e1ea74ada86b5921",
+    "4f307520d34392ed43d8a8e03c1b40ea587e24f99362fd2bab9d45eecd5659da",
+    "52c51d59a9e5d323d30aef698a1c29748e11bb64a30fcdadae0427a142cea602",
+    "de681fcd581fd37c624f1a2f86a4154a95e4af04ec9610d6c2af4b5d00ef4038",
+    "8ee0d335453862653a7dd1925da71c0646f7d06a60c6dbd4706b63d22ab34fff"
+  ],
+  "limits": "One fixture. Scope timings include its clock scale relative to the MCU. No calibrated voltage, universal threshold, power-cycle, audio-load or jack-detection claim. Full private native originals retained; published digital edges are a derived subset."
+}

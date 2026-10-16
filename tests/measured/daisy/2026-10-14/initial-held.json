@@ -1,0 +1,54 @@
+{
+  "schema": 1,
+  "evidence": "measured physical inputs; software-injected ADC gaps remain explicitly flagged",
+  "transformation": "Original USB wire bytes, complete window, gzip with mtime=0. Scope edge times relative to first service rising edge; metadata copied only from explicit allowlist.",
+  "acquired_utc": "2026-10-15T06:29:08.778293+00:00",
+  "firmware_commit": "cc730b48d3284561ea4cbf9fde907be3acf4f98c",
+  "firmware_build_id": "1f0d42db39622ab699e03d0b",
+  "firmware_binary_sha256": "bd70675b1076f69dca044aee85a7946d09f8c670be2b99072528deeb0436dee3",
+  "raw_sha256": "f238e41fe6cb1a357bc893f8510f422dd06b41e07d8bfad54437a6969bed418a",
+  "compressed_sha256": "297de2f23f8514bf44b12b33b7c13c2842fa397059824231cceb1be247ddcd82",
+  "samples": 30000,
+  "scenario": 0,
+  "fixture": {
+    "board": "Daisy Seed3",
+    "pot_ohms": 100000,
+    "capacitor_nf": 0,
+    "service_hz": 1000,
+    "adc_bits": 16,
+    "sample_cycles": 810.5,
+    "probe_attenuation": 10,
+    "scope_api": "saleae-mso-api 0.5.8",
+    "analog_sample_rate_hz": 1000000
+  },
+  "scope": {
+    "service_pulses": 30000,
+    "sampled_button_disagreements": 0,
+    "button_initial_high": false,
+    "button_edges_s": [
+      16.940600293000003,
+      18.949068252,
+      19.090957449
+    ],
+    "action_edges_s": [
+      19.101897136
+    ],
+    "action_service_windows_s": [
+      [
+        19.101757050000003,
+        19.101897529000002
+      ]
+    ]
+  },
+  "native_scope_file_sha256": [
+    "15cf029bf1d9c10f90964139f8da55780e80dea0560879721f3420354eaae052",
+    "d9c77900d8b438261b7361991412a25467b492f4c301a21fbd2e0c1e14f6338a",
+    "a3cf022028b55aa3da61044167ef97ffdfae64db13c4119e913a3322062f2731",
+    "3ebcbd75c297f33425432f97154e0a91ba154107ea039cf7d14133d3ade86ddd",
+    "362889950756dd987537de6457314f3f9cd101f7a9101dbcc742f069c0504c72",
+    "7d76a100290753bbfe98e1cae0883b916110d138c388a09997bd602b6c3eb1df",
+    "5a6a9b196ee9f8f4d8878a72285e816f7d54f6c2daeaa4fb239c704f87b1f419",
+    "5285fea751058d6d20baaf696f86a6d217e7385216a12bec15b7489bd1312c86"
+  ],
+  "limits": "One fixture. Scope timings include its clock scale relative to the MCU. No calibrated voltage, universal threshold, power-cycle, audio-load or jack-detection claim. Full private native originals retained; published digital edges are a derived subset."
+}

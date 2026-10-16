@@ -18,7 +18,10 @@ import time
 COLUMNS = ('seq,time_us,adc_us,work_us,raw,adc_valid,injected,pressed,external_milli,'
            'cadence_valid,accepted_ppm,value_ppm,target_ppm,state,debounced,gesture,'
            'changed,actions,missed').split(',')
-SCENARIOS = {'manual': 0, 'targets': 1, 'gap': 2, 'stall': 3, 'load': 4}
+SCENARIOS = {'manual': 0, 'targets': 1, 'gap': 2, 'stall': 3, 'load': 4,
+             'press-stall': 5, 'hold-stall': 6, 'release-stall': 7, 'press-adc-gap': 8,
+             'pickup-gap-up': 9, 'pickup-gap-down': 10, 'moving-target': 11, 'startup': 12}
+EVENT_SCENARIOS = range(5, 12)
 
 def require(condition, message):
     if not condition:
@@ -35,30 +38,42 @@ def parse(data, build_id=None):
     lines = data.splitlines(keepends=True)
     require(len(lines) >= 5 and lines[0].startswith(b'INFO,'), 'missing identity')
     info = json.loads(lines[0][5:])
-    require(info.get('protocol') == 1 and info.get('board') == 'seed3' and
+    require(info.get('protocol') in (1, 2) and info.get('board') == 'seed3' and
             info.get('ready') is True, 'unsupported protocol or board not ready')
     require(info.get('period_us') == 1000 and info.get('max_records') == 30000 and
             info.get('sample_cycles_x2') == 1621 and info.get('oversampling') == 1,
             'unexpected acquisition configuration')
     if build_id: require(info.get('build_id') == build_id, 'firmware build identity mismatch')
+    protocol = info['protocol']
     start = lines[1].decode('ascii').strip().split(',')
     require(len(start) == 6 and start[0] == 'START', 'missing START')
     token, scenario, duration, target, held = map(int, start[1:])
     require(0 <= token <= 0xffffffff and scenario in SCENARIOS.values() and
             1000 <= duration <= 30000 and 0 <= target <= 1000 and held in (0, 1),
             'invalid run configuration')
-    require(lines[2].decode('ascii').strip() == 'COLUMNS,' + ','.join(COLUMNS), 'column mismatch')
+    require(protocol == 2 or scenario <= 4, 'scenario requires protocol 2')
+    require(scenario != 12 or (duration == 20000 and target == 250), 'invalid startup configuration')
+    require(scenario not in (9, 10, 11) or target == 250, 'invalid movement scenario target')
+    stimulus = [-1, -1, -1]
+    column_index = 2
+    if protocol == 2:
+        fields = lines[2].decode('ascii').strip().split(',')
+        require(len(fields) == 4 and fields[0] == 'STIMULUS', 'missing stimulus evidence')
+        stimulus = list(map(int, fields[1:]))
+        column_index = 3
+    require(lines[column_index].decode('ascii').strip() == 'COLUMNS,' + ','.join(COLUMNS), 'column mismatch')
     end = lines[-1].decode('ascii').strip().split(',')
     require(len(end) == 9 and end[0] == 'END', 'missing END (capture incomplete)')
     end_token, count, missed, failures, rx_dropped, overflow, checksum, elapsed = map(int, end[1:])
-    require(end_token == token and 0 < count <= 30000 and len(lines) == count + 4,
+    require(end_token == token and 0 < count <= 30000 and len(lines) == count + column_index + 2,
             'run token or record count mismatch')
     require(min(missed, failures, rx_dropped, overflow) >= 0 and elapsed >= duration * 1000,
             'invalid completion counters')
     rows, digest, actions, adc_failures = [], 2166136261, 0, 0
+    if protocol == 2: digest = fnv(lines[2], digest)
     previous_time = None
     target_epoch = 0
-    for i, line in enumerate(lines[3:-1]):
+    for i, line in enumerate(lines[column_index + 1:-1]):
         require(line.startswith(b'D,') and line.endswith(b'\n'), 'malformed data record')
         digest = fnv(line, digest)
         fields = line[2:].decode('ascii').strip().split(',')
@@ -77,12 +92,15 @@ def parse(data, build_id=None):
         require(r['accepted_ppm'] == -1 or 0 <= r['accepted_ppm'] <= 1000000, 'invalid accepted value')
         require(0 <= r['value_ppm'] <= 1000000 and 0 <= r['target_ppm'] <= 1000000, 'invalid value')
         expected_injection = scenario == 2 and 5000000 <= us < 5250000
+        if scenario in (8, 9, 10):
+            expected_injection = stimulus[1] >= 0 and us >= stimulus[1] and (stimulus[2] < 0 or us < stimulus[2])
         require(bool(r['injected']) == expected_injection and not (r['injected'] and r['adc_valid']),
                 'injection evidence mismatch')
         expected_external = -1
         if scenario == 1 and us // 5000000 != target_epoch:
             target_epoch = us // 5000000
             expected_external = 750 if target_epoch % 2 else 250
+        if scenario == 11 and us == stimulus[0]: expected_external = 750
         require(r['external_milli'] == expected_external, 'target schedule mismatch')
         cadence = previous_time is None or us - previous_time <= 10000
         require(bool(r['cadence_valid']) == cadence, 'cadence flag mismatch')
@@ -96,9 +114,61 @@ def parse(data, build_id=None):
         rows.append(r)
     require(digest == checksum, 'record checksum mismatch')
     require(rows[-1]['missed'] == missed and adc_failures == failures, 'completion count mismatch')
+    stimulus_status = validate_stimulus(scenario, stimulus, rows, bool(held), elapsed)
     return info, dict(token=token, scenario=scenario, duration_ms=duration, target_milli=target,
                       startup_held=bool(held), elapsed_us=elapsed, missed=missed,
+                      stimulus=dict(zip(('trigger_us', 'begin_us', 'end_us'), stimulus)),
+                      stimulus_status=stimulus_status,
                       adc_failures=failures, rx_dropped=rx_dropped, buffer_overflow=overflow), rows
+
+def validate_stimulus(scenario, stimulus, rows, held, elapsed):
+    """Independent checks against recorded input edges and elapsed times."""
+    if scenario not in EVENT_SCENARIOS:
+        require(stimulus == [-1, -1, -1], 'unexpected event stimulus')
+        return 'not_applicable'
+    trigger, begin, end = stimulus
+    previous_pressed, saw_press, previous_raw = held, False, None
+    expected_trigger = -1
+    for r in rows:
+        press = r['pressed'] and not previous_pressed
+        release = not r['pressed'] and previous_pressed and saw_press
+        saw_press = saw_press or press
+        previous_pressed = bool(r['pressed'])
+        event = (scenario in (5, 6, 8) and press) or (scenario == 7 and release)
+        if r['adc_valid'] and previous_raw is not None:
+            if scenario == 9: event = previous_raw < 9831 <= r['raw']
+            if scenario == 10: event = previous_raw > 22937 >= r['raw']
+            if scenario == 11: event = previous_raw < 32768 <= r['raw']
+        previous_raw = r['raw'] if r['adc_valid'] else None
+        if event and expected_trigger < 0: expected_trigger = r['time_us']
+    require(trigger == expected_trigger, 'stimulus trigger does not match observed input')
+    if trigger < 0:
+        require(begin == end == -1, 'untriggered stimulus executed')
+        return 'not_triggered'
+    delay = {5: 100000, 6: 605000, 8: 20000, 11: 0}.get(scenario, 1)
+    due = trigger + delay
+    require(begin == -1 or due <= begin <= elapsed, 'stimulus began before its deadline')
+    if begin < 0:
+        require(end == -1 and all(r['time_us'] < due for r in rows), 'due stimulus not executed')
+        return 'incomplete'
+    require(end == -1 or begin <= end <= elapsed, 'invalid stimulus completion')
+    if scenario in (8, 9, 10):
+        eligible = [r['time_us'] for r in rows if r['time_us'] >= due]
+        require(eligible and begin == eligible[0], 'ADC gap did not begin at first eligible observation')
+        recovery = [r['time_us'] for r in rows if r['time_us'] >= begin + (250000 if scenario == 8 else 1000000)]
+        require(end == (recovery[0] if recovery else -1), 'ADC gap recovery time mismatch')
+    elif scenario in (5, 6, 7):
+        require(end >= begin + 25000, 'incomplete/short service stall')
+        require(not any(begin <= r['time_us'] < end for r in rows), 'observations inside service stall')
+    else:
+        require(trigger == begin == end, 'moving edit timestamp mismatch')
+    return 'completed' if end >= 0 and any(r['time_us'] >= end for r in rows) else 'incomplete'
+
+
+def result_code(summary):
+    if any(summary['run'][key] for key in ('adc_failures', 'rx_dropped', 'buffer_overflow')): return 2
+    if summary['run']['stimulus_status'] in ('not_triggered', 'incomplete'): return 3
+    return 0
 
 def percentile(values, percent):
     values = sorted(values)
@@ -139,7 +209,7 @@ def save_analysis(data, out, build_id=None, replay=None):
 
 def load_manifest(path):
     manifest = json.loads(path.read_text())
-    require(manifest.get('kind') == 'eurorack-patterns-daisy-bench' and manifest.get('protocol') == 1,
+    require(manifest.get('kind') == 'eurorack-patterns-daisy-bench' and manifest.get('protocol') in (1, 2),
             'wrong build manifest')
     binary = path.parent / 'patterns_daisy.bin'
     require(hashlib.sha256(binary.read_bytes()).hexdigest() ==
@@ -200,20 +270,31 @@ def capture(a):
                 line = reader.read_line(time.monotonic() + 8)
                 require(line.startswith(b'INFO,'), 'unexpected device response; no run requested')
                 identity = json.loads(line[5:])
-                require(identity.get('protocol') == 1 and identity.get('ready') is True and
+                require(identity.get('protocol') == manifest['protocol'] and identity.get('ready') is True and
                         identity.get('build_id') == manifest['build_id'],
                         'device identity mismatch or initialization failure; no run requested')
                 token = secrets.randbits(32)
                 scenario = SCENARIOS[a.scenario]
                 target = round(a.target * 1000)
-                command = f'R,{token},{scenario},{a.seconds * 1000},{target}\n'
+                require(scenario <= 4 or identity['protocol'] == 2, 'scenario requires new firmware')
+                require(scenario not in (9, 10, 11) or target == 250, 'movement-triggered scenarios require target 0.25')
+                if scenario == 12:
+                    require(a.seconds == 20 and target == 250, 'startup capture is fixed at 20 seconds and target 0.25')
+                    require(identity.get('startup_available') is True, 'no unread startup capture; reset/power-cycle only when the scope is ready')
+                    command = f'B,{token}\n'
+                else:
+                    require(not identity.get('startup_available'), 'download the startup capture first (--scenario startup)')
+                    command = f'R,{token},{scenario},{a.seconds * 1000},{target}\n'
                 port.write(command.encode('ascii')); port.flush()
                 start = reader.read_line(time.monotonic() + 8)
                 fields = start.decode('ascii').strip().split(',')
                 require(len(fields) == 6 and fields[:5] ==
                         ['START', str(token), str(scenario), str(a.seconds * 1000), str(target)],
                         'run acknowledgement mismatch')
-                print(f'Capturing {a.seconds} seconds ({a.scenario}); perform the planned gesture now.', flush=True)
+                if scenario == 12:
+                    print('Downloading the retained post-initialization startup capture; no new acquisition requested.', flush=True)
+                else:
+                    print(f'Capturing {a.seconds} seconds ({a.scenario}); perform the planned gesture now.', flush=True)
                 print('Then downloading buffered records. The Daisy D0 service marker is the timing reference.', flush=True)
                 deadline = time.monotonic() + a.seconds + a.download_timeout
                 while True:
@@ -225,7 +306,7 @@ def capture(a):
         metadata['raw_sha256'] = summary['raw_sha256']
         save_meta()
         print(json.dumps(summary, indent=2))
-        return 2 if any(summary['run'][key] for key in ['adc_failures', 'rx_dropped', 'buffer_overflow']) else 0
+        return result_code(summary)
     except BaseException:
         # Keep status incomplete on interruption, parsing failure or disconnect.
         save_meta()
@@ -269,7 +350,7 @@ def main():
         (a.out / 'raw.txt').write_bytes(data)
         summary = save_analysis(data, a.out, a.build_id, a.replay)
         print(json.dumps(summary, indent=2))
-        return 2 if any(summary['run'][key] for key in ['adc_failures', 'rx_dropped', 'buffer_overflow']) else 0
+        return result_code(summary)
     except (ValueError, OSError, KeyError, TimeoutError) as exc:
         print(str(exc), file=sys.stderr)
         return 1

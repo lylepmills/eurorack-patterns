@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: MIT
 // Copyright 2026 Lyle Mills
 #include "protocol.h"
+#include "experiment.h"
 #include <cerrno>
 #include <cstdlib>
 #include <cstring>
@@ -35,6 +36,9 @@ static int Replay(const char* path) {
       if (started || !Numbers(line.substr(6), n) || n.size() != 5 ||
           n[3] < 0 || n[3] > 1000 || n[4] < 0 || n[4] > 1) return 1;
       controls.Reset(uint32_t(n[3]), n[4] != 0); token = n[0]; started = true;
+    } else if (line.compare(0, 9, "STIMULUS,") == 0) {
+      if (!started || count || ended) return 1;
+      line += '\n'; hash = bench::Hash(hash, line.data(), line.size());
     } else if (line.compare(0, 2, "D,") == 0) {
       if (!started || ended || !Numbers(line.substr(2), n) || n.size() != 19 ||
           n[0] != count || n[1] < 0 || n[1] > 30000000 || n[4] < 0 || n[4] > 65535 ||
@@ -58,36 +62,65 @@ static int Replay(const char* path) {
   std::cout << "PASS: " << count << " samples replayed through the C++ adapter; not independent hardware validation\n";
   return 0;
 }
-static int Synthetic(unsigned scenario) {
-  if (scenario > 4) return 1;
-  // Generated stimulus, explicitly identified. Used only to exercise the host
-  // capture/replay pipeline; never evidence of physical behavior.
-  std::puts("INFO,{\"protocol\":1,\"build_id\":\"synthetic\",\"board\":\"seed3\",\"ready\":true,\"period_us\":1000,\"max_records\":30000,\"sample_cycles_x2\":1621,\"oversampling\":1}");
-  std::printf("START,42,%u,6000,250,0\nCOLUMNS,%s\n", scenario, bench::kColumns);
-  bench::Controls controls; controls.Reset(250, false);
-  uint32_t seq = 0, missed = 0, hash = 2166136261u;
-  for (uint32_t us = 0; us < 6000000; us += 1000) {
-    if (scenario == 3 && us == 5000000) { us += 25000; missed += 25; }
-    const bool injected = scenario == 2 && us >= 5000000 && us < 5250000;
-    const bool pressed = (us >= 200000 && us < 900000) || (us >= 1100000 && us < 1200000);
-    const uint16_t raw = injected ? 0 : uint16_t((us / 1000 * 37) % 65536);
-    const int32_t external = scenario == 1 && us == 5000000 ? 750 : -1;
+static int Synthetic(unsigned scenario, bool force_v2 = false) {
+  if (scenario > bench::kStartup) return 1;
+  // Generated stimulus. Pipeline tests only; never physical evidence.
+  const bool version2 = force_v2 || scenario >= bench::kPressStall;
+  const bool startup = scenario == bench::kStartup;
+  const uint32_t duration = startup ? bench::kStartupDurationMs : 6000;
+  std::printf("INFO,{\"protocol\":%u,\"build_id\":\"synthetic\",\"board\":\"seed3\",\"ready\":true,\"period_us\":1000,\"max_records\":30000,\"sample_cycles_x2\":1621,\"oversampling\":1,\"startup_available\":%s}\n",
+              version2 ? 2u : 1u, startup ? "true" : "false");
+  std::printf("START,42,%u,%u,250,%u\n", scenario, duration, unsigned(startup));
+  bench::Controls controls; controls.Reset(250, startup);
+  bench::Experiment experiment(scenario, startup);
+  bench::Schedule schedule;
+  uint32_t seq = 0, missed = 0;
+  std::vector<bench::Record> records;
+  for (uint32_t us = 0; us < duration * 1000; us += 1000) {
+    if (experiment.Stall(us)) { us += 25000; experiment.EndStall(us); }
+    if (us >= duration * 1000) break;
+    missed += schedule.Take(us);
+    const bool injected = experiment.InvalidAdc(us);
+    bool pressed = startup ? us < 800000 || (us >= 1100000 && us < 1200000) :
+                                  (us >= 200000 && us < 900000) || (us >= 1100000 && us < 1200000);
+    if (scenario >= bench::kPickupGapUp && scenario <= bench::kMovingTarget) pressed = false;
+    if (scenario == bench::kReleaseStall || scenario == bench::kPressAdcGap)
+      pressed = (us >= 200000 && us < 300000) || (us >= 1100000 && us < 1200000);
+    uint16_t raw = uint16_t((us / 1000 * 37) % 65536);
+    if (scenario == bench::kPickupGapUp || scenario == bench::kMovingTarget)
+      raw = uint16_t(us >= 2000000 ? 65535 : us * 65535ull / 2000000);
+    if (scenario == bench::kPickupGapDown)
+      raw = uint16_t(us >= 2000000 ? 0 : 65535 - us * 65535ull / 2000000);
+    if (injected) raw = 0;
+    int32_t external = experiment.Observe(us, raw, !injected, pressed);
+    if (scenario == bench::kTargets && us == 5000000) external = 750;
     const auto result = controls.Step(us, raw, !injected, pressed, external);
-    bench::Record r{seq++, us, injected ? 0u : 35u, scenario == 4 ? 440u : 40u,
+    bench::Record r{seq++, us, injected ? 0u : 35u, scenario == bench::kLoad ? 440u : 40u,
                     raw, !injected, injected, pressed, external, result, missed};
-    char line[512]; const int size = bench::FormatRecord(line, sizeof(line), r);
+    records.push_back(r);
+  }
+  char line[512]; uint32_t hash = 2166136261u;
+  if (version2) {
+    const auto& s = experiment.stimulus();
+    const int size = std::snprintf(line, sizeof(line), "STIMULUS,%d,%d,%d\n", int(s.trigger), int(s.begin), int(s.end));
     hash = bench::Hash(hash, line, size_t(size)); std::fputs(line, stdout);
   }
-  std::printf("END,42,%u,%u,0,0,0,%u,6000000\n", seq, missed, hash);
+  std::printf("COLUMNS,%s\n", bench::kColumns);
+  for (const auto& r : records) {
+    const int size = bench::FormatRecord(line, sizeof(line), r);
+    hash = bench::Hash(hash, line, size_t(size)); std::fputs(line, stdout);
+  }
+  std::printf("END,42,%u,%u,0,0,0,%u,%u\n", seq, missed, hash, duration * 1000);
   return 0;
 }
+
 int main(int argc, char** argv) {
-  if (argc == 3 && std::strcmp(argv[1], "--synthetic") == 0) {
+  if (argc == 3 && (std::strcmp(argv[1], "--synthetic") == 0 || std::strcmp(argv[1], "--synthetic-v2") == 0)) {
 #ifdef _WIN32
     // Protocol checksums cover exact wire bytes, including LF line endings.
     if (_setmode(_fileno(stdout), _O_BINARY) == -1) return 1;
 #endif
-    return Synthetic(unsigned(std::atoi(argv[2])));
+    return Synthetic(unsigned(std::atoi(argv[2])), std::strcmp(argv[1], "--synthetic-v2") == 0);
   }
   if (argc == 2) return Replay(argv[1]);
   std::cerr << "Usage: daisy_replay raw.txt | --synthetic SCENARIO_ID\n";

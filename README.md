@@ -12,7 +12,7 @@ A cable should not change routing repeatedly while being inserted. A slow knob m
 
 - **Explore design ideas:** browse the [88-pattern catalog](docs/catalog.md) by problem, then check its source and limits. A catalog entry is not necessarily an implemented component.
 - **Use the C++ library:** follow the [shared-knob walkthrough](docs/quickstart.md), then build the optional [Raspberry Pi Pico adapter](examples/pico/README.md).
-- **Measure controls on hardware:** use the [Daisy Seed3 bench and capture tools](docs/validation.md#daisy-seed3-control-bench). Hardware results are still pending.
+- **Measure controls on hardware:** use the [Daisy Seed3 bench and capture tools](docs/validation.md#daisy-seed3-control-bench). The first bounded control measurements are available; newer fault/startup scenarios await bench validation.
 - **Contribute evidence:** report a [bug, source correction or measured trace](https://github.com/lylepmills/eurorack-patterns/issues/new/choose), or pick a [bounded contribution task](https://github.com/lylepmills/eurorack-patterns/issues?q=is%3Aissue%20is%3Aopen%20label%3A%22help%20wanted%22).
 
 ## Three small improvements
@@ -95,9 +95,9 @@ cmake --build build --config Release
 ctest --test-dir build -C Release --output-on-failure
 ```
 
-Tests remain active with `NDEBUG`. They cover invalid and duplicate evidence, insertion chatter, noisy slow movement, exact endpoints, pickup reversal, gesture consumption, event overflow, timer wrap, rapid destination changes, unreachable pickup, pulse retrigger/cancellation, and delayed input identity. Deterministic reference models and bounded trace enumeration supplement the example traces. The fixtures identify themselves as synthetic. To enable address and undefined-behavior sanitizers on GCC or Clang, configure with `-DEURORACK_PATTERNS_SANITIZERS=ON`.
+Tests remain active with `NDEBUG`. They cover invalid and duplicate evidence, insertion chatter, noisy slow movement, exact endpoints, pickup reversal, gesture consumption, event overflow, timer wrap, rapid destination changes, unreachable pickup, pulse retrigger/cancellation, and delayed input identity. Deterministic reference models and bounded trace enumeration supplement the example traces. Synthetic fixtures and measured Daisy recordings are labeled separately. To enable address and undefined-behavior sanitizers on GCC or Clang, configure with `-DEURORACK_PATTERNS_SANITIZERS=ON`.
 
-The [coverage map](docs/coverage.md) separates implemented mechanisms from application recipes and hardware measurements. The [validation guide](docs/validation.md) records the synthetic checks and the measurements still needed. Clock tracking, audio fades, storage backends, and electrical protection remain documented patterns, with their conditions and proposed checks. They are not silently treated as solved by this library.
+The [coverage map](docs/coverage.md) separates implemented mechanisms from application recipes and hardware measurements. The [validation guide](docs/validation.md) records host checks, bounded Daisy measurements and the measurements still needed. Clock tracking, audio fades, storage backends, and electrical protection remain documented patterns, with their conditions and proposed checks. They are not silently treated as solved by this library.
 
 ## License and provenance
 

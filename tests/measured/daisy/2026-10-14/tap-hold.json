@@ -1,0 +1,90 @@
+{
+  "schema": 1,
+  "evidence": "measured physical inputs; software-injected ADC gaps remain explicitly flagged",
+  "transformation": "Original USB wire bytes, complete window, gzip with mtime=0. Scope edge times relative to first service rising edge; metadata copied only from explicit allowlist.",
+  "acquired_utc": "2026-10-15T06:11:27.236796+00:00",
+  "firmware_commit": "cc730b48d3284561ea4cbf9fde907be3acf4f98c",
+  "firmware_build_id": "1f0d42db39622ab699e03d0b",
+  "firmware_binary_sha256": "bd70675b1076f69dca044aee85a7946d09f8c670be2b99072528deeb0436dee3",
+  "raw_sha256": "18f685c8278b73679b62b468567d88176541e88855d8f984ea017eabe9d59e3b",
+  "compressed_sha256": "a3695ca7276b0fda0199db2da8f9363d12b39bc629d9f2f2e8c1417c7b3e0b9c",
+  "samples": 30000,
+  "scenario": 0,
+  "fixture": {
+    "board": "Daisy Seed3",
+    "pot_ohms": 100000,
+    "capacitor_nf": 0,
+    "service_hz": 1000,
+    "adc_bits": 16,
+    "sample_cycles": 810.5,
+    "probe_attenuation": 10,
+    "scope_api": "saleae-mso-api 0.5.8",
+    "analog_sample_rate_hz": 1000000
+  },
+  "scope": {
+    "service_pulses": 30000,
+    "sampled_button_disagreements": 0,
+    "button_initial_high": true,
+    "button_edges_s": [
+      8.976019601,
+      9.066336235,
+      9.521763877,
+      9.620395634000001,
+      10.462895798,
+      10.462982693,
+      10.463004717999999,
+      10.560395038,
+      11.213523314000001,
+      11.290236485,
+      12.114277602000001,
+      12.198284307,
+      13.024947435,
+      15.072606328000003
+    ],
+    "action_edges_s": [
+      9.076500563,
+      9.631522541999999,
+      10.570559979999999,
+      11.300588816,
+      12.208625128,
+      13.635681904000002
+    ],
+    "action_service_windows_s": [
+      [
+        9.076360360999999,
+        9.076500948
+      ],
+      [
+        9.631382291000001,
+        9.631522933000001
+      ],
+      [
+        10.570419773000001,
+        10.570560403
+      ],
+      [
+        11.300448598,
+        11.300589202
+      ],
+      [
+        12.208484934000001,
+        12.208625576
+      ],
+      [
+        13.635541661000001,
+        13.635682261
+      ]
+    ]
+  },
+  "native_scope_file_sha256": [
+    "6a70b96b63d2e53b08ad4b7d7490fb2d2a98413af1f4688fdc735ec3261dcb16",
+    "d9c77900d8b438261b7361991412a25467b492f4c301a21fbd2e0c1e14f6338a",
+    "a59a9a0b33887afa4a085a040df0d8464a5b7603fe1ef04247924435851b3004",
+    "baebe7939990e99461dd292123d865fff13d44b796ac021e9083578278191582",
+    "b0cd19af6c58c998c9da782369665a000fa8a7bda7988c224da68020949c4a1e",
+    "26177f2ff40e70295304d8f9b2cfd916fbd1da805b6353057279ea39a3574def",
+    "760022e1b65cfb8028b46bb341ccfcf3e09bc8b4bd071be95b796f97262a47fb",
+    "5b805593d89ad9053abab12c8873d1afe50f556c163dc9095e0e9333dee19864"
+  ],
+  "limits": "One fixture. Scope timings include its clock scale relative to the MCU. No calibrated voltage, universal threshold, power-cycle, audio-load or jack-detection claim. Full private native originals retained; published digital edges are a derived subset."
+}

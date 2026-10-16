@@ -8,6 +8,7 @@
 #include "usbd_cdc.h"
 #include "build_identity.h"
 #include "protocol.h"
+#include "experiment.h"
 #include <atomic>
 #include <cstring>
 
@@ -22,7 +23,13 @@ static DSY_SDRAM_BSS bench::Record records[bench::kMaxRecords];
 static_assert(ATOMIC_INT_LOCK_FREE == 2, "USB IRQ mailbox requires lock-free 32-bit atomics");
 static std::atomic<uint32_t> rx_head{0}, rx_tail{0}, rx_dropped{0};
 static char rx[256];
-static bool ready;
+static bool ready, startup_available;
+struct CaptureState {
+  uint32_t scenario, duration, target, count, missed, failures, overflow, elapsed, dropped;
+  bool held;
+  bench::Stimulus stimulus;
+};
+static CaptureState saved;
 
 // USB IRQ only publishes bytes; all control/state/logging work has one owner.
 static void Receive(uint8_t* bytes, uint32_t* size) {
@@ -120,37 +127,41 @@ static bool ReadAdc(uint16_t& raw) {
 static void Identity() {
   char line[512];
   std::snprintf(line, sizeof(line),
-      "INFO,{\"protocol\":1,\"build_id\":\"%s\",\"board\":\"seed3\",\"ready\":%s,"
+      "INFO,{\"protocol\":2,\"build_id\":\"%s\",\"board\":\"seed3\",\"ready\":%s,"
       "\"cpu_hz\":%u,\"timer_hz\":%u,\"adc_hz\":%u,\"mcu_revision\":%u,\"sample_cycles_x2\":1621,"
-      "\"oversampling\":1,\"period_us\":1000,\"max_records\":30000}\n",
+      "\"oversampling\":1,\"period_us\":1000,\"max_records\":30000,\"startup_available\":%s,\"startup_duration_ms\":%u}\n",
       EP_BUILD_ID, ready ? "true" : "false", unsigned(SystemCoreClock),
-      unsigned(System::GetTickFreq()), unsigned(AdcHz()), unsigned(HAL_GetREVID()));
+      unsigned(System::GetTickFreq()), unsigned(AdcHz()), unsigned(HAL_GetREVID()),
+      startup_available ? "true" : "false", unsigned(bench::kStartupDurationMs));
   Send(line);
 }
-static void Run(uint32_t token, uint32_t scenario, uint32_t duration, uint32_t target) {
-  char line[512];
-  const bool held = !button_pin.Read();
+static bool StartLine(uint32_t token) {
+  char line[128];
   std::snprintf(line, sizeof(line), "START,%u,%u,%u,%u,%u\n", unsigned(token),
-                unsigned(scenario), unsigned(duration), unsigned(target), unsigned(held));
-  if (!Send(line)) return;
-  // Allow the host to display a cue. The scope's first D0 edge is the precise
-  // acquisition reference; START reception / host wall time is not that reference.
-  System::Delay(50);
+                unsigned(saved.scenario), unsigned(saved.duration), unsigned(saved.target), unsigned(saved.held));
+  return Send(line);
+}
+static void Collect() {
+  const uint32_t scenario = saved.scenario, duration = saved.duration, target = saved.target;
+  const bool held = saved.held;
+  bench::Experiment experiment(scenario, held);
   bench::Controls controls;
   controls.Reset(target, held);
   bench::Clock clock(System::GetTick(), System::GetTickFreq());
   bench::Schedule schedule;
   uint32_t count = 0, missed = 0, failures = 0, overflow = 0;
   const uint32_t rx_before = rx_dropped.load();
-  bool stalled = false, action_level = false;
+  bool action_level = false;
   uint32_t target_epoch = 0;
   action_marker.Write(false);
   while (true) {
     uint32_t us = clock.Us(System::GetTick());
-    if (scenario == 3 && !stalled && us >= 5000000) {
-      stalled = true;
-      System::Delay(25);
+    if (us >= duration * 1000) break;
+    const uint32_t stall_ms = experiment.Stall(us);
+    if (stall_ms) {
+      System::Delay(stall_ms);
       us = clock.Us(System::GetTick());
+      experiment.EndStall(us);
     }
     if (us >= duration * 1000) break;
     if (!schedule.Due(us)) continue;
@@ -160,13 +171,13 @@ static void Run(uint32_t token, uint32_t scenario, uint32_t duration, uint32_t t
     if (us >= duration * 1000) { sample_marker.Write(false); break; }
     missed += schedule.Take(us);
     const bool pressed = !button_pin.Read();
-    const bool injected = scenario == 2 && us >= 5000000 && us < 5250000;
+    const bool injected = experiment.InvalidAdc(us);
     uint16_t raw = 0;
     const uint32_t adc_start = clock.Us(System::GetTick());
     const bool valid = !injected && ReadAdc(raw);
     const uint32_t adc_us = clock.Us(System::GetTick()) - adc_start;
     if (!valid && !injected) ++failures;
-    int32_t external = -1;
+    int32_t external = experiment.Observe(us, raw, valid, pressed);
     if (scenario == 1 && us / 5000000 != target_epoch) {
       target_epoch = us / 5000000;
       external = (target_epoch % 2) ? 750 : 250;
@@ -185,23 +196,41 @@ static void Run(uint32_t token, uint32_t scenario, uint32_t duration, uint32_t t
     sample_marker.Write(false);
     ++count;
   }
-  const uint32_t elapsed = clock.Us(System::GetTick());
-  const uint32_t dropped = rx_dropped.load() - rx_before;
+  saved.elapsed = clock.Us(System::GetTick());
+  saved.dropped = rx_dropped.load() - rx_before;
+  saved.count = count; saved.missed = missed; saved.failures = failures; saved.overflow = overflow;
+  saved.stimulus = experiment.stimulus();
   sample_marker.Write(false);
+}
+static bool Download(uint32_t token) {
+  char line[512];
   // No formatting or USB transmission occurs inside the acquisition loop.
+  std::snprintf(line, sizeof(line), "STIMULUS,%d,%d,%d\n", int(saved.stimulus.trigger),
+                int(saved.stimulus.begin), int(saved.stimulus.end));
+  if (!Send(line)) return false;
+  uint32_t hash = bench::Hash(2166136261u, line, std::strlen(line));
   std::snprintf(line, sizeof(line), "COLUMNS,%s\n", bench::kColumns);
-  if (!Send(line)) return;
-  uint32_t hash = 2166136261u;
-  for (uint32_t i = 0; i < count; ++i) {
+  if (!Send(line)) return false;
+  for (uint32_t i = 0; i < saved.count; ++i) {
     const int n = bench::FormatRecord(line, sizeof(line), records[i]);
-    if (n < 0 || size_t(n) >= sizeof(line)) { Send("ERROR,format\n"); return; }
+    if (n < 0 || size_t(n) >= sizeof(line)) { Send("ERROR,format\n"); return false; }
     hash = bench::Hash(hash, line, size_t(n));
-    if (!Send(line)) return;
+    if (!Send(line)) return false;
   }
   std::snprintf(line, sizeof(line), "END,%u,%u,%u,%u,%u,%u,%u,%u\n", unsigned(token),
-      unsigned(count), unsigned(missed), unsigned(failures), unsigned(dropped),
-      unsigned(overflow), unsigned(hash), unsigned(elapsed));
-  Send(line);
+      unsigned(saved.count), unsigned(saved.missed), unsigned(saved.failures), unsigned(saved.dropped),
+      unsigned(saved.overflow), unsigned(hash), unsigned(saved.elapsed));
+  return Send(line);
+}
+static void Run(uint32_t token, uint32_t scenario, uint32_t duration, uint32_t target) {
+  saved = {};
+  saved.scenario = scenario; saved.duration = duration; saved.target = target;
+  saved.held = !button_pin.Read();
+  if (!StartLine(token)) return;
+  // Host cue only; D0, not START reception, is the acquisition timing reference.
+  System::Delay(50);
+  Collect();
+  Download(token);
 }
 int main() {
   // No codec/audio, QSPI erase/program, persistent settings or bootloader calls.
@@ -215,6 +244,16 @@ int main() {
   led.Init(Pin(PORTC, 7), GPIO::Mode::OUTPUT);
   sample_marker.Write(false); action_marker.Write(false); led.Write(false);
   ready = ready && InitAdc();
+  // Automatic post-initialization capture. USB is deliberately initialized only
+  // afterward, so neither host enumeration nor a command defines startup state.
+  // This does not cover ROM/bootloader, clock/RAM/ADC initialization or rail rise.
+  if (ready) {
+    saved = {};
+    saved.scenario = bench::kStartup; saved.duration = bench::kStartupDurationMs;
+    saved.target = 250; saved.held = !button_pin.Read();
+    Collect();
+    startup_available = true;
+  }
   usb.Init(UsbHandle::FS_INTERNAL);
   usb.SetReceiveCallback(Receive, UsbHandle::FS_INTERNAL);
   char command[96]; size_t used = 0; bool too_long = false;
@@ -232,11 +271,16 @@ int main() {
     else if (std::strcmp(command, "?") == 0) Identity();
     else {
       unsigned token, scenario, duration, target; char extra;
-      if (ready && std::sscanf(command, "R,%u,%u,%u,%u%c", &token, &scenario, &duration,
-                               &target, &extra) == 4 && scenario <= 4 &&
-          duration >= 1000 && duration <= 30000 && target <= 1000)
-        Run(token, scenario, duration, target);
-      else Send("ERROR,command_or_not_ready\n");
+      if (ready && std::sscanf(command, "B,%u%c", &token, &extra) == 1) {
+        if (!startup_available) Send("ERROR,no_startup_capture\n");
+        else if (StartLine(token) && Download(token)) startup_available = false;
+      } else if (ready && std::sscanf(command, "R,%u,%u,%u,%u%c", &token, &scenario, &duration,
+                                      &target, &extra) == 4 && scenario <= bench::kMovingTarget &&
+                 duration >= 1000 && duration <= 30000 && target <= 1000 &&
+                 (!(scenario >= bench::kPickupGapUp && scenario <= bench::kMovingTarget) || target == 250)) {
+        if (startup_available) Send("ERROR,download_startup_first\n");
+        else Run(token, scenario, duration, target);
+      } else Send("ERROR,command_or_not_ready\n");
     }
     used = 0; too_long = false;
   }

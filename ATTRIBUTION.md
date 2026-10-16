@@ -51,3 +51,10 @@ this repository. Board wiring follows the [Seed3 datasheet](https://daisy.nyc3.c
 The long ADC acquisition setting follows [ST's ADC accuracy guidance](https://www.st.com/resource/en/application_note/an2834-how-to-get-the-best-adc-accuracy-in-stm32-microcontrollers-stmicroelectronics.pdf);
 it is an initial bench setting, not a measured recommendation. SDK and
 third-party per-file licenses remain applicable to linked firmware distributions.
+
+The measured Daisy trace corpus is original project measurement data, provided
+under this repository's MIT license. It records this library's own test firmware,
+not an upstream module's firmware. Saleae software is an optional external tool
+for acquiring/reading native recordings; no vendor implementation is copied or
+redistributed. The public corpus contains lossless numeric USB traces and derived
+digital edge times, with provenance and scope limits in [validation.md](docs/validation.md).
