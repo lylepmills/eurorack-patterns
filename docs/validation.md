@@ -238,7 +238,8 @@ Keep the entire waiting period in both recordings. This is a fixed full window,
 not a rolling or movement-started capture; the stimulus still triggers on the
 physical input. Arm the scope for the whole window plus setup margins. Longer
 windows need more capture storage and download time. The 150,000-record buffer
-uses 11.4 MB of SDRAM; the automatic startup window remains 20 seconds.
+uses 10.2 MB of SDRAM in the ARM link map; the automatic startup window remains
+20 seconds.
 
 Scheduled-fault/target scenarios require at least six seconds.
 Movement-triggered scenarios use target 0.25. Event triggers use raw input
