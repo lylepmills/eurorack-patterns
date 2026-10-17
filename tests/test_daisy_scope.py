@@ -81,6 +81,9 @@ class ExportPrivacyTests(unittest.TestCase):
         path = Path(__file__).resolve().parent/'measured/daisy/2026-10-16-load/baseline.txt.gz'
         info = json.loads(gzip.decompress(path.read_bytes()).splitlines()[0][5:])
         check_identity(info, load=True)
+        check_identity(dict(info, timing_diagnostics=1), load=True)
+        for value in (True, 0, 2, '1'):
+            with self.assertRaises(AssertionError): check_identity(dict(info, timing_diagnostics=value), load=True)
         for key, value in [('extra', 'unreviewed metadata'), ('cpu_hz', 'unreviewed text'),
                            ('build_id', 'unreviewed-machine'), ('board', 'unreviewed-board')]:
             with self.subTest(key=key), self.assertRaises(AssertionError):

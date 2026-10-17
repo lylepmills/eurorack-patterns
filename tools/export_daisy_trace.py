@@ -33,6 +33,9 @@ def check_identity(info, load=False):
         allowed |= {'startup_available', 'startup_duration_ms'}
     if load:
         allowed.add('load_protocol')
+        if 'timing_diagnostics' in info:
+            assert type(info['timing_diagnostics']) is int and info['timing_diagnostics'] == 1
+            allowed.add('timing_diagnostics')
     assert set(info) == allowed, 'Review new identity fields before publishing'
     assert re.fullmatch('[0-9a-f]{24}', info['build_id'])
     assert all(type(v) in (int, bool) for k, v in info.items() if k not in ('build_id', 'board'))

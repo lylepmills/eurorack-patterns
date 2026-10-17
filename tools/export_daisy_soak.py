@@ -13,18 +13,38 @@ import hashlib
 import json
 from pathlib import Path
 import re
-from daisy_scope import inspect_aggregate_service
+from daisy_scope import inspect_aggregate_service, inspect_timing_service
 from export_daisy_trace import public_identity, public_writer, load_capture
 
 
-def export(source, prefix, pot_ohms, capacitor_nf, expected_status='pass', expected_scope_status='pass'):
+def timing_evidence(buckets, edges, report):
+    """Declared subset: every retained witness and its predecessor, by sequence.
+
+    The caller checks full physical coverage first. This subset cannot establish
+    that omitted pulses were present or smaller than the published maxima.
+    """
+    selected = {w[side]['seq'] for b in buckets for w in b['timing']['witnesses']
+                for side in ('previous', 'current')}
+    origin = float(edges[0])
+    return dict(
+        selection='Every retained timing witness and predecessor. Original sample sequence numbers; scope times subtract the first acquisition rise. Other physical pulses are omitted, not reconstructed.',
+        service_pulses=[[seq, float(edges[2*seq])-origin, float(edges[2*seq+1])-origin]
+                        for seq in sorted(selected)],
+        summary={k:report[k] for k in ('original_acceptance',
+            'max_witness_interval_outside_cpu_bracket_us', 'max_witness_width_outside_cpu_bracket_us')},
+        buckets=[{k:b[k] for k in ('second','raw_clock_scale_ppm','scope_max_interval_seq',
+            'scope_max_width_seq','scope_interval_peak_retained','scope_width_peak_retained',
+            'max_bookkeeping_us','bookkeeping_seq')} for b in report['buckets']])
+
+
+def export(source, prefix, pot_ohms, capacitor_nf, expected_status='pass', expected_scope_status='pass', diagnostic=False):
     import numpy as np
     from saleae.mso_api.capture import Capture, DigitalData
     assert pot_ohms == 100000 and capacitor_nf == 0, 'Declare the recorded reference fixture explicitly'
     data = (source/'usb/raw.txt').read_bytes()
     summary, controls, buckets = load_capture.parse(data)
     assert controls is None, 'Expected aggregate soak, not a full trace'
-    assert summary['configuration']['mode'] == 1, 'Diagnostic publication requires a separate evidence review'
+    assert summary['configuration']['mode'] == (2 if diagnostic else 1), 'Review diagnostic evidence explicitly with --diagnostic'
     info = public_identity(data, load=True)
     metadata = json.loads((source/'usb/metadata.json').read_text())
     assert metadata['status'] == 'complete' and metadata['stationary'] is True
@@ -51,6 +71,11 @@ def export(source, prefix, pot_ohms, capacitor_nf, expected_status='pass', expec
     actions = np.asarray(gesture.transition_times)
     assert not np.any((actions >= first) & (actions <= last)), 'Unexpected action edge'
     scope.update(button_released_throughout=True, action_edges=0)
+    timing = None
+    if diagnostic:
+        report = inspect_timing_service(buckets, edges, summary['counters']['timer_hz'], service.initial_state)
+        assert report['aggregate'] == {k:v for k,v in scope.items() if k not in ('button_released_throughout','action_edges')}
+        timing = timing_evidence(buckets, edges, report)
     excerpt = None
     if scope_status == 'fail':
         # Preserve the first offending second and its preceding context. This
@@ -59,7 +84,7 @@ def export(source, prefix, pot_ohms, capacitor_nf, expected_status='pass', expec
         first_second = max(0, last_second-1)
         lo, hi = first_second*2000, (last_second+1)*2000
         origin = float(edges[lo]); base_us = first_second*1000000
-        normalized = [dict(b, second=b['second']-first_second,
+        normalized = [dict({k:v for k,v in b.items() if k != 'timing'}, second=b['second']-first_second,
                            first_us=b['first_us']-base_us, last_us=b['last_us']-base_us)
                       for b in buckets[first_second:last_second+1]]
         excerpt = dict(first_original_second=first_second, buckets=normalized,
@@ -82,6 +107,13 @@ def export(source, prefix, pot_ohms, capacitor_nf, expected_status='pass', expec
         native_scope_file_sha256=[hashlib.sha256(p.read_bytes()).hexdigest()
                                  for p in sorted((source/'scope').rglob('*')) if p.is_file()],
         limits='One fixture and declared stationary workload. Aggregates do not retain individual observations or prove pickup/gesture behavior during movement. Digital-only scope; analog preflights are separate. Synthetic callback padding, not production DSP or audio-quality qualification. Host pacing is best effort; reported quality failures remain failures.')
+    if diagnostic:
+        evidence['schema'] = 2
+        evidence['timing'] = timing
+        evidence['evidence'] = 'Complete stationary diagnostic soak with selected same-sample physical timing witnesses'
+        evidence['transformation'] += ' Diagnostic scope subset is explicitly declared; every retained firmware witness and predecessor is included.'
+        evidence['limits'] = evidence['limits'].replace('Aggregates do not retain individual observations', 'Aggregates with selected witnesses do not retain every individual observation')
+        evidence['limits'] += ' CPU GPIO brackets are diagnostic observations, not pad-transition guarantees. Selected witnesses are not a full trace. A new passing run does not resolve an earlier unexplained failure.'
     raw_path, meta_path = prefix.with_suffix('.txt.gz'), prefix.with_suffix('.json')
     assert not raw_path.exists() and not meta_path.exists(), 'Use a fresh export prefix'
     prefix.parent.mkdir(parents=True, exist_ok=True)
@@ -98,5 +130,6 @@ if __name__ == '__main__':
     p.add_argument('--capacitor-nf', type=float, required=True)
     p.add_argument('--expected-status', choices=('pass', 'fail'), default='pass')
     p.add_argument('--expected-scope-status', choices=('pass', 'fail'), default='pass')
+    p.add_argument('--diagnostic', action='store_true', help='Explicitly review and export selected raw-timing witnesses')
     a = p.parse_args()
-    export(a.capture, a.out_prefix, a.pot_ohms, a.capacitor_nf, a.expected_status, a.expected_scope_status)
+    export(a.capture, a.out_prefix, a.pot_ohms, a.capacitor_nf, a.expected_status, a.expected_scope_status, a.diagnostic)

@@ -485,8 +485,13 @@ compares each retained observation with the same physical pulse by sequence
 number and reports whether the scope's local peaks were retained. CPU brackets
 are diagnostic evidence, not guarantees about external pad transitions. Its
 `original_acceptance` still uses the unchanged 5/3 us aggregate limits.
-The public soak exporter currently accepts ordinary aggregate mode only;
-diagnostic publication needs a separate evidence review.
+The public soak exporter requires explicit `--diagnostic` review for this mode.
+It retains the complete wire record and a declared scope subset containing every
+retained firmware witness and predecessor, using original sequence numbers.
+Full physical coverage is checked before export; the published subset does not
+establish coverage or maxima for omitted pulses. Original whole-capture hashes
+are retained. Unknown identity fields, malformed rows and unexpected failures
+remain rejected.
 
 The first hardware diagnostic preflight exposed unsupported 64-bit `printf`
 formatting in the linked compact C runtime: diagnostic rows contained literal
@@ -494,8 +499,15 @@ formatting in the linked compact C runtime: diagnostic rows contained literal
 decimal text before using C89-compatible string/32-bit formats, with boundary
 and malformed-row regressions. This matches the documented
 [newlib-nano formatted-I/O limitation](https://sourceware.org/pipermail/newlib/2014/011493.html).
-It is a diagnostic-download defect, separate from the older soak disagreement;
-the corrected image still requires hardware verification.
+It is a diagnostic-download defect, separate from the older soak disagreement.
+The corrected image passed a startup replay, a paired full-trace baseline, and
+four paired 10-second aggregate comparisons on one fixture (diagnostics off/on,
+each unloaded and with 650/1000 audio padding, 16-frame blocks and requested
+500 USB packets/s). All physical pulses were present and original timing limits
+passed. Diagnostic retention reached 6.217 us unloaded and 7.700 us loaded;
+retained CPU brackets contained their corresponding measured intervals and
+widths in these short runs. These are observations, not universal overhead bounds.
+The original late-run disagreement remains unresolved pending long-run evidence.
 
 The load envelope has its own `load_protocol=1`, echoed configuration and whole
 response checksum around unchanged protocol-2 control traces or `S` aggregate

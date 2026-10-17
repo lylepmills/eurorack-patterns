@@ -13,6 +13,7 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path[:0] = [str(ROOT/'examples/daisy'),str(ROOT/'tools')]
 import load_capture as load
 from daisy_scope import inspect_timing_service
+from export_daisy_soak import timing_evidence
 DIAGNOSTIC, REPLAY = [Path(sys.argv.pop(1)).resolve() for _ in range(2)]
 
 
@@ -54,6 +55,14 @@ class DiagnosticsTests(unittest.TestCase):
             self.assertEqual(report['original_acceptance'],'pass')
             self.assertLess(report['max_witness_interval_outside_cpu_bracket_us'],.001)
             self.assertLess(report['max_witness_width_outside_cpu_bracket_us'],.001)
+            selected=timing_evidence(b,edges,report)
+            expected={w[side]['seq'] for bucket in b for w in bucket['timing']['witnesses']
+                      for side in ('previous','current')}
+            self.assertEqual({row[0] for row in selected['service_pulses']},expected)
+            self.assertLess(len(selected['service_pulses']),len(edges)//2)
+            for seq,rise,fall in selected['service_pulses']:
+                self.assertEqual(rise,edges[2*seq]-edges[0])
+                self.assertEqual(fall,edges[2*seq+1]-edges[0])
             # Glitch the SAME retained width event: diagnostics must not convert
             # a physical disagreement into a qualified pass.
             edges[1]+=.000020

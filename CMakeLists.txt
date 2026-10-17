@@ -73,6 +73,8 @@ if(EURORACK_PATTERNS_BUILD_TESTS)
     ${CMAKE_CURRENT_SOURCE_DIR}/tests/test_daisy_diagnostic_capture.py $<TARGET_FILE:test_daisy_diagnostics> $<TARGET_FILE:daisy_replay>)
   add_test(NAME test_daisy_load_measured COMMAND ${Python3_EXECUTABLE}
     ${CMAKE_CURRENT_SOURCE_DIR}/tests/test_daisy_load_measured.py $<TARGET_FILE:daisy_replay>)
+  add_test(NAME test_daisy_timing_measured COMMAND ${Python3_EXECUTABLE}
+    ${CMAKE_CURRENT_SOURCE_DIR}/tests/test_daisy_timing_measured.py)
   ep_test(example_behavior_traces examples/behavior_traces.cpp)
   # Each public header must compile with only its own includes.
   file(GLOB ep_headers CONFIGURE_DEPENDS "${CMAKE_CURRENT_SOURCE_DIR}/include/eurorack_patterns/*.h")

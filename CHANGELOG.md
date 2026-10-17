@@ -2,6 +2,10 @@
 
 ## Unreleased
 
+- Retain four measured short timing comparisons with diagnostics off/on and
+  audio/USB load off/on. Explicit diagnostic export preserves complete wire data
+  and the physical pulses for retained observations and their predecessors;
+  selected evidence never claims full-sample replay or resolves an older failure.
 - Add optional Daisy timing diagnostics with raw tick/GPIO-call brackets,
   retained maximum-event predecessors and measured retention cost. Host checks
   cover wrap, long elapsed time, wire integrity and same-pulse scope comparison;
