@@ -92,6 +92,7 @@ class Clock {
     previous_ = tick;
     return static_cast<uint32_t>(ticks_ * 1000000ull / hz_);
   }
+  uint64_t ticks() const { return ticks_; }
  private:
   uint64_t ticks_ = 0;
   uint32_t previous_, hz_;

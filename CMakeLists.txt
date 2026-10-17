@@ -45,6 +45,7 @@ if(EURORACK_PATTERNS_BUILD_TESTS)
   ep_test(test_daisy_bench tests/test_daisy_bench.cpp)
   ep_test(test_daisy_experiment tests/test_daisy_experiment.cpp)
   ep_test(test_daisy_load tests/test_daisy_load.cpp)
+  ep_test(test_daisy_diagnostics tests/test_daisy_diagnostics.cpp)
   add_executable(daisy_replay examples/daisy/replay.cpp)
   target_link_libraries(daisy_replay PRIVATE eurorack_patterns)
   set_target_properties(daisy_replay PROPERTIES CXX_STANDARD 11 CXX_STANDARD_REQUIRED YES CXX_EXTENSIONS NO)
@@ -68,6 +69,8 @@ if(EURORACK_PATTERNS_BUILD_TESTS)
     ${CMAKE_CURRENT_SOURCE_DIR}/tests/test_daisy_fault_measured.py $<TARGET_FILE:daisy_replay>)
   add_test(NAME test_daisy_load_capture COMMAND ${Python3_EXECUTABLE}
     ${CMAKE_CURRENT_SOURCE_DIR}/tests/test_daisy_load_capture.py $<TARGET_FILE:daisy_replay>)
+  add_test(NAME test_daisy_diagnostic_capture COMMAND ${Python3_EXECUTABLE}
+    ${CMAKE_CURRENT_SOURCE_DIR}/tests/test_daisy_diagnostic_capture.py $<TARGET_FILE:test_daisy_diagnostics> $<TARGET_FILE:daisy_replay>)
   add_test(NAME test_daisy_load_measured COMMAND ${Python3_EXECUTABLE}
     ${CMAKE_CURRENT_SOURCE_DIR}/tests/test_daisy_load_measured.py $<TARGET_FILE:daisy_replay>)
   ep_test(example_behavior_traces examples/behavior_traces.cpp)

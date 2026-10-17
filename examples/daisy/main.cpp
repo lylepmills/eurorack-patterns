@@ -10,6 +10,7 @@
 #include "protocol.h"
 #include "experiment.h"
 #include "load.h"
+#include "diagnostics.h"
 #include <atomic>
 #include <cstring>
 #include "audio_load.h"
@@ -23,8 +24,9 @@ static GPIO button_pin, sample_marker, action_marker, led;
 static ADC_HandleTypeDef adc;
 static DSY_SDRAM_BSS bench::Record records[bench::kMaxRecords];
 static DSY_SDRAM_BSS bench::Bucket buckets[bench::kMaxBuckets];
+static DSY_SDRAM_BSS bench::TimingBucket timing_buckets[bench::kMaxBuckets];
 static_assert(sizeof(records) <= 16 * 1024 * 1024, "Keep the trace buffer within its SDRAM budget");
-static_assert(sizeof(records) + sizeof(buckets) <= 16 * 1024 * 1024, "Keep all recorders within the SDRAM budget");
+static_assert(sizeof(records) + sizeof(buckets) + sizeof(timing_buckets) <= 16 * 1024 * 1024, "Keep all recorders within the SDRAM budget");
 static_assert(ATOMIC_INT_LOCK_FREE == 2, "USB IRQ mailbox requires lock-free 32-bit atomics");
 static std::atomic<uint32_t> rx_head{0}, rx_tail{0}, rx_dropped{0};
 static char rx[256];
@@ -144,7 +146,7 @@ static void Identity() {
   std::snprintf(line, sizeof(line),
       "INFO,{\"protocol\":2,\"build_id\":\"%s\",\"board\":\"seed3\",\"ready\":%s,"
       "\"cpu_hz\":%u,\"timer_hz\":%u,\"adc_hz\":%u,\"mcu_revision\":%u,\"sample_cycles_x2\":1621,"
-      "\"oversampling\":1,\"period_us\":1000,\"max_records\":%u,\"startup_available\":%s,\"startup_duration_ms\":%u,\"load_protocol\":1}\n",
+      "\"oversampling\":1,\"period_us\":1000,\"max_records\":%u,\"startup_available\":%s,\"startup_duration_ms\":%u,\"load_protocol\":1,\"timing_diagnostics\":1}\n",
       EP_BUILD_ID, ready ? "true" : "false", unsigned(SystemCoreClock),
       unsigned(System::GetTickFreq()), unsigned(AdcHz()), unsigned(HAL_GetREVID()),
       unsigned(bench::kMaxRecords), startup_available ? "true" : "false", unsigned(bench::kStartupDurationMs));
@@ -166,12 +168,15 @@ static void Collect() {
   bench::Schedule schedule;
   uint32_t count = 0, missed = 0, failures = 0, overflow = 0;
   uint32_t previous_sample_us = 0;
+  const bool diagnose = load_run && workload.mode == 2;
+  bench::Timing previous_timing{};
   const uint32_t rx_before = rx_dropped.load();
   bool action_level = false;
   uint32_t target_epoch = 0;
   action_marker.Write(false);
   if (load_run) {
     if (workload.mode) for (uint32_t i = 0; i < duration / 1000; ++i) buckets[i].Reset();
+    if (diagnose) for (uint32_t i = 0; i < duration / 1000; ++i) timing_buckets[i].Reset();
     const uint32_t mask = __get_PRIMASK(); __disable_irq();
     traffic.ResetCounters(); audio_load::counters = {};
     traffic_measuring.store(true, std::memory_order_relaxed);
@@ -194,12 +199,20 @@ static void Collect() {
     if (!(load_run && workload.mode) && count == bench::kMaxRecords) { ++overflow; break; }
     // Keep marker/timestamp/button observations together across audio IRQs.
     // These short instrumentation guards are part of the measured adapter.
+    bench::Timing timing;
     const uint32_t begin_mask = __get_PRIMASK(); __disable_irq();
-    us = clock.Us(System::GetTick());
+    const uint32_t begin_tick = System::GetTick();
+    us = clock.Us(begin_tick);
     if (us >= duration * 1000) {
       __set_PRIMASK(begin_mask); break;
     }
+    if (diagnose) {
+      timing.seq = count; timing.time_us = us; timing.begin_tick = begin_tick;
+      timing.begin_elapsed = clock.ticks();
+      timing.rise_before = System::GetTick();
+    }
     sample_marker.Write(true);
+    if (diagnose) timing.rise_after = System::GetTick();
     const bool pressed = !button_pin.Read();
     __set_PRIMASK(begin_mask);
     const uint32_t skipped = schedule.Take(us);
@@ -229,10 +242,25 @@ static void Collect() {
       auto& bucket = buckets[us / 1000000];
       bucket.Add(record, skipped, count ? us - previous_sample_us : 0);
       const uint32_t end_mask = __get_PRIMASK(); __disable_irq();
-      record.work_us = clock.Us(System::GetTick()) - us;
+      const uint32_t end_tick = System::GetTick();
+      record.work_us = clock.Us(end_tick) - us;
       bucket.max_work_us = std::max(bucket.max_work_us, record.work_us);
+      if (diagnose) {
+        timing.end_tick = end_tick; timing.end_elapsed = clock.ticks();
+        timing.work_us = record.work_us;
+        timing.fall_before = System::GetTick();
+      }
       sample_marker.Write(false);
+      if (diagnose) timing.fall_after = System::GetTick();
       __set_PRIMASK(end_mask);
+      if (diagnose) {
+        // Retention runs outside the marker/IRQ guard. Its cost can still delay
+        // the next service, so retain the observed cost (including IRQs).
+        auto& diagnostic = timing_buckets[us / 1000000];
+        diagnostic.Add(count ? previous_timing : timing, timing);
+        previous_timing = timing;
+        diagnostic.Bookkeeping(count, System::GetTick() - timing.fall_after);
+      }
     } else {
       records[count] = record;
       const uint32_t end_mask = __get_PRIMASK(); __disable_irq();
@@ -314,6 +342,20 @@ static void RunLoad(uint32_t token) {
         unsigned(b.failures), unsigned(b.cadence_breaks), unsigned(b.actions),
         unsigned(b.max_work_us), unsigned(b.max_interval_us), unsigned(b.raw_min), unsigned(b.raw_max));
       ok = Send(line);
+      if (ok && workload.mode == 2) {
+        const auto& d = timing_buckets[i];
+        std::snprintf(line, sizeof(line), "T,%u,%u,%u,%u\n", unsigned(i), unsigned(d.count),
+                      unsigned(d.max_bookkeeping_ticks), unsigned(d.bookkeeping_seq));
+        ok = Send(line);
+        // Kinds 0/1 are first/last (repeated in both slots); 2..9 are peaks.
+        for (unsigned k = 0; ok && d.count && k < bench::kTimingPeaks + 2; ++k) {
+          const auto& p = k < 2 ? (k ? d.last : d.first) : d.peak[k-2].previous;
+          const auto& t = k < 2 ? p : d.peak[k-2].current;
+          const int n = bench::FormatTiming(line, sizeof(line), i, k, p, t);
+          if (n < 0 || size_t(n) >= sizeof(line)) { Send("ERROR,timing_format\n"); ok = false; }
+          else ok = Send(line);
+        }
+      }
     }
   }
   if (ok) {

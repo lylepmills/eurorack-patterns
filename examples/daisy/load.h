@@ -13,7 +13,7 @@ struct Workload {
   uint32_t mode = 0, duration = 0, target = 250, block = 48, usb_hz = 0;
   int32_t audio_permille = -1; // -1: stopped; 0: DMA callback without padding.
   bool Valid() const {
-    return mode <= 1 && duration >= 1000 && duration % 1000 == 0 &&
+    return mode <= 2 && duration >= 1000 && duration % 1000 == 0 &&
       duration <= (mode ? kMaxSoakMs : kMaxDurationMs) && target <= 1000 &&
       audio_permille >= -1 && audio_permille <= 700 &&
       (block == 16 || block == 48 || block == 96) &&

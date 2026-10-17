@@ -391,10 +391,10 @@ Two counterexamples remain explicit in the same corpus:
   The unchanged 5/3 us local bounds reject it. The complete aggregate wire record
   and a declared two-second scope excerpt reproduce the rejection in regression
   tests; passing that regression means detecting the disagreement, not passing
-  hardware qualification. Native originals remain retained. Next instrumentation
-  should measure raw-timer-to-marker timing and local timing bounds before
-  repeating the soak; do not widen bounds or attribute this to the control
-  library without evidence.
+  hardware qualification. Native originals remain retained. The optional timing
+  diagnostic mode below retains raw-timer-to-marker evidence for the next run;
+  it has not yet resolved or qualified this failure. Do not widen bounds or
+  attribute this to the control library without evidence.
 
 The optional `L` command starts the Seed3 codec's real stereo SAI/DMA callbacks
 at nominal 48 kHz. Outputs are silent and inputs are ignored; the existing
@@ -456,6 +456,37 @@ full traces to check that behavior. Digital-only soak recordings also do not
 establish analog wiring or voltage stability throughout the window.
 No USB output or download interrupts either acquisition; records transfer after
 audio stops. The timer is extended across raw counter wraps before conversion.
+
+`--mode diagnostic` adds selected timing observations to the continuous soak.
+It requires `timing_diagnostics=1` in both the build manifest and device identity.
+For every nonempty second it retains first/last observations and eight maxima:
+microsecond interval/work, raw marker interval/width, and start/end guard and
+GPIO-call durations. Each maximum retains its actual preceding observation,
+including across second boundaries. Raw 32-bit ticks bracket GPIO calls;
+extended ticks independently check the existing integer clock conversion.
+Ties keep the first observation. This is **selected evidence, not a complete
+sample trace**. A physical peak need not be among the retained candidates.
+
+The original clock arithmetic and aggregate acceptance limits are unchanged.
+Additional retention happens after the falling marker with interrupts enabled;
+its maximum elapsed cost and sample sequence are recorded, including any IRQ
+preemption during that work. It can affect the next deadline. Compare paired
+short runs with diagnostics off/on, both without load and with the intended
+audio/USB load, before a real elapsed-time soak. Host arithmetic tests near the
+old failure's elapsed time do not substitute for a physical long-duration run.
+
+Diagnostic wire records are `T` bucket summaries followed by ten ordered `D`
+records (first, last, then the eight maxima). They are covered by the existing
+whole-response checksum, validated against aggregate maxima and sequence/time
+boundaries, and saved as `timing.json` beside the unchanged aggregate CSV.
+The complete wire remains retained on any validation failure. The offline
+`inspect_timing_service` helper in [daisy_scope.py](../tools/daisy_scope.py)
+compares each retained observation with the same physical pulse by sequence
+number and reports whether the scope's local peaks were retained. CPU brackets
+are diagnostic evidence, not guarantees about external pad transitions. Its
+`original_acceptance` still uses the unchanged 5/3 us aggregate limits.
+The public soak exporter currently accepts ordinary aggregate mode only;
+diagnostic publication needs a separate evidence review.
 
 The load envelope has its own `load_protocol=1`, echoed configuration and whole
 response checksum around unchanged protocol-2 control traces or `S` aggregate

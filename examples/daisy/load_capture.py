@@ -15,6 +15,7 @@ import threading
 import time
 
 import capture
+import diagnostics
 from capture import require
 
 CONFIG = 'token,mode,duration_ms,target_milli,audio_permille,block_size,usb_hz,startup_held'.split(',')
@@ -36,7 +37,7 @@ def fields(line, prefix, names):
 
 
 def validate_config(c):
-    require(c['mode'] in (0, 1) and 1000 <= c['duration_ms'] <= (150000 if c['mode'] == 0 else 3600000)
+    require(c['mode'] in (0, 1, 2) and 1000 <= c['duration_ms'] <= (150000 if c['mode'] == 0 else 3600000)
             and c['duration_ms'] % 1000 == 0 and 0 <= c['target_milli'] <= 1000
             and -1 <= c['audio_permille'] <= 700 and c['block_size'] in (16, 48, 96)
             and c['usb_hz'] in (0, 100, 500) and c['startup_held'] in (0, 1), 'invalid workload configuration')
@@ -53,6 +54,8 @@ def parse(data, build_id=None):
     capture.acquisition_capacity(info)
     if build_id: require(info.get('build_id') == build_id, 'firmware build identity mismatch')
     c = fields(lines[1], 'LOADSTART', CONFIG); validate_config(c)
+    if c['mode'] == 2:
+        require(info.get('timing_diagnostics') == 1, 'firmware lacks timing diagnostics')
     s = fields(lines[-2], 'LOADSTATS', STATS)
     end = fields(lines[-1], 'LOADEND', ['token', 'checksum'])
     require(end['token'] == c['token'] and end['checksum'] == capture.fnv(b''.join(lines[1:-1])),
@@ -75,10 +78,17 @@ def parse(data, build_id=None):
         work = max(r['work_us'] for r in rows)
         interval = max((b['time_us']-a['time_us'] for a, b in zip(rows, rows[1:])), default=0)
     else:
-        require(len(lines[2:-2]) == c['duration_ms']//1000, 'missing soak buckets')
-        accounted = 0
-        for i, line in enumerate(lines[2:-2]):
-            b = fields(line, 'S', BUCKETS)
+        if c['mode'] == 1:
+            require(len(lines[2:-2]) == c['duration_ms']//1000, 'missing soak buckets')
+        body = iter(lines[2:-2])
+        def take():
+            line = next(body, None)
+            require(line is not None, 'missing soak buckets/diagnostics')
+            return line
+        accounted = base_seq = 0
+        origin = None
+        for i in range(c['duration_ms']//1000):
+            b = fields(take(), 'S', BUCKETS)
             require(b['second'] == i, 'reordered soak bucket')
             require(b['samples'] <= 1000 and b['adc_failures'] <= b['samples']
                     and b['cadence_breaks'] <= b['samples'] and b['actions'] <= b['samples'],
@@ -94,7 +104,12 @@ def parse(data, build_id=None):
             else:
                 require(all(b[k] == 0 for k in BUCKETS[1:-2]) and b['raw_min'] == 65535
                         and b['raw_max'] == 0, 'invalid empty bucket')
+            if c['mode'] == 2:
+                b['timing'], origin = diagnostics.parse_bucket(take, b, base_seq, s['timer_hz'],
+                                                               c['duration_ms']*1000, origin)
+            base_seq += b['samples']
             buckets.append(b)
+        require(next(body, None) is None, 'extra soak buckets/diagnostics')
         for key in ('samples', 'missed', 'adc_failures'):
             require(sum(b[key] for b in buckets) == s[key], 'bucket total mismatch: ' + key)
         actions = sum(b['actions'] for b in buckets)
@@ -113,6 +128,11 @@ def parse(data, build_id=None):
                    raw_sha256=hashlib.sha256(data).hexdigest(),
                    representation='complete control trace' if not c['mode'] else 'continuous per-second aggregates; no per-sample replay',
                    callback_timing_note='Application callback body only; excludes SDK conversion and DMA IRQ overhead. Late interval means >1.5 nominal periods, not a codec underrun detector.')
+    if c['mode'] == 2:
+        summary['timing_diagnostics'] = dict(version=1, buckets=len(buckets),
+            retained_witnesses=sum(len(b['timing']['witnesses']) for b in buckets),
+            max_bookkeeping_ticks=max(b['timing']['max_bookkeeping_ticks'] for b in buckets),
+            note='Selected samples and predecessors, not a complete per-sample trace; CPU GPIO brackets need physical review.')
     return summary, control_data, buckets
 
 
@@ -161,8 +181,10 @@ def save_analysis(data, out, build_id=None, replay=None, stationary=False, write
     else:
         summary['replay'] = 'not applicable: aggregates do not retain individual samples'
         with (out/'buckets.csv').open('w', newline='') as f:
-            csv_writer = csv.DictWriter(f, fieldnames=BUCKETS)
+            csv_writer = csv.DictWriter(f, fieldnames=BUCKETS, extrasaction='ignore')
             csv_writer.writeheader(); csv_writer.writerows(buckets)
+        if summary['configuration']['mode'] == 2:
+            (out/'timing.json').write_text(json.dumps([b['timing'] for b in buckets], indent=2)+'\n')
     assess(summary, stationary, writer)
     (out/'summary.json').write_text(json.dumps(summary, indent=2)+'\n')
     return summary
@@ -207,10 +229,12 @@ def record(a):
     manifest = capture.load_manifest(a.manifest)
     require(manifest.get('load_protocol') == 1, 'manifest has no load firmware')
     require(a.replay is not None and a.replay.is_file(), 'build the C++ replay executable before capture')
-    requested = dict(mode=int(a.mode == 'soak'), duration_ms=a.seconds*1000,
+    requested = dict(mode={'trace': 0, 'soak': 1, 'diagnostic': 2}[a.mode], duration_ms=a.seconds*1000,
                      target_milli=round(a.target*1000), audio_permille=a.audio_permille,
                      block_size=a.block_size, usb_hz=a.usb_hz, startup_held=0)
     validate_config(requested)
+    if requested['mode'] == 2:
+        require(manifest.get('timing_diagnostics') == 1, 'manifest lacks timing diagnostics')
     require(a.out is not None and not a.out.exists(), 'output directory must be new')
     import serial
     a.out.mkdir(parents=True)
@@ -234,6 +258,8 @@ def record(a):
                     require(info.get('load_protocol') == 1 and info.get('protocol') == 2
                             and info.get('ready') is True and info.get('board') == 'seed3'
                             and info.get('build_id') == manifest['build_id'], 'firmware mismatch; no run requested')
+                    if requested['mode'] == 2:
+                        require(info.get('timing_diagnostics') == 1, 'device lacks timing diagnostics')
                     require(not info.get('startup_available'), 'download retained startup capture first')
                     capacity = capture.acquisition_capacity(info)
                     require(requested['mode'] or requested['duration_ms'] <= capacity,
@@ -271,7 +297,7 @@ def main():
     c.add_argument('--port', required=True)
     c.add_argument('--manifest', type=Path, required=True)
     c.add_argument('--out', type=Path, required=True)
-    c.add_argument('--mode', choices=['trace', 'soak'], default='trace')
+    c.add_argument('--mode', choices=['trace', 'soak', 'diagnostic'], default='trace')
     c.add_argument('--seconds', type=int, default=30)
     c.add_argument('--target', type=float, default=.25)
     c.add_argument('--audio-permille', type=int, default=0, help='-1 disables audio; 0 runs DMA; 1..700 pads the callback body')

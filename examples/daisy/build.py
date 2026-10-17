@@ -44,7 +44,7 @@ def main():
         modules[name] = actual
     files = list((ROOT / 'include/eurorack_patterns').glob('*.h'))
     files += [ROOT / 'examples/shared_control.h']
-    files += [HERE / name for name in ['main.cpp', 'bench.h', 'protocol.h', 'experiment.h', 'load.h', 'audio_load.h', 'CMakeLists.txt',
+    files += [HERE / name for name in ['main.cpp', 'bench.h', 'protocol.h', 'experiment.h', 'load.h', 'audio_load.h', 'diagnostics.h', 'CMakeLists.txt',
                                       'build_identity.h.in', 'build.py']]
     manifest = dict(schema=1, kind='eurorack-patterns-daisy-bench', protocol=2,
                     status='cross-built only; hardware validation pending', board='seed3',
@@ -56,7 +56,7 @@ def main():
                     sample_period_us=1000, sample_cycles=810.5, adc_bits=16, oversampling=1,
                     pot_ohms=100000, debounce_ms=10, hold_ms=600,
                     gap_threshold_us=10000, max_duration_ms=150000, startup_duration_ms=20000,
-                    load_protocol=1, max_soak_ms=3600000, audio_sample_rate_hz=48000,
+                    load_protocol=1, timing_diagnostics=1, max_soak_ms=3600000, audio_sample_rate_hz=48000,
                     audio_block_sizes=[16, 48, 96], max_audio_padding_permille=700)
     manifest['build_id'] = hashlib.sha256(json.dumps(manifest, sort_keys=True).encode()).hexdigest()[:24]
     out.mkdir(parents=True, exist_ok=True)

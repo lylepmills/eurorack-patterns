@@ -24,6 +24,7 @@ def export(source, prefix, pot_ohms, capacitor_nf, expected_status='pass', expec
     data = (source/'usb/raw.txt').read_bytes()
     summary, controls, buckets = load_capture.parse(data)
     assert controls is None, 'Expected aggregate soak, not a full trace'
+    assert summary['configuration']['mode'] == 1, 'Diagnostic publication requires a separate evidence review'
     info = public_identity(data, load=True)
     metadata = json.loads((source/'usb/metadata.json').read_text())
     assert metadata['status'] == 'complete' and metadata['stationary'] is True

@@ -2,6 +2,10 @@
 
 ## Unreleased
 
+- Add optional Daisy timing diagnostics with raw tick/GPIO-call brackets,
+  retained maximum-event predecessors and measured retention cost. Host checks
+  cover wrap, long elapsed time, wire integrity and same-pulse scope comparison;
+  hardware qualification of this instrumentation remains pending.
 - Add optional Seed3 audio-DMA/USB load experiments and a continuous
   aggregate soak recorder (up to one hour), with strict capture checks and a
   stationary campaign runner.

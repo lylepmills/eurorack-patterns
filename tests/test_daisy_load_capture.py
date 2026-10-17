@@ -65,7 +65,7 @@ class LoadTests(unittest.TestCase):
         c = dict(mode=1, duration_ms=3600000, target_milli=250, audio_permille=700,
                  block_size=96, usb_hz=500, startup_held=1)
         load.validate_config(c)
-        for key, value in [('duration_ms',3601000),('duration_ms',1501),('mode',2),
+        for key, value in [('duration_ms',3601000),('duration_ms',1501),('mode',3),
                            ('audio_permille',701),('audio_permille',-2),('block_size',17),
                            ('usb_hz',1),('startup_held',2),('target_milli',1001)]:
             with self.subTest(key=key,value=value), self.assertRaises(ValueError):

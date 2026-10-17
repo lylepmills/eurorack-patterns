@@ -103,3 +103,76 @@ def match_aggregate_service(buckets, transitions, initial_high=False):
                          f"interval error {first['interval_error_us']:.3f} us, "
                          f"width error {first['work_width_error_us']:.3f} us")
     return report
+
+
+def inspect_timing_service(buckets, transitions, timer_hz, initial_high=False):
+    """Correlate selected raw-tick witnesses with the SAME physical pulses.
+
+    The original aggregate acceptance is returned unchanged. CPU GPIO brackets
+    aid diagnosis; they do not prove pad timing or authorize wider tolerances.
+    Requires parse-validated diagnostic buckets and full nominal slot coverage.
+    """
+    aggregate = inspect_aggregate_service(buckets, transitions, initial_high)
+    if timer_hz <= 0 or any('timing' not in b for b in buckets):
+        raise ValueError('Missing validated timing diagnostics')
+    edges = [float(t) for t in transitions]
+    rise, fall = edges[::2], edges[1::2]
+    tick_us = 1e6/timer_hz
+
+    def extended(t, field):
+        return t['begin_elapsed'] + ((t[field]-t['begin_tick']) & 0xffffffff)
+
+    def outside(value, lo, hi):
+        return max(lo-value, value-hi, 0.)
+
+    details = []
+    max_interval_error = max_width_error = 0.
+    for b in buckets:
+        d = b['timing']; ws = d['witnesses']
+        if d['samples'] != 1000 or len(ws) != 10:
+            raise ValueError('Incomplete timing witnesses')
+        first, last = ws[0]['current'], ws[1]['current']
+        begin, end = b['second']*1000, (b['second']+1)*1000
+        if first['seq'] != begin or last['seq'] != end-1:
+            raise ValueError('Timing sequence does not align with scope')
+        scale = ((rise[end-1]-rise[begin])*1e6 /
+                 ((extended(last,'rise_before')-extended(first,'rise_before'))*tick_us))
+        if abs(scale-1) >= .001:
+            raise ValueError('Raw diagnostic clock scale outside bound')
+        interval_seq = max(range(max(1,begin),end), key=lambda j: rise[j]-rise[j-1])
+        width_seq = max(range(begin,end), key=lambda j: fall[j]-rise[j])
+        reviewed = []
+        for w in ws:
+            p, t = w['previous'], w['current']; seq = t['seq']
+            width = (fall[seq]-rise[seq])*1e6/scale
+            lo = (extended(t,'fall_before')-extended(t,'rise_after'))*tick_us
+            hi = (extended(t,'fall_after')-extended(t,'rise_before'))*tick_us
+            width_error = outside(width,lo,hi)
+            interval = interval_error = None
+            # First/last repeat the sample in the predecessor slot. Only peak
+            # records retain the actual preceding observation.
+            if seq and p['seq']+1 == seq:
+                interval = (rise[seq]-rise[seq-1])*1e6/scale
+                ilo = (extended(t,'rise_before')-extended(p,'rise_after'))*tick_us
+                ihi = (extended(t,'rise_after')-extended(p,'rise_before'))*tick_us
+                interval_error = outside(interval,ilo,ihi)
+                max_interval_error = max(max_interval_error,interval_error)
+            max_width_error = max(max_width_error,width_error)
+            reviewed.append(dict(kind=w['kind'],seq=seq,previous_seq=p['seq'],
+                scope_width_us=width,firmware_work_us=t['work_us'],
+                cpu_width_bracket_us=[lo,hi],width_outside_cpu_bracket_us=width_error,
+                scope_interval_us=interval,interval_outside_cpu_bracket_us=interval_error,
+                begin_guard_us=(extended(t,'rise_after')-t['begin_elapsed'])*tick_us,
+                end_guard_us=(extended(t,'fall_after')-t['end_elapsed'])*tick_us))
+        retained = {w['current']['seq'] for w in ws}
+        details.append(dict(second=b['second'],raw_clock_scale_ppm=(scale-1)*1e6,
+            scope_max_interval_seq=interval_seq,scope_max_width_seq=width_seq,
+            scope_interval_peak_retained=interval_seq in retained,
+            scope_width_peak_retained=width_seq in retained,witnesses=reviewed,
+            max_bookkeeping_us=d['max_bookkeeping_ticks']*tick_us,
+            bookkeeping_seq=d['bookkeeping_seq']))
+    return dict(aggregate=aggregate,
+        original_acceptance='fail' if aggregate['mismatched_buckets'] else 'pass',
+        max_witness_interval_outside_cpu_bracket_us=max_interval_error,
+        max_witness_width_outside_cpu_bracket_us=max_width_error,buckets=details,
+        limitation='Selected witnesses only. CPU brackets are diagnostic evidence, not physical-pad guarantees; original acceptance limits remain unchanged.')
