@@ -16,6 +16,12 @@ The [catalog](catalog.md) contains 88 patterns. This table describes the public 
 
 The code expresses mechanisms with caller-defined time and electrical units. A host must establish its scan rate, voltage scaling, thread/interrupt ownership, invalid-sample policy, event overflow response, startup behavior, and acceptance criteria. Numeric values cited in the catalog describe particular source products. They are not drop-in defaults for new hardware.
 
+The [Daisy fault/startup measurements](validation.md#active-fault-and-startup-measurements)
+add bounded physical evidence for pickup rearming/history breaks, gesture
+cancellation and startup-held suppression in the example adapter. The public
+corpus contains 15 complete runs across both passes. These checks do not promote
+jack detection, audio/IRQ timing, brownout behavior or other boards to measured status.
+
 See [research scope and unresolved reports](research-pass-2.md) and [executed checks versus hardware evidence](validation.md). Upstream tests cited in the catalog were read, not executed.
 
 ## Integration examples

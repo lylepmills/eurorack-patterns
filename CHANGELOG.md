@@ -14,7 +14,14 @@
   bounded to one fixture and exclude incomplete or suspect-contact runs.
 - Add event-triggered gesture/pickup fault scenarios and a retained 20-second
   automatic startup recorder. Protocol 2 reports/checks stimulus timing and refuses
-  to overwrite unread startup evidence. These new scenarios await physical validation.
+  to overwrite unread startup evidence.
+- Add nine complete measured fault/startup traces (609,923 observations): gesture
+  interruption, independent ADC gaps, bidirectional missing-crossing pickup,
+  moving targets, released RESET and held-button USB power-on. Include derived
+  analog medians, explicit pre-application electrical levels and regression checks.
+- Reject missing/glitched service pulses during scope alignment; distinguish
+  the observed long pre-application marker level from the complete startup window.
+  Keep untriggered and disconnected-probe runs out of published passes.
 - Cross-build the Daisy adapter in CI; public core interfaces and behavior are unchanged.
 
 ## 0.2.1 — 2026-10-13

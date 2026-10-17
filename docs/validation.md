@@ -61,12 +61,11 @@ checks](../examples/pico/README.md#adapter-decisions-and-checks-still-needed).
 
 The [firmware](../examples/daisy/main.cpp), [builder](../examples/daisy/build.py)
 and [capture tool](../examples/daisy/capture.py) prepare a reproducible control
-experiment. The first firmware has bounded physical evidence below. **The newer
-event-triggered scenarios and automatic startup recorder are cross-built and
-host-tested; their physical measurements remain pending.** Public library headers
-are unchanged. The host suite has 28 CTest entries, including 18 Python
-protocol/mock-serial tests, 13 synthetic protocol scenarios and six measured
-replays. The firmware itself is not simulated by those host tests.
+experiment. Both the initial controls and the newer event-triggered fault/startup
+scenarios have bounded physical evidence below. Public library headers are
+unchanged. The host suite has 30 CTest entries, including protocol/mock-serial
+tests, synthetic scenarios, scope-alignment rejection tests and 15 complete
+measured replays. The firmware itself is not simulated by those host tests.
 
 ### First Daisy measurements
 
@@ -122,9 +121,66 @@ To export another reviewed capture, use an environment containing
 python tools/export_daisy_trace.py --capture CAPTURE_DIRECTORY --out-prefix tests/measured/daisy/DATE/CASE
 ```
 
-The exporter deliberately accepts only the first fixture/protocol's known
-identity and wiring metadata. Extend its allowlist after reviewing a new
-fixture; add independent expectations before treating a new trace as a pass.
+The exporter accepts the reviewed protocol 1/2 identity and fixture fields only.
+For startup captures, specify `--startup-kind reset` or `--startup-kind usb-power-cycle`
+from the recorded operator procedure. Review any new identity fields before
+extending the allowlist; add independent expectations before treating a trace as a pass.
+
+### Active fault and startup measurements
+
+Measured on 2026-10-15 and 2026-10-16 in America/Los_Angeles, on the same Seed3,
+B100k pot and normally open button fixture. The [second corpus](../tests/measured/daisy/2026-10-16)
+contains nine complete runs totaling 609,923 observations. Each file identifies
+its actual acquisition timestamp, firmware commit/build and binary hash. The
+fault-button runs used firmware commit `9b5442910fd9f4e9851c56b5a80e07e1f245137f`;
+the longer movement and startup runs used `5c9b10e9d344e103421d763eeb97c2c85fe57f7f`.
+
+| Experiment | Observed result |
+| --- | --- |
+| Service gap during a held press or across its hold threshold | Cancelled press and eventual release caused no action; a later fresh tap acted once. Each gap was approximately 27 ms and accounted for 26 skipped service slots. |
+| Service gap during release qualification | Interrupted tap cancelled; release qualification restarted after the gap. A subsequent fresh tap acted once. The approximately 26 ms gap accounted for 25 skipped slots. |
+| ADC-only invalid interval during a tap | Button sampling continued; the first release/action occurred inside the 250 ms ADC gap, and the second tap acted normally. Invalid ADC samples were not applied. |
+| Upward and downward pickup crossings hidden by a one-second ADC gap | Output held at 25% through the unobserved crossing and recovery. The later observed reverse crossings acquired at 25.0462% and 24.6983%, within the configured tolerance. Scope analog medians corroborated the crossings during invalidity. |
+| Target changed while the knob moved | Pickup first acquired at 25.0004%. A raw midpoint crossing changed the target to 75%, revoked ownership, and held that value for 3.181 s until reacquisition at 75.0134%. |
+| Physical RESET, released button, high knob position | All 20,000 application samples matched the scope; no button actions or unintended pickup. |
+| USB power-on with button held and knob near midpoint | Initial hold and release caused no action. One fresh 131.292 ms tap acted once, 10.863 ms after release. ADC and analog midpoint readings stayed consistent. |
+
+All nine runs have verified transport and C++ replay, complete application
+service-pulse coverage and sampled button agreement, with no unexpected skipped
+slots or ADC failures. Gaps are deliberate software invalidation or foreground
+stalls; they do not establish physical disconnection detection or audio/IRQ-load
+behavior. The [new measured checks](../tests/test_daisy_fault_measured.py) preserve
+these expectations alongside the first-pass regressions.
+
+Reset and power-on captures included a roughly 2.287-second high service-marker
+level **before application sampling**. It ended about 130 ms before the first
+application pulse. A released button input also changed electrical level before
+its application sampling began. These observations remain explicit in exported
+metadata; their electrical/boot-stage cause is not established here. The
+[scope matcher](../tools/daisy_scope.py) accepts only the reviewed long prefix,
+then matches every application pulse by count, timestamp, interval and recorded
+work width. Unknown extra pulses, missing pulses and timing mismatches fail.
+
+Protocol 2 exports retain actual analog sample rates, service-gap intervals and
+10 ms voltage medians, with pre-application analog medians for startup captures.
+Medians are rounded to six decimals for reproducibility, not calibrated precision.
+Full original USB windows remain losslessly compressed; native scope files remain
+private and are represented by hashes. These derived analog data are not full-bandwidth
+noise or transient measurements.
+
+Untriggered operator windows and disconnected-probe recordings were retained
+privately and excluded from these published passes. A disconnected analog probe
+read approximately zero while the MCU continued reporting valid full-scale ADC
+conversions. Reconnecting the probe restored agreement. This is a measurement
+fault, not evidence that the ADC's conversion-success flag detects cable health.
+Longer fixed windows provided about two minutes for the operator to begin while
+retaining the complete waiting period.
+
+This remains one fixture and a small set of manually operated runs. Remaining
+work includes repeated/varied startup and fault phases, other pots and boards,
+audio/IRQ workloads and soaks, real jack/gate circuitry, pulse/CV timing, and a
+separate power-cut/brownout/storage campaign. No library control behavior changed
+as a result of this pass.
 
 ### Fixture and Saleae connections
 
@@ -153,13 +209,16 @@ require a separate protected input circuit.
 Start Saleae recording before requesting a run. Use DC coupling for the wiper
 and an appropriate 3.3 V digital threshold. A digital rate of at least 1 MS/s is a
 reasonable starting point for the service/button markers; record the actual
-rate. The first Daisy D0 service-marker edge aligns the run with the USB trace,
+rate. The first **application** D0 service-marker pulse aligns the run with the USB trace,
 subject to the small GPIO/timestamp instruction offset. These D0/D1 names refer
 to Daisy pins, not the scope's channel numbers. D0 width includes acquisition,
 state updates, record storage and synthetic foreground load; `work_us` excludes the final
 marker write. D1 marks the action immediately after the state update. Save the
 native Saleae recording with the USB evidence. Saleae capture is currently
 operator-controlled; the Python tool captures USB, not the MSO.
+For startup, retain pre-application transitions separately; a reset-time high
+level is not automatically an application service pulse. Use complete-window
+timing/width checks rather than dropping unexpected edges until counts agree.
 
 The onboard LED shows pickup ownership during a run. It retains the last state
 afterward; it is not a progress indicator or a voltage readout.
