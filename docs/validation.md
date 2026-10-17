@@ -63,7 +63,7 @@ The [firmware](../examples/daisy/main.cpp), [builder](../examples/daisy/build.py
 and [capture tool](../examples/daisy/capture.py) prepare a reproducible control
 experiment. Both the initial controls and the newer event-triggered fault/startup
 scenarios have bounded physical evidence below. Public library headers are
-unchanged. The host suite has 30 CTest entries, including protocol/mock-serial
+unchanged. The host suite has 32 CTest entries, including protocol/mock-serial
 tests, synthetic scenarios, scope-alignment rejection tests and 15 complete
 measured replays. The firmware itself is not simulated by those host tests.
 
@@ -340,6 +340,82 @@ No persistent settings or automatic reset command is involved.
 This observes the application **after peripheral initialization**. It does not
 capture supply rise, ROM/bootloader execution, or clock/RAM/ADC setup. Record
 those separately if the question concerns earlier electrical/startup behavior.
+
+### Audio/USB load and continuous soak — prepared, not yet measured
+
+The optional `L` command starts the Seed3 codec's real stereo SAI/DMA callbacks
+at nominal 48 kHz. Outputs are silent and inputs are ignored; the existing
+pot/button/marker wiring is sufficient. This is a scheduling experiment, not an
+audio-quality or production-DSP workload measurement. Normal captures and the
+automatic startup recorder leave audio stopped. No QSPI write or erase is added.
+
+`audio-permille=-1` disables audio; `0` exercises DMA and the SDK conversion path
+without extra work; `1..700` pads the application callback body to that fraction
+of its nominal period. The default matrix uses 250 and 650, with 16- and 48-frame
+blocks; 96 is also supported. This padding is synthetic work in a real audio IRQ,
+not a claim that a particular synth occupies that CPU percentage. Measured body
+time excludes SDK conversion and the rest of IRQ handling. Callback count, maximum
+body/interval time, over-budget bodies, >1.5-period intervals and wrong block sizes
+are retained. These counters cannot prove that the codec had no underruns.
+
+USB load is host-to-device traffic at a requested 100 or 500 64-byte packets/s.
+The IRQ checks packet contents and sequence across arbitrary USB chunk boundaries;
+traffic cannot enter the command mailbox. Host pacing is best effort. Both sides'
+counts, host skipped send slots/maximum lateness, malformed frames and sequence
+errors remain explicit. A run fails its stimulus checks if counts differ, fewer
+than 80% of the expected active-window packets arrive, more than 20% of host
+slots are skipped, or host pacing pauses exceed 50 ms. This does not exercise
+simultaneous USB transmit traffic or storage I/O.
+
+After downloading the retained startup window, use the matching manifest and
+replay executable from the build above:
+
+```sh
+python3 examples/daisy/load_capture.py capture --port PORT --manifest build-daisy/manifest.json --out build-captures/load-trace --mode trace --seconds 150 --audio-permille 650 --block-size 16 --usb-hz 100 --replay build/daisy_replay
+python3 examples/daisy/load_campaign.py --dry-run
+python3 examples/daisy/load_campaign.py --port PORT --manifest build-daisy/manifest.json --out build-captures/load-campaign --replay build/daisy_replay
+```
+
+For an interactive trace, retain the 150-second operator window and record the
+intended gesture independently. Start the scope first and verify complete service
+coverage afterward. Short IRQ-masked instrumentation windows keep the starting
+marker, timestamp and button read together, and the ending work timestamp and
+marker together. They are part of this adapter's measured interrupt latency.
+A mismatch with the first-pass tight alignment bounds requires investigation,
+not silent trimming or wider acceptance after seeing the result.
+
+The stationary campaign runs seven full-trace cases (baseline, audio DMA, two
+padding levels, USB alone, and combined loads at two block sizes), followed by
+one **continuous 30-minute soak**. Keep the button released and pot still.
+It stops at the first failed check and preserves that run. `--soak-seconds` can
+select 1..3600 seconds for bring-up or a longer follow-up. The short cases are
+separate acquisitions; only the final soak is continuous. Neither script captures
+Saleae channels or flashes/resets a device.
+
+Trace mode retains every sample for the existing C++ replay, up to 150 seconds.
+Soak mode keeps servicing controls throughout, retaining a fixed-size aggregate
+for every second: sample/skip/error/action counts, cadence breaks, first/last
+timestamps, maximum work/interval time and valid ADC range. It supports one hour
+without a RAM buffer wrap. These aggregates are **not individually replayable**
+and cannot establish the exact shape of a transient or a missed pickup crossing.
+No USB output or download interrupts either acquisition; records transfer after
+audio stops. The timer is extended across raw counter wraps before conversion.
+
+The load envelope has its own `load_protocol=1`, echoed configuration and whole
+response checksum around unchanged protocol-2 control traces or `S` aggregate
+records. The host rejects incomplete/reordered/count-inconsistent data and saves
+raw bytes before validation. Nominal-load gates require complete service-slot
+coverage, no unexpected skips/ADC faults/cadence breaks or callback budget/interval
+faults, and plausible callback coverage within 0.5% (at least three callbacks)
+of nominal timing. Stationary runs additionally require zero button actions.
+A machine pass still says independent scope/behavior review is pending.
+
+Host tests exercise framing, corrupt/missing evidence, failed measurement gates,
+mock serial interruptions, hour-long aggregate accounting and timer wrap. The
+new firmware requires physical qualification, beginning with a short baseline
+and DMA-only paired capture before ramping the load. Existing measured traces
+continue to identify their older, actually tested firmware. The public trace
+exporter deliberately does not yet accept this new identity/load envelope.
 
 ### Transfer integrity
 

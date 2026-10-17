@@ -2,6 +2,12 @@
 
 ## Unreleased
 
+- Prepare optional Seed3 audio-DMA/USB load experiments and a continuous
+  aggregate soak recorder (up to one hour), with strict capture checks and a
+  stationary campaign runner. Physical qualification is pending; existing
+  measured traces do not validate this new firmware.
+- Retain attribution for the adapted libDaisy Seed3 SAI configuration.
+
 - Allow Daisy recordings up to 150 seconds so operator-led tests can tolerate
   delayed starts. Preserve the full waiting window, check device capacity before
   requesting a run, and retain support for the original 30-second images/traces.
