@@ -62,7 +62,7 @@ def public_writer(writer):
     return {k: writer[k] for k in ('packets', 'skipped_slots', 'max_lateness_s')}
 
 
-def export(source, prefix, startup_kind=None, load=False, pot_ohms=None, capacitor_nf=None):
+def export(source, prefix, startup_kind=None, load=False, pot_ohms=None, capacitor_nf=None, expected_status='pass'):
     import numpy as np
     from saleae.mso_api.capture import Capture, DigitalData, AnalogData
     data = (source / 'usb/raw.txt').read_bytes()
@@ -74,8 +74,11 @@ def export(source, prefix, startup_kind=None, load=False, pot_ohms=None, capacit
         assert control_data is not None, 'Aggregate soaks have no individual scope-matched control trace'
         assert metadata['status'] == 'complete'
         assert metadata['stationary'] is True, 'This load exporter expects a stationary reference window'
-        assert load_capture.assess(workload, metadata['stationary'], metadata['writer']), 'Failed load window'
+        load_capture.assess(workload, metadata['stationary'], metadata['writer'])
+        assert workload['checks']['status'] == expected_status, 'Unexpected quality outcome; review before publishing'
         assert pot_ohms == 100000 and capacitor_nf == 0, 'Declare the recorded reference fixture explicitly'
+    else:
+        assert expected_status == 'pass', 'Expected failures are supported only for load captures'
     _, run, rows = capture.parse(control_data)
     info = public_identity(data, load)
     if load:
@@ -166,7 +169,8 @@ def export(source, prefix, startup_kind=None, load=False, pot_ohms=None, capacit
     if workload is not None:
         evidence['evidence'] = 'Measured stationary controls under declared audio-DMA and inbound USB load'
         evidence['load'] = dict(configuration=workload['configuration'], counters=workload['counters'],
-                               host_writer=public_writer(metadata['writer']))
+                               host_writer=public_writer(metadata['writer']),
+                               quality_status=workload['checks']['status'], quality_failures=workload['checks']['failures'])
         for key, values in [('service_interval_us', np.diff(rises) * 1e6),
                             ('service_width_us', (np.asarray(falls) - np.asarray(rises)) * 1e6)]:
             evidence['scope'][key] = dict(min=float(np.min(values)), max=float(np.max(values)),
@@ -174,7 +178,7 @@ def export(source, prefix, startup_kind=None, load=False, pot_ohms=None, capacit
         evidence['limits'] = ('One fixture and bounded stationary run. Callback timing excludes SDK conversion and IRQ overhead; '
                               'padding is synthetic occupancy, not production DSP or audio-quality qualification. '
                               'Host USB pacing is best effort. No calibrated voltage, rail/brownout, jack-detection or universal timing claim. '
-                              'Native originals retained privately; published scope data are derived subsets.')
+                              'Native originals retained privately; published scope data are derived subsets. Declared quality failures remain failures.')
     else:
         assert metadata['declared_fixture']['pot_ohms'] == 100000
         assert metadata['declared_fixture']['capacitor_nf'] == 0
@@ -202,5 +206,6 @@ if __name__ == '__main__':
     parser.add_argument('--load', action='store_true', help='Export a complete load-protocol trace, not a soak')
     parser.add_argument('--pot-ohms', type=int, help='Required explicit fixture declaration for load traces')
     parser.add_argument('--capacitor-nf', type=float, help='Required explicit fixture declaration for load traces')
+    parser.add_argument('--expected-status', choices=('pass', 'fail'), default='pass')
     args = parser.parse_args()
-    export(args.capture, args.out_prefix, args.startup_kind, args.load, args.pot_ohms, args.capacitor_nf)
+    export(args.capture, args.out_prefix, args.startup_kind, args.load, args.pot_ohms, args.capacitor_nf, args.expected_status)

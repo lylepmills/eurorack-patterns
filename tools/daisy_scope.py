@@ -48,13 +48,15 @@ def match_service(rows, transitions, initial_high=False, startup=False):
         pre_application_high_intervals_s=[[a-rises[0], b-rises[0]] for a, b in prefix])
 
 
-def match_aggregate_service(buckets, transitions, initial_high=False):
-    """Check every pulse against complete 1 kHz, one-second soak buckets.
+def inspect_aggregate_service(buckets, transitions, initial_high=False):
+    """Inspect every pulse against complete 1 kHz, one-second soak buckets.
 
     This validates aggregate counts and extrema, not individual sample replay.
     Fit clocks within each second so slow oscillator drift over a long soak is
     visible without treating it as service jitter. Missing/extra pulses fail.
-    Failed or partial buckets require separate review and are not accepted here.
+    Failed or partial acquisition buckets require separate review and raise.
+    Local timing disagreements are returned explicitly for diagnostic reporting;
+    match_aggregate_service rejects any such disagreement.
     """
     edges = [float(t) for t in transitions]
     if (initial_high or not buckets or len(edges) != 2000 * len(buckets)
@@ -62,7 +64,7 @@ def match_aggregate_service(buckets, transitions, initial_high=False):
             or any(a >= b for a, b in zip(edges, edges[1:]))):
         raise ValueError('Incomplete aggregate service edges')
     rises, falls = edges[::2], edges[1::2]
-    scales, interval_errors, width_errors = [], [], []
+    scales, interval_errors, width_errors, mismatches = [], [], [], []
     maximum_interval = maximum_width = 0.
     for i, b in enumerate(buckets):
         if (b['second'] != i or b['samples'] != 1000 or b['missed']
@@ -78,7 +80,8 @@ def match_aggregate_service(buckets, transitions, initial_high=False):
         interval_error = abs(interval/scale-b['max_interval_us'])
         width_error = abs(width/scale-b['max_work_us'])
         if interval_error >= 5 or width_error >= 3:
-            raise ValueError('Aggregate interval/work maxima disagree with scope')
+            mismatches.append(dict(second=i, interval_error_us=interval_error,
+                                   work_width_error_us=width_error))
         scales.append((scale-1)*1e6)
         interval_errors.append(interval_error); width_errors.append(width_error)
         maximum_interval = max(maximum_interval, interval)
@@ -87,4 +90,16 @@ def match_aggregate_service(buckets, transitions, initial_high=False):
                 clock_scale_ppm_min=min(scales), clock_scale_ppm_max=max(scales),
                 max_interval_error_us=max(interval_errors), max_work_width_error_us=max(width_errors),
                 max_service_interval_us=maximum_interval, max_service_width_us=maximum_width,
+                mismatched_buckets=mismatches,
                 representation='All physical service pulses; per-second counts and extrema checked, no individual sample replay')
+
+
+def match_aggregate_service(buckets, transitions, initial_high=False):
+    report = inspect_aggregate_service(buckets, transitions, initial_high)
+    if report['mismatched_buckets']:
+        first = report['mismatched_buckets'][0]
+        raise ValueError('Aggregate interval/work maxima disagree with scope: '
+                         f"{len(report['mismatched_buckets'])} bucket(s), first second {first['second']}, "
+                         f"interval error {first['interval_error_us']:.3f} us, "
+                         f"width error {first['work_width_error_us']:.3f} us")
+    return report

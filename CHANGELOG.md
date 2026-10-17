@@ -10,6 +10,10 @@
   with explicit audio/USB workload, host pacing and scope timing evidence.
   Check long-soak pulse counts and per-second extrema independently; aggregate
   evidence never claims individual-sample replay.
+- Retain a measured 96-frame scheduling counterexample (1,593 skipped control
+  slots despite audio callbacks meeting their period) and an unqualified
+  30-minute soak with nine local scope-timing disagreements. Regression tests
+  must continue rejecting these failures; no acceptance bounds were widened.
 
 - Allow Daisy recordings up to 150 seconds so operator-led tests can tolerate
   delayed starts. Preserve the full waiting window, check device capacity before

@@ -371,6 +371,31 @@ published windows matched the device count and sequence checks. Physical scope
 alignment kept the existing bounds: under 5 us timestamp/interval mismatch and
 under 3 us work-width mismatch; observed errors were around 1 us or less.
 
+Two counterexamples remain explicit in the same corpus:
+
+- **Scheduling boundary, independently verified:** at 96-frame blocks and
+  650/1000 padding, with no USB traffic, a complete 10-second trace contained
+  8,407 observations and 1,593 skipped control slots. No audio callback exceeded
+  its own period. Scope alignment passed, with a 2000.020 us maximum service
+  interval. The nominal-service check correctly fails. Meeting the audio
+  deadline does not guarantee the control deadline, even with average CPU
+  headroom. The replay checks the actual observations; it does not invent the
+  skipped ones.
+- **30-minute soak, not qualified:** all 1,800,000 observations, 5,401,612 audio
+  callbacks and 796,049 received USB packets were accounted for. Device counters
+  reported no missed slots, ADC failures, malformed packets or button actions;
+  all 1,800,000 physical service pulses were present. However, nine one-second
+  buckets between seconds 1611 and 1668 disagree with the scope's local maxima
+  by up to 22.016 us for intervals and 20.312 us for widths. The cause is
+  unresolved. Whole-run maxima agree within 1 us and would hide this discrepancy.
+  The unchanged 5/3 us local bounds reject it. The complete aggregate wire record
+  and a declared two-second scope excerpt reproduce the rejection in regression
+  tests; passing that regression means detecting the disagreement, not passing
+  hardware qualification. Native originals remain retained. Next instrumentation
+  should measure raw-timer-to-marker timing and local timing bounds before
+  repeating the soak; do not widen bounds or attribute this to the control
+  library without evidence.
+
 The optional `L` command starts the Seed3 codec's real stereo SAI/DMA callbacks
 at nominal 48 kHz. Outputs are silent and inputs are ignored; the existing
 pot/button/marker wiring is sufficient. This is a scheduling experiment, not an
@@ -422,10 +447,13 @@ Saleae channels or flashes/resets a device.
 
 Trace mode retains every sample for the existing C++ replay, up to 150 seconds.
 Soak mode keeps servicing controls throughout, retaining a fixed-size aggregate
-for every second: sample/skip/error/action counts, cadence breaks, first/last
+for every second: counts of samples, skips, errors and button actions, cadence breaks, first/last
 timestamps, maximum work/interval time and valid ADC range. It supports one hour
 without a RAM buffer wrap. These aggregates are **not individually replayable**
 and cannot establish the exact shape of a transient or a missed pickup crossing.
+Pickup ownership and value changes are not retained in these aggregates; use
+full traces to check that behavior. Digital-only soak recordings also do not
+establish analog wiring or voltage stability throughout the window.
 No USB output or download interrupts either acquisition; records transfer after
 audio stops. The timer is extended across raw counter wraps before conversion.
 
@@ -445,14 +473,18 @@ ramping the load. Each measured trace identifies its exact firmware build.
 
 The [trace exporter](../tools/export_daisy_trace.py) accepts complete stationary
 load traces with `--load --pot-ohms 100000 --capacitor-nf 0`. It requires an
-explicit fixture declaration, full physical pulse/input coverage, replayable
-control records and passing machine checks. The
+explicit fixture declaration, full physical pulse/input coverage and replayable
+control records. Passing machine checks are the default; a counterexample
+requires `--expected-status fail` and retains its failed quality result. The
 [soak exporter](../tools/export_daisy_soak.py) checks every digital service pulse
 against the per-second aggregate counts and maxima. It fits clocks within each
 second to allow slow oscillator drift over long recordings without hiding
 interval/width mismatches. It does not reconstruct individual observations.
 An expected failed quality outcome must be declared explicitly when exporting
-a complete soak counterexample; it remains labelled as failed. Both exporters
+a complete soak counterexample; an independent timing disagreement requires
+`--expected-scope-status fail`. Neither becomes a qualified pass. The soak
+export retains an explicit local edge excerpt when timing comparison fails.
+Both exporters
 retain wire bytes and use an explicit metadata allowlist, excluding native
 vendor metadata and arbitrary host error text.
 
