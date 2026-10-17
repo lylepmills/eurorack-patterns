@@ -17,6 +17,10 @@ static bench::Timing Sample(uint32_t seq, uint64_t ticks, uint32_t width = 9600)
           begin, begin+120, begin+160, begin+width, begin+width+120, begin+width+160};
 }
 int main(int argc, char** argv) {
+  char decimal[21];
+  CHECK(std::strcmp(bench::TimingDecimal(0,decimal),"0")==0);
+  CHECK(std::strcmp(bench::TimingDecimal(UINT64_MAX,decimal),"18446744073709551615")==0);
+  CHECK(std::strcmp(bench::TimingDecimal(432000000000ull,decimal),"432000000000")==0);
   bench::Workload w; w.mode=2; w.duration=3600000; CHECK(w.Valid()); w.mode=3; CHECK(!w.Valid());
   bench::TimingBucket bucket; bucket.Reset();
   auto p = Sample(0,0); bucket.Add(p,p);

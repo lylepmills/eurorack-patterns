@@ -55,17 +55,29 @@ struct TimingBucket {
     }
   }
 };
+// newlib-nano formatted I/O supports C89 formats, not long long. Convert here
+// after acquisition, then pass only strings and 32-bit unsigned values to it.
+inline const char* TimingDecimal(uint64_t value, char (&text)[21]) {
+  text[20] = '\0';
+  unsigned i = 20;
+  do {
+    text[--i] = static_cast<char>('0' + value % 10);
+    value /= 10;
+  } while (value);
+  return text + i;
+}
 inline int FormatTiming(char* line, size_t size, uint32_t second, unsigned kind,
                         const Timing& p, const Timing& t) {
+  char elapsed[4][21];
   return std::snprintf(line, size,
-      "D,%u,%u,%llu,%llu,%u,%u,%u,%u,%u,%u,%u,%u,%u,"
-      "%llu,%llu,%u,%u,%u,%u,%u,%u,%u,%u,%u\n",
+      "D,%u,%u,%s,%s,%u,%u,%u,%u,%u,%u,%u,%u,%u,"
+      "%s,%s,%u,%u,%u,%u,%u,%u,%u,%u,%u\n",
       unsigned(second), kind,
-      static_cast<unsigned long long>(p.begin_elapsed), static_cast<unsigned long long>(p.end_elapsed),
+      TimingDecimal(p.begin_elapsed, elapsed[0]), TimingDecimal(p.end_elapsed, elapsed[1]),
       unsigned(p.seq), unsigned(p.time_us), unsigned(p.work_us), unsigned(p.begin_tick),
       unsigned(p.rise_before), unsigned(p.rise_after), unsigned(p.end_tick),
       unsigned(p.fall_before), unsigned(p.fall_after),
-      static_cast<unsigned long long>(t.begin_elapsed), static_cast<unsigned long long>(t.end_elapsed),
+      TimingDecimal(t.begin_elapsed, elapsed[2]), TimingDecimal(t.end_elapsed, elapsed[3]),
       unsigned(t.seq), unsigned(t.time_us), unsigned(t.work_us), unsigned(t.begin_tick),
       unsigned(t.rise_before), unsigned(t.rise_after), unsigned(t.end_tick),
       unsigned(t.fall_before), unsigned(t.fall_after));

@@ -72,6 +72,18 @@ class DiagnosticsTests(unittest.TestCase):
                     data[:-1]):
             with self.assertRaises(ValueError): load.parse(rehash(bad) if bad.endswith(b'\n') else bad)
 
+    def test_unsupported_embedded_printf_output_is_rejected(self):
+        data=synthetic()
+        # The first hardware diagnostic download exposed unsupported long-long
+        # formatting as literal "lu" tokens. Never accept or repair those rows.
+        bad=data.replace(b'D,0,0,0,9600,',b'D,0,0,lu,lu,')
+        self.assertNotEqual(bad,data)
+        with self.assertRaises(ValueError): load.parse(rehash(bad))
+        # Keep the embedded formatter on C89 conversions; a host libc passing
+        # long-long tests cannot establish newlib-nano compatibility.
+        source=(ROOT/'examples/daisy/diagnostics.h').read_text()
+        self.assertNotIn('%ll',source)
+
     def test_rehashed_clock_or_peak_corruption_rejected(self):
         data=synthetic()
         for kind,field,value in ((3,'work_us',41),(3,'end_elapsed',999999),

@@ -488,6 +488,15 @@ are diagnostic evidence, not guarantees about external pad transitions. Its
 The public soak exporter currently accepts ordinary aggregate mode only;
 diagnostic publication needs a separate evidence review.
 
+The first hardware diagnostic preflight exposed unsupported 64-bit `printf`
+formatting in the linked compact C runtime: diagnostic rows contained literal
+`lu` tokens and were rejected. The formatter now converts extended ticks to
+decimal text before using C89-compatible string/32-bit formats, with boundary
+and malformed-row regressions. This matches the documented
+[newlib-nano formatted-I/O limitation](https://sourceware.org/pipermail/newlib/2014/011493.html).
+It is a diagnostic-download defect, separate from the older soak disagreement;
+the corrected image still requires hardware verification.
+
 The load envelope has its own `load_protocol=1`, echoed configuration and whole
 response checksum around unchanged protocol-2 control traces or `S` aggregate
 records. The host rejects incomplete/reordered/count-inconsistent data and saves
