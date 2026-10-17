@@ -46,3 +46,45 @@ def match_service(rows, transitions, initial_high=False, startup=False):
         max_fit_residual_us=residual, max_interval_error_us=interval_error,
         max_work_width_error_us=width_error,
         pre_application_high_intervals_s=[[a-rises[0], b-rises[0]] for a, b in prefix])
+
+
+def match_aggregate_service(buckets, transitions, initial_high=False):
+    """Check every pulse against complete 1 kHz, one-second soak buckets.
+
+    This validates aggregate counts and extrema, not individual sample replay.
+    Fit clocks within each second so slow oscillator drift over a long soak is
+    visible without treating it as service jitter. Missing/extra pulses fail.
+    Failed or partial buckets require separate review and are not accepted here.
+    """
+    edges = [float(t) for t in transitions]
+    if (initial_high or not buckets or len(edges) != 2000 * len(buckets)
+            or any(not math.isfinite(t) for t in edges)
+            or any(a >= b for a, b in zip(edges, edges[1:]))):
+        raise ValueError('Incomplete aggregate service edges')
+    rises, falls = edges[::2], edges[1::2]
+    scales, interval_errors, width_errors = [], [], []
+    maximum_interval = maximum_width = 0.
+    for i, b in enumerate(buckets):
+        if (b['second'] != i or b['samples'] != 1000 or b['missed']
+                or b['adc_failures'] or b['cadence_breaks']
+                or not i*1000000 <= b['first_us'] < b['last_us'] < (i+1)*1000000):
+            raise ValueError('Incomplete or failed aggregate bucket')
+        begin, end = i*1000, (i+1)*1000
+        scale = (rises[end-1]-rises[begin])*1e6 / (b['last_us']-b['first_us'])
+        if abs(scale-1) >= .001:
+            raise ValueError('Aggregate clock scale outside bound')
+        interval = max((rises[j]-rises[j-1])*1e6 for j in range(max(1, begin), end))
+        width = max((falls[j]-rises[j])*1e6 for j in range(begin, end))
+        interval_error = abs(interval/scale-b['max_interval_us'])
+        width_error = abs(width/scale-b['max_work_us'])
+        if interval_error >= 5 or width_error >= 3:
+            raise ValueError('Aggregate interval/work maxima disagree with scope')
+        scales.append((scale-1)*1e6)
+        interval_errors.append(interval_error); width_errors.append(width_error)
+        maximum_interval = max(maximum_interval, interval)
+        maximum_width = max(maximum_width, width)
+    return dict(samples=len(rises), seconds=len(buckets),
+                clock_scale_ppm_min=min(scales), clock_scale_ppm_max=max(scales),
+                max_interval_error_us=max(interval_errors), max_work_width_error_us=max(width_errors),
+                max_service_interval_us=maximum_interval, max_service_width_us=maximum_width,
+                representation='All physical service pulses; per-second counts and extrema checked, no individual sample replay')

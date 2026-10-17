@@ -13,7 +13,7 @@ A cable should not change routing repeatedly while being inserted. A slow knob m
 - **Explore design ideas:** browse the [88-pattern catalog](docs/catalog.md) by problem, then check its source and limits. A catalog entry is not necessarily an implemented component.
 - **Use the C++ library:** follow the [shared-knob walkthrough](docs/quickstart.md), then build the optional [Raspberry Pi Pico adapter](examples/pico/README.md).
 - **Measure controls on hardware:** use the [Daisy Seed3 bench and capture tools](docs/validation.md#daisy-seed3-control-bench). Complete recorded regressions cover control movement, active faults, target changes and selected reset/power-on cases on one fixture.
-- **Help qualify load behavior:** the [audio/USB load and continuous-soak tools](docs/validation.md#audiousb-load-and-continuous-soak--prepared-not-yet-measured) are prepared for the next bench pass; physical qualification is pending.
+- **Measure load behavior:** the [audio/USB load and continuous-soak tools](docs/validation.md#audiousb-load-and-continuous-soak) include paired stationary reference traces. Results apply to the recorded fixture and workload; broader qualification remains open.
 - **Contribute evidence:** report a [bug, source correction or measured trace](https://github.com/lylepmills/eurorack-patterns/issues/new/choose), or pick a [bounded contribution task](https://github.com/lylepmills/eurorack-patterns/issues?q=is%3Aissue%20is%3Aopen%20label%3A%22help%20wanted%22).
 
 ## Three small improvements

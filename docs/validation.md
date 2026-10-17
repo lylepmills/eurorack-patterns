@@ -178,7 +178,7 @@ retaining the complete waiting period.
 
 This remains one fixture and a small set of manually operated runs. Remaining
 work includes repeated/varied startup and fault phases, other pots and boards,
-audio/IRQ workloads and soaks, real jack/gate circuitry, pulse/CV timing, and a
+broader audio/IRQ workloads, real jack/gate circuitry, pulse/CV timing, and a
 separate power-cut/brownout/storage campaign. No library control behavior changed
 as a result of this pass.
 
@@ -341,7 +341,35 @@ This observes the application **after peripheral initialization**. It does not
 capture supply rise, ROM/bootloader execution, or clock/RAM/ADC setup. Record
 those separately if the question concerns earlier electrical/startup behavior.
 
-### Audio/USB load and continuous soak — prepared, not yet measured
+### Audio/USB load and continuous soak
+
+Three complete paired stationary traces from the first load pass are available
+in [the measured corpus](../tests/measured/daisy/2026-10-16-load), with
+[replay and physical-evidence checks](../tests/test_daisy_load_measured.py).
+Each contains 10,000 observations on the same Seed3/B100k fixture, with the pot
+near its midpoint and button released. All service pulses matched; no missed
+slots, ADC failures, unexpected actions or callback timing flags occurred.
+
+| Recorded workload | Maximum physical service interval | Maximum physical service width |
+| --- | --- | --- |
+| Audio stopped, no USB traffic | 1000.383 us | 141.234 us |
+| Real DMA callbacks, no padding or USB traffic | 1004.978 us | 145.576 us |
+| 650/1000 callback padding, 16-frame blocks, requested 500 USB packets/s | 1229.155 us | 566.010 us |
+
+These are extrema from bounded recordings, not universal deadlines or calibrated
+accuracy claims. The separate short matrix also passed at 48-frame blocks, but
+its firmware-reported maximum interval reached 1669 us. **Block size changes
+worst-case foreground latency even at the same callback padding fraction.**
+Control validity and button behavior still need testing while an operator moves
+the controls under these loads. Production DSP, other interrupt priorities,
+display/storage work and other boards remain separate qualification work.
+
+The fixture's actual callback rate was about 3000.9/s at 16-frame blocks. Host
+USB delivery was below its requested rate; skipped host send slots remain in
+the evidence and are not attributed to device loss. Every sent packet in these
+published windows matched the device count and sequence checks. Physical scope
+alignment kept the existing bounds: under 5 us timestamp/interval mismatch and
+under 3 us work-width mismatch; observed errors were around 1 us or less.
 
 The optional `L` command starts the Seed3 codec's real stereo SAI/DMA callbacks
 at nominal 48 kHz. Outputs are silent and inputs are ignored; the existing
@@ -411,11 +439,22 @@ of nominal timing. Stationary runs additionally require zero button actions.
 A machine pass still says independent scope/behavior review is pending.
 
 Host tests exercise framing, corrupt/missing evidence, failed measurement gates,
-mock serial interruptions, hour-long aggregate accounting and timer wrap. The
-new firmware requires physical qualification, beginning with a short baseline
-and DMA-only paired capture before ramping the load. Existing measured traces
-continue to identify their older, actually tested firmware. The public trace
-exporter deliberately does not yet accept this new identity/load envelope.
+mock serial interruptions, hour-long aggregate accounting and timer wrap. Begin
+new hardware qualification with paired baseline and DMA-only captures before
+ramping the load. Each measured trace identifies its exact firmware build.
+
+The [trace exporter](../tools/export_daisy_trace.py) accepts complete stationary
+load traces with `--load --pot-ohms 100000 --capacitor-nf 0`. It requires an
+explicit fixture declaration, full physical pulse/input coverage, replayable
+control records and passing machine checks. The
+[soak exporter](../tools/export_daisy_soak.py) checks every digital service pulse
+against the per-second aggregate counts and maxima. It fits clocks within each
+second to allow slow oscillator drift over long recordings without hiding
+interval/width mismatches. It does not reconstruct individual observations.
+An expected failed quality outcome must be declared explicitly when exporting
+a complete soak counterexample; it remains labelled as failed. Both exporters
+retain wire bytes and use an explicit metadata allowlist, excluding native
+vendor metadata and arbitrary host error text.
 
 ### Transfer integrity
 
