@@ -392,7 +392,7 @@ Two counterexamples remain explicit in the same corpus:
   and a declared two-second scope excerpt reproduce the rejection in regression
   tests; passing that regression means detecting the disagreement, not passing
   hardware qualification. Native originals remain retained. The optional timing
-  diagnostic mode below retains raw-timer-to-marker evidence for the next run;
+  diagnostic mode below retains raw-timer-to-marker evidence in a later run;
   it has not yet resolved or qualified this failure. Do not widen bounds or
   attribute this to the control library without evidence.
 
@@ -507,7 +507,37 @@ each unloaded and with 650/1000 audio padding, 16-frame blocks and requested
 passed. Diagnostic retention reached 6.217 us unloaded and 7.700 us loaded;
 retained CPU brackets contained their corresponding measured intervals and
 widths in these short runs. These are observations, not universal overhead bounds.
-The original late-run disagreement remains unresolved pending long-run evidence.
+
+A subsequent **continuous 30-minute diagnostic soak passed** with the same
+650/1000 padding, 16-frame blocks and requested 500 USB packets/s. All 1,800,000
+physical service pulses and 5,401,612 audio callbacks were accounted for, with
+zero skipped control slots, ADC failures, cadence breaks or button actions.
+The host sent 811,708 packets, all received with valid sequence and contents;
+87,968 host pacing slots were skipped and maximum host lateness was 31.257 ms.
+This remains best-effort traffic, not precisely periodic USB stimulation.
+
+All 1,800 per-second comparisons passed the unchanged limits. Maximum interval
+disagreement was 0.958 us and width disagreement 0.934 us; maximum physical
+service interval was 1231.583 us and marker width 571.272 us. Raw ticks crossed
+100 complete counter periods without an extended-clock validation error.
+The 18,000 retained witness slots represented 11,027 distinct current observations
+(18,347 pulses including predecessors). Each current observation's scope
+interval and width fit its corresponding CPU bracket. Two per-second interval
+maxima and three width maxima were outside the retained current observations;
+the complete native capture, rather than this selected subset, establishes their
+aggregate comparison.
+Maximum observed start/end guards were 0.467/0.450 us, and retention bookkeeping
+reached 17.883 us, including possible interrupt preemption. These maxima describe
+this run, not worst-case execution guarantees.
+
+The [timing corpus](../tests/measured/daisy/2026-10-17-timing) preserves the
+complete short and long wire recordings plus declared selected scope pulses.
+Its [regression checks](../tests/test_daisy_timing_measured.py) validate the
+extended counters and recalculate selected same-event physical comparisons.
+**The older disagreement was not reproduced and remains unexplained.**
+Instrumentation changed between the runs, so this does not establish that the
+original adapter is fixed or identify a faulty component. Button/knob movement
+under load and broader workload/startup coverage remain separate validation work.
 
 The load envelope has its own `load_protocol=1`, echoed configuration and whole
 response checksum around unchanged protocol-2 control traces or `S` aggregate

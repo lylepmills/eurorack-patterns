@@ -2,6 +2,9 @@
 
 ## Unreleased
 
+- Preserve a passing continuous 30-minute diagnostic soak: 1.8 million physical
+  service pulses, unchanged timing limits and selected raw-timer comparisons.
+  The earlier late-run disagreement did not recur and remains unresolved.
 - Retain four measured short timing comparisons with diagnostics off/on and
   audio/USB load off/on. Explicit diagnostic export preserves complete wire data
   and the physical pulses for retained observations and their predecessors;
@@ -9,7 +12,7 @@
 - Add optional Daisy timing diagnostics with raw tick/GPIO-call brackets,
   retained maximum-event predecessors and measured retention cost. Host checks
   cover wrap, long elapsed time, wire integrity and same-pulse scope comparison;
-  hardware qualification of this instrumentation remains pending.
+  short paired comparisons and one long stationary run now have measured evidence.
 - Add optional Seed3 audio-DMA/USB load experiments and a continuous
   aggregate soak recorder (up to one hour), with strict capture checks and a
   stationary campaign runner.

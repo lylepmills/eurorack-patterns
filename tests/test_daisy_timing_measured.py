@@ -27,6 +27,10 @@ def verify(name, seconds, quality='pass', scope='pass'):
     assert s['checks']['failures']==meta['quality_failures']
     assert meta['scope_status']==scope
     assert meta['validation_status']==('pass' if quality==scope=='pass' else 'fail')
+    if scope == 'pass':
+        assert not meta['scope']['mismatched_buckets']
+        assert meta['scope']['max_interval_error_us'] < 5
+        assert meta['scope']['max_work_width_error_us'] < 3
     assert s['counters']['samples']==meta['scope']['samples']==1000*seconds
     assert not s['actions'] and meta['scope']['button_released_throughout']
     assert meta['scope']['action_edges']==0
@@ -68,8 +72,20 @@ def verify(name, seconds, quality='pass', scope='pass'):
     assert abs(width_error-timing['summary']['max_witness_width_outside_cpu_bracket_us'])<.0001
     assert abs(interval_error-timing['summary']['max_witness_interval_outside_cpu_bracket_us'])<.0001
     assert timing['summary']['original_acceptance']==scope
+    if seconds == 1800:
+        # This real elapsed-time run crosses 100 raw counter wraps and the older
+        # failure window. Parsing validates extended ticks before conversion;
+        # the selected physical evidence cannot qualify omitted pulse details.
+        assert buckets[-1]['timing']['witnesses'][1]['current']['begin_elapsed'] > 100 * 2**32
+        assert s['configuration']['audio_permille']==650
+        assert s['configuration']['block_size']==16 and s['configuration']['usb_hz']==500
+        assert width_error==interval_error==0
+        assert [b['second'] for b in timing['buckets'][1611:1669]]==list(range(1611,1669))
 
 
 for name in ('aggregate-baseline','diagnostic-baseline','aggregate-combined','diagnostic-combined'):
     verify(name,10)
     print('PASS:',name,'complete 10-second aggregate evidence; selected diagnostic pulses checked where present')
+
+verify('soak-30m',1800)
+print('PASS: soak-30m complete 1800-second diagnostic evidence; selected pulse brackets agree; older failure remains unresolved')
