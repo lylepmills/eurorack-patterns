@@ -154,12 +154,18 @@ int main() {
   // five ticks. Restarting the fade on every request finishes nothing while
   // requests keep arriving; keeping only the latest request completes the
   // running fade, then starts one fade to the newest preset.
+  // The running fade is tracked by an explicit busy flag. An earlier form that
+  // used fade_end == -1 as the idle sentinel was folded wrongly by GCC 13.5 and
+  // 14.4 at -O2/-O3 (the completion count read back as zero one tick after it
+  // was incremented; -fno-tree-fre avoided it), while Clang, MSVC, -O0 and the
+  // sanitized build were unaffected.
   LatestRequest<int> latest;
   const int kFadeTicks = 5;
   const int expected_started[] = {1, 3, 6};
-  int restart_end = -1, restart_done = 0, fade_end = -1, done = 0, started = 0;
+  bool busy = false;
+  int restart_end = -1, restart_done = 0, fade_end = 0, done = 0, started = 0;
   for (int tick = 0; tick < 15; ++tick) {
-    if (tick == fade_end) { ++done; fade_end = -1; }
+    if (busy && tick == fade_end) { ++done; busy = false; }
     if (tick == restart_end) { ++restart_done; restart_end = -1; }
     if (tick % 2 == 0 && tick <= 10) {
       const int preset = tick / 2 + 1;
@@ -167,13 +173,14 @@ int main() {
       latest.Request(preset);
     }
     int preset = 0;
-    if (fade_end < 0 && latest.Take(preset)) {
+    if (!busy && latest.Take(preset)) {
       CHECK(started < 3 && preset == expected_started[started]);
       ++started;
+      busy = true;
       fade_end = tick + kFadeTicks;
     }
     CHECK(restart_done == 0 && done == (tick >= 10 ? 2 : tick >= 5 ? 1 : 0));
     std::printf("transitions,%d,%d,%d\n", tick, restart_done, done);
   }
-  CHECK(started == 3 && restart_end == 15 && !latest.pending());
+  CHECK(started == 3 && busy && fade_end == 15 && restart_end == 15 && !latest.pending());
 }
