@@ -150,6 +150,6 @@ the portable API and hardware-validation scope are unchanged.
 | G09 | Recipe | Test real packed schemas, guard bytes and migration of changed wire layouts. |
 | G10 | Recipe + measure | Specify page validity, initial/wrapped generation ordering, gap scan and power-cut recovery. |
 | G11 | Recipe | Test all persisted semantic names against runtime mappings across schema versions. |
-| H01 | Measure | Specify useful and survival input ranges including powered-off behavior. |
+| H01 | Measure | Specify useful and survival input ranges including powered-off behavior; check voltage-only ratings behind coupling capacitors and during insertion. |
 | H02 | Measure | Test output shorts and precision under realistic loads. |
 | H03 | Measure | Measure loaded-jack pitch voltage and fan-out error. |
