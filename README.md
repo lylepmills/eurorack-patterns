@@ -24,7 +24,7 @@ Each picture is generated from an executable-checked **synthetic** sequence in t
 
 ## Pick your path
 
-- **Designing a module:** browse the [88-pattern catalog](docs/catalog.md) by problem. Each entry names its evidence (code, manual, maker account or release notes), cites a pinned source, and proposes a check; the [source and bug-history pass](docs/research-pass-2.md) records the research scope and unresolved reports.
+- **Designing a module:** browse the [89-pattern catalog](docs/catalog.md) by problem. Each entry names its evidence (code, manual, maker account, release notes or datasheet), cites a pinned source, and proposes a check; the [source and bug-history pass](docs/research-pass-2.md) records the research scope and unresolved reports.
 - **Writing firmware:** follow the [shared-knob walkthrough](docs/quickstart.md), start from the example below, then see the optional [Raspberry Pi Pico adapter](examples/pico/README.md).
 - **Evaluating the claims:** read the [validation guide](docs/validation.md) for evidence levels, the reusable integration lessons and what remains outside the claim, and the [coverage map](docs/coverage.md) for which patterns have code. Freshness, ownership, recovery and acquisition deadlines belong in every adapter.
 - **Contributing:** report a [bug, source correction or measured trace](https://github.com/lylepmills/eurorack-patterns/issues/new/choose) or pick a [bounded contribution task](https://github.com/lylepmills/eurorack-patterns/issues?q=is%3Aissue%20is%3Aopen%20label%3A%22help%20wanted%22); [CONTRIBUTING.md](CONTRIBUTING.md) states the public scope and evidence rules. Sources are credited beside each observation and in [ATTRIBUTION.md](ATTRIBUTION.md).

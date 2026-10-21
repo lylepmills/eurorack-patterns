@@ -1,6 +1,6 @@
 # Eurorack micro-pattern catalog
 
-Research snapshot: 13 October 2026. A catalog of 88 small design choices that can make a module feel predictable while patching, playing, editing and recovering from mistakes. The emphasis is on reusable behavior rather than synthesis algorithms.
+Research snapshot: 13 October 2026. A catalog of 89 small design choices that can make a module feel predictable while patching, playing, editing and recovering from mistakes. The emphasis is on reusable behavior rather than synthesis algorithms.
 
 The strongest common principle is to separate **what the user or signal is doing** from **when it is safe and musically appropriate to act on it**. Jack presence, gate edges, knob movement, clock acquisition and preset loading need different policies. A blanket “debounce everything” or “smooth everything” rule breaks useful behavior.
 
@@ -24,7 +24,7 @@ These are candidates for reusable contracts. See [coverage](coverage.md) for the
 ## Browse by problem
 
 - [Jack presence and trigger capture](#jack-presence-and-trigger-capture) — A01–A08
-- [Analogue acquisition and filtering](#analogue-acquisition-and-filtering) — B01–B06
+- [Analogue acquisition and filtering](#analogue-acquisition-and-filtering) — B01–B07
 - [Knobs and gestures](#knobs-and-gestures) — C01–C14
 - [Visible state and reversible actions](#visible-state-and-reversible-actions) — D01–D13
 - [Musical timing and synchronization](#musical-timing-and-synchronization) — E01–E14
@@ -33,7 +33,7 @@ These are candidates for reusable contracts. See [coverage](coverage.md) for the
 - [Electrical boundaries](#electrical-boundaries) — H01–H03
 
 <!-- catalog-index:begin -->
-All 88 entries, in catalog order:
+All 89 entries, in catalog order:
 
 | ID | Pattern |
 | --- | --- |
@@ -53,6 +53,7 @@ All 88 entries, in catalog order:
 | B04 | [Budget acquisition time at the worst source impedance](#b04-budget-acquisition-time-at-the-worst-source-impedance) |
 | B05 | [Treat averaging and calibration as different tools](#b05-treat-averaging-and-calibration-as-different-tools) |
 | B06 | [Keep input paths separately observable](#b06-keep-input-paths-separately-observable) |
+| B07 | [Let a timer and DMA own the acquisition frame](#b07-let-a-timer-and-dma-own-the-acquisition-frame) |
 | **Knobs and gestures** | |
 | C01 | [Make an attenuverter's zero easy to find](#c01-make-an-attenuverters-zero-easy-to-find) |
 | C02 | [Give important continuous values broad landing zones](#c02-give-important-continuous-values-broad-landing-zones) |
@@ -150,7 +151,7 @@ At 48 kHz, the 4 kHz block callback and prescaler of two give a nominal 32 ms wi
 
 Measured follow-up: invalid observations must also break tentative qualification. The [Daisy audio/IRQ campaign](bench/daisy.md#jack-audiointerrupt-load-results) found that a detector can preserve its published state correctly yet stop qualifying new states when long callbacks repeatedly interrupt acquisition. Budget the longest interruption and test recovery; passing audio deadlines alone does not establish control responsiveness.
 
-The [scheduled-acquisition follow-up](bench/daisy.md#scheduled-jack-acquisition-results) split probe drive, settling and conversion completion into bounded interrupt phases. All twelve measured load profiles qualified both states, including the six previously starved profiles, while retaining invalidity rules. Keep one owner per acquisition, bind each completed conversion to its probe, and measure the cost imposed on audio; changing interrupt priority alone is not a universal recipe.
+The [scheduled-acquisition follow-up](bench/daisy.md#scheduled-jack-acquisition-results) split probe drive, settling and conversion completion into bounded interrupt phases. All twelve measured load profiles qualified both states, including the six previously starved profiles, while retaining invalidity rules. Keep one owner per acquisition, bind each completed conversion to its probe, and measure the cost imposed on audio; changing interrupt priority alone is not a universal recipe. [B07](#b07-let-a-timer-and-dma-own-the-acquisition-frame) records the hardware-timed alternative: a timer-triggered, DMA-chained scan that leaves the CPU one interrupt per frame.
 
 ### A02 Test the first cable between separate cases
 
@@ -166,7 +167,7 @@ The [scheduled-acquisition follow-up](bench/daisy.md#scheduled-jack-acquisition-
 
 ### A05 Preserve brief events across slower processing domains
 
-*Code.* **Observed:** Braids OR-latches detected triggers at the audio interrupt rate until a completed ADC scan consumes them; it separately stores sample-level sync flags. **Reuse:** carry edges, not merely the current logic level, across rate boundaries. **Tradeoff/test:** a boolean latch collapses multiple events; use a counter/queue where multiplicity matters. Test pulses shorter than the control period. [Trigger capture](https://github.com/pichenettes/eurorack/blob/f4cfa7697095a28d292bff758beb51deb49b5a86/braids/braids.cc#L102-L135).
+*Code.* **Observed:** Braids OR-latches detected triggers at the audio interrupt rate until a completed ADC scan consumes them; it separately stores sample-level sync flags. **Reuse:** carry edges, not merely the current logic level, across rate boundaries. **Tradeoff/test:** a boolean latch collapses multiple events; use a counter/queue where multiplicity matters. Test pulses shorter than the control period. [Trigger capture](https://github.com/pichenettes/eurorack/blob/f4cfa7697095a28d292bff758beb51deb49b5a86/braids/braids.cc#L102-L135). **Counterexample (Code and manual):** Plaits instead reads its trigger input once per 12-sample block (250 µs at 48 kHz) through the A04 Schmitt thresholds, so a pulse that rises and falls between two block reads is never seen; its manual describes what the trigger does but states no minimum pulse width (checked 2026-10-21). A module that follows an established reference instrument this way should state the minimum width it accepts and test at exactly that width; the tradeoff is familiarity for players of the reference instrument against catching sub-block pulses. [Per-block control read](https://github.com/pichenettes/eurorack/blob/f4cfa7697095a28d292bff758beb51deb49b5a86/plaits/ui.cc#L450-L459), [per-block render](https://github.com/pichenettes/eurorack/blob/f4cfa7697095a28d292bff758beb51deb49b5a86/plaits/plaits.cc#L122), [trigger evaluation](https://github.com/pichenettes/eurorack/blob/f4cfa7697095a28d292bff758beb51deb49b5a86/plaits/dsp/voice.cc#L99-L116), [block size](https://github.com/pichenettes/eurorack/blob/f4cfa7697095a28d292bff758beb51deb49b5a86/plaits/dsp/dsp.h#L51), [Plaits manual, Inputs and outputs](https://pichenettes.github.io/mutable-instruments-documentation/modules/plaits/manual/).
 
 ### A06 Keep button debounce out of high-rate clock paths
 
@@ -196,7 +197,7 @@ The [scheduled-acquisition follow-up](bench/daisy.md#scheduled-jack-acquisition-
 
 ### B04 Budget acquisition time at the worst source impedance
 
-*Maker account.* Thea Flowers explains ADC sample-capacitor settling and the pot's maximum source impedance near midpoint. **Reuse:** validate settling across mux channel jumps, not just static endpoints. Check alternating minimum/maximum channels with the pot at center; longer acquisition costs scan bandwidth. [SAM D21 ADC, Input impedance](https://blog.thea.codes/getting-the-most-out-of-the-samd21-adc/#input-impedance).
+*Maker account.* Thea Flowers explains ADC sample-capacitor settling and the pot's maximum source impedance near midpoint. **Reuse:** validate settling across mux channel jumps, not just static endpoints. Check alternating minimum/maximum channels with the pot at center; longer acquisition costs scan bandwidth. [SAM D21 ADC, Input impedance](https://blog.thea.codes/getting-the-most-out-of-the-samd21-adc/#input-impedance). **Tradeoff (proposed check; vendor application notes):** ST relates the same settling to a time constant (RADC + RAIN) × CADC that the sampling time must cover, and TI notes that on some ADC architectures the sampling capacitor starts near the previously converted channel's voltage, so an under-settled channel reads as memory cross-talk from its neighbour. TI's mitigation converts a fixed reference (zero-scale in its example) immediately before the sensitive channel, which turns a neighbour-dependent error into a repeatable gain error that calibration can remove, at the cost of a conversion slot and latency per protected channel. A “park step” of this kind in a pot scan makes each pot's settling error depend on its own position rather than its neighbour's; it is proposed here, not measured. Check: read one pot with each neighbour at both extremes, with and without the park step, and weigh the error against the scan bandwidth lost. [AN2834 Rev 10, §3.2.7 Effect of the analog signal source resistance](https://www.st.com/resource/en/application_note/an2834-how-to-get-the-best-adc-accuracy-in-stm32-microcontrollers-stmicroelectronics.pdf), [SPRACW9A, §1 and §5.1–5.2 Pre-Sampling VREFLO](https://www.ti.com/lit/pdf/spracw9).
 
 ### B05 Treat averaging and calibration as different tools
 
@@ -205,6 +206,10 @@ The [scheduled-acquisition follow-up](bench/daisy.md#scheduled-jack-acquisition-
 ### B06 Keep input paths separately observable
 
 *Maker account.* MI notes that separate acquisition makes pot, attenuverter and CV independently testable. **Reuse:** factory diagnostics should expose each raw input as well as the combined parameter, so a bad pot cannot masquerade as a CV fault. Check one deliberately fixed input at a time. [MI CV inputs, Advantages](https://pichenettes.github.io/mutable-instruments-documentation/tech_notes/cv_inputs/#advantages).
+
+### B07 Let a timer and DMA own the acquisition frame
+
+*Code.* **Observed:** Beads scans its seven multiplexed pots from a hardware timer: the timer's trigger output starts each ADC conversion, one DMA stream writes each result into the value array, and a second DMA stream driven by the same timer's update event writes the next multiplexer select word to the GPIO port. The CPU's only per-step work is a timer interrupt that counts the remaining steps and stops the timer after the last one; the audio callback reads the completed values and restarts the scan once per block. The step period is fixed at initialization (a 5 kHz full-cycle rate for the seven pots). **Reuse:** when hardware paces the scan and DMA moves the data, a long audio callback delays the consumer but not the acquisition, so the scan cannot be starved the way a foreground-polled scan can; per-step settling becomes a timer period rather than a software wait, and the chain can be arranged so the CPU takes one interrupt per completed frame instead of one per step. **Tradeoff/check (proposed):** a fixed schedule must budget the worst settling case at every step (B04) and cannot adapt to a slow source; measure the frame rate against the schedule, count missed or late frames, and invalidate any probe-to-conversion pairing whenever a DMA half-buffer boundary is found misaligned with the frame. The [scheduled-acquisition follow-up](bench/daisy.md#scheduled-jack-acquisition-results) under A01 measured the interrupt-phased alternative; neither approach was measured against the other here. [Triggered ADC and DMA setup](https://github.com/pichenettes/eurorack/blob/f4cfa7697095a28d292bff758beb51deb49b5a86/beads/drivers/pots_adc.cc#L161-L223), [timer and select-word DMA](https://github.com/pichenettes/eurorack/blob/f4cfa7697095a28d292bff758beb51deb49b5a86/beads/drivers/pots_adc.cc#L225-L291), [scan start and per-step interrupt](https://github.com/pichenettes/eurorack/blob/f4cfa7697095a28d292bff758beb51deb49b5a86/beads/drivers/pots_adc.cc#L293-L361), [restart from the audio callback](https://github.com/pichenettes/eurorack/blob/f4cfa7697095a28d292bff758beb51deb49b5a86/beads/cv_reader.cc#L88-L97).
 
 ## Knobs and gestures
 
@@ -226,11 +231,11 @@ The [scheduled-acquisition follow-up](bench/daisy.md#scheduled-jack-acquisition-
 
 ### C05 Rejoin the original parameter smoothly after a hidden edit
 
-*Code.* **Observed:** Beads returns through relative catch-up: movement adjusts the stored main value with a bounded direction-dependent ratio until physical and stored positions meet. **Reuse:** avoid a parameter jump when a shared knob resumes its primary role. **Tradeoff/test:** temporary non-1:1 feel; test near endpoints and repeated enter/exit cycles. [Catch-up](https://github.com/pichenettes/eurorack/blob/f4cfa7697095a28d292bff758beb51deb49b5a86/beads/pot_controller.h#L126-L144).
+*Code.* **Observed:** Beads returns through relative catch-up: movement adjusts the stored main value with a bounded direction-dependent ratio until physical and stored positions meet. **Reuse:** avoid a parameter jump when a shared knob resumes its primary role. **Tradeoff/test:** temporary non-1:1 feel; test near endpoints and repeated enter/exit cycles. **Tradeoff (proposed):** crossing pickup, paired with an on-screen indicator of the value waiting to be picked up, removes the temporary non-1:1 feel entirely; its cost is a knob that does nothing until it crosses the stored value, so the indicator must be visible from the playing position. [Catch-up](https://github.com/pichenettes/eurorack/blob/f4cfa7697095a28d292bff758beb51deb49b5a86/beads/pot_controller.h#L126-L144).
 
 ### C06 Guide soft takeover
 
-*Manual.* **Befaco Oneiroi.** **Observed:** Catch mode waits for the knob to reach the parameter value; LEDs indicate direction and acknowledge capture. **Reuse:** prevent jumps after page changes or randomization. **Caveat:** define the pickup target under CV. **Test:** approach from both directions with noisy knobs and active modulation. (§15.1) [Oneiroi manual](https://befaco.org/docs/Oneiroi/Oneiroi_User_Manual.pdf).
+*Manual.* **Befaco Oneiroi.** **Observed:** Catch mode waits for the knob to reach the parameter value; LEDs indicate direction and acknowledge capture. **Reuse:** prevent jumps after page changes or randomization. **Caveat:** define the pickup target under CV. **Tradeoff (proposed):** against relative catch-up (C05), a crossing policy leaves the knob inert until it reaches the waiting value; an indicator of that value is what makes the dead travel acceptable. **Test:** approach from both directions with noisy knobs and active modulation. (§15.1) [Oneiroi manual](https://befaco.org/docs/Oneiroi/Oneiroi_User_Manual.pdf).
 
 ### C07 Once movement is intentional, keep following small increments
 
@@ -242,7 +247,7 @@ The [scheduled-acquisition follow-up](bench/daisy.md#scheduled-jack-acquisition-
 
 ### C09 Make gesture timing adjustable
 
-*Manual.* **ALM Pamela’s PRO Workout.** **Observed:** the Enc Hold Time setting adjusts how long the program knob must remain pressed before a hold is recognized. **Reuse:** accommodate different playing styles and dexterity. **Caveat:** §6.4 gives no numeric range or recommended duration; keep a reliable distinction between press and hold. **Test:** the shortest/longest supported settings, near-threshold releases, and repeated quick clicks. [Pamela’s PRO operation manual](https://assets.busycircuits.com/docs/alm034-manual.pdf#page=21), **v0.4 / firmware 131**, dated 2026-10-01, **§6.4 Enc Hold Time, printed/PDF p.21**; checked 2026-10-21.
+*Manual.* **ALM Pamela’s PRO Workout.** **Observed:** the Enc Hold Time setting adjusts how long the program knob must remain pressed before a hold is recognized. **Reuse:** accommodate different playing styles and dexterity. **Caveat:** §6.4 gives no numeric range or recommended duration; keep a reliable distinction between press and hold. **Caveat (proposed):** the Reuse line is not unconditional. A module whose menu policy forbids extra settings can instead fix one conservative hold time, state it, and verify it with players of differing dexterity; the test then covers that single value. **Test:** the shortest/longest supported settings, near-threshold releases, and repeated quick clicks. [Pamela’s PRO operation manual](https://assets.busycircuits.com/docs/alm034-manual.pdf#page=21), **v0.4 / firmware 131**, dated 2026-10-01, **§6.4 Enc Hold Time, printed/PDF p.21**; checked 2026-10-21.
 
 ### C10 Navigate laterally across channels
 
@@ -326,7 +331,7 @@ The [scheduled-acquisition follow-up](bench/daisy.md#scheduled-jack-acquisition-
 
 ### E02 Latch disruptive selection CV at the musical event
 
-*Code.* **Observed:** Plaits captures engine CV at the trigger edge; without a trigger cable it follows continuously. **Reuse:** event-sample mode/algorithm choices that should remain consistent during a note. **Tradeoff/test:** ongoing CV changes become deferred; test modulation around the trigger boundary and patch/unpatch behavior. [Engine CV capture](https://github.com/pichenettes/eurorack/blob/f4cfa7697095a28d292bff758beb51deb49b5a86/plaits/dsp/voice.cc#L102-L124).
+*Code.* **Observed:** Plaits captures engine CV at the trigger edge; without a trigger cable it follows continuously. **Reuse:** event-sample mode/algorithm choices that should remain consistent during a note. **Tradeoff/test:** ongoing CV changes become deferred; test modulation around the trigger boundary and patch/unpatch behavior. **Tradeoff (proposed, no product cited):** a fixed latch-on-trigger for every disruptive CV is one policy; a per-input user toggle that defaults to live following lets the player choose which CVs are sampled at the event, at the cost of one more setting to explain and a test matrix that doubles per input. [Engine CV capture](https://github.com/pichenettes/eurorack/blob/f4cfa7697095a28d292bff758beb51deb49b5a86/plaits/dsp/voice.cc#L102-L124).
 
 ### E03 Give inferred events a refractory interval
 
@@ -512,7 +517,7 @@ The [scheduled-acquisition follow-up](bench/daisy.md#scheduled-jack-acquisition-
 
 ### H01 Distinguish working range from survival range
 
-*Maker account.* Castor & Pollux accepts a nominal 0–6 V pitch signal but conditions the input for signals beyond that range. **Reuse:** specify useful modulation range and non-destructive input range separately, including powered-off behavior; a software clamp cannot protect a pin. Check every jack at the promised limits and during power sequencing. [Castor & Pollux, Control voltage inputs](https://blog.thea.codes/designing-castor-and-pollux/#control-voltage-inputs).
+*Maker account.* Castor & Pollux accepts a nominal 0–6 V pitch signal but conditions the input for signals beyond that range. **Reuse:** specify useful modulation range and non-destructive input range separately, including powered-off behavior; a software clamp cannot protect a pin. Check every jack at the promised limits and during power sequencing. [Castor & Pollux, Control voltage inputs](https://blog.thea.codes/designing-castor-and-pollux/#control-voltage-inputs). **Counterexample (datasheet):** a fault-current walk from each jack to the first semiconductor misses limits stated only as voltages. The RP2040 rates voltage at any IO pin at −0.5 V to IOVDD + 0.5 V, and the TI TAC5212 codec rates its analog input pins at −0.3 V to 5.656 V relative to VSS; neither table gives a current figure, so a series resistor sized for current alone does not establish compliance, and both negative floors are small against bipolar Eurorack signals. **Checks (proposed):** evaluate the voltage-only rating at the first device behind any series coupling capacitor, where a step lands whole on the far side before the capacitor charges; and test during insertion, when a plug's tip wipes across the sleeve and normal contacts, as well as seated. [RP2040 datasheet, Table 622 Absolute maximum ratings, build 2025-02-20](https://datasheets.raspberrypi.com/rp2040/rp2040-datasheet.pdf), [TAC5212 datasheet, Absolute Maximum Ratings, SLASF23A revised January 2025](https://www.ti.com/lit/ds/symlink/tac5212.pdf).
 
 ### H02 Expect temporary output shorts while patching
 
@@ -530,4 +535,4 @@ Each entry is a design recipe and a proposed check, not a claim that this librar
 
 The linked code examples pin the inspected revisions: Mutable Instruments `f4cfa7697095a28d292bff758beb51deb49b5a86`; 4ms DLD `dfc4295fc9ca71be6243217ab544c2ef71705e3b`; monome crow `b340579d94e57e2b43336611b2c4037cff74bb80`; Winterbloom Castor & Pollux `652b28c950ed04ca41f0d8aa98d9b1be2f310f76`. Manual links identify versions where available; behavior can differ across firmware versions. The page numbers distinguish printed and PDF numbering when needed. [Attribution](../ATTRIBUTION.md) explains provenance and licensing.
 
-These examples span Mutable Instruments, 4ms, Befaco, Intellijel, Xaoc Devices, Instruō, ALM, Make Noise, Noise Engineering, Expert Sleepers, Ornament & Crime, monome, Winterbloom and Doepfer. Maker technical accounts and release notes complement manuals. This is a curated set, not a complete survey.
+These examples span Mutable Instruments, 4ms, Befaco, Intellijel, Xaoc Devices, Instruō, ALM, Make Noise, Noise Engineering, Expert Sleepers, Ornament & Crime, monome, Winterbloom and Doepfer. Maker technical accounts and release notes complement manuals; vendor datasheets and application notes (Raspberry Pi, STMicroelectronics, Texas Instruments) are cited where a limit is electrical rather than musical. This is a curated set, not a complete survey.
