@@ -1,0 +1,714 @@
+{
+  "schema": 1,
+  "status": "diagnostic only; no behavior qualification",
+  "build": {
+    "build_id": "f955659b5b02f8b649aaf1ea",
+    "source_commit": "a6cee8ec6e570d0468f74f8537f8578fb390d020",
+    "sdk_revision": "e1f740a5a7fe38e6d6d41281bf99fe7a2bb3827b",
+    "binary_sha256": "dd3ff314b99bc2f7775d546fbc1e595f353319f80be3c4241d4f30b9c7e5f661"
+  },
+  "run": {
+    "token": 772390355,
+    "duration_ms": 10000,
+    "fault": 0,
+    "policy": 1,
+    "count": 20000,
+    "missed": 0,
+    "adc_failures": 0,
+    "elapsed_us": 10000001,
+    "fault_begin_us": 0,
+    "fault_end_us": 0,
+    "finish_reason": "duration",
+    "finish_request_us": 0,
+    "acquisition_limit_us": 10000000,
+    "trigger": 0,
+    "fault_delay_slots": 0,
+    "fault_duration_us": 25000,
+    "trigger_seq": 4294967295,
+    "trigger_us": 0,
+    "fault_due_us": 0,
+    "audio": {
+      "block": 0,
+      "permille": 0,
+      "off_ms": 0,
+      "end_us": 0,
+      "callbacks": 0,
+      "max_work_ticks": 0,
+      "max_interval_ticks": 0,
+      "over_budget": 0,
+      "late_intervals": 0,
+      "bad_size": 0,
+      "period_ticks": 0,
+      "timer_hz": 240000000
+    },
+    "dsp": {
+      "voices": 0,
+      "frames": 0,
+      "hash": 2166136261,
+      "peak": 0,
+      "nonzero": 0,
+      "macs": 0
+    },
+    "dma": {
+      "kib": 0,
+      "period_us": 0,
+      "started": 0,
+      "completed": 0,
+      "verified": 0,
+      "bytes": 0,
+      "errors": 0,
+      "corrupt_words": 0,
+      "timeouts": 0,
+      "skipped": 0,
+      "first_us": 0,
+      "last_us": 0,
+      "max_gap_us": 0,
+      "max_transfer_ticks": 0,
+      "irqs": 0,
+      "max_irq_wall_ticks": 0,
+      "irq_priority": 0,
+      "stream": 0
+    },
+    "acquisition": {
+      "tick_us": 50,
+      "timer_priority": 0,
+      "adc_priority": 0,
+      "audio_priority": 1,
+      "timer_irqs": 200000,
+      "adc_irqs": 20000,
+      "max_timer_ticks": 266,
+      "max_adc_ticks": 344,
+      "work_ticks_low": 28873948,
+      "work_ticks_high": 0,
+      "timeouts": 0,
+      "overruns": 0,
+      "unexpected_irqs": 0,
+      "cpu_padding": 1
+    }
+  },
+  "service_timing": {
+    "alignment": {
+      "clock_scale_ppm": 40.915852734801916,
+      "max_fit_residual_us": 0.2773997522890568,
+      "max_interval_error_us": 0.3254579270006843,
+      "max_work_width_error_us": 0.6410000002759944,
+      "pre_application_high_intervals_s": []
+    },
+    "status": "pass",
+    "failures": [],
+    "local_diagnostic": {
+      "window_seconds": 1,
+      "blocks": [
+        {
+          "window": 0,
+          "first_seq": 0,
+          "samples": 2001,
+          "clock_scale_ppm": 40.89162745746222,
+          "max_fit_residual_us": 0.2136403900803998
+        },
+        {
+          "window": 1,
+          "first_seq": 2001,
+          "samples": 2000,
+          "clock_scale_ppm": 40.895435359011856,
+          "max_fit_residual_us": 0.21211999643128365
+        },
+        {
+          "window": 2,
+          "first_seq": 4001,
+          "samples": 2000,
+          "clock_scale_ppm": 40.88861033846314,
+          "max_fit_residual_us": 0.21961657074280083
+        },
+        {
+          "window": 3,
+          "first_seq": 6001,
+          "samples": 2000,
+          "clock_scale_ppm": 40.91634922231968,
+          "max_fit_residual_us": 0.23326356807956472
+        },
+        {
+          "window": 4,
+          "first_seq": 8001,
+          "samples": 2000,
+          "clock_scale_ppm": 40.89749077884619,
+          "max_fit_residual_us": 0.24184582463931292
+        },
+        {
+          "window": 5,
+          "first_seq": 10001,
+          "samples": 2000,
+          "clock_scale_ppm": 40.890023077500004,
+          "max_fit_residual_us": 0.24808997963555157
+        },
+        {
+          "window": 6,
+          "first_seq": 12001,
+          "samples": 2000,
+          "clock_scale_ppm": 40.93409249894542,
+          "max_fit_residual_us": 0.24107581289717928
+        },
+        {
+          "window": 7,
+          "first_seq": 14001,
+          "samples": 2000,
+          "clock_scale_ppm": 40.936795770774026,
+          "max_fit_residual_us": 0.2329882918857038
+        },
+        {
+          "window": 8,
+          "first_seq": 16001,
+          "samples": 2000,
+          "clock_scale_ppm": 40.937033018106916,
+          "max_fit_residual_us": 0.23382065421901643
+        },
+        {
+          "window": 9,
+          "first_seq": 18001,
+          "samples": 1999,
+          "clock_scale_ppm": 40.95079748811514,
+          "max_fit_residual_us": 0.2246880604652688
+        }
+      ],
+      "limitation": "Diagnostic only; no qualification override or attribution to either clock."
+    }
+  },
+  "dsp_dma": {
+    "dsp": "disabled",
+    "dma": "disabled",
+    "dma_payload_bytes": 0,
+    "dma_verified_transfers": 0,
+    "dma_skipped_launches": 0,
+    "dma_max_gap_us": 0,
+    "limitation": "The DSP reference reuses the tested integer kernel. DMA timing/counters are device-reported; D4 independently checks audio callbacks, not the DMA2 bus. Silent outputs do not qualify codec audio quality."
+  },
+  "generator_times_us": [
+    300000,
+    437919,
+    583757,
+    737514,
+    874190,
+    1018785,
+    1171299,
+    1306732,
+    1450084,
+    1601355,
+    1735545,
+    1877654,
+    2027682,
+    2160629,
+    2301495,
+    2450280,
+    2581984,
+    2721607,
+    2869149,
+    2999610,
+    3137990,
+    3284289,
+    3438507,
+    3575644,
+    3720700,
+    3873675,
+    4009569,
+    4153382,
+    4305114,
+    4439765,
+    4582335,
+    4732824,
+    4866232,
+    5007559,
+    5156805,
+    5288970,
+    5429054,
+    5577057,
+    5707979,
+    5846820,
+    5993580,
+    6148259,
+    6285857,
+    6431374,
+    6584810,
+    6721165,
+    6865439,
+    7017632,
+    7152744,
+    7295775,
+    7446725,
+    7580594,
+    7722382,
+    7872089,
+    8004715,
+    8145260,
+    8293724,
+    8425107,
+    8564409,
+    8711630,
+    8841770,
+    8979829,
+    9125807,
+    9279704
+  ],
+  "generator_build_id": "4e68efce89b64d686cf11c63",
+  "payloads": {
+    "raw": {
+      "file": "reference-unloaded-raw.txt.gz",
+      "sha256": "d3afad0825a96e9d206ac2b4705dac169ee55a100d4c182e8a92cc147c1662ed",
+      "compressed_sha256": "31df82a0fd0e052a4890ce70eaed6fc2a4e914a1965834bb9b729128f9d50cd6"
+    },
+    "generator": {
+      "file": "reference-unloaded-generator.txt.gz",
+      "sha256": "5fff25d1e5615cd6a4bdbd2204e8d8ab32dd67202e40e8f5775a7f56a5fb3133",
+      "compressed_sha256": "b357010be9b92a2f1194e8fc5f0b34fe654d10b3d3f3a7a5fe01371845332764"
+    },
+    "service": {
+      "file": "reference-unloaded-service.bin.gz",
+      "sha256": "f933d808db87c97b4f81acf5fc634f4086d898fdc1717b0e63b9b988d59b1f6c",
+      "compressed_sha256": "eda8cae986f6309e8a306b7ac3db09cc1edce9ab0d489053d6deb936d1f4ff8c"
+    },
+    "audio": {
+      "file": "reference-unloaded-audio.bin.gz",
+      "sha256": "08ca7fde506e38130474af28ecd32fd1e633d6099f38f3671d69c3c7c184b381",
+      "compressed_sha256": "2eab66ed751f361986d5995876e5d26e6cbbb901d886423b0ed9ca62c314bb37"
+    },
+    "sense": {
+      "file": "reference-unloaded-sense.bin.gz",
+      "sha256": "c010be678ad19599f469e5c84ab007c5ed1fb088b91163ee4128d5089d40b95c",
+      "compressed_sha256": "355a157861350d3fa55c2e57f94fc65f606451242b6537ffe082fb8dfbac7377"
+    },
+    "probe": {
+      "file": "reference-unloaded-probe.bin.gz",
+      "sha256": "8bf69147432754f0587154ba068ef37351babd72f2bae7e759694835dbef6a24",
+      "compressed_sha256": "fdc6006c3a8436333dbfaf2e6d197edd47825bce4746bf52f109b9cdc3d5298a"
+    }
+  },
+  "native_scope_sha256": {
+    "analog_0.bin": "ff216cc21cc5b6dc5118a069505b49600fecabaabcadd923187aacedfcd1d963",
+    "settings.json": "5d6d91b658c08457a42e2f1ca06cb05b8942b54dd0c081d8daec4b0665a08087",
+    "capture.sal": "06c68eb36c52992b50eff42107d31bfc76a22f1757d69b98239edea8fc025c93",
+    "digital_2_0.bin": "08ca7fde506e38130474af28ecd32fd1e633d6099f38f3671d69c3c7c184b381",
+    "digital_1_2.bin": "8744d6cb05bbc7ba37792b53b0598d5d7e4fb9f8d4b3e5c1deac927f82e4243b",
+    "digital_1_3.bin": "8bf69147432754f0587154ba068ef37351babd72f2bae7e759694835dbef6a24",
+    "digital_1_1.bin": "f933d808db87c97b4f81acf5fc634f4086d898fdc1717b0e63b9b988d59b1f6c",
+    "digital_1_0.bin": "c010be678ad19599f469e5c84ab007c5ed1fb088b91163ee4128d5089d40b95c"
+  },
+  "limitation": "Complete wire and selected native digital channels; analog originals retained privately by digest. Clock reference edge mapping is exploratory and cannot override the whole-window timing failure.",
+  "clock_reference": {
+    "qualification": "diagnostic only; fixture acceptance unchanged",
+    "visible_edges": 25,
+    "clock_scale_ppm": 39.61241743155597,
+    "max_residual_us": 0.18858656236631077,
+    "generator_scope_offset_s": 0.8045097969597297,
+    "matched": [
+      {
+        "seq": 0,
+        "physical_s": 1.1045215499999999,
+        "residual_us": -0.13068495929857704
+      },
+      {
+        "seq": 2,
+        "physical_s": 1.3882899510000002,
+        "residual_us": 0.03001430792792803
+      },
+      {
+        "seq": 4,
+        "physical_s": 1.6787344560000002,
+        "residual_us": 0.03026107608938844
+      },
+      {
+        "seq": 8,
+        "physical_s": 2.2546513750000003,
+        "residual_us": 0.13670755194539197
+      },
+      {
+        "seq": 9,
+        "physical_s": 2.40592819,
+        "residual_us": -0.0405024458416392
+      },
+      {
+        "seq": 13,
+        "physical_s": 2.965224537,
+        "residual_us": 0.15230240757446722
+      },
+      {
+        "seq": 15,
+        "physical_s": 3.254886832,
+        "residual_us": -0.02647391372789798
+      },
+      {
+        "seq": 18,
+        "physical_s": 3.6737725099999996,
+        "residual_us": 0.05911240830158704
+      },
+      {
+        "seq": 19,
+        "physical_s": 3.804238518,
+        "residual_us": -0.10076318179841337
+      },
+      {
+        "seq": 21,
+        "physical_s": 4.088928707000001,
+        "residual_us": -0.18858656236631077
+      },
+      {
+        "seq": 24,
+        "physical_s": 4.525357069,
+        "residual_us": -0.11388126708311574
+      },
+      {
+        "seq": 25,
+        "physical_s": 4.678338274,
+        "residual_us": 0.03140917570476631
+      },
+      {
+        "seq": 26,
+        "physical_s": 4.814237704,
+        "residual_us": 0.07831932169466427
+      },
+      {
+        "seq": 27,
+        "physical_s": 4.958056277,
+        "residual_us": -0.04546126586291166
+      },
+      {
+        "seq": 29,
+        "physical_s": 5.244450741,
+        "residual_us": 0.07421579173438886
+      },
+      {
+        "seq": 31,
+        "physical_s": 5.537521367,
+        "residual_us": 0.09144035217900637
+      },
+      {
+        "seq": 39,
+        "physical_s": 6.651561493,
+        "residual_us": 0.08936578321794286
+      },
+      {
+        "seq": 41,
+        "physical_s": 6.953012299,
+        "residual_us": -0.04536171527291799
+      },
+      {
+        "seq": 44,
+        "physical_s": 7.389580480999999,
+        "residual_us": -0.15620215787492953
+      },
+      {
+        "seq": 48,
+        "physical_s": 7.957537197,
+        "residual_us": 0.06255916051856047
+      },
+      {
+        "seq": 52,
+        "physical_s": 8.527197649999998,
+        "residual_us": -0.0491790821399718
+      },
+      {
+        "seq": 54,
+        "physical_s": 8.809542001,
+        "residual_us": 0.1179282715924046
+      },
+      {
+        "seq": 55,
+        "physical_s": 8.950092499999998,
+        "residual_us": 0.049601059259885005
+      },
+      {
+        "seq": 58,
+        "physical_s": 9.369257872,
+        "residual_us": -0.1819040917894199
+      },
+      {
+        "seq": 62,
+        "physical_s": 9.930678367999999,
+        "residual_us": 0.07576398530773076
+      }
+    ],
+    "hidden": [
+      {
+        "seq": 1,
+        "probe_high": false,
+        "nearest_probe_edge_us": 176.73201004142493,
+        "explanation": "probe low"
+      },
+      {
+        "seq": 3,
+        "probe_high": false,
+        "nearest_probe_edge_us": 581.9853278408171,
+        "explanation": "probe low"
+      },
+      {
+        "seq": 5,
+        "probe_high": false,
+        "nearest_probe_edge_us": 188.63449642281262,
+        "explanation": "probe low"
+      },
+      {
+        "seq": 6,
+        "probe_high": false,
+        "nearest_probe_edge_us": 202.49494465485185,
+        "explanation": "probe low"
+      },
+      {
+        "seq": 7,
+        "probe_high": false,
+        "nearest_probe_edge_us": 135.14977318518362,
+        "explanation": "probe low"
+      },
+      {
+        "seq": 10,
+        "probe_high": false,
+        "nearest_probe_edge_us": 447.57609274093113,
+        "explanation": "probe low"
+      },
+      {
+        "seq": 11,
+        "probe_high": false,
+        "nearest_probe_edge_us": 56.54237376928606,
+        "explanation": "probe low"
+      },
+      {
+        "seq": 12,
+        "probe_high": false,
+        "nearest_probe_edge_us": 84.26434553188145,
+        "explanation": "probe low"
+      },
+      {
+        "seq": 14,
+        "probe_high": false,
+        "nearest_probe_edge_us": 397.03874038643505,
+        "explanation": "probe low"
+      },
+      {
+        "seq": 16,
+        "probe_high": false,
+        "nearest_probe_edge_us": 385.6765877392476,
+        "explanation": "probe low"
+      },
+      {
+        "seq": 17,
+        "probe_high": false,
+        "nearest_probe_edge_us": 8.47539229908989,
+        "explanation": "probe low"
+      },
+      {
+        "seq": 20,
+        "probe_high": false,
+        "nearest_probe_edge_us": 390.97032950552443,
+        "explanation": "probe low"
+      },
+      {
+        "seq": 22,
+        "probe_high": false,
+        "nearest_probe_edge_us": 92.57646564542199,
+        "explanation": "probe low"
+      },
+      {
+        "seq": 23,
+        "probe_high": false,
+        "nearest_probe_edge_us": 44.15486244457867,
+        "explanation": "probe low"
+      },
+      {
+        "seq": 28,
+        "probe_high": false,
+        "nearest_probe_edge_us": 13.197932588582262,
+        "explanation": "probe low"
+      },
+      {
+        "seq": 30,
+        "probe_high": false,
+        "nearest_probe_edge_us": 765.9996734385999,
+        "explanation": "probe low"
+      },
+      {
+        "seq": 32,
+        "probe_high": false,
+        "nearest_probe_edge_us": 869.5738269670628,
+        "explanation": "probe low"
+      },
+      {
+        "seq": 33,
+        "probe_high": false,
+        "nearest_probe_edge_us": 42.51152284862059,
+        "explanation": "probe low"
+      },
+      {
+        "seq": 34,
+        "probe_high": false,
+        "nearest_probe_edge_us": 203.32647200405063,
+        "explanation": "probe low"
+      },
+      {
+        "seq": 35,
+        "probe_high": false,
+        "nearest_probe_edge_us": 631.9261528471287,
+        "explanation": "probe low"
+      },
+      {
+        "seq": 36,
+        "probe_high": false,
+        "nearest_probe_edge_us": 451.9989130367108,
+        "explanation": "probe low"
+      },
+      {
+        "seq": 37,
+        "probe_high": false,
+        "nearest_probe_edge_us": 454.80866965341704,
+        "explanation": "probe low"
+      },
+      {
+        "seq": 38,
+        "probe_high": false,
+        "nearest_probe_edge_us": 876.3858065687913,
+        "explanation": "probe low"
+      },
+      {
+        "seq": 40,
+        "probe_high": false,
+        "nearest_probe_edge_us": 477.2481525989747,
+        "explanation": "probe low"
+      },
+      {
+        "seq": 42,
+        "probe_high": false,
+        "nearest_probe_edge_us": 1246.2390488714448,
+        "explanation": "probe low"
+      },
+      {
+        "seq": 43,
+        "probe_high": false,
+        "nearest_probe_edge_us": 229.49176872355537,
+        "explanation": "probe low"
+      },
+      {
+        "seq": 45,
+        "probe_high": false,
+        "nearest_probe_edge_us": 61.07555333656478,
+        "explanation": "probe low"
+      },
+      {
+        "seq": 46,
+        "probe_high": false,
+        "nearest_probe_edge_us": 165.08240475054947,
+        "explanation": "probe low"
+      },
+      {
+        "seq": 47,
+        "probe_high": false,
+        "nearest_probe_edge_us": 2027.9813278953895,
+        "explanation": "probe low"
+      },
+      {
+        "seq": 49,
+        "probe_high": false,
+        "nearest_probe_edge_us": 829.5267554832009,
+        "explanation": "probe low"
+      },
+      {
+        "seq": 50,
+        "probe_high": false,
+        "nearest_probe_edge_us": 620.0387389281303,
+        "explanation": "probe low"
+      },
+      {
+        "seq": 51,
+        "probe_high": false,
+        "nearest_probe_edge_us": 10.910386363249813,
+        "explanation": "probe low"
+      },
+      {
+        "seq": 53,
+        "probe_high": false,
+        "nearest_probe_edge_us": 16.257564745103537,
+        "explanation": "probe low"
+      },
+      {
+        "seq": 56,
+        "probe_high": false,
+        "nearest_probe_edge_us": 881.9455831190481,
+        "explanation": "probe low"
+      },
+      {
+        "seq": 57,
+        "probe_high": false,
+        "nearest_probe_edge_us": 500.80381511996563,
+        "explanation": "probe low"
+      },
+      {
+        "seq": 59,
+        "probe_high": false,
+        "nearest_probe_edge_us": 476.51831620143525,
+        "explanation": "probe low"
+      },
+      {
+        "seq": 60,
+        "probe_high": false,
+        "nearest_probe_edge_us": 163.2708438030761,
+        "explanation": "probe low"
+      },
+      {
+        "seq": 61,
+        "probe_high": false,
+        "nearest_probe_edge_us": 222.31869454358844,
+        "explanation": "probe low"
+      },
+      {
+        "seq": 63,
+        "probe_high": false,
+        "nearest_probe_edge_us": 96.89646821975373,
+        "explanation": "probe low"
+      }
+    ],
+    "local_blocks": [
+      {
+        "second": 0,
+        "edges": 3,
+        "clock_scale_ppm": 39.89162285278347
+      },
+      {
+        "second": 1,
+        "edges": 2,
+        "clock_scale_ppm": 38.44094373373075
+      },
+      {
+        "second": 2,
+        "edges": 4,
+        "clock_scale_ppm": 39.41289954378924
+      },
+      {
+        "second": 3,
+        "edges": 3,
+        "clock_scale_ppm": 39.94114156435913
+      },
+      {
+        "second": 4,
+        "edges": 4,
+        "clock_scale_ppm": 39.70050754986687
+      },
+      {
+        "second": 6,
+        "edges": 2,
+        "clock_scale_ppm": 39.35851710257232
+      },
+      {
+        "second": 7,
+        "edges": 2,
+        "clock_scale_ppm": 39.416260851243834
+      },
+      {
+        "second": 8,
+        "edges": 3,
+        "clock_scale_ppm": 39.072895809288966
+      }
+    ],
+    "fixture_timing": {
+      "clock_scale_ppm": 40.915852734801916,
+      "max_fit_residual_us": 0.2773997522890568,
+      "max_interval_error_us": 0.3254579270006843,
+      "max_work_width_error_us": 0.6410000002759944,
+      "pre_application_high_intervals_s": []
+    }
+  }
+}

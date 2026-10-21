@@ -4,6 +4,7 @@
 #define EP_DAISY_JACK_BENCH_H_
 #include <eurorack_patterns/presence.h>
 #include "pulse_generator.h"
+#include "dma_config.h"
 #include <cstdio>
 
 // Measurement adapter, not a recommended electrical front end or universal
@@ -21,6 +22,8 @@ struct Plan {
   // Zero block disables audio. Stop at least one second before the acquisition
   // limit, leaving a complete unloaded tail and explicit recovery evidence.
   uint32_t audio_block = 0, audio_permille = 0, audio_off_ms = 0;
+  uint32_t dsp_voices = 0, dma_kib = 0;
+  uint32_t dma_region = 0, dma_period_us = 1000;
   bool Valid() const {
     return duration_ms >= 1000 && duration_ms <= kMaxDurationMs &&
            fault <= 2 && policy <= 1 && (!fault || duration_ms >= 3000) &&
@@ -31,9 +34,18 @@ struct Plan {
            ((!audio_block && !audio_permille && !audio_off_ms) ||
             ((audio_block == 16 || audio_block == 48 || audio_block == 96) &&
              audio_permille <= 700 && audio_off_ms >= 1000 &&
-             audio_off_ms <= duration_ms - 1000));
+             audio_off_ms <= duration_ms - 1000)) &&
+           dsp_voices <= 32 && dmaconfig::ValidPlan(dma_kib, dma_region, dma_period_us) &&
+           (!(dsp_voices || dma_kib) ||
+            (audio_block && !audio_permille && duration_ms <= 30000));
   }
 };
+inline bool ValidClockDiagnosticPlan(const Plan& plan) {
+  return plan.Valid() && plan.duration_ms <= 10000 && !plan.fault && !plan.audio_permille;
+}
+inline bool ValidClockReferencePlan(const Plan& plan) {
+  return plan.Valid() && plan.duration_ms <= 10000 && !plan.audio_permille;
+}
 inline bool Parse(const char* p, Plan& out) {
   Plan q;
   if (*p++ != 'J' || *p++ != ',' || !pulsegen::Number(p, q.token) ||
@@ -46,6 +58,10 @@ inline bool Parse(const char* p, Plan& out) {
   if (*p && (*p++ != ',' || !pulsegen::Number(p, q.audio_block) ||
       *p++ != ',' || !pulsegen::Number(p, q.audio_permille) ||
       *p++ != ',' || !pulsegen::Number(p, q.audio_off_ms))) return false;
+  if (*p && (*p++ != ',' || !pulsegen::Number(p, q.dsp_voices) ||
+      *p++ != ',' || !pulsegen::Number(p, q.dma_kib))) return false;
+  if (*p && (*p++ != ',' || !pulsegen::Number(p, q.dma_region) ||
+      *p++ != ',' || !pulsegen::Number(p, q.dma_period_us))) return false;
   if (*p || !q.Valid()) return false;
   out = q; return true;
 }

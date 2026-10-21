@@ -80,6 +80,20 @@ int main(int argc, char** argv) {
     p.audio_off_ms = 8000; CHECK(p.Valid()); Trace(p, 0); return 0;
   }
   Plan p;
+  p.duration_ms = 3000; p.audio_block = 16; p.audio_off_ms = 2000;
+  p.dsp_voices = 4; p.dma_kib = 4;
+  CHECK(ValidClockDiagnosticPlan(p));
+  CHECK(ValidClockReferencePlan(p));
+  p.duration_ms = 10001; CHECK(!ValidClockDiagnosticPlan(p));
+  CHECK(!ValidClockReferencePlan(p));
+  p.duration_ms = 3000; p.fault = 1; CHECK(!ValidClockDiagnosticPlan(p));
+  CHECK(ValidClockReferencePlan(p));
+  p.fault = 2; p.trigger = 5; CHECK(ValidClockReferencePlan(p));
+  p.trigger = 0;
+  p.fault = 0; p.dsp_voices = p.dma_kib = 0; p.audio_permille = 1;
+  CHECK(!ValidClockDiagnosticPlan(p));
+  CHECK(!ValidClockReferencePlan(p));
+  p = Plan(); CHECK(!ValidClockDiagnosticPlan(p));
   CHECK(Parse("J,17,300000,1,1,2,0,25000", p));
   CHECK(p.trigger == 2 && p.delay_slots == 0 && p.fault_us == 25000);
   CHECK(Parse("J,17,300000,2,1,6,64,100000", p));

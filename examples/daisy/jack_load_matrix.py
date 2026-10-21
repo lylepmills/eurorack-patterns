@@ -41,8 +41,8 @@ def cases(stage):
 def run(a, *, before_case=None):
     require(a.port != a.generator_port and not a.out.exists(), 'distinct ports and new output required')
     manifest = json.loads(a.manifest.read_text())
-    require(manifest.get('kind') == 'eurorack-patterns-daisy-jack-bench' and manifest.get('protocol') in (4, 5),
-            'protocol-4/5 jack load firmware required')
+    require(manifest.get('kind') == 'eurorack-patterns-daisy-jack-bench' and manifest.get('protocol') in (4, 5, 6),
+            'protocol-4/5/6 jack load firmware required')
     gen = pulse_generator.load_manifest(a.generator_manifest)
     requested = a.case.split(',')
     available = cases(a.stage)

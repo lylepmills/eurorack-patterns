@@ -1,0 +1,235 @@
+{
+  "schema": 1,
+  "status": "diagnostic only; no behavior qualification",
+  "build": {
+    "build_id": "f955659b5b02f8b649aaf1ea",
+    "source_commit": "a6cee8ec6e570d0468f74f8537f8578fb390d020",
+    "sdk_revision": "e1f740a5a7fe38e6d6d41281bf99fe7a2bb3827b",
+    "binary_sha256": "dd3ff314b99bc2f7775d546fbc1e595f353319f80be3c4241d4f30b9c7e5f661"
+  },
+  "run": {
+    "token": 572991341,
+    "duration_ms": 10000,
+    "fault": 0,
+    "policy": 1,
+    "count": 20000,
+    "missed": 0,
+    "adc_failures": 0,
+    "elapsed_us": 10000001,
+    "fault_begin_us": 0,
+    "fault_end_us": 0,
+    "finish_reason": "duration",
+    "finish_request_us": 0,
+    "acquisition_limit_us": 10000000,
+    "trigger": 0,
+    "fault_delay_slots": 0,
+    "fault_duration_us": 25000,
+    "trigger_seq": 4294967295,
+    "trigger_us": 0,
+    "fault_due_us": 0,
+    "audio": {
+      "block": 16,
+      "permille": 0,
+      "off_ms": 8000,
+      "end_us": 8000001,
+      "callbacks": 24007,
+      "max_work_ticks": 9470,
+      "max_interval_ticks": 80386,
+      "over_budget": 0,
+      "late_intervals": 0,
+      "bad_size": 0,
+      "period_ticks": 80000,
+      "timer_hz": 240000000
+    },
+    "dsp": {
+      "voices": 4,
+      "frames": 384112,
+      "hash": 3978709764,
+      "peak": 1951,
+      "nonzero": 384112,
+      "macs": 49166336
+    },
+    "dma": {
+      "kib": 4,
+      "period_us": 1000,
+      "started": 7999,
+      "completed": 7999,
+      "verified": 7999,
+      "bytes": 32763904,
+      "errors": 0,
+      "corrupt_words": 0,
+      "timeouts": 0,
+      "skipped": 0,
+      "first_us": 1215,
+      "last_us": 7999254,
+      "max_gap_us": 1044,
+      "max_transfer_ticks": 57160,
+      "irqs": 7999,
+      "max_irq_wall_ticks": 9318,
+      "irq_priority": 2,
+      "stream": 6
+    },
+    "acquisition": {
+      "tick_us": 50,
+      "timer_priority": 0,
+      "adc_priority": 0,
+      "audio_priority": 1,
+      "timer_irqs": 200000,
+      "adc_irqs": 20000,
+      "max_timer_ticks": 398,
+      "max_adc_ticks": 376,
+      "work_ticks_low": 30002324,
+      "work_ticks_high": 0,
+      "timeouts": 0,
+      "overruns": 0,
+      "unexpected_irqs": 0,
+      "cpu_padding": 1
+    }
+  },
+  "service_timing": {
+    "alignment": {
+      "clock_scale_ppm": 34.6221897262744,
+      "max_fit_residual_us": 10.956672491505742,
+      "max_interval_error_us": 0.4393110960477884,
+      "max_work_width_error_us": 0.6620000002371853,
+      "pre_application_high_intervals_s": []
+    },
+    "status": "fail",
+    "failures": [
+      "global_fit"
+    ],
+    "local_diagnostic": {
+      "window_seconds": 1,
+      "blocks": [
+        {
+          "window": 0,
+          "first_seq": 0,
+          "samples": 2001,
+          "clock_scale_ppm": 30.998058957898422,
+          "max_fit_residual_us": 1.4236600947192528
+        },
+        {
+          "window": 1,
+          "first_seq": 2001,
+          "samples": 2000,
+          "clock_scale_ppm": 30.278825223994943,
+          "max_fit_residual_us": 2.122915963803507
+        },
+        {
+          "window": 2,
+          "first_seq": 4001,
+          "samples": 2000,
+          "clock_scale_ppm": 33.061697418013125,
+          "max_fit_residual_us": 1.9748279406901474
+        },
+        {
+          "window": 3,
+          "first_seq": 6001,
+          "samples": 2000,
+          "clock_scale_ppm": 34.89148792956698,
+          "max_fit_residual_us": 2.1973653718596324
+        },
+        {
+          "window": 4,
+          "first_seq": 8001,
+          "samples": 2000,
+          "clock_scale_ppm": 36.452229975392214,
+          "max_fit_residual_us": 1.7850349468644708
+        },
+        {
+          "window": 5,
+          "first_seq": 10001,
+          "samples": 2000,
+          "clock_scale_ppm": 37.753198908863084,
+          "max_fit_residual_us": 1.5031804235859454
+        },
+        {
+          "window": 6,
+          "first_seq": 12001,
+          "samples": 2000,
+          "clock_scale_ppm": 35.56111486902047,
+          "max_fit_residual_us": 2.415223306341886
+        },
+        {
+          "window": 7,
+          "first_seq": 14001,
+          "samples": 2000,
+          "clock_scale_ppm": 34.58224285379785,
+          "max_fit_residual_us": 1.8235846685711294
+        },
+        {
+          "window": 8,
+          "first_seq": 16001,
+          "samples": 2000,
+          "clock_scale_ppm": 41.29354613535696,
+          "max_fit_residual_us": 0.20787018698320026
+        },
+        {
+          "window": 9,
+          "first_seq": 18001,
+          "samples": 1999,
+          "clock_scale_ppm": 41.28275146531024,
+          "max_fit_residual_us": 0.2117605812381953
+        }
+      ],
+      "limitation": "Diagnostic only; no qualification override or attribution to either clock."
+    }
+  },
+  "dsp_dma": {
+    "dsp": "full deterministic sample signature matched",
+    "dma": "every completed destination word verified",
+    "dma_payload_bytes": 32763904,
+    "dma_verified_transfers": 7999,
+    "dma_skipped_launches": 0,
+    "dma_max_gap_us": 1044,
+    "limitation": "The DSP reference reuses the tested integer kernel. DMA timing/counters are device-reported; D4 independently checks audio callbacks, not the DMA2 bus. Silent outputs do not qualify codec audio quality."
+  },
+  "generator_times_us": [
+    3000000,
+    6500000
+  ],
+  "generator_build_id": "4e68efce89b64d686cf11c63",
+  "payloads": {
+    "raw": {
+      "file": "combined-timing-rejected-raw.txt.gz",
+      "sha256": "d3cdf7f170cae11dd77ed9665216243843499038504369d6fdc4c97074998dc8",
+      "compressed_sha256": "6fd9596a2b3f5ba930720d4b0657a3062a3ec0baef94aaafd46ea08d98b1d38a"
+    },
+    "generator": {
+      "file": "combined-timing-rejected-generator.txt.gz",
+      "sha256": "bc1d3447853782e519aca8443b6a5da80af92121d164560a383327f20e75b5b0",
+      "compressed_sha256": "ae7d8fe317d5a341645031bd681615f32a310ab1e5ef71d5ce22834cf02b5978"
+    },
+    "service": {
+      "file": "combined-timing-rejected-service.bin.gz",
+      "sha256": "8b7ed74d20f693e29d92ed292ce767993920f39704110af599a14b2c6f9013b2",
+      "compressed_sha256": "50c7c1c73d338cf7a98d9d5d4b8118eef5d762d6739d381ba9f130e366f9e464"
+    },
+    "audio": {
+      "file": "combined-timing-rejected-audio.bin.gz",
+      "sha256": "becf7cd272cbc330f24fa6b9d1ea4e5f247b11a22b99c3758a01585e19863a8a",
+      "compressed_sha256": "05a6acc1f85440e15129266aa71ca4fb2a146443923241ce60754076eaf8519b"
+    },
+    "sense": {
+      "file": "combined-timing-rejected-sense.bin.gz",
+      "sha256": "b470f10f7c75fc68306cb16454366aea395d27f160f799c6fdc9484df84b1ce3",
+      "compressed_sha256": "121419b907481b3e69844fbeb61e8b531d1076e34dbc6b8cfea9f73590561125"
+    },
+    "probe": {
+      "file": "combined-timing-rejected-probe.bin.gz",
+      "sha256": "f36905644be7394a6f07cfc9fa7a5ac625f6d3a9a75cfc0e25d7c70bb1c3a734",
+      "compressed_sha256": "046ffbc70027da678097259e515fcffd259b7d98f286bdd7263bdac7f9ad1587"
+    }
+  },
+  "native_scope_sha256": {
+    "analog_0.bin": "39f9987227d7c8114cb8743604af148e3f287dee9a2c89350a6581e216c3f4c0",
+    "settings.json": "5d6d91b658c08457a42e2f1ca06cb05b8942b54dd0c081d8daec4b0665a08087",
+    "capture.sal": "d4e91ec65985e9d72e5fc5f44286368b8839e7bce787d6362052954b6971903e",
+    "digital_2_0.bin": "becf7cd272cbc330f24fa6b9d1ea4e5f247b11a22b99c3758a01585e19863a8a",
+    "digital_1_2.bin": "ee40c42751df8c739d505bff9206a63403a1dfd35d487930b53d8e4ba62f9035",
+    "digital_1_3.bin": "f36905644be7394a6f07cfc9fa7a5ac625f6d3a9a75cfc0e25d7c70bb1c3a734",
+    "digital_1_1.bin": "8b7ed74d20f693e29d92ed292ce767993920f39704110af599a14b2c6f9013b2",
+    "digital_1_0.bin": "b470f10f7c75fc68306cb16454366aea395d27f160f799c6fdc9484df84b1ce3"
+  },
+  "limitation": "Complete wire and selected native digital channels; analog originals retained privately by digest. Clock reference edge mapping is exploratory and cannot override the whole-window timing failure."
+}

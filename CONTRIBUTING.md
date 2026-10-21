@@ -17,3 +17,25 @@ Contributed original code and writing are submitted under this repository's MIT 
 Before submitting, run the repository's documented tests, inspect the diff for generated files or unintended private paths, and update [coverage](docs/coverage.md) when a pattern gains an implementation or stronger validation. Claims of hardware validation need actual measurements or a reproducible bench procedure with results.
 
 For bug-history research, inspect the patch and surrounding callers, pin the revision, and distinguish merged/released behavior from branch proposals and unresolved reports. A closed issue does not by itself establish a fix; an upstream test read during research is not a test executed here. Include a counterexample or failure boundary and an independent oracle where practical. The [second-pass methodology](docs/research-pass-2.md) and [validation guide](docs/validation.md) provide examples and measured-trace metadata requirements.
+
+## Keep investigations bounded
+
+Before a hardware campaign, name the reusable contract or product decision it
+can change, list a finite set of cases, and set acceptance and stopping criteria.
+Record actual coverage and retain failures. Separate a reusable lesson from a
+fixture's unresolved physical diagnosis; resolving every anomaly is not a
+prerequisite for a useful library. Put long apparatus histories in bench or
+investigation records and link a concise conclusion from the validation guide.
+
+## Readable changes and history
+
+Use a small number of coherent commits that explain the problem, final behavior,
+tests and limitations. Include the relevant tests and documentation with a
+change. Consolidate exploratory fixups before merging, while preserving any
+original source revision needed to reproduce a measurement. Do not rewrite
+published release tags or relabel old evidence with a new source identity.
+
+Keep large recordings outside ordinary Git history. Retain reviewable reports,
+an immutable download and hashes for every payload; the [evidence guide](docs/evidence.md)
+shows the current arrangement. A shorter history must not erase counterexamples
+or turn a failed measurement into a passing one.

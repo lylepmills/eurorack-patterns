@@ -10,6 +10,8 @@ import argparse
 import gzip
 import hashlib
 import json
+import lzma
+import struct
 from pathlib import Path
 import re
 from review_daisy_jacks import review, review_motion, review_fault_motion, CASES
@@ -39,11 +41,12 @@ def unique(pairs):
     return result
 
 
-def export(source, prefix, expected, case='empty', *, derived=None):
+def export(source, prefix, expected, case='empty', *, derived=None, dsp_reference=None, clock_reference=False):
     motion = case in MOTION_CASES
     assert case in CASES or motion
     raw = (source / 'fixture/raw.txt').read_bytes()
-    info, run, rows, _ = parse(raw)
+    assert not clock_reference or case == 'automated-electrical-clamp', 'clock-reference export requires automated clamp case'
+    info, run, rows, _ = parse(raw, clock_reference=clock_reference)
     loaded = info['protocol'] >= 4
     derived = source if derived is None else derived
     recorded = json.loads(raw.split(b'\n', 1)[0][6:], object_pairs_hook=unique)
@@ -97,6 +100,13 @@ def export(source, prefix, expected, case='empty', *, derived=None):
         gen_info = json.loads(generator_raw.split(b'\n',1)[0][8:], object_pairs_hook=unique)
         assert set(gen_info) == {'kind','protocol','board','build_id','released','armed','max_edges','max_us','max_late_us','timer_hz'}
         assert all(type(v) in (int,bool) for k,v in gen_info.items() if k not in ('kind','board','build_id'))
+    clock_bytes = None
+    if clock_reference:
+        from inspect_daisy_timing import read_digital
+        clock_bytes = (source / 'scope/digital_2_0.bin').read_bytes()
+        initial, edges = read_digital(clock_bytes)
+        _, _, begin, end, _ = struct.unpack_from('<IdddQ', clock_bytes, 24)
+        channels['clock'] = dict(initial_high=initial, edges_s=edges, begin_s=begin, end_s=end)
     outcome = None
     rejection_detail = None
     try:
@@ -107,13 +117,15 @@ def export(source, prefix, expected, case='empty', *, derived=None):
             else:
                 from review_daisy_jack_matrix import review as electrical_review
                 assert campaign['times_us'] == [3000000,6500000]
+            kwargs = {'dsp_reference': dsp_reference} if info['protocol'] >= 6 else {}
+            if clock_reference: kwargs['clock_reference'] = True
             outcome = electrical_review(raw, channels, analog, generator_raw,
-                                        generator_build['build_id'], campaign['times_us'])
+                                        generator_build['build_id'], campaign['times_us'], **kwargs)
             if loaded and (campaign['times_us'][1] == 10500000 or not run['audio']['block']):
                 assert outcome['qualification'] == 'responsive'
         elif case == 'automated-clean-finish':
             from review_daisy_jack_load import review_finish
-            outcome = review_finish(raw, channels, analog)
+            outcome = review_finish(raw, channels, analog, dsp_reference=dsp_reference)
         elif case == 'manual-transition-fault': outcome = review_fault_motion(raw, channels, analog)
         elif motion: outcome = review_motion(raw, channels, analog, cycles=MOTION_CASES[case][0])
         else: outcome = review(raw, channels, analog, info['build_id'], case=case)
@@ -139,6 +151,7 @@ def export(source, prefix, expected, case='empty', *, derived=None):
         else:
             assert case == 'empty' and expected == 'analog-disagreement' and str(e) == 'analog/digital plateau disagreement'
     else: assert expected == 'pass'
+    if clock_reference: del channels['clock']  # Separate lossless native payload, never JSON-expanded.
     payloads = dict(raw=raw, channels=json.dumps(channels, separators=(',', ':')).encode(),
                     analog=json.dumps(analog, separators=(',', ':')).encode())
     if generator_raw is not None: payloads['generator'] = generator_raw
@@ -147,6 +160,7 @@ def export(source, prefix, expected, case='empty', *, derived=None):
     manual_scope_names = {'settings.json','capture.sal','analog_0.bin',
                           'digital_1_0.bin','digital_1_1.bin','digital_1_2.bin','digital_1_3.bin'}
     if loaded: manual_scope_names.add('digital_2_0.bin')
+    if clock_reference: manual_scope_names.add('digital_2_1.bin')
     files = {p.name:sha(p.read_bytes()) for p in (source / 'scope').iterdir() if p.is_file()}
     assert set(files) in (scope_names, manual_scope_names)
     published = dict(schema=1, evidence='measured on hardware', status=expected,
@@ -156,6 +170,10 @@ def export(source, prefix, expected, case='empty', *, derived=None):
         run=run, review=outcome, native_scope_sha256=files,
         limitation=((outcome['limitation'] if outcome else 'Physical motion review rejected; independent evidence is incomplete or disagrees with the ADC. No complete physical pass or mechanical-position qualification.') + ' All acquired digital transitions and complete wire evidence; analog payload contains extrema over captured service apertures, not the full waveform.' if motion else
                     'Complete digital timelines and wire records; analog export is one plateau sample per observation plus extrema, not the full waveform. No insertion or external-module voltage qualification.'))
+    if clock_reference:
+        published['status'] = outcome['status']
+        published['clock_reference'] = True
+        published['limitation'] += ' Scheduling and behavior are checked in counted HSE cycles; the original external-clock stability result is retained separately. No calibrated absolute-clock or audio-fidelity claim.'
     if expected == 'missing-probe': published['rejection'] = 'Physical probe channel stayed low; incomplete independent evidence, not a hardware pass.'
     if generator_build is not None:
         published['generator_times_us'] = campaign['times_us']
@@ -177,6 +195,16 @@ def export(source, prefix, expected, case='empty', *, derived=None):
         packed = gzip.compress(data, compresslevel=9, mtime=0)
         published[name + '_sha256'] = sha(data); published[name + '_compressed_sha256'] = sha(packed)
         dest.write_bytes(packed)
+    if clock_bytes is not None:
+        dest = prefix.parent / (prefix.name + '-clock.bin.xz')
+        assert not dest.exists()
+        packed = lzma.compress(clock_bytes, filters=[
+            {'id': lzma.FILTER_DELTA, 'dist': 8}, {'id': lzma.FILTER_LZMA2, 'preset': 3}])
+        assert lzma.decompress(packed) == clock_bytes, 'lossless clock roundtrip'
+        published['clock_file'] = dest.name
+        published['clock_sha256'] = sha(clock_bytes)
+        published['clock_compressed_sha256'] = sha(packed)
+        dest.write_bytes(packed)
     prefix.with_suffix('.json').write_text(json.dumps(published, indent=2) + '\n')
     return published
 
@@ -185,5 +213,7 @@ if __name__ == '__main__':
     p.add_argument('source', type=Path); p.add_argument('prefix', type=Path)
     p.add_argument('--expected', choices=('pass','missing-probe','analog-disagreement','motion-analog-disagreement','missing-motion-tail'), default='pass')
     p.add_argument('--case', choices=tuple(CASES)+tuple(MOTION_CASES), default='empty')
-    a = p.parse_args(); result = export(a.source, a.prefix, a.expected, a.case)
+    p.add_argument('--dsp-reference', type=Path)
+    p.add_argument('--clock-reference', action='store_true')
+    a = p.parse_args(); result = export(a.source, a.prefix, a.expected, a.case, dsp_reference=a.dsp_reference, clock_reference=a.clock_reference)
     print(result['status'], result['run']['count'], 'observations exported')

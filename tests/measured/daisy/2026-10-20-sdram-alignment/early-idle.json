@@ -1,0 +1,234 @@
+{
+  "name": "early-idle",
+  "phase": "preflight",
+  "review": {
+    "name": "early-idle",
+    "run": {
+      "token": 685438942,
+      "duration_ms": 10000,
+      "fault": 0,
+      "policy": 1,
+      "count": 3267,
+      "missed": 0,
+      "adc_failures": 0,
+      "elapsed_us": 1633501,
+      "fault_begin_us": 0,
+      "fault_end_us": 0,
+      "finish_reason": "operator",
+      "finish_request_us": 1633090,
+      "acquisition_limit_us": 1633500,
+      "trigger": 0,
+      "fault_delay_slots": 0,
+      "fault_duration_us": 25000,
+      "trigger_seq": 4294967295,
+      "trigger_us": 0,
+      "fault_due_us": 0,
+      "audio": {
+        "block": 0,
+        "permille": 0,
+        "off_ms": 0,
+        "end_us": 0,
+        "callbacks": 0,
+        "max_work_ticks": 0,
+        "max_interval_ticks": 0,
+        "over_budget": 0,
+        "late_intervals": 0,
+        "bad_size": 0,
+        "period_ticks": 0,
+        "timer_hz": 240000000
+      },
+      "dsp": {
+        "voices": 0,
+        "frames": 0,
+        "hash": 2166136261,
+        "peak": 0,
+        "nonzero": 0,
+        "macs": 0
+      },
+      "dma": {
+        "kib": 0,
+        "period_us": 0,
+        "started": 0,
+        "completed": 0,
+        "verified": 0,
+        "bytes": 0,
+        "errors": 0,
+        "corrupt_words": 0,
+        "timeouts": 0,
+        "skipped": 0,
+        "first_us": 0,
+        "last_us": 0,
+        "max_gap_us": 0,
+        "max_transfer_ticks": 0,
+        "irqs": 0,
+        "max_irq_wall_ticks": 0,
+        "irq_priority": 0,
+        "stream": 0
+      },
+      "dma_memory": {
+        "region": 0,
+        "source": 0,
+        "destination": 0,
+        "capacity_bytes": 0,
+        "cache_line_bytes": 0
+      },
+      "acquisition": {
+        "tick_us": 50,
+        "timer_priority": 0,
+        "adc_priority": 0,
+        "audio_priority": 1,
+        "timer_irqs": 32670,
+        "adc_irqs": 3267,
+        "max_timer_ticks": 258,
+        "max_adc_ticks": 338,
+        "work_ticks_low": 4526344,
+        "work_ticks_high": 0,
+        "timeouts": 0,
+        "overruns": 0,
+        "unexpected_irqs": 0,
+        "cpu_padding": 1
+      }
+    },
+    "scheduling": {
+      "status": "pass",
+      "basis": "Counted HSE/15 cycles at fixed nominal frequency; one constant offset; no fitted rate",
+      "samples": 3267,
+      "offset_us": 0.9160709577534268,
+      "max_residual_us": 0.7238036415385162,
+      "max_interval_error_us": 1.0133404481457546,
+      "max_work_width_error_us": 1.0506208143197,
+      "limits_us": {
+        "offset": 5,
+        "interval": 5,
+        "work_width": 3
+      }
+    },
+    "clock_stability": {
+      "alignment": {
+        "clock_scale_ppm": 39.93255258416539,
+        "max_fit_residual_us": 0.7266602306626737,
+        "max_interval_error_us": 1.0130062087450256,
+        "max_work_width_error_us": 1.0460000000350647,
+        "pre_application_high_intervals_s": []
+      },
+      "status": "pass",
+      "failures": [],
+      "local_diagnostic": {
+        "window_seconds": 1,
+        "blocks": [
+          {
+            "window": 0,
+            "first_seq": 0,
+            "samples": 2000,
+            "clock_scale_ppm": 39.941735282988944,
+            "max_fit_residual_us": 0.7252050149254501
+          },
+          {
+            "window": 1,
+            "first_seq": 2000,
+            "samples": 1267,
+            "clock_scale_ppm": 39.98411875016927,
+            "max_fit_residual_us": 0.7413781118948464
+          }
+        ],
+        "limitation": "Diagnostic only; no qualification override or attribution to either clock."
+      }
+    },
+    "hardware_clock": {
+      "status": "diagnostic only",
+      "cycles": 1742404,
+      "nominal_hz": 1066666.6666666667,
+      "minimum_period_s": 9.359999992852863e-07,
+      "maximum_period_s": 9.40000000060337e-07,
+      "first_gated_period_s": 8.919999999745798e-07,
+      "boundary_high_widths_s": [
+        3.920000000157131e-07,
+        4.510000000124137e-07
+      ],
+      "blocks": [
+        {
+          "begin_s": 0.7499215579999998,
+          "end_s": 2.3830721660000003,
+          "first_cycle": 216,
+          "last_cycle": 1742172,
+          "clock_scale_ppm": 39.924468050234196
+        }
+      ],
+      "limitation": "Every interior full clock period checked; initial gated period and boundary half-pulse widths reported separately. Relative clocks only; no DUT acceptance override."
+    },
+    "dsp_dma": {
+      "dsp": "disabled",
+      "dma": "disabled",
+      "dma_payload_bytes": 0,
+      "dma_verified_transfers": 0,
+      "dma_skipped_launches": 0,
+      "dma_max_gap_us": 0,
+      "limitation": "The DSP reference reuses the tested integer kernel. DMA timing/counters are device-reported; the separate audio marker independently checks audio callbacks, not the DMA2 bus. Silent outputs do not qualify codec audio quality."
+    },
+    "audio": {
+      "callbacks": 0,
+      "independent_marker": "verified idle"
+    },
+    "raw_sha256": "971f6d2f858887a094e85a432265b9e3687b122e5f6376f85467ea44d0fa8c03",
+    "digital_sha256": {
+      "sense": "7ef759ef9e9963c69548ae3eb4da57c0afe3637faf20d17fcaf48224d825e6d2",
+      "service": "760b79f95f2676bc2d9cedd9cb0b74c5a94875e173f9e96e001d91ad6a7028ec",
+      "presence": "d993bbab5d6ed3575dacf5dde2b2a85bd763f6bb42866de708ef18931f207f1f",
+      "probe": "b4a39dcc46ccff629000cf01d4de1ed6ed2ab65b177e46dd032a3132a9135a9b",
+      "clock": "a89e5acedaaf745b2247927783931ebe9f110a77ff3e23b0f43ec24b11bcabc4",
+      "audio": "5f6fcfd68be2500c2858c5d7f8277c9468124028ccc0f84a5b66cb7ca18c90cf"
+    }
+  },
+  "payloads": {
+    "wire": {
+      "file": "early-idle-wire.txt.gz",
+      "bytes": 237518,
+      "sha256": "971f6d2f858887a094e85a432265b9e3687b122e5f6376f85467ea44d0fa8c03",
+      "compressed_sha256": "15cbdbb00578e196c7f6333db5c82bbfa0b72b3cf88f025f412befc58fbf3b1f"
+    },
+    "sense": {
+      "file": "early-idle-sense.bin.gz",
+      "bytes": 60,
+      "sha256": "7ef759ef9e9963c69548ae3eb4da57c0afe3637faf20d17fcaf48224d825e6d2",
+      "compressed_sha256": "cf33818a49387be9efee8136af3f26ae13ab71f19e928e9399ef8c9214b03b64"
+    },
+    "service": {
+      "file": "early-idle-service.bin.gz",
+      "bytes": 52332,
+      "sha256": "760b79f95f2676bc2d9cedd9cb0b74c5a94875e173f9e96e001d91ad6a7028ec",
+      "compressed_sha256": "b19b5f4138a628f6ebb426e4725c8beb14569206c3fdaf388ccd492226428c7c"
+    },
+    "presence": {
+      "file": "early-idle-presence.bin.gz",
+      "bytes": 60,
+      "sha256": "d993bbab5d6ed3575dacf5dde2b2a85bd763f6bb42866de708ef18931f207f1f",
+      "compressed_sha256": "0a79c5e5bd020b1938515f0d853610cf94fe94b9bebb729b98867dddad967d49"
+    },
+    "probe": {
+      "file": "early-idle-probe.bin.gz",
+      "bytes": 13404,
+      "sha256": "b4a39dcc46ccff629000cf01d4de1ed6ed2ab65b177e46dd032a3132a9135a9b",
+      "compressed_sha256": "b9d26bf3e706803d0560ecd34f171c9dcaf477e1b9674f2cc06dae5577adbb4a"
+    },
+    "clock": {
+      "file": "early-idle-clock.bin.xz",
+      "bytes": 27878524,
+      "sha256": "a89e5acedaaf745b2247927783931ebe9f110a77ff3e23b0f43ec24b11bcabc4",
+      "compressed_sha256": "741b11321de57319d0d82e55e2f32264266c45afb25c44759243f2157921d77f"
+    },
+    "audio": {
+      "file": "early-idle-audio.bin.gz",
+      "bytes": 60,
+      "sha256": "5f6fcfd68be2500c2858c5d7f8277c9468124028ccc0f84a5b66cb7ca18c90cf",
+      "compressed_sha256": "249c5020794bf4d490b87847a3e3aaa14331b0b0b76139abc43e00e3ce0c1098"
+    },
+    "hysteretic": {
+      "file": "early-idle-hysteretic.bin.gz",
+      "bytes": 60,
+      "sha256": "0fe7c527cca8c89a35efbbceb390a89e944aaa4472852456be1b52c1bb6002d9",
+      "compressed_sha256": "a9f8f7020ff6160e7348c56a9aba3640e839397ece9f9d72029e67800b6fe351"
+    }
+  },
+  "native_analog_sha256": "f877c76a7aeca604ae34ee3520428ae2be09cb39238bd4a7d5c32bb1b17a783a",
+  "native_session_sha256": "a206291ee418d32c71a06b978e7c3be9cea8591b71bc40a2a87c19939396f8d4"
+}

@@ -56,6 +56,7 @@ def record_case(a, case, manager, generator_manifest, *, times=TIMES_US, seconds
     args = SimpleNamespace(**{k:v for k,v in case.items() if k != 'name'},
         port=a.port, manifest=a.manifest, scope_id=a.scope_id, out=out,
         max_seconds=seconds, finish_after=None, server_port=a.server_port,
+        clock_reference=getattr(a, 'clock_reference', False),
         notes=json.dumps(dict(case='automated-electrical-clamp',
             fixture='Empty switched jack; independent open-drain output on tip/sense; 1k probe series; 100k sense pulldown; no cable or external powered module.',
             generator_times_us=times, mechanical_motion=False)))
@@ -77,16 +78,18 @@ def record_case(a, case, manager, generator_manifest, *, times=TIMES_US, seconds
                     try: gen.abort()
                     except Exception: pass
                 raise
-    raw, channels, analog = extract(out)
+    raw, channels, analog = (extract(out, clock_reference=True)
+                            if args.clock_reference else extract(out))
     result = reviewer(raw, channels, analog, gen_raw.read_bytes(), generator_manifest['build_id'], times)
     actual = result['run']
     require(all(actual[k] == case[k] for k in ('fault','trigger','fault_delay_slots'))
             and actual['fault_duration_us'] == case['fault_us'],
             'recorded fault plan differs from matrix')
     jack_capture.publish_json(out / 'physical-review.json', result)
-    return dict(name=case['name'], status='pass', samples=result['samples'],
+    return dict(name=case['name'], status=result['status'], samples=result['samples'],
                 raw_sha256=result['raw_sha256'], generator_sha256=result['generator']['raw_sha256'],
-                run=result['run'])
+                run=result['run'], **({'scheduling': result['scheduling'],
+                    'clock_stability': result['clock_stability']} if args.clock_reference else {}))
 
 
 def run(a):

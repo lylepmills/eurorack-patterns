@@ -16,6 +16,7 @@ import subprocess
 import sys
 import time
 import jack_capture
+from capture import require
 
 
 class RetainedCapture:
@@ -111,13 +112,29 @@ def collect(capture, child, out, maximum, finish_after=None, on_started=None):
 
 def run(args, manager=None, on_started=None):
     manifest = json.loads(args.manifest.read_text())
-    if manifest.get('kind') != 'eurorack-patterns-daisy-jack-bench' or manifest.get('protocol') not in (2, 3, 4, 5):
-        raise ValueError('Manual session requires jack firmware protocol 2–5')
+    diagnostic = getattr(args, 'clock_diagnostic', False)
+    diagnostic_audio = getattr(args, 'diagnostic_audio', False)
+    reference = getattr(args, 'clock_reference', False)
+    require(not reference or (not diagnostic and not diagnostic_audio), 'conflicting clock modes')
+    if reference:
+        jack_capture.validate_clock_reference(manifest, args.max_seconds*1000, args.audio_permille)
+    jack_capture.validate_diagnostic_audio(manifest, diagnostic, diagnostic_audio)
+    if diagnostic:
+        jack_capture.validate_clock_diagnostic(manifest, args.max_seconds*1000,
+                                               args.fault, args.audio_permille)
+    if manifest.get('kind') != 'eurorack-patterns-daisy-jack-bench' or manifest.get('protocol') not in (2, 3, 4, 5, 6, 7, 8, 9):
+        raise ValueError('Manual session requires jack firmware protocol 2–9')
     jack_capture.validate_plan(args.max_seconds * 1000, args.fault, args.policy,
                               args.trigger, args.fault_delay_slots, args.fault_us)
     if manifest['protocol'] < 3 and (args.trigger, args.fault_delay_slots, args.fault_us) != (0, 0, 25000):
         raise ValueError('Configurable fault timing requires protocol 3')
     jack_capture.validate_audio(args.max_seconds * 1000, *jack_capture.audio_arguments(args))
+    jack_capture.validate_dsp(args.max_seconds * 1000, *jack_capture.audio_arguments(args)[:2],
+                              *jack_capture.dsp_arguments(args))
+    if manifest['protocol'] < 6 and jack_capture.dsp_arguments(args) != (0, 0):
+        raise ValueError('DSP/DMA requires protocol 6')
+    jack_capture.dma_memory.validate_plan(jack_capture.dsp_arguments(args)[1],
+        *jack_capture.dma_memory.arguments(args), manifest['protocol'])
     if args.out.exists(): raise ValueError('Output must be new')
     from saleae import automation as a
     args.out.mkdir(parents=True); (args.out/'scope').mkdir()
@@ -126,7 +143,7 @@ def run(args, manager=None, on_started=None):
           if manager is None else nullcontext(manager)) as manager:
         manager.set_reporting(analytics=False, crashes=False)
         wait_device(manager, args.scope_id, a.DeviceType.LOGIC_MSO)
-        layout = jack_capture.digital_layout(manifest['protocol'])
+        layout = jack_capture.digital_layout(manifest['protocol'], diagnostic, diagnostic_audio, reference)
         config = a.MsoDeviceConfiguration(
             scope_channels=[a.MsoScopeChannelConfiguration(index=0,
                 analog=a.MsoScopeAnalogChannelConfiguration(center_voltage=1.65,
@@ -154,6 +171,12 @@ def run(args, manager=None, on_started=None):
                 '--fault-us', str(args.fault_us)]
             command += [item for k,v in zip(('audio-block','audio-permille','audio-off-ms'),
                 jack_capture.audio_arguments(args)) for item in ('--'+k,str(v))]
+            command += [item for k,v in zip(('dsp-voices','dma-kib'),
+                jack_capture.dsp_arguments(args)) for item in ('--'+k,str(v))]
+            command += [item for k,v in zip(('dma-region','dma-period-us'),
+                jack_capture.dma_memory.arguments(args)) for item in ('--'+k,str(v))]
+            if diagnostic: command.append('--clock-diagnostic')
+            if reference: command.append('--clock-reference')
             with (args.out/'console.txt').open('w') as log:
                 child = subprocess.Popen(command, stdout=log, stderr=subprocess.STDOUT)
                 try:
@@ -184,6 +207,11 @@ def main():
     p.add_argument('--max-seconds', type=int, default=300); p.add_argument('--notes', required=True)
     jack_capture.add_fault_arguments(p)
     jack_capture.add_audio_arguments(p)
+    jack_capture.add_dsp_arguments(p)
+    p.add_argument('--clock-diagnostic', action='store_true', help='D4 is HSE/15; diagnostic capture only')
+    p.add_argument('--clock-reference', action='store_true', help='M mode: separate scheduling/clock checks; D4 clock, D5 audio')
+    p.add_argument('--diagnostic-audio', action='store_true',
+                   help='Also capture D5 on physical pin 5; requires clock mode and a supporting build')
     p.add_argument('--server-port', type=int, default=10439)
     p.add_argument('--finish-after', type=float, help='Unattended workflow check: request finish after this many seconds')
     args=p.parse_args()

@@ -1,0 +1,1590 @@
+{
+  "schema": 1,
+  "status": "three early finishes and thirty fixed-layout comparisons complete; failures retained",
+  "build": {
+    "schema": 1,
+    "status": "cross-built only; hardware validation pending",
+    "board": "seed3",
+    "source_commit": "4a6f288f4cc723917bc06e95f1346a0f174ad283",
+    "source_sha256": {
+      "examples/daisy/CMakeLists.txt": "db9e2481361371527a65614d91c4a86524c469ab28452d1299313107cce77aeb",
+      "examples/daisy/audio_load.h": "954103c360f62770869787905e9f28ab8e13f4d52b4f2af4c4cdbb20c56e96b8",
+      "examples/daisy/bench.h": "d954217b2f8c314ee7f26fe5b4047786960542db10abd1ad3855f321c0d08cdb",
+      "examples/daisy/build.py": "77e927eb7afde64deb685466e95ba2a8a225aec952326e34ed4dd633c3df0664",
+      "examples/daisy/build_identity.h.in": "fd78ac8d88872fd9378149668b0f0d02dcb1caaca667ee24e489bb30832dfc03",
+      "examples/daisy/diagnostics.h": "913eab7f77d74744ea44bbb52abe17e88b5b5f686a37d8f1f24753a757d6f352",
+      "examples/daisy/dma_config.h": "7efcb37932fc56dbe44e7e3eda28f7be6c40ecb1ef32ec013d76440752763ef0",
+      "examples/daisy/dma_internal.lds": "5424675d94ee7fb9244c3e3a35004ff16f9e0ddb506f5b41e02cbbe210a4cd04",
+      "examples/daisy/dma_memory.py": "793bfc511951e66d64d71cd27cabb0f2680a6addd3ed629726d146f0d3926d8a",
+      "examples/daisy/dma_sdram.lds": "b3dc50f5770fca8fd571e7beaf837b040f4da00e392bffad179af2a4fc64c0fa",
+      "examples/daisy/dma_workload.h": "b37fca9b2c74a1115d7f09d6d4f018f5115ce6a0bab0bf26993ce5caa3401024",
+      "examples/daisy/dsp_workload.h": "ac3cfb5963c809182fcb1e487b48ac7b71f5c1a448a4f5a4b9ff5b49c9bb1461",
+      "examples/daisy/experiment.h": "34d79dc8c45e076de5392cc196e1d5cfb3a75858262245816621251bb8759613",
+      "examples/daisy/jack.cpp": "e7704c29dac2c650a4f5e88e529b4ff8eacf9d90637e59e4582d883770a447f0",
+      "examples/daisy/jack_acquisition.h": "22bdf59cb7f0925604ef145b49550ebe06123a1ec6b5bdbe32f4a36f0305e467",
+      "examples/daisy/jack_bench.h": "4765e46425fd1e905378d061839cc3f26352a2fab8b85f0c3dcf8ce156d82a17",
+      "examples/daisy/load.h": "286525685df63c637cbea238a8dbf95f5c4870dab4dbad8763808301986e9880",
+      "examples/daisy/main.cpp": "cba85b151fc4c831b7527189257399b42d6b475145f113cf05603c7e74e8144c",
+      "examples/daisy/protocol.h": "337f9b62c7926ebb04cd264e7468dba0dbe7828d02b092eb862397ab8ed7c352",
+      "examples/daisy/pulse_generator.h": "e2f8d751b083f32adee9a709404d4b3d5f08885ff3d1f210674f12853e67ce0d",
+      "examples/shared_control.h": "2b3d3d3232d6611bb036ecb2e5fabe2633bc36aa7e9c9b834f613c363be229a7",
+      "include/eurorack_patterns/controls.h": "9c8c0650034a2278eefc4f7500cfec03072e0e189623420c03192d361678e467",
+      "include/eurorack_patterns/events.h": "c887574788f8ece7dbcbaa643537b950ca5071335db3a04b2130e0751b775ade",
+      "include/eurorack_patterns/gestures.h": "c825b10a540f7180b4581be878be5f41b4791ff75c112c3e5cd79cbbe1b361f8",
+      "include/eurorack_patterns/pickup.h": "378bda5b84775124298f0403993608774822db3a829a59dadc94b5e139d197a2",
+      "include/eurorack_patterns/presence.h": "7884c320389d00d79a789b612b613f77e4120b196cc6b9b7f204baf35d5bba18",
+      "include/eurorack_patterns/pulses.h": "b6297e0f70efd13bc84495caf98926b1f75065d342efbd55e1d8ffc92b65c854",
+      "include/eurorack_patterns/timing.h": "01d73080b3397d76815e7e1a7aa6342ae84716a653a684d4a6c7f5566eb1546c",
+      "include/eurorack_patterns/transitions.h": "86b8eaaef30852868acfcf9b895d7910e43feb5667c361540768d7372b21e053",
+      "include/eurorack_patterns/trigger_delay.h": "db596072922b0f893608978b13fe952cd99dce6815c4961b265a6ff5d2bb2815"
+    },
+    "sdk_revision": "e1f740a5a7fe38e6d6d41281bf99fe7a2bb3827b",
+    "sdk_submodules": {
+      "Drivers/CMSIS-DSP": "3a04f817a4380c00ff51f9bcdc6c4e4bb7a18b80",
+      "Drivers/CMSIS_5": "2b7495b8535bdcb306dac29b9ded4cfb679d7e5c",
+      "Drivers/CMSIS-Device/ST/STM32H7xx": "6dac8c24d7b38ab20806d27dd7d8285a6433b8f7",
+      "Drivers/STM32H7xx_HAL_Driver": "404a70d4c19c124636c78801ff7c0dbc87bc4256",
+      "Middlewares/ST/STM32_USB_Device_Library": "7b5e6886d2f11ad15d2b46364e8a96984358f639"
+    },
+    "compiler": "arm-none-eabi-gcc (Arm GNU Toolchain 15.3.Rel1 (Build arm-15.149)) 15.3.1 20260627",
+    "flash_address": "0x90040000",
+    "storage": "bootloader SRAM application",
+    "kind": "eurorack-patterns-daisy-jack-bench",
+    "protocol": 9,
+    "acquisition": "TIM7 50us phase service plus single ADC EOC interrupt",
+    "acquisition_irq_priority": 0,
+    "audio_irq_priority": 1,
+    "audio_padding": "CPU work excluding measured acquisition ISR body time",
+    "pause_fault": "acquisition suspended; timer and audio continue",
+    "dsp_workload": "1-32 deterministic fixed-point 32-tap FIR and SDRAM feedback-delay voices; silent codec outputs",
+    "dma_workload": "DMA2 stream6 fixed SDRAM alignment views or AXI SRAM 4/16KiB; 1/2ms requested cadence; cache ownership and full data verification",
+    "dma_irq_priority": 2,
+    "max_dsp_dma_duration_ms": 30000,
+    "clock_diagnostic": "HSE/15 on PC9; K command; max 10 seconds",
+    "clock_diagnostic_audio": "PC8 / D4 / physical pin 5; K mode only",
+    "clock_reference": "M command; HSE/15 on PC9; audio on PC8; max 10 seconds; faults allowed",
+    "audio_sample_rate_hz": 48000,
+    "audio_block_sizes": [
+      16,
+      48,
+      96
+    ],
+    "max_audio_padding_permille": 700,
+    "audio_marker": "PC9 / D3 / physical pin 4",
+    "fault_triggers": 6,
+    "max_fault_us": 100000,
+    "max_fault_delay_slots": 64,
+    "sample_period_us": 500,
+    "settle_us": 150,
+    "sample_cycles": 810.5,
+    "adc_bits": 16,
+    "max_duration_ms": 300000,
+    "max_records": 600000,
+    "window_size": 64,
+    "mismatch_threshold": 3,
+    "bad_windows_required": 8,
+    "low_code": 16384,
+    "high_code": 49151,
+    "probe": "PC10 / D2 / physical pin 3 through 1k to tip-normal",
+    "input": "PA3 / A1 / physical pin 23 on tip, 100k to ground",
+    "markers": "physical pin 1 sampling, physical pin 2 qualified patched",
+    "startup": "unknown state reset at each commanded acquisition; no automatic boot capture",
+    "build_id": "efb2237905e88d4bbaba81f8",
+    "dma_linked_buffers": {
+      "0": {
+        "region": 0,
+        "source": 3221225472,
+        "destination": 3221241856,
+        "capacity_bytes": 16384,
+        "cache_line_bytes": 32
+      },
+      "1": {
+        "region": 1,
+        "source": 604066208,
+        "destination": 604082592,
+        "capacity_bytes": 16384,
+        "cache_line_bytes": 32
+      },
+      "2": {
+        "region": 2,
+        "source": 3252122624,
+        "destination": 3252139008,
+        "capacity_bytes": 16384,
+        "cache_line_bytes": 32
+      },
+      "3": {
+        "region": 3,
+        "source": 3223388160,
+        "destination": 3223404544,
+        "capacity_bytes": 16384,
+        "cache_line_bytes": 32
+      },
+      "4": {
+        "region": 4,
+        "source": 3252092928,
+        "destination": 3252109312,
+        "capacity_bytes": 16384,
+        "cache_line_bytes": 32
+      },
+      "5": {
+        "region": 5,
+        "source": 3223388192,
+        "destination": 3223404576,
+        "capacity_bytes": 16384,
+        "cache_line_bytes": 32
+      },
+      "6": {
+        "region": 6,
+        "source": 3252092960,
+        "destination": 3252109344,
+        "capacity_bytes": 16384,
+        "cache_line_bytes": 32
+      },
+      "7": {
+        "region": 7,
+        "source": 3223389184,
+        "destination": 3223405568,
+        "capacity_bytes": 16384,
+        "cache_line_bytes": 32
+      },
+      "8": {
+        "region": 8,
+        "source": 3252093952,
+        "destination": 3252110336,
+        "capacity_bytes": 16384,
+        "cache_line_bytes": 32
+      },
+      "9": {
+        "region": 9,
+        "source": 3223417856,
+        "destination": 3223434240,
+        "capacity_bytes": 16384,
+        "cache_line_bytes": 32
+      }
+    },
+    "fixed_sdram_storage": {
+      "ep_dma_sdram_buffers": {
+        "address": 3221225472,
+        "size_bytes": 32768
+      },
+      "ep_dsp_delay": {
+        "address": 3221258240,
+        "size_bytes": 2097152
+      },
+      "ep_jack_records": {
+        "address": 3254779904,
+        "size_bytes": 28800000
+      },
+      "ep_dma_low_arena": {
+        "address": 3223388160,
+        "size_bytes": 65536
+      },
+      "ep_dma_high_arena": {
+        "address": 3252092928,
+        "size_bytes": 65536
+      }
+    },
+    "artifacts_sha256": {
+      "patterns_jack.bin": "8a5fbb7dcb4d740918f441a2c25a0bf555bd5bc305f5d6d855dd71f03303f00c",
+      "patterns_jack.elf": "31a4a3bce70a1fc1a15c7cfca793162bf1ec3e26ca1d665b45665b77f5188d27",
+      "patterns_jack.map": "db923fd4c0c7937964b86abe83c687e6f6eca490a2f1bd720c1504724e0735a1"
+    }
+  },
+  "plans": {
+    "preflight": [
+      {
+        "name": "early-idle",
+        "audio_block": 0,
+        "dsp_voices": 0,
+        "dma_kib": 0,
+        "dma_region": 0,
+        "dma_period_us": 1000
+      },
+      {
+        "name": "early-low-offset",
+        "audio_block": 16,
+        "dsp_voices": 16,
+        "dma_kib": 16,
+        "dma_region": 5,
+        "dma_period_us": 2000
+      },
+      {
+        "name": "early-high-offset",
+        "audio_block": 16,
+        "dsp_voices": 16,
+        "dma_kib": 16,
+        "dma_region": 6,
+        "dma_period_us": 2000
+      }
+    ],
+    "comparison": [
+      {
+        "audio_block": 0,
+        "audio_permille": 0,
+        "audio_off_ms": 0,
+        "dsp_voices": 0,
+        "dma_kib": 0,
+        "dma_region": 0,
+        "dma_period_us": 1000,
+        "name": "idle-before"
+      },
+      {
+        "audio_block": 16,
+        "audio_permille": 0,
+        "audio_off_ms": 8000,
+        "dsp_voices": 16,
+        "dma_kib": 0,
+        "dma_region": 0,
+        "dma_period_us": 1000,
+        "name": "dsp-before"
+      },
+      {
+        "audio_block": 16,
+        "audio_permille": 0,
+        "audio_off_ms": 8000,
+        "dsp_voices": 16,
+        "dma_kib": 16,
+        "dma_region": 0,
+        "dma_period_us": 2000,
+        "name": "legacy-low-before"
+      },
+      {
+        "audio_block": 16,
+        "audio_permille": 0,
+        "audio_off_ms": 8000,
+        "dsp_voices": 0,
+        "dma_kib": 16,
+        "dma_region": 3,
+        "dma_period_us": 2000,
+        "name": "dma-only-r3"
+      },
+      {
+        "audio_block": 16,
+        "audio_permille": 0,
+        "audio_off_ms": 8000,
+        "dsp_voices": 0,
+        "dma_kib": 16,
+        "dma_region": 4,
+        "dma_period_us": 2000,
+        "name": "dma-only-r4"
+      },
+      {
+        "audio_block": 16,
+        "audio_permille": 0,
+        "audio_off_ms": 8000,
+        "dsp_voices": 0,
+        "dma_kib": 16,
+        "dma_region": 6,
+        "dma_period_us": 2000,
+        "name": "dma-only-r6"
+      },
+      {
+        "audio_block": 16,
+        "audio_permille": 0,
+        "audio_off_ms": 8000,
+        "dsp_voices": 0,
+        "dma_kib": 16,
+        "dma_region": 5,
+        "dma_period_us": 2000,
+        "name": "dma-only-r5"
+      },
+      {
+        "audio_block": 16,
+        "audio_permille": 0,
+        "audio_off_ms": 8000,
+        "dsp_voices": 0,
+        "dma_kib": 16,
+        "dma_region": 7,
+        "dma_period_us": 2000,
+        "name": "dma-only-r7"
+      },
+      {
+        "audio_block": 16,
+        "audio_permille": 0,
+        "audio_off_ms": 8000,
+        "dsp_voices": 0,
+        "dma_kib": 16,
+        "dma_region": 8,
+        "dma_period_us": 2000,
+        "name": "dma-only-r8"
+      },
+      {
+        "audio_block": 16,
+        "audio_permille": 0,
+        "audio_off_ms": 8000,
+        "dsp_voices": 0,
+        "dma_kib": 16,
+        "dma_region": 2,
+        "dma_period_us": 2000,
+        "name": "dma-only-r2"
+      },
+      {
+        "audio_block": 16,
+        "audio_permille": 0,
+        "audio_off_ms": 8000,
+        "dsp_voices": 0,
+        "dma_kib": 16,
+        "dma_region": 9,
+        "dma_period_us": 2000,
+        "name": "dma-only-r9"
+      },
+      {
+        "audio_block": 16,
+        "audio_permille": 0,
+        "audio_off_ms": 8000,
+        "dsp_voices": 16,
+        "dma_kib": 16,
+        "dma_region": 3,
+        "dma_period_us": 2000,
+        "name": "combined-s1-r3"
+      },
+      {
+        "audio_block": 16,
+        "audio_permille": 0,
+        "audio_off_ms": 8000,
+        "dsp_voices": 16,
+        "dma_kib": 16,
+        "dma_region": 4,
+        "dma_period_us": 2000,
+        "name": "combined-s1-r4"
+      },
+      {
+        "audio_block": 16,
+        "audio_permille": 0,
+        "audio_off_ms": 8000,
+        "dsp_voices": 16,
+        "dma_kib": 16,
+        "dma_region": 6,
+        "dma_period_us": 2000,
+        "name": "combined-s1-r6"
+      },
+      {
+        "audio_block": 16,
+        "audio_permille": 0,
+        "audio_off_ms": 8000,
+        "dsp_voices": 16,
+        "dma_kib": 16,
+        "dma_region": 5,
+        "dma_period_us": 2000,
+        "name": "combined-s1-r5"
+      },
+      {
+        "audio_block": 16,
+        "audio_permille": 0,
+        "audio_off_ms": 8000,
+        "dsp_voices": 16,
+        "dma_kib": 16,
+        "dma_region": 7,
+        "dma_period_us": 2000,
+        "name": "combined-s1-r7"
+      },
+      {
+        "audio_block": 16,
+        "audio_permille": 0,
+        "audio_off_ms": 8000,
+        "dsp_voices": 16,
+        "dma_kib": 16,
+        "dma_region": 8,
+        "dma_period_us": 2000,
+        "name": "combined-s1-r8"
+      },
+      {
+        "audio_block": 16,
+        "audio_permille": 0,
+        "audio_off_ms": 8000,
+        "dsp_voices": 16,
+        "dma_kib": 16,
+        "dma_region": 2,
+        "dma_period_us": 2000,
+        "name": "combined-s1-r2"
+      },
+      {
+        "audio_block": 16,
+        "audio_permille": 0,
+        "audio_off_ms": 8000,
+        "dsp_voices": 16,
+        "dma_kib": 16,
+        "dma_region": 9,
+        "dma_period_us": 2000,
+        "name": "combined-s1-r9"
+      },
+      {
+        "audio_block": 16,
+        "audio_permille": 0,
+        "audio_off_ms": 8000,
+        "dsp_voices": 16,
+        "dma_kib": 16,
+        "dma_region": 9,
+        "dma_period_us": 2000,
+        "name": "combined-s2-r9"
+      },
+      {
+        "audio_block": 16,
+        "audio_permille": 0,
+        "audio_off_ms": 8000,
+        "dsp_voices": 16,
+        "dma_kib": 16,
+        "dma_region": 2,
+        "dma_period_us": 2000,
+        "name": "combined-s2-r2"
+      },
+      {
+        "audio_block": 16,
+        "audio_permille": 0,
+        "audio_off_ms": 8000,
+        "dsp_voices": 16,
+        "dma_kib": 16,
+        "dma_region": 8,
+        "dma_period_us": 2000,
+        "name": "combined-s2-r8"
+      },
+      {
+        "audio_block": 16,
+        "audio_permille": 0,
+        "audio_off_ms": 8000,
+        "dsp_voices": 16,
+        "dma_kib": 16,
+        "dma_region": 7,
+        "dma_period_us": 2000,
+        "name": "combined-s2-r7"
+      },
+      {
+        "audio_block": 16,
+        "audio_permille": 0,
+        "audio_off_ms": 8000,
+        "dsp_voices": 16,
+        "dma_kib": 16,
+        "dma_region": 5,
+        "dma_period_us": 2000,
+        "name": "combined-s2-r5"
+      },
+      {
+        "audio_block": 16,
+        "audio_permille": 0,
+        "audio_off_ms": 8000,
+        "dsp_voices": 16,
+        "dma_kib": 16,
+        "dma_region": 6,
+        "dma_period_us": 2000,
+        "name": "combined-s2-r6"
+      },
+      {
+        "audio_block": 16,
+        "audio_permille": 0,
+        "audio_off_ms": 8000,
+        "dsp_voices": 16,
+        "dma_kib": 16,
+        "dma_region": 4,
+        "dma_period_us": 2000,
+        "name": "combined-s2-r4"
+      },
+      {
+        "audio_block": 16,
+        "audio_permille": 0,
+        "audio_off_ms": 8000,
+        "dsp_voices": 16,
+        "dma_kib": 16,
+        "dma_region": 3,
+        "dma_period_us": 2000,
+        "name": "combined-s2-r3"
+      },
+      {
+        "audio_block": 16,
+        "audio_permille": 0,
+        "audio_off_ms": 8000,
+        "dsp_voices": 16,
+        "dma_kib": 16,
+        "dma_region": 0,
+        "dma_period_us": 2000,
+        "name": "legacy-low-after"
+      },
+      {
+        "audio_block": 16,
+        "audio_permille": 0,
+        "audio_off_ms": 8000,
+        "dsp_voices": 16,
+        "dma_kib": 0,
+        "dma_region": 0,
+        "dma_period_us": 1000,
+        "name": "dsp-after"
+      },
+      {
+        "audio_block": 0,
+        "audio_permille": 0,
+        "audio_off_ms": 0,
+        "dsp_voices": 0,
+        "dma_kib": 0,
+        "dma_region": 0,
+        "dma_period_us": 1000,
+        "name": "idle-after"
+      }
+    ]
+  },
+  "cases": [
+    {
+      "name": "early-idle",
+      "phase": "preflight"
+    },
+    {
+      "name": "early-low-offset",
+      "phase": "preflight"
+    },
+    {
+      "name": "early-high-offset",
+      "phase": "preflight"
+    },
+    {
+      "name": "idle-before",
+      "phase": "comparison"
+    },
+    {
+      "name": "dsp-before",
+      "phase": "comparison"
+    },
+    {
+      "name": "legacy-low-before",
+      "phase": "comparison"
+    },
+    {
+      "name": "dma-only-r3",
+      "phase": "comparison"
+    },
+    {
+      "name": "dma-only-r4",
+      "phase": "comparison"
+    },
+    {
+      "name": "dma-only-r6",
+      "phase": "comparison"
+    },
+    {
+      "name": "dma-only-r5",
+      "phase": "comparison"
+    },
+    {
+      "name": "dma-only-r7",
+      "phase": "comparison"
+    },
+    {
+      "name": "dma-only-r8",
+      "phase": "comparison"
+    },
+    {
+      "name": "dma-only-r2",
+      "phase": "comparison"
+    },
+    {
+      "name": "dma-only-r9",
+      "phase": "comparison"
+    },
+    {
+      "name": "combined-s1-r3",
+      "phase": "comparison"
+    },
+    {
+      "name": "combined-s1-r4",
+      "phase": "comparison"
+    },
+    {
+      "name": "combined-s1-r6",
+      "phase": "comparison"
+    },
+    {
+      "name": "combined-s1-r5",
+      "phase": "comparison"
+    },
+    {
+      "name": "combined-s1-r7",
+      "phase": "comparison"
+    },
+    {
+      "name": "combined-s1-r8",
+      "phase": "comparison"
+    },
+    {
+      "name": "combined-s1-r2",
+      "phase": "comparison"
+    },
+    {
+      "name": "combined-s1-r9",
+      "phase": "comparison"
+    },
+    {
+      "name": "combined-s2-r9",
+      "phase": "comparison"
+    },
+    {
+      "name": "combined-s2-r2",
+      "phase": "comparison"
+    },
+    {
+      "name": "combined-s2-r8",
+      "phase": "comparison"
+    },
+    {
+      "name": "combined-s2-r7",
+      "phase": "comparison"
+    },
+    {
+      "name": "combined-s2-r5",
+      "phase": "comparison"
+    },
+    {
+      "name": "combined-s2-r6",
+      "phase": "comparison"
+    },
+    {
+      "name": "combined-s2-r4",
+      "phase": "comparison"
+    },
+    {
+      "name": "combined-s2-r3",
+      "phase": "comparison"
+    },
+    {
+      "name": "legacy-low-after",
+      "phase": "comparison"
+    },
+    {
+      "name": "dsp-after",
+      "phase": "comparison"
+    },
+    {
+      "name": "idle-after",
+      "phase": "comparison"
+    }
+  ],
+  "host_commit": "4a6f288f4cc723917bc06e95f1346a0f174ad283",
+  "times_us": [
+    300000,
+    437919,
+    583757,
+    737514,
+    874190,
+    1018785,
+    1171299,
+    1306732,
+    1450084,
+    1601355,
+    1735545,
+    1877654,
+    2027682,
+    2160629,
+    2301495,
+    2450280,
+    2581984,
+    2721607,
+    2869149,
+    2999610,
+    3137990,
+    3284289,
+    3438507,
+    3575644,
+    3720700,
+    3873675,
+    4009569,
+    4153382,
+    4305114,
+    4439765,
+    4582335,
+    4732824,
+    4866232,
+    5007559,
+    5156805,
+    5288970,
+    5429054,
+    5577057,
+    5707979,
+    5846820,
+    5993580,
+    6148259,
+    6285857,
+    6431374,
+    6584810,
+    6721165,
+    6865439,
+    7017632,
+    7152744,
+    7295775,
+    7446725,
+    7580594,
+    7722382,
+    7872089,
+    8004715,
+    8145260,
+    8293724,
+    8425107,
+    8564409,
+    8711630,
+    8841770,
+    8979829,
+    9125807,
+    9279704
+  ],
+  "generator_build_id": "4e68efce89b64d686cf11c63",
+  "scope_settings": {
+    "analog_channel": 0,
+    "analog_rate_hz": 250000,
+    "probe_attenuation": 10,
+    "coupling": "DC",
+    "digital_layout": [
+      {
+        "name": "sense",
+        "port_index": 0,
+        "channel_index": 0
+      },
+      {
+        "name": "service",
+        "port_index": 0,
+        "channel_index": 1
+      },
+      {
+        "name": "presence",
+        "port_index": 0,
+        "channel_index": 2
+      },
+      {
+        "name": "probe",
+        "port_index": 0,
+        "channel_index": 3
+      },
+      {
+        "name": "clock",
+        "port_index": 1,
+        "channel_index": 0
+      },
+      {
+        "name": "audio",
+        "port_index": 1,
+        "channel_index": 1
+      }
+    ],
+    "threshold_volts": 1.65,
+    "minimum_pulse_width_seconds": 0,
+    "scope_derived_digital": {
+      "index": 0,
+      "low_threshold_volts": 1.2,
+      "high_threshold_volts": 2.0,
+      "minimum_pulse_width_seconds": 0,
+      "node": "independent generator output"
+    },
+    "mode": "manual; no trim",
+    "physical_review": "pending"
+  },
+  "acquisition_provenance": {
+    "preflight": {
+      "host_commit": "4a6f288f4cc723917bc06e95f1346a0f174ad283",
+      "runner_sha256": "f1cd3556a1a09f8e20229eed419f6bcd370de00fff12781c86837ffa55f8f306",
+      "session_adapter_sha256": "52ce52ccabe45860c5f0a6444d1a924fc429ec568958dec0cce9c71a83f6f480",
+      "dsp_reference_sha256": "37250efcc0adfe56fd8dd8e7e087a19c6e14dbfe8e8177420f5d9cc8a9abe3c7",
+      "physical_channels": {
+        "D0": "independent generator output; 4.7k pull-up; disconnected from fixture sense",
+        "D1": "fixture service",
+        "D2": "fixture presence",
+        "D3": "fixture probe",
+        "D4": "fixture HSE/15",
+        "D5": "fixture audio",
+        "CH1": "independent generator output; probe ground generator pin 40",
+        "CH1-derived": "same analog input, high 2.0 V low 1.2 V hysteresis, no pulse filter"
+      }
+    },
+    "comparison": {
+      "host_commit": "4a6f288f4cc723917bc06e95f1346a0f174ad283",
+      "runner_sha256": "c9ee7245a74bd4ba0630f6ecd35b56d15d6dcfe457b99404c87717a8c4769de3",
+      "session_adapter_sha256": "52ce52ccabe45860c5f0a6444d1a924fc429ec568958dec0cce9c71a83f6f480",
+      "dsp_reference_sha256": "37250efcc0adfe56fd8dd8e7e087a19c6e14dbfe8e8177420f5d9cc8a9abe3c7",
+      "physical_channels": {
+        "D0": "independent generator output; 4.7k pull-up; disconnected from fixture sense",
+        "D1": "fixture service",
+        "D2": "fixture presence",
+        "D3": "fixture probe",
+        "D4": "fixture HSE/15",
+        "D5": "fixture audio",
+        "CH1": "independent generator output; probe ground generator pin 40",
+        "CH1-derived": "same analog input, high 2.0 V low 1.2 V hysteresis, no pulse filter"
+      }
+    }
+  },
+  "settling_seconds": 60,
+  "throughput_comparisons": [
+    {
+      "left": "dma-only-r3",
+      "right": "dma-only-r4",
+      "variable": "address range; same offset",
+      "runs": [
+        {
+          "region": 3,
+          "verified": 3999,
+          "skipped": 0,
+          "payload_bytes": 65519616,
+          "loaded_us": 8000001,
+          "transfers_per_second": 499.87493751563284,
+          "payload_bytes_per_second": 8189950.976256128,
+          "dsp_frames": 0,
+          "audio_callbacks": 24007
+        },
+        {
+          "region": 4,
+          "verified": 3999,
+          "skipped": 0,
+          "payload_bytes": 65519616,
+          "loaded_us": 8000001,
+          "transfers_per_second": 499.87493751563284,
+          "payload_bytes_per_second": 8189950.976256128,
+          "dsp_frames": 0,
+          "audio_callbacks": 24007
+        }
+      ],
+      "completion_counts_matched": true,
+      "interpretation": "Counts agree within one transfer/callback, no skipped launches; compare clock results with cache/verification costs included."
+    },
+    {
+      "left": "dma-only-r5",
+      "right": "dma-only-r6",
+      "variable": "address range; same offset",
+      "runs": [
+        {
+          "region": 5,
+          "verified": 3999,
+          "skipped": 0,
+          "payload_bytes": 65519616,
+          "loaded_us": 8000001,
+          "transfers_per_second": 499.87493751563284,
+          "payload_bytes_per_second": 8189950.976256128,
+          "dsp_frames": 0,
+          "audio_callbacks": 24007
+        },
+        {
+          "region": 6,
+          "verified": 3999,
+          "skipped": 0,
+          "payload_bytes": 65519616,
+          "loaded_us": 8000001,
+          "transfers_per_second": 499.87493751563284,
+          "payload_bytes_per_second": 8189950.976256128,
+          "dsp_frames": 0,
+          "audio_callbacks": 24007
+        }
+      ],
+      "completion_counts_matched": true,
+      "interpretation": "Counts agree within one transfer/callback, no skipped launches; compare clock results with cache/verification costs included."
+    },
+    {
+      "left": "dma-only-r7",
+      "right": "dma-only-r8",
+      "variable": "address range; same offset",
+      "runs": [
+        {
+          "region": 7,
+          "verified": 3999,
+          "skipped": 0,
+          "payload_bytes": 65519616,
+          "loaded_us": 8000001,
+          "transfers_per_second": 499.87493751563284,
+          "payload_bytes_per_second": 8189950.976256128,
+          "dsp_frames": 0,
+          "audio_callbacks": 24007
+        },
+        {
+          "region": 8,
+          "verified": 3999,
+          "skipped": 0,
+          "payload_bytes": 65519616,
+          "loaded_us": 8000001,
+          "transfers_per_second": 499.87493751563284,
+          "payload_bytes_per_second": 8189950.976256128,
+          "dsp_frames": 0,
+          "audio_callbacks": 24007
+        }
+      ],
+      "completion_counts_matched": true,
+      "interpretation": "Counts agree within one transfer/callback, no skipped launches; compare clock results with cache/verification costs included."
+    },
+    {
+      "left": "dma-only-r9",
+      "right": "dma-only-r2",
+      "variable": "address range; same offset",
+      "runs": [
+        {
+          "region": 9,
+          "verified": 3999,
+          "skipped": 0,
+          "payload_bytes": 65519616,
+          "loaded_us": 8000001,
+          "transfers_per_second": 499.87493751563284,
+          "payload_bytes_per_second": 8189950.976256128,
+          "dsp_frames": 0,
+          "audio_callbacks": 24007
+        },
+        {
+          "region": 2,
+          "verified": 3999,
+          "skipped": 0,
+          "payload_bytes": 65519616,
+          "loaded_us": 8000000,
+          "transfers_per_second": 499.875,
+          "payload_bytes_per_second": 8189952.0,
+          "dsp_frames": 0,
+          "audio_callbacks": 24007
+        }
+      ],
+      "completion_counts_matched": true,
+      "interpretation": "Counts agree within one transfer/callback, no skipped launches; compare clock results with cache/verification costs included."
+    },
+    {
+      "left": "combined-s1-r3",
+      "right": "combined-s1-r4",
+      "variable": "address range; same offset",
+      "runs": [
+        {
+          "region": 3,
+          "verified": 3999,
+          "skipped": 0,
+          "payload_bytes": 65519616,
+          "loaded_us": 8000004,
+          "transfers_per_second": 499.87475006262497,
+          "payload_bytes_per_second": 8189947.9050260475,
+          "dsp_frames": 384112,
+          "audio_callbacks": 24007
+        },
+        {
+          "region": 4,
+          "verified": 3999,
+          "skipped": 0,
+          "payload_bytes": 65519616,
+          "loaded_us": 8000003,
+          "transfers_per_second": 499.8748125469453,
+          "payload_bytes_per_second": 8189948.928769152,
+          "dsp_frames": 384112,
+          "audio_callbacks": 24007
+        }
+      ],
+      "completion_counts_matched": true,
+      "interpretation": "Counts agree within one transfer/callback, no skipped launches; compare clock results with cache/verification costs included."
+    },
+    {
+      "left": "combined-s1-r5",
+      "right": "combined-s1-r6",
+      "variable": "address range; same offset",
+      "runs": [
+        {
+          "region": 5,
+          "verified": 3999,
+          "skipped": 0,
+          "payload_bytes": 65519616,
+          "loaded_us": 8000001,
+          "transfers_per_second": 499.87493751563284,
+          "payload_bytes_per_second": 8189950.976256128,
+          "dsp_frames": 384112,
+          "audio_callbacks": 24007
+        },
+        {
+          "region": 6,
+          "verified": 3999,
+          "skipped": 0,
+          "payload_bytes": 65519616,
+          "loaded_us": 8000001,
+          "transfers_per_second": 499.87493751563284,
+          "payload_bytes_per_second": 8189950.976256128,
+          "dsp_frames": 384112,
+          "audio_callbacks": 24007
+        }
+      ],
+      "completion_counts_matched": true,
+      "interpretation": "Counts agree within one transfer/callback, no skipped launches; compare clock results with cache/verification costs included."
+    },
+    {
+      "left": "combined-s1-r7",
+      "right": "combined-s1-r8",
+      "variable": "address range; same offset",
+      "runs": [
+        {
+          "region": 7,
+          "verified": 3999,
+          "skipped": 0,
+          "payload_bytes": 65519616,
+          "loaded_us": 8000001,
+          "transfers_per_second": 499.87493751563284,
+          "payload_bytes_per_second": 8189950.976256128,
+          "dsp_frames": 384112,
+          "audio_callbacks": 24007
+        },
+        {
+          "region": 8,
+          "verified": 3999,
+          "skipped": 0,
+          "payload_bytes": 65519616,
+          "loaded_us": 8000005,
+          "transfers_per_second": 499.8746875783203,
+          "payload_bytes_per_second": 8189946.881283199,
+          "dsp_frames": 384112,
+          "audio_callbacks": 24007
+        }
+      ],
+      "completion_counts_matched": true,
+      "interpretation": "Counts agree within one transfer/callback, no skipped launches; compare clock results with cache/verification costs included."
+    },
+    {
+      "left": "combined-s1-r9",
+      "right": "combined-s1-r2",
+      "variable": "address range; same offset",
+      "runs": [
+        {
+          "region": 9,
+          "verified": 3999,
+          "skipped": 0,
+          "payload_bytes": 65519616,
+          "loaded_us": 8000002,
+          "transfers_per_second": 499.87487503128125,
+          "payload_bytes_per_second": 8189949.952512512,
+          "dsp_frames": 384112,
+          "audio_callbacks": 24007
+        },
+        {
+          "region": 2,
+          "verified": 3999,
+          "skipped": 0,
+          "payload_bytes": 65519616,
+          "loaded_us": 8000001,
+          "transfers_per_second": 499.87493751563284,
+          "payload_bytes_per_second": 8189950.976256128,
+          "dsp_frames": 384112,
+          "audio_callbacks": 24007
+        }
+      ],
+      "completion_counts_matched": true,
+      "interpretation": "Counts agree within one transfer/callback, no skipped launches; compare clock results with cache/verification costs included."
+    },
+    {
+      "left": "combined-s2-r3",
+      "right": "combined-s2-r4",
+      "variable": "address range; same offset",
+      "runs": [
+        {
+          "region": 3,
+          "verified": 3999,
+          "skipped": 0,
+          "payload_bytes": 65519616,
+          "loaded_us": 8000001,
+          "transfers_per_second": 499.87493751563284,
+          "payload_bytes_per_second": 8189950.976256128,
+          "dsp_frames": 384112,
+          "audio_callbacks": 24007
+        },
+        {
+          "region": 4,
+          "verified": 3999,
+          "skipped": 0,
+          "payload_bytes": 65519616,
+          "loaded_us": 8000004,
+          "transfers_per_second": 499.87475006262497,
+          "payload_bytes_per_second": 8189947.9050260475,
+          "dsp_frames": 384112,
+          "audio_callbacks": 24007
+        }
+      ],
+      "completion_counts_matched": true,
+      "interpretation": "Counts agree within one transfer/callback, no skipped launches; compare clock results with cache/verification costs included."
+    },
+    {
+      "left": "combined-s2-r5",
+      "right": "combined-s2-r6",
+      "variable": "address range; same offset",
+      "runs": [
+        {
+          "region": 5,
+          "verified": 3999,
+          "skipped": 0,
+          "payload_bytes": 65519616,
+          "loaded_us": 8000001,
+          "transfers_per_second": 499.87493751563284,
+          "payload_bytes_per_second": 8189950.976256128,
+          "dsp_frames": 384112,
+          "audio_callbacks": 24007
+        },
+        {
+          "region": 6,
+          "verified": 3999,
+          "skipped": 0,
+          "payload_bytes": 65519616,
+          "loaded_us": 8000002,
+          "transfers_per_second": 499.87487503128125,
+          "payload_bytes_per_second": 8189949.952512512,
+          "dsp_frames": 384112,
+          "audio_callbacks": 24007
+        }
+      ],
+      "completion_counts_matched": true,
+      "interpretation": "Counts agree within one transfer/callback, no skipped launches; compare clock results with cache/verification costs included."
+    },
+    {
+      "left": "combined-s2-r7",
+      "right": "combined-s2-r8",
+      "variable": "address range; same offset",
+      "runs": [
+        {
+          "region": 7,
+          "verified": 3999,
+          "skipped": 0,
+          "payload_bytes": 65519616,
+          "loaded_us": 8000003,
+          "transfers_per_second": 499.8748125469453,
+          "payload_bytes_per_second": 8189948.928769152,
+          "dsp_frames": 384112,
+          "audio_callbacks": 24007
+        },
+        {
+          "region": 8,
+          "verified": 3999,
+          "skipped": 0,
+          "payload_bytes": 65519616,
+          "loaded_us": 8000001,
+          "transfers_per_second": 499.87493751563284,
+          "payload_bytes_per_second": 8189950.976256128,
+          "dsp_frames": 384112,
+          "audio_callbacks": 24007
+        }
+      ],
+      "completion_counts_matched": true,
+      "interpretation": "Counts agree within one transfer/callback, no skipped launches; compare clock results with cache/verification costs included."
+    },
+    {
+      "left": "combined-s2-r9",
+      "right": "combined-s2-r2",
+      "variable": "address range; same offset",
+      "runs": [
+        {
+          "region": 9,
+          "verified": 3999,
+          "skipped": 0,
+          "payload_bytes": 65519616,
+          "loaded_us": 8000001,
+          "transfers_per_second": 499.87493751563284,
+          "payload_bytes_per_second": 8189950.976256128,
+          "dsp_frames": 384112,
+          "audio_callbacks": 24007
+        },
+        {
+          "region": 2,
+          "verified": 3999,
+          "skipped": 0,
+          "payload_bytes": 65519616,
+          "loaded_us": 8000001,
+          "transfers_per_second": 499.87493751563284,
+          "payload_bytes_per_second": 8189950.976256128,
+          "dsp_frames": 384112,
+          "audio_callbacks": 24007
+        }
+      ],
+      "completion_counts_matched": true,
+      "interpretation": "Counts agree within one transfer/callback, no skipped launches; compare clock results with cache/verification costs included."
+    },
+    {
+      "left": "combined-s1-r3",
+      "right": "combined-s1-r5",
+      "variable": "byte offset; same arena",
+      "runs": [
+        {
+          "region": 3,
+          "verified": 3999,
+          "skipped": 0,
+          "payload_bytes": 65519616,
+          "loaded_us": 8000004,
+          "transfers_per_second": 499.87475006262497,
+          "payload_bytes_per_second": 8189947.9050260475,
+          "dsp_frames": 384112,
+          "audio_callbacks": 24007
+        },
+        {
+          "region": 5,
+          "verified": 3999,
+          "skipped": 0,
+          "payload_bytes": 65519616,
+          "loaded_us": 8000001,
+          "transfers_per_second": 499.87493751563284,
+          "payload_bytes_per_second": 8189950.976256128,
+          "dsp_frames": 384112,
+          "audio_callbacks": 24007
+        }
+      ],
+      "completion_counts_matched": true,
+      "interpretation": "Counts agree within one transfer/callback, no skipped launches; compare clock results with cache/verification costs included."
+    },
+    {
+      "left": "combined-s1-r3",
+      "right": "combined-s1-r7",
+      "variable": "byte offset; same arena",
+      "runs": [
+        {
+          "region": 3,
+          "verified": 3999,
+          "skipped": 0,
+          "payload_bytes": 65519616,
+          "loaded_us": 8000004,
+          "transfers_per_second": 499.87475006262497,
+          "payload_bytes_per_second": 8189947.9050260475,
+          "dsp_frames": 384112,
+          "audio_callbacks": 24007
+        },
+        {
+          "region": 7,
+          "verified": 3999,
+          "skipped": 0,
+          "payload_bytes": 65519616,
+          "loaded_us": 8000001,
+          "transfers_per_second": 499.87493751563284,
+          "payload_bytes_per_second": 8189950.976256128,
+          "dsp_frames": 384112,
+          "audio_callbacks": 24007
+        }
+      ],
+      "completion_counts_matched": true,
+      "interpretation": "Counts agree within one transfer/callback, no skipped launches; compare clock results with cache/verification costs included."
+    },
+    {
+      "left": "combined-s1-r3",
+      "right": "combined-s1-r9",
+      "variable": "byte offset; same arena",
+      "runs": [
+        {
+          "region": 3,
+          "verified": 3999,
+          "skipped": 0,
+          "payload_bytes": 65519616,
+          "loaded_us": 8000004,
+          "transfers_per_second": 499.87475006262497,
+          "payload_bytes_per_second": 8189947.9050260475,
+          "dsp_frames": 384112,
+          "audio_callbacks": 24007
+        },
+        {
+          "region": 9,
+          "verified": 3999,
+          "skipped": 0,
+          "payload_bytes": 65519616,
+          "loaded_us": 8000002,
+          "transfers_per_second": 499.87487503128125,
+          "payload_bytes_per_second": 8189949.952512512,
+          "dsp_frames": 384112,
+          "audio_callbacks": 24007
+        }
+      ],
+      "completion_counts_matched": true,
+      "interpretation": "Counts agree within one transfer/callback, no skipped launches; compare clock results with cache/verification costs included."
+    },
+    {
+      "left": "combined-s1-r4",
+      "right": "combined-s1-r6",
+      "variable": "byte offset; same arena",
+      "runs": [
+        {
+          "region": 4,
+          "verified": 3999,
+          "skipped": 0,
+          "payload_bytes": 65519616,
+          "loaded_us": 8000003,
+          "transfers_per_second": 499.8748125469453,
+          "payload_bytes_per_second": 8189948.928769152,
+          "dsp_frames": 384112,
+          "audio_callbacks": 24007
+        },
+        {
+          "region": 6,
+          "verified": 3999,
+          "skipped": 0,
+          "payload_bytes": 65519616,
+          "loaded_us": 8000001,
+          "transfers_per_second": 499.87493751563284,
+          "payload_bytes_per_second": 8189950.976256128,
+          "dsp_frames": 384112,
+          "audio_callbacks": 24007
+        }
+      ],
+      "completion_counts_matched": true,
+      "interpretation": "Counts agree within one transfer/callback, no skipped launches; compare clock results with cache/verification costs included."
+    },
+    {
+      "left": "combined-s1-r4",
+      "right": "combined-s1-r8",
+      "variable": "byte offset; same arena",
+      "runs": [
+        {
+          "region": 4,
+          "verified": 3999,
+          "skipped": 0,
+          "payload_bytes": 65519616,
+          "loaded_us": 8000003,
+          "transfers_per_second": 499.8748125469453,
+          "payload_bytes_per_second": 8189948.928769152,
+          "dsp_frames": 384112,
+          "audio_callbacks": 24007
+        },
+        {
+          "region": 8,
+          "verified": 3999,
+          "skipped": 0,
+          "payload_bytes": 65519616,
+          "loaded_us": 8000005,
+          "transfers_per_second": 499.8746875783203,
+          "payload_bytes_per_second": 8189946.881283199,
+          "dsp_frames": 384112,
+          "audio_callbacks": 24007
+        }
+      ],
+      "completion_counts_matched": true,
+      "interpretation": "Counts agree within one transfer/callback, no skipped launches; compare clock results with cache/verification costs included."
+    },
+    {
+      "left": "combined-s1-r4",
+      "right": "combined-s1-r2",
+      "variable": "byte offset; same arena",
+      "runs": [
+        {
+          "region": 4,
+          "verified": 3999,
+          "skipped": 0,
+          "payload_bytes": 65519616,
+          "loaded_us": 8000003,
+          "transfers_per_second": 499.8748125469453,
+          "payload_bytes_per_second": 8189948.928769152,
+          "dsp_frames": 384112,
+          "audio_callbacks": 24007
+        },
+        {
+          "region": 2,
+          "verified": 3999,
+          "skipped": 0,
+          "payload_bytes": 65519616,
+          "loaded_us": 8000001,
+          "transfers_per_second": 499.87493751563284,
+          "payload_bytes_per_second": 8189950.976256128,
+          "dsp_frames": 384112,
+          "audio_callbacks": 24007
+        }
+      ],
+      "completion_counts_matched": true,
+      "interpretation": "Counts agree within one transfer/callback, no skipped launches; compare clock results with cache/verification costs included."
+    },
+    {
+      "left": "combined-s2-r3",
+      "right": "combined-s2-r5",
+      "variable": "byte offset; same arena",
+      "runs": [
+        {
+          "region": 3,
+          "verified": 3999,
+          "skipped": 0,
+          "payload_bytes": 65519616,
+          "loaded_us": 8000001,
+          "transfers_per_second": 499.87493751563284,
+          "payload_bytes_per_second": 8189950.976256128,
+          "dsp_frames": 384112,
+          "audio_callbacks": 24007
+        },
+        {
+          "region": 5,
+          "verified": 3999,
+          "skipped": 0,
+          "payload_bytes": 65519616,
+          "loaded_us": 8000001,
+          "transfers_per_second": 499.87493751563284,
+          "payload_bytes_per_second": 8189950.976256128,
+          "dsp_frames": 384112,
+          "audio_callbacks": 24007
+        }
+      ],
+      "completion_counts_matched": true,
+      "interpretation": "Counts agree within one transfer/callback, no skipped launches; compare clock results with cache/verification costs included."
+    },
+    {
+      "left": "combined-s2-r3",
+      "right": "combined-s2-r7",
+      "variable": "byte offset; same arena",
+      "runs": [
+        {
+          "region": 3,
+          "verified": 3999,
+          "skipped": 0,
+          "payload_bytes": 65519616,
+          "loaded_us": 8000001,
+          "transfers_per_second": 499.87493751563284,
+          "payload_bytes_per_second": 8189950.976256128,
+          "dsp_frames": 384112,
+          "audio_callbacks": 24007
+        },
+        {
+          "region": 7,
+          "verified": 3999,
+          "skipped": 0,
+          "payload_bytes": 65519616,
+          "loaded_us": 8000003,
+          "transfers_per_second": 499.8748125469453,
+          "payload_bytes_per_second": 8189948.928769152,
+          "dsp_frames": 384112,
+          "audio_callbacks": 24007
+        }
+      ],
+      "completion_counts_matched": true,
+      "interpretation": "Counts agree within one transfer/callback, no skipped launches; compare clock results with cache/verification costs included."
+    },
+    {
+      "left": "combined-s2-r3",
+      "right": "combined-s2-r9",
+      "variable": "byte offset; same arena",
+      "runs": [
+        {
+          "region": 3,
+          "verified": 3999,
+          "skipped": 0,
+          "payload_bytes": 65519616,
+          "loaded_us": 8000001,
+          "transfers_per_second": 499.87493751563284,
+          "payload_bytes_per_second": 8189950.976256128,
+          "dsp_frames": 384112,
+          "audio_callbacks": 24007
+        },
+        {
+          "region": 9,
+          "verified": 3999,
+          "skipped": 0,
+          "payload_bytes": 65519616,
+          "loaded_us": 8000001,
+          "transfers_per_second": 499.87493751563284,
+          "payload_bytes_per_second": 8189950.976256128,
+          "dsp_frames": 384112,
+          "audio_callbacks": 24007
+        }
+      ],
+      "completion_counts_matched": true,
+      "interpretation": "Counts agree within one transfer/callback, no skipped launches; compare clock results with cache/verification costs included."
+    },
+    {
+      "left": "combined-s2-r4",
+      "right": "combined-s2-r6",
+      "variable": "byte offset; same arena",
+      "runs": [
+        {
+          "region": 4,
+          "verified": 3999,
+          "skipped": 0,
+          "payload_bytes": 65519616,
+          "loaded_us": 8000004,
+          "transfers_per_second": 499.87475006262497,
+          "payload_bytes_per_second": 8189947.9050260475,
+          "dsp_frames": 384112,
+          "audio_callbacks": 24007
+        },
+        {
+          "region": 6,
+          "verified": 3999,
+          "skipped": 0,
+          "payload_bytes": 65519616,
+          "loaded_us": 8000002,
+          "transfers_per_second": 499.87487503128125,
+          "payload_bytes_per_second": 8189949.952512512,
+          "dsp_frames": 384112,
+          "audio_callbacks": 24007
+        }
+      ],
+      "completion_counts_matched": true,
+      "interpretation": "Counts agree within one transfer/callback, no skipped launches; compare clock results with cache/verification costs included."
+    },
+    {
+      "left": "combined-s2-r4",
+      "right": "combined-s2-r8",
+      "variable": "byte offset; same arena",
+      "runs": [
+        {
+          "region": 4,
+          "verified": 3999,
+          "skipped": 0,
+          "payload_bytes": 65519616,
+          "loaded_us": 8000004,
+          "transfers_per_second": 499.87475006262497,
+          "payload_bytes_per_second": 8189947.9050260475,
+          "dsp_frames": 384112,
+          "audio_callbacks": 24007
+        },
+        {
+          "region": 8,
+          "verified": 3999,
+          "skipped": 0,
+          "payload_bytes": 65519616,
+          "loaded_us": 8000001,
+          "transfers_per_second": 499.87493751563284,
+          "payload_bytes_per_second": 8189950.976256128,
+          "dsp_frames": 384112,
+          "audio_callbacks": 24007
+        }
+      ],
+      "completion_counts_matched": true,
+      "interpretation": "Counts agree within one transfer/callback, no skipped launches; compare clock results with cache/verification costs included."
+    },
+    {
+      "left": "combined-s2-r4",
+      "right": "combined-s2-r2",
+      "variable": "byte offset; same arena",
+      "runs": [
+        {
+          "region": 4,
+          "verified": 3999,
+          "skipped": 0,
+          "payload_bytes": 65519616,
+          "loaded_us": 8000004,
+          "transfers_per_second": 499.87475006262497,
+          "payload_bytes_per_second": 8189947.9050260475,
+          "dsp_frames": 384112,
+          "audio_callbacks": 24007
+        },
+        {
+          "region": 2,
+          "verified": 3999,
+          "skipped": 0,
+          "payload_bytes": 65519616,
+          "loaded_us": 8000001,
+          "transfers_per_second": 499.87493751563284,
+          "payload_bytes_per_second": 8189950.976256128,
+          "dsp_frames": 384112,
+          "audio_callbacks": 24007
+        }
+      ],
+      "completion_counts_matched": true,
+      "interpretation": "Counts agree within one transfer/callback, no skipped launches; compare clock results with cache/verification costs included."
+    }
+  ],
+  "totals": {
+    "samples": 609406,
+    "comparison_samples": 600000,
+    "callbacks": 672196,
+    "dma_verified": 103974,
+    "dma_skipped": 0,
+    "dsp_frames": 7682240,
+    "missed": 0,
+    "adc_errors": 0,
+    "clock_failures": [
+      "combined-s1-r4",
+      "combined-s1-r6",
+      "combined-s1-r8",
+      "combined-s1-r2",
+      "combined-s2-r2",
+      "combined-s2-r8",
+      "combined-s2-r6",
+      "combined-s2-r4"
+    ],
+    "raw_reference_failures": 30,
+    "reference_edges": 1920,
+    "max_reference_us": 0.36538596730679274,
+    "schedule_maxima": {
+      "max_residual_us": 0.8014304771993217,
+      "max_interval_error_us": 1.0133404481457546,
+      "max_work_width_error_us": 1.0506208143197
+    }
+  },
+  "limitations": [
+    "One exact firmware image; runtime selection changes only the chosen SDRAM DMA source/destination pair. DSP, trace and code locations stay fixed between captures.",
+    "Code differs from the previous protocol-8 binary. DSP and trace addresses match that binary; legacy-low and original-high controls are retained. This experiment does not infer physical SDRAM row/bank mapping from address offsets.",
+    "Complete serial/digital records published without trimming. Native analog/instrument sessions retained separately by hash.",
+    "Both jacks empty; this diagnoses firmware/clock/workload behavior, not mechanical jack or audible codec quality.",
+    "Raw D0 failures remain failures. Hysteretic CH1 is a separately recorded reference, not post-hoc filtering. No calibrated absolute accuracy claim."
+  ]
+}

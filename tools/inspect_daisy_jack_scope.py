@@ -18,17 +18,21 @@ from inspect_daisy_timing import read_digital
 from review_daisy_jacks import review_timing
 
 
-def extract(folder, *, output=None):
+def extract(folder, *, output=None, clock_reference=False):
     require((folder / 'collection-complete.json').is_file(), 'incomplete collection')
     raw = (folder / 'fixture/raw.txt').read_bytes()
     channels = {}
-    protocol = jack_capture.identity(raw.splitlines()[0])['protocol']
-    for name, port, i in jack_capture.digital_layout(protocol):
+    protocol = jack_capture.identity(raw.splitlines()[0], clock_reference=clock_reference)['protocol']
+    for name, port, i in jack_capture.digital_layout(protocol, clock_reference=clock_reference):
         data = (folder / f'scope/digital_{port+1}_{i}.bin').read_bytes()
         initial, edges = read_digital(data)
         _, _, begin, end, _ = struct.unpack_from('<IdddQ', data, 24)
         channels[name] = dict(initial_high=initial, edges_s=list(edges), begin_s=begin, end_s=end)
-    timing = review_timing(raw, channels)
+    if clock_reference:
+        from review_daisy_clock_reference import review_timing as clock_timing
+        timing = clock_timing(raw, channels)
+    else:
+        timing = review_timing(raw, channels)
     rises, falls = timing['rises'], timing['falls']
     data = (folder / 'scope/analog_0.bin').read_bytes()
     require(len(data) >= 64 and struct.unpack_from('<8siiQ', data) == (b'<SALEAE>', 1, 1, 1),
@@ -61,7 +65,9 @@ def extract(folder, *, output=None):
             representation='Three native samples centered at or before each service midpoint; source timing only')
     output = folder if output is None else output
     output.mkdir(parents=True, exist_ok=True)
-    for name, value in [('channels', channels), ('analog-apertures', analog)]:
+    # Full clock waveform stays native; review always requires it, not a summary.
+    saved_channels = {k:v for k,v in channels.items() if k != 'clock'}
+    for name, value in [('channels', saved_channels), ('analog-apertures', analog)]:
         require(not (output / (name + '.json')).exists(), 'derived evidence already exists')
         jack_capture.publish_json(output / (name + '.json'), value)
     return raw, channels, analog

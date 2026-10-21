@@ -3,5 +3,5 @@
 __pycache__/
 
 # Optional release assets restored by tools/fetch_evidence.py.
-/tests/measured/**/*.txt.gz
-/tests/measured/**/*.bin.xz
+/tests/measured/**/*.gz
+/tests/measured/**/*.xz

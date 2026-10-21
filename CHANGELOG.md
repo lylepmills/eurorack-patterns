@@ -2,71 +2,34 @@
 
 ## Unreleased
 
-- Fix the measured jack-acquisition starvation in the Seed3 example with short
-  timer/ADC interrupts and explicit ownership. All 21 load/recovery/fault reruns
-  pass, including six previously starved profiles; two independent early-finish
-  checks pass after an atomic deadline fix. Preserve complete measured replays
-  and acquisition/audio timing budgets. Portable library headers are unchanged.
-- Add a 21-case jack audio/IRQ campaign with full measured replay: 14 load
-  comparisons, three sustained-insertion recovery cases and four faults under
-  load. Retain six scheduling-starvation counterexamples alongside responsive
-  cases. Independently verify every audio callback and keep source-timing
-  witnesses separate from conservative ADC-aperture evidence. Portable headers
-  are unchanged; no production-voltage or DSP-quality qualification is implied.
-- Preserve four complete interaction recordings under audio/USB load (240,000
-  observations): taps and holds during motion, re-armed pickup and quick
-  reversals. Physical-stimulus regressions retain the earlier stationary-hold
-  and paced-sweep attempts without overstating their coverage. Core interfaces
-  and firmware are unchanged.
-- Preserve three complete manual load recordings (360,000 observations), with
-  physical gesture timing, consumed starting holds and bidirectional pickup
-  checked alongside C++ replay. Add explicit manual-load export; missing operator
-  stimulus is not a behavioral pass. Core interfaces and firmware are unchanged.
-- Preserve a passing continuous 30-minute diagnostic soak: 1.8 million physical
-  service pulses, unchanged timing limits and selected raw-timer comparisons.
-  The earlier late-run disagreement did not recur and remains unresolved.
-- Retain four measured short timing comparisons with diagnostics off/on and
-  audio/USB load off/on. Explicit diagnostic export preserves complete wire data
-  and the physical pulses for retained observations and their predecessors;
-  selected evidence never claims full-sample replay or resolves an older failure.
-- Add optional Daisy timing diagnostics with raw tick/GPIO-call brackets,
-  retained maximum-event predecessors and measured retention cost. Host checks
-  cover wrap, long elapsed time, wire integrity and same-pulse scope comparison;
-  short paired comparisons and one long stationary run now have measured evidence.
-- Add optional Seed3 audio-DMA/USB load experiments and a continuous
-  aggregate soak recorder (up to one hour), with strict capture checks and a
-  stationary campaign runner.
-- Retain attribution for the adapted libDaisy Seed3 SAI configuration.
-- Preserve three complete paired stationary load traces (30,000 observations)
-  with explicit audio/USB workload, host pacing and scope timing evidence.
-  Check long-soak pulse counts and per-second extrema independently; aggregate
-  evidence never claims individual-sample replay.
-- Retain a measured 96-frame scheduling counterexample (1,593 skipped control
-  slots despite audio callbacks meeting their period) and an unqualified
-  30-minute soak with nine local scope-timing disagreements. Regression tests
-  must continue rejecting these failures; no acceptance bounds were widened.
+- Keep default tests focused on portable contracts. Make board simulations and
+  measured replays explicit options; require verified evidence before replay.
+- Distribute large recordings as optional release assets with archive/member
+  SHA-256 checks. Keep reports in Git and preserve exact measured source
+  revisions in a separate history bundle. Add a code map for the optional bench.
 
-- Allow Daisy recordings up to 150 seconds so operator-led tests can tolerate
-  delayed starts. Preserve the full waiting window, check device capacity before
-  requesting a run, and retain support for the original 30-second images/traces.
-- Add an optional Daisy Seed3 control bench with explicit ADC freshness, a
-  100k-pot acquisition configuration, buffered USB traces and Saleae markers.
-- Add pickup/gesture/gap/load scenarios, strict capture integrity checks and C++
-  trace replay, with synthetic adapter and mocked-serial regressions.
-- Preserve six complete first-pass Daisy recordings with allowlisted provenance,
-  scope-derived digital edges and measured replay regressions. Keep conclusions
-  bounded to one fixture and exclude incomplete or suspect-contact runs.
-- Add event-triggered gesture/pickup fault scenarios and a retained 20-second
-  automatic startup recorder. Protocol 2 reports/checks stimulus timing and refuses
-  to overwrite unread startup evidence.
-- Add nine complete measured fault/startup traces (609,923 observations): gesture
-  interruption, independent ADC gaps, bidirectional missing-crossing pickup,
-  moving targets, released RESET and held-button USB power-on. Include derived
-  analog medians, explicit pre-application electrical levels and regression checks.
-- Reject missing/glitched service pulses during scope alignment; distinguish
-  the observed long pre-application marker level from the complete startup window.
-  Keep untriggered and disconnected-probe runs out of published passes.
-- Cross-build the Daisy adapter in CI; public core interfaces and behavior are unchanged.
+- Consolidate [reusable lessons and validation limits](docs/validation.md).
+  Separate the detailed [Daisy bench record](docs/bench/daisy.md) and
+  [closed clock investigation](docs/investigations/daisy-clock.md) from the
+  library's integration guide. Preserve all measured traces and failed cases.
+- Add a Seed3 reference adapter with fresh ADC evidence, explicit startup/gap
+  policies, independent stimulus and buffered capture/replay. Retain attribution
+  for the adapted libDaisy Seed3 SAI configuration.
+- Add measured pickup, gesture, startup, simultaneous-control and fault cases,
+  physical jack insertion/removal records and a 110-case electrical fault matrix.
+  These are bounded fixture results, not production electrical qualification.
+- Fix jack-acquisition starvation in the Seed3 adapter with bounded timer/ADC
+  phases and explicit ownership; all 21 load/recovery/fault reruns pass, including
+  the six previously starved profiles. Two early-finish checks cover the corrected
+  stop/drain deadline. Audio and acquisition acceptance remain separate.
+- Harden capture completion, transport integrity, physical coverage and receiver
+  review. Preserve incomplete recordings, receiver glitches and timing failures
+  as explicit regressions; do not widen limits to make them pass.
+- Preserve real DSP/DMA and clock diagnostics, including matched buffer-placement
+  and analog probe-path comparisons. The clock investigation is closed with its
+  physical cause unresolved; no oscillator, codec-quality or portable memory-
+  placement conclusion follows. Detailed methods/results remain in the archive.
+- The nine portable headers and their interfaces remain unchanged from v0.2.0.
 
 ## 0.2.1 — 2026-10-13
 

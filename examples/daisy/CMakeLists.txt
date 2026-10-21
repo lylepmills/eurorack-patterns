@@ -21,6 +21,15 @@ endif()
 set(DAISY_STORAGE sram)
 set(DAISY_GENERATE_BIN ON)
 include(DaisyProject)
+if(EP_JACK_BENCH)
+  # GNU ld requires the INSERT fragment before the SDK's main -T script.
+  target_link_options(${FIRMWARE_NAME} BEFORE PRIVATE
+    "LINKER:-T,${CMAKE_CURRENT_SOURCE_DIR}/dma_internal.lds"
+    "LINKER:-T,${CMAKE_CURRENT_SOURCE_DIR}/dma_sdram.lds")
+  set_property(TARGET ${FIRMWARE_NAME} APPEND PROPERTY LINK_DEPENDS
+    ${CMAKE_CURRENT_SOURCE_DIR}/dma_internal.lds
+    ${CMAKE_CURRENT_SOURCE_DIR}/dma_sdram.lds)
+endif()
 target_compile_definitions(${FIRMWARE_NAME} PRIVATE BOOT_APP)
 target_include_directories(${FIRMWARE_NAME} PRIVATE ../../include ${CMAKE_BINARY_DIR})
 target_compile_options(${FIRMWARE_NAME} PRIVATE -Wall -Wextra -Werror)

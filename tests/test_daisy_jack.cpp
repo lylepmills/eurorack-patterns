@@ -51,6 +51,36 @@ int main(int argc, char** argv) {
     "J,1,300001,0,1", "J,1,2000,1,1", "J,1,3000,3,1", "J,1,3000,0,2",
     "J,-1,1000,0,1", "J,4294967296,1000,0,1", "J,1,1000,0,1,", "J,1,1000,0,1x"};
   for (auto s : bad) { CHECK(!Parse(s, p)); CHECK(p.token == UINT32_MAX); }
+  CHECK(Parse("J,4294967295,30000,2,1,6,64,100000,96,0,29000,32,16,1,2000", p));
+  CHECK(p.dma_region == 1 && p.dma_period_us == 2000);
+  for (auto s : {"J,1,10000,0,1,0,0,25000,16,0,8000,16,16,1",
+                 "J,1,10000,0,1,0,0,25000,16,0,8000,16,16,1,500",
+                 "J,1,10000,0,1,0,0,25000,16,0,8000,16,0,1,1000"})
+    CHECK(!Parse(s, p));
+  CHECK(dmaconfig::ValidBuffers(1, 0x24070000u, 0x24074000u));
+  CHECK(dmaconfig::ValidBuffers(0, 0xc0000000u, 0xc0004000u));
+  CHECK(Parse("J,1,10000,0,1,0,0,25000,16,0,8000,16,16,2,1000", p));
+  CHECK(p.dma_region == 2);
+  CHECK(dmaconfig::ValidBuffers(2, 0xc1d77400u, 0xc1d7b400u));
+  CHECK(!dmaconfig::ValidBuffers(2, 0x24000000u, 0x24004000u));
+  CHECK(!dmaconfig::ValidBuffers(3, 0xc1d77400u, 0xc1d7b400u));
+  const uint32_t addresses[] = {0xc1d77400u,0xc0210000u,0xc1d70000u,0xc0210020u,
+                               0xc1d70020u,0xc0210400u,0xc1d70400u,0xc0217400u};
+  for (uint32_t region = 2; region <= 9; ++region) {
+    char command[96];
+    std::snprintf(command,sizeof(command),"J,1,10000,0,1,0,0,25000,16,0,8000,16,16,%u,2000",unsigned(region));
+    CHECK(Parse(command,p) && p.dma_region == region);
+    const uint32_t a = addresses[region-2];
+    CHECK(dmaconfig::ValidBuffers(region,a,a+16384));
+    CHECK(!dmaconfig::ValidBuffers(region,a+32,a+16384+32));
+    CHECK(dmaconfig::Offset(region)+32768 <= dmaconfig::kArenaBytes);
+  }
+  CHECK(!dmaconfig::ValidPlan(16,10,2000));
+  CHECK(!dmaconfig::ValidBuffers(1, 0x20000000u, 0x20004000u));
+  CHECK(!dmaconfig::ValidBuffers(1, 0x24000000u, 0x24000020u));
+  CHECK(!dmaconfig::ValidBuffers(1, 0x24000001u, 0x24004000u));
+  CHECK(!dmaconfig::ValidBuffers(1, 0x24070000u, 0x24074020u));
+  CHECK(!dmaconfig::ValidBuffers(1, 0xffffffe0u, 0x24004000u));
   FinishCommand finish;
   for (uint32_t token : {0u, 7u, UINT32_MAX}) {
     char text[16]; std::snprintf(text, sizeof(text), "JF,%u\n", unsigned(token));

@@ -20,7 +20,7 @@ jobs:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
       - run: cmake -S . -B build -DCMAKE_BUILD_TYPE=Release -DEURORACK_PATTERNS_SANITIZERS=${{ matrix.sanitize }} -DEURORACK_PATTERNS_BUILD_BENCH_TESTS=ON
       - run: cmake --build build --config Release --parallel
-      - run: ctest --test-dir build -C Release --output-on-failure
+      - run: ctest --test-dir build -C Release --output-on-failure --parallel 2
       - run: cmake --install build --config Release --prefix "${{ github.workspace }}/installed"
       - run: cmake -S tests/consumer -B build-consumer -DCMAKE_PREFIX_PATH="${{ github.workspace }}/installed"
       - run: cmake --build build-consumer --config Release
@@ -68,6 +68,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
-        with:
-          fetch-depth: 0
+      # Audit the candidate's complete ancestry without fetching unrelated
+      # development branches or large historical evidence objects.
+      - run: git fetch --no-tags --unshallow origin "$GITHUB_SHA"
       - run: python3 tools/check_public.py

@@ -59,7 +59,7 @@ prove that an upstream acquisition was lost.
 The portable detector has no sequence counter because transports differ.
 
 Budget the longest interruption of acquisition, not only average CPU use. In
-the [Daisy load campaign](validation.md#jack-audiointerrupt-load-results), 25%
+the [Daisy load campaign](bench/daisy.md#jack-audiointerrupt-load-results), 25%
 padding in 16-sample audio callbacks preserved every 500 us observation slot;
 the same nominal percentage in 96-sample callbacks prevented qualification.
 The longer uninterrupted callback exceeded the foreground acquisition budget.

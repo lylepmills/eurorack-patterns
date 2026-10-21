@@ -9,6 +9,7 @@ import os
 from pathlib import Path
 import shutil
 import subprocess
+import dma_memory
 
 HERE = Path(__file__).resolve().parent
 ROOT = HERE.parents[1]
@@ -50,7 +51,7 @@ def main():
     if a.role == 'pulse-generator':
         files += [HERE / 'pulse_generator.cpp', HERE / 'pulse_generator.h']
     if a.role == 'jack-bench':
-        files += [HERE / n for n in ['jack.cpp', 'jack_bench.h', 'jack_acquisition.h', 'pulse_generator.h']]
+        files += [HERE / n for n in ['jack.cpp', 'jack_bench.h', 'jack_acquisition.h', 'dsp_workload.h', 'dma_workload.h', 'dma_config.h', 'dma_internal.lds', 'dma_sdram.lds', 'dma_memory.py', 'pulse_generator.h']]
     manifest = dict(schema=1, kind='eurorack-patterns-daisy-bench', protocol=2,
                     status='cross-built only; hardware validation pending', board='seed3',
                     source_commit=run('git', '-C', ROOT, 'rev-parse', 'HEAD'),
@@ -73,11 +74,17 @@ def main():
     if a.role == 'jack-bench':
         manifest = {k: manifest[k] for k in ['schema', 'status', 'board', 'source_commit',
             'source_sha256', 'sdk_revision', 'sdk_submodules', 'compiler', 'flash_address', 'storage']}
-        manifest.update(kind='eurorack-patterns-daisy-jack-bench', protocol=5,
+        manifest.update(kind='eurorack-patterns-daisy-jack-bench', protocol=9,
                         acquisition='TIM7 50us phase service plus single ADC EOC interrupt',
                         acquisition_irq_priority=0, audio_irq_priority=1,
                         audio_padding='CPU work excluding measured acquisition ISR body time',
                         pause_fault='acquisition suspended; timer and audio continue',
+                        dsp_workload='1-32 deterministic fixed-point 32-tap FIR and SDRAM feedback-delay voices; silent codec outputs',
+                        dma_workload='DMA2 stream6 fixed SDRAM alignment views or AXI SRAM 4/16KiB; 1/2ms requested cadence; cache ownership and full data verification',
+                        dma_irq_priority=2, max_dsp_dma_duration_ms=30000,
+                        clock_diagnostic='HSE/15 on PC9; K command; max 10 seconds',
+                        clock_diagnostic_audio='PC8 / D4 / physical pin 5; K mode only',
+                        clock_reference='M command; HSE/15 on PC9; audio on PC8; max 10 seconds; faults allowed',
                         audio_sample_rate_hz=48000, audio_block_sizes=[16,48,96],
                         max_audio_padding_permille=700, audio_marker='PC9 / D3 / physical pin 4',
                         fault_triggers=6, max_fault_us=100000, max_fault_delay_slots=64,
@@ -112,6 +119,11 @@ def main():
     names = [stem + suffix for suffix in ['.bin', '.elf', '.map']]
     if not 0 < (out / names[0]).stat().st_size < 480 * 1024:
         raise SystemExit('unexpected SRAM application image size')
+    if a.role == 'jack-bench':
+        nm = Path(compiler).with_name('arm-none-eabi-nm')
+        symbols = run(nm, '-S', '--defined-only', out / (stem + '.elf'))
+        manifest['dma_linked_buffers'] = dma_memory.linked_buffers(symbols, protocol=9)
+        manifest['fixed_sdram_storage'] = dma_memory.fixed_storage(symbols, protocol=9)
     manifest['artifacts_sha256'] = {n: sha(out / n) for n in names}
     (out / 'manifest.json').write_text(json.dumps(manifest, indent=2) + '\n')
     print('Built', manifest['build_id'], 'in', out, '(not flashed)')

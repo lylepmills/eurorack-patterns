@@ -45,7 +45,7 @@ files and `source-history.json` from that release. Concatenate the parts in the
 listed order, verify their hashes and the complete bundle hash, then run:
 
 ```sh
-git clone source-history.bundle evidence-history
+git clone --branch codex/daisy-clock-validation source-history.bundle evidence-history
 git -C evidence-history checkout FIRMWARE_COMMIT_FROM_REPORT
 ```
 

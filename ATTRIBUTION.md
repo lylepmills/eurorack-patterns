@@ -61,3 +61,9 @@ not an upstream module's firmware. Saleae software is an optional external tool
 for acquiring/reading native recordings; no vendor implementation is copied or
 redistributed. The public corpus contains lossless numeric USB traces and derived
 digital edge times, with provenance and scope limits in [validation.md](docs/validation.md).
+
+Large measured payloads are distributed as [optional evidence downloads](docs/evidence.md)
+under the same MIT terms as the original measurement corpus. Their per-file
+digests, recorded firmware identities and rejected verdicts are preserved.
+The historical source bundle retains original dependency/license notices;
+consolidated commits do not reattribute those sources.

@@ -82,7 +82,7 @@ def review_audio(timing, channel):
         maximum_interval_us=max(intervals), measured_end_us=load['end_us'])
 
 
-def review_finish(raw, channels, analog):
+def review_finish(raw, channels, analog, dsp_reference=None):
     """Empty-jack operator finish, including conversion drain and audio stop."""
     timing = review_timing(raw, channels)
     run, rows, changes = (timing[k] for k in ('run','rows','changes'))
@@ -96,21 +96,33 @@ def review_finish(raw, channels, analog):
             len(changes) == 1 and changes[0]['seq'] == 63 and not changes[0]['patched'],
             'finish fixture was not continuously empty')
     audio = review_audio(timing,channels['audio'])
+    from review_daisy_dsp import verify
+    workload = verify(run, dsp_reference)
     require(run['elapsed_us'] - run['acquisition_limit_us'] < 50,
             'acquisition did not stop at the published boundary')
-    return dict(schema=1,status='pass',case='automated empty-jack finish',run=run,samples=len(rows),
+    result = dict(schema=1,status='pass',case='automated empty-jack finish',run=run,samples=len(rows),
         audio=audio,service_alignment=timing['alignment'],probe_max_error_us=timing['probe_error'],
         terminal_release_error_us=timing['terminal_error'],raw_sha256=hashlib.sha256(raw).hexdigest(),
         limitation='One stationary empty-jack fixture and software-requested finish; no insertion or production-input qualification.')
+    if workload is not None: result['workload'] = workload
+    return result
 
 
-def review(raw, channels, analog, generator_raw, generator_build, times, require_response=False):
+def review(raw, channels, analog, generator_raw, generator_build, times, require_response=False, dsp_reference=None,
+           *, clock_reference=False):
     source = pulse_generator.parse(generator_raw, generator_build, times)
     require(len(times) == 2, 'one complete electrical clamp required')
-    timing = review_timing(raw, channels)
+    if clock_reference:
+        from review_daisy_clock_reference import review_timing as clock_timing
+        timing = clock_timing(raw, channels)
+    else:
+        timing = review_timing(raw, channels)
     run, rows, changes = (timing[k] for k in ('run','rows','changes'))
     require('audio' in run and run['adc_failures'] == 0, 'protocol 4 and completed conversions required')
-    audio = review_audio(timing, channels['audio'])
+    audio = review_audio(timing.get('audio_timing', timing),
+                         timing.get('audio_channel', channels['audio']))
+    from review_daisy_dsp import verify
+    workload = verify(run, dsp_reference)
     if run['audio']['block']:
         target = min(run['audio']['off_ms']*1000, run['acquisition_limit_us'])
         tolerance = 1000 + 2*run['audio']['block']*1e6/48000 + (run['fault_duration_us'] if run['fault']==2 else 0)
@@ -159,7 +171,7 @@ def review(raw, channels, analog, generator_raw, generator_build, times, require
             for i in tail) and rows[-1]['ready'] and not rows[-1]['patched'], 'unloaded tail did not recover')
     if run['audio']['block']:
         require(run['audio']['end_us'] < rows[tail[0]]['drive_us'], 'audio still active in recovery tail')
-    return dict(schema=1, status='pass', case='automated jack audio load', samples=len(rows), run=run,
+    result = dict(schema=1, status='pass', case='automated jack audio load', samples=len(rows), run=run,
         qualification='responsive' if responsive else 'starved under load; recovered empty',
         first_ready_us=changes[0]['time_us'],
         patched_while_audio_active=bool(responsive and changes[-2]['time_us'] < run['audio']['end_us']),
@@ -172,3 +184,19 @@ def review(raw, channels, analog, generator_raw, generator_build, times, require
         ambiguous_analog_apertures=ambiguous, digital_transition_apertures=crossings,
         recovery_tail_samples=len(tail), raw_sha256=hashlib.sha256(raw).hexdigest(),
         limitation='One passive electrical-clamp fixture; silent SAI DMA callbacks with measured busy padding. Not DSP/audio quality, mechanical motion, calibrated absolute latency, arbitrary IRQ priorities or protected-input qualification.')
+    if workload is not None:
+        result['workload'] = workload
+        result['limitation'] = ('One passive electrical-clamp fixture; deterministic FIR/delay processing and optional '
+            'SDRAM DMA with silent codec outputs. Not codec audio quality, arbitrary DSP/DMA traffic, '
+            'mechanical motion, calibrated absolute latency or protected-input qualification.')
+    if clock_reference:
+        result.update(status='scheduling and behavior pass; clock stability reported separately',
+                      scheduling=timing['scheduling'], clock_stability=timing['clock_stability'],
+                      hardware_clock=timing['hardware_clock'])
+        result['limitation'] += (' Scheduling uses counted HSE cycles with a fixed nominal conversion and constant offset only. '
+            'External clock-stability failures are retained; this is not an overall clock-accuracy pass.')
+        if workload is not None:
+            workload['limitation'] = ('DSP signature reuses the tested integer kernel; DMA counters and full-word checks '
+                'are device-reported. D5 independently checks audio callbacks in counted HSE units, not the DMA2 bus '
+                'or codec audio fidelity.')
+    return result

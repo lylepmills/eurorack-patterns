@@ -12,9 +12,8 @@ A cable should not change routing repeatedly while being inserted. A slow knob m
 
 - **Explore design ideas:** browse the [88-pattern catalog](docs/catalog.md) by problem, then check its source and limits. A catalog entry is not necessarily an implemented component.
 - **Use the C++ library:** follow the [shared-knob walkthrough](docs/quickstart.md), then build the optional [Raspberry Pi Pico adapter](examples/pico/README.md).
-- **Measure controls on hardware:** use the [Daisy Seed3 bench and capture tools](docs/validation.md#daisy-seed3-control-bench). Complete recorded regressions cover control movement, active faults, target changes and selected reset/power-on cases on one fixture.
-- **Measure load behavior:** the [audio/USB load and continuous-soak tools](docs/validation.md#audiousb-load-and-continuous-soak) include paired stationary traces, gestures during knob movement and quick reversals. Results apply to the recorded fixture and synthetic workload; broader qualification remains open.
-- **Measure jack detection under load:** the [21-case audio/IRQ campaign](docs/validation.md#jack-audiointerrupt-load-results) records both responsive operation and qualification starvation, plus recovery and fault comparisons.
+- **Understand the integration contracts:** read the [reusable lessons and validation limits](docs/validation.md). Freshness, ownership, recovery and acquisition deadlines belong in every adapter.
+- **Use measured evidence:** the [Daisy code map](examples/daisy/README.md) and [bench record](docs/bench/daisy.md) preserves bounded control/jack results and failed cases. The campaign is closed; its separate clock investigation remains unresolved.
 - **Contribute evidence:** report a [bug, source correction or measured trace](https://github.com/lylepmills/eurorack-patterns/issues/new/choose), or pick a [bounded contribution task](https://github.com/lylepmills/eurorack-patterns/issues?q=is%3Aissue%20is%3Aopen%20label%3A%22help%20wanted%22).
 
 ## Three small improvements
@@ -88,8 +87,8 @@ This full commit pin selects immutable release v0.2.1. Each [release](https://gi
 
 ## Build and test
 
-The host checks require CMake, a C++ compiler and Python 3.9 or newer. Python is
-used for the capture/replay tests, not by the header-only library.
+The host checks require CMake, a C++ compiler and Python 3.9 or newer. Python supports repository checks and optional capture/replay tools; it is not
+a library dependency.
 
 ```sh
 cmake -S . -B build -DCMAKE_BUILD_TYPE=Release

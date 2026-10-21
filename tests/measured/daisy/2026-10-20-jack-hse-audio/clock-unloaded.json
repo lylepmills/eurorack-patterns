@@ -1,0 +1,239 @@
+{
+  "schema": 1,
+  "status": "diagnostic only; normal load campaign still requires its original review",
+  "raw_sha256": "c710730135f129372ac2e3b27a1ea1d29923088ba4628b7f92d1fb95d041c86b",
+  "service_sha256": "15b9004ecfcfa1fbfe6f48871059f4aafd8bcac6e5403263c0e38f0d171cb2be",
+  "clock_sha256": "b7299995f13000abec220e98bf2041a3ed6502ca09f0439935ab37651a1a7f75",
+  "build_id": "7a89cb3eebe6fe8f8f062bed",
+  "run": {
+    "token": 839155383,
+    "duration_ms": 3000,
+    "fault": 0,
+    "policy": 1,
+    "count": 6000,
+    "missed": 0,
+    "adc_failures": 0,
+    "elapsed_us": 3000001,
+    "fault_begin_us": 0,
+    "fault_end_us": 0,
+    "finish_reason": "duration",
+    "finish_request_us": 0,
+    "acquisition_limit_us": 3000000,
+    "trigger": 0,
+    "fault_delay_slots": 0,
+    "fault_duration_us": 25000,
+    "trigger_seq": 4294967295,
+    "trigger_us": 0,
+    "fault_due_us": 0,
+    "audio": {
+      "block": 0,
+      "permille": 0,
+      "off_ms": 0,
+      "end_us": 0,
+      "callbacks": 0,
+      "max_work_ticks": 0,
+      "max_interval_ticks": 0,
+      "over_budget": 0,
+      "late_intervals": 0,
+      "bad_size": 0,
+      "period_ticks": 0,
+      "timer_hz": 240000000
+    },
+    "dsp": {
+      "voices": 0,
+      "frames": 0,
+      "hash": 2166136261,
+      "peak": 0,
+      "nonzero": 0,
+      "macs": 0
+    },
+    "dma": {
+      "kib": 0,
+      "period_us": 0,
+      "started": 0,
+      "completed": 0,
+      "verified": 0,
+      "bytes": 0,
+      "errors": 0,
+      "corrupt_words": 0,
+      "timeouts": 0,
+      "skipped": 0,
+      "first_us": 0,
+      "last_us": 0,
+      "max_gap_us": 0,
+      "max_transfer_ticks": 0,
+      "irqs": 0,
+      "max_irq_wall_ticks": 0,
+      "irq_priority": 0,
+      "stream": 0
+    },
+    "acquisition": {
+      "tick_us": 50,
+      "timer_priority": 0,
+      "adc_priority": 0,
+      "audio_priority": 1,
+      "timer_irqs": 60000,
+      "adc_irqs": 6000,
+      "max_timer_ticks": 258,
+      "max_adc_ticks": 316,
+      "work_ticks_low": 8325128,
+      "work_ticks_high": 0,
+      "timeouts": 0,
+      "overruns": 0,
+      "unexpected_irqs": 0,
+      "cpu_padding": 1
+    }
+  },
+  "service_timing": {
+    "alignment": {
+      "clock_scale_ppm": 39.948790549582114,
+      "max_fit_residual_us": 0.19923117524012923,
+      "max_interval_error_us": 0.29597439534558134,
+      "max_work_width_error_us": 0.7080000000464395,
+      "pre_application_high_intervals_s": []
+    },
+    "status": "pass",
+    "failures": [],
+    "local_diagnostic": {
+      "window_seconds": 1,
+      "blocks": [
+        {
+          "window": 0,
+          "first_seq": 0,
+          "samples": 2001,
+          "clock_scale_ppm": 39.96601911215869,
+          "max_fit_residual_us": 0.2015017789817648
+        },
+        {
+          "window": 1,
+          "first_seq": 2001,
+          "samples": 2000,
+          "clock_scale_ppm": 39.95436440584754,
+          "max_fit_residual_us": 0.19457642536144704
+        },
+        {
+          "window": 2,
+          "first_seq": 4001,
+          "samples": 1999,
+          "clock_scale_ppm": 39.949248315185315,
+          "max_fit_residual_us": 0.20097421656828374
+        }
+      ],
+      "limitation": "Diagnostic only; no qualification override or attribution to either clock."
+    }
+  },
+  "hardware_clock": {
+    "status": "diagnostic only",
+    "cycles": 3200003,
+    "nominal_hz": 1066666.6666666667,
+    "minimum_period_s": 9.359999992852863e-07,
+    "maximum_period_s": 9.400000005044262e-07,
+    "first_gated_period_s": 7.950000000533919e-07,
+    "boundary_high_widths_s": [
+      2.960000000662433e-07,
+      4.3899999990770766e-07
+    ],
+    "blocks": [
+      {
+        "begin_s": 0.7454442749999997,
+        "end_s": 1.7449342119999998,
+        "first_cycle": 268,
+        "last_cycle": 1066347,
+        "clock_scale_ppm": 39.946508029409245,
+        "first_seq": 0,
+        "last_seq": 1999,
+        "service_clock_scale_ppm": 39.958977437803966
+      },
+      {
+        "begin_s": 1.7454342319999996,
+        "end_s": 2.744974234,
+        "first_cycle": 1066882,
+        "last_cycle": 2133014,
+        "clock_scale_ppm": 39.947023445563445,
+        "first_seq": 2000,
+        "last_seq": 3999,
+        "service_clock_scale_ppm": 40.02201100572478
+      },
+      {
+        "begin_s": 2.745474245,
+        "end_s": 3.7450141379999997,
+        "first_cycle": 2133548,
+        "last_cycle": 3199681,
+        "clock_scale_ppm": 39.954489730931186,
+        "first_seq": 4000,
+        "last_seq": 5999,
+        "service_clock_scale_ppm": 39.912956477872186
+      }
+    ],
+    "limitation": "Every interior full clock period checked; initial gated period and boundary half-pulse widths reported separately. Relative clocks only; no DUT acceptance override."
+  },
+  "service_clock_cycles": {
+    "status": "diagnostic only",
+    "samples": 6000,
+    "offset_us": 1.2087363982652195,
+    "max_residual_us": 0.1970133343632452,
+    "peak_to_peak_us": 0.31299919937737286,
+    "max_interval_error_us": 0.2959961729357019,
+    "limitation": "Fixed nominal clock-cycle units and one constant offset; no fitted rate. Does not establish absolute clock accuracy, audio timing or behavior qualification."
+  },
+  "dsp_dma": {
+    "dsp": "disabled",
+    "dma": "disabled",
+    "dma_payload_bytes": 0,
+    "dma_verified_transfers": 0,
+    "dma_skipped_launches": 0,
+    "dma_max_gap_us": 0,
+    "limitation": "The DSP reference reuses the tested integer kernel. DMA timing/counters are device-reported; D4 independently checks audio callbacks, not the DMA2 bus. Silent outputs do not qualify codec audio quality."
+  },
+  "audio_in_clock_cycles": {
+    "callbacks": 0,
+    "independent_marker": "verified idle"
+  },
+  "audio_sha256": "247926952d85b8beeecc09ffc9ee9dfb52d198624d5468535d1b5de13cff929e",
+  "audio_limitation": "Callback checks in counted HSE clock units only; no jack behavior or absolute clock qualification.",
+  "build": {
+    "source_commit": "9fb130f5a9425ace7c06691488ab6101d54006b8",
+    "build_id": "7a89cb3eebe6fe8f8f062bed",
+    "binary_sha256": "daf597459a959197be7b73f5104cdf3c60aab4d321072adf982b1aa62a518a66",
+    "sdk_revision": "e1f740a5a7fe38e6d6d41281bf99fe7a2bb3827b"
+  },
+  "inspector_sha256": "4d7d61cbc8512cf08f0bc5f7a6070dc46f23c4ed293f4176b125b9a71414548b",
+  "payloads": {
+    "raw": {
+      "file": "clock-unloaded-raw.txt.gz",
+      "sha256": "c710730135f129372ac2e3b27a1ea1d29923088ba4628b7f92d1fb95d041c86b",
+      "compressed_sha256": "1832a57563e6100febd29ffa6ab1d93e8e9b5135daca10c8c5ad31bf1e438f88",
+      "bytes": 445377
+    },
+    "service": {
+      "file": "clock-unloaded-service.bin.gz",
+      "sha256": "15b9004ecfcfa1fbfe6f48871059f4aafd8bcac6e5403263c0e38f0d171cb2be",
+      "compressed_sha256": "78baabc7804f237e388defeaf7cef5e3a87ba6c60936dd3b779408062d011d92",
+      "bytes": 96060
+    },
+    "clock": {
+      "file": "clock-unloaded-clock.bin.xz",
+      "sha256": "b7299995f13000abec220e98bf2041a3ed6502ca09f0439935ab37651a1a7f75",
+      "compressed_sha256": "a8ff17dea48b18a1ad4303d5e59688bc5f8b5b79fe7c6babb70201518c611f87",
+      "bytes": 51200108
+    },
+    "audio": {
+      "file": "clock-unloaded-audio.bin.gz",
+      "sha256": "247926952d85b8beeecc09ffc9ee9dfb52d198624d5468535d1b5de13cff929e",
+      "compressed_sha256": "b493ddac0196bc0234ae196e11015fa79a1b473d37ecca4f5d4998feafa2bbdb",
+      "bytes": 60
+    }
+  },
+  "native_scope_sha256": {
+    "analog_0.bin": "44ef6c46b81cab287cae2672dd8ca274fcf73bdab675c445073d877ae658c3e5",
+    "settings.json": "4449b9b41a346a55e46f9922ebbede6717da7ab0db049b678f367da6ee00f1ab",
+    "capture.sal": "b404d6c083a48a83e078ce577e58f888c9b0d493e50745c62efffc15c8f6bae1",
+    "digital_2_0.bin": "b7299995f13000abec220e98bf2041a3ed6502ca09f0439935ab37651a1a7f75",
+    "digital_2_1.bin": "247926952d85b8beeecc09ffc9ee9dfb52d198624d5468535d1b5de13cff929e",
+    "digital_1_2.bin": "5dc2a14725e75ae19eb62e81eeee5a3942a0df55d8d8460609b3ea612f8d3f8d",
+    "digital_1_3.bin": "feb54054673336d1379e9e6df969b296a472adf88f88c7262d4739363e4df0ff",
+    "digital_1_1.bin": "15b9004ecfcfa1fbfe6f48871059f4aafd8bcac6e5403263c0e38f0d171cb2be",
+    "digital_1_0.bin": "aefe8051372bf2e0690c62c67e53ab0a9edc48f617b3a8a37b92e23050b69776"
+  },
+  "evidence_extent": "Complete native clock, service, audio and wire payloads published; other native scope channels retained by hash."
+}

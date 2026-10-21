@@ -32,6 +32,10 @@ namespace audio_load {
 #ifndef EP_AUDIO_WORK_CLOCK
 #define EP_AUDIO_WORK_CLOCK() daisy::System::GetTick()
 #endif
+#ifndef EP_AUDIO_RENDER
+#define EP_AUDIO_RENDER(out, size, measure) \
+  do { for (size_t i = 0; i < (size); ++i) (out)[0][i] = (out)[1][i] = 0.0f; } while (0)
+#endif
 struct Counters {
   uint32_t callbacks = 0, max_work_ticks = 0, max_interval_ticks = 0;
   uint32_t over_budget = 0, late_intervals = 0, bad_size = 0;
@@ -55,8 +59,9 @@ static void Callback(daisy::AudioHandle::InputBuffer, daisy::AudioHandle::Output
   const uint32_t work_start = EP_AUDIO_WORK_CLOCK();
   if (measure) EP_AUDIO_MARKER(true);
   __set_PRIMASK(start_guard);
-  // Silence on both channels. This tests scheduling, not codec audio quality.
-  for (size_t i = 0; i < size; ++i) out[0][i] = out[1][i] = 0.0f;
+  // The optional fixture renderer computes real DSP but keeps outputs silent.
+  // Its signature makes the computed samples observable without audio wiring.
+  EP_AUDIO_RENDER(out, size, measure);
   while (uint32_t(EP_AUDIO_WORK_CLOCK() - work_start) < busy_ticks) __NOP();
   if (!measure) return;
   const uint32_t end_guard = __get_PRIMASK(); __disable_irq();

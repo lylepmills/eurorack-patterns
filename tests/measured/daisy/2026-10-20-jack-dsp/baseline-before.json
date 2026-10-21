@@ -1,0 +1,314 @@
+{
+  "schema": 1,
+  "evidence": "measured on hardware",
+  "status": "pass",
+  "build": {
+    "build_id": "f955659b5b02f8b649aaf1ea",
+    "source_commit": "a6cee8ec6e570d0468f74f8537f8578fb390d020",
+    "sdk_revision": "e1f740a5a7fe38e6d6d41281bf99fe7a2bb3827b",
+    "binary_sha256": "dd3ff314b99bc2f7775d546fbc1e595f353319f80be3c4241d4f30b9c7e5f661"
+  },
+  "fixture": {
+    "board": "Seed3",
+    "case": "automated-electrical-clamp",
+    "jack": "switched mono; empty jack with independent open-drain clamp on tip/sense; no cable movement",
+    "probe_series_ohms": 1000,
+    "sense_pulldown_ohms": 100000,
+    "scope_probe": "10x; sense node",
+    "analog_rate_hz": 250000.0
+  },
+  "run": {
+    "token": 367093978,
+    "duration_ms": 10000,
+    "fault": 0,
+    "policy": 1,
+    "count": 20000,
+    "missed": 0,
+    "adc_failures": 0,
+    "elapsed_us": 10000001,
+    "fault_begin_us": 0,
+    "fault_end_us": 0,
+    "finish_reason": "duration",
+    "finish_request_us": 0,
+    "acquisition_limit_us": 10000000,
+    "trigger": 0,
+    "fault_delay_slots": 0,
+    "fault_duration_us": 25000,
+    "trigger_seq": 4294967295,
+    "trigger_us": 0,
+    "fault_due_us": 0,
+    "audio": {
+      "block": 0,
+      "permille": 0,
+      "off_ms": 0,
+      "end_us": 0,
+      "callbacks": 0,
+      "max_work_ticks": 0,
+      "max_interval_ticks": 0,
+      "over_budget": 0,
+      "late_intervals": 0,
+      "bad_size": 0,
+      "period_ticks": 0,
+      "timer_hz": 240000000
+    },
+    "dsp": {
+      "voices": 0,
+      "frames": 0,
+      "hash": 2166136261,
+      "peak": 0,
+      "nonzero": 0,
+      "macs": 0
+    },
+    "dma": {
+      "kib": 0,
+      "period_us": 0,
+      "started": 0,
+      "completed": 0,
+      "verified": 0,
+      "bytes": 0,
+      "errors": 0,
+      "corrupt_words": 0,
+      "timeouts": 0,
+      "skipped": 0,
+      "first_us": 0,
+      "last_us": 0,
+      "max_gap_us": 0,
+      "max_transfer_ticks": 0,
+      "irqs": 0,
+      "max_irq_wall_ticks": 0,
+      "irq_priority": 0,
+      "stream": 0
+    },
+    "acquisition": {
+      "tick_us": 50,
+      "timer_priority": 0,
+      "adc_priority": 0,
+      "audio_priority": 1,
+      "timer_irqs": 200000,
+      "adc_irqs": 20000,
+      "max_timer_ticks": 264,
+      "max_adc_ticks": 352,
+      "work_ticks_low": 28954454,
+      "work_ticks_high": 0,
+      "timeouts": 0,
+      "overruns": 0,
+      "unexpected_irqs": 0,
+      "cpu_padding": 1
+    }
+  },
+  "review": {
+    "schema": 1,
+    "status": "pass",
+    "case": "automated jack audio load",
+    "samples": 20000,
+    "run": {
+      "token": 367093978,
+      "duration_ms": 10000,
+      "fault": 0,
+      "policy": 1,
+      "count": 20000,
+      "missed": 0,
+      "adc_failures": 0,
+      "elapsed_us": 10000001,
+      "fault_begin_us": 0,
+      "fault_end_us": 0,
+      "finish_reason": "duration",
+      "finish_request_us": 0,
+      "acquisition_limit_us": 10000000,
+      "trigger": 0,
+      "fault_delay_slots": 0,
+      "fault_duration_us": 25000,
+      "trigger_seq": 4294967295,
+      "trigger_us": 0,
+      "fault_due_us": 0,
+      "audio": {
+        "block": 0,
+        "permille": 0,
+        "off_ms": 0,
+        "end_us": 0,
+        "callbacks": 0,
+        "max_work_ticks": 0,
+        "max_interval_ticks": 0,
+        "over_budget": 0,
+        "late_intervals": 0,
+        "bad_size": 0,
+        "period_ticks": 0,
+        "timer_hz": 240000000
+      },
+      "dsp": {
+        "voices": 0,
+        "frames": 0,
+        "hash": 2166136261,
+        "peak": 0,
+        "nonzero": 0,
+        "macs": 0
+      },
+      "dma": {
+        "kib": 0,
+        "period_us": 0,
+        "started": 0,
+        "completed": 0,
+        "verified": 0,
+        "bytes": 0,
+        "errors": 0,
+        "corrupt_words": 0,
+        "timeouts": 0,
+        "skipped": 0,
+        "first_us": 0,
+        "last_us": 0,
+        "max_gap_us": 0,
+        "max_transfer_ticks": 0,
+        "irqs": 0,
+        "max_irq_wall_ticks": 0,
+        "irq_priority": 0,
+        "stream": 0
+      },
+      "acquisition": {
+        "tick_us": 50,
+        "timer_priority": 0,
+        "adc_priority": 0,
+        "audio_priority": 1,
+        "timer_irqs": 200000,
+        "adc_irqs": 20000,
+        "max_timer_ticks": 264,
+        "max_adc_ticks": 352,
+        "work_ticks_low": 28954454,
+        "work_ticks_high": 0,
+        "timeouts": 0,
+        "overruns": 0,
+        "unexpected_irqs": 0,
+        "cpu_padding": 1
+      }
+    },
+    "qualification": "responsive",
+    "first_ready_us": 31784,
+    "patched_while_audio_active": false,
+    "late_adc_observations": 0,
+    "state_changes": [
+      {
+        "seq": 63,
+        "time_us": 31784,
+        "ready": true,
+        "patched": false
+      },
+      {
+        "seq": 6463,
+        "time_us": 3231834,
+        "ready": true,
+        "patched": true
+      },
+      {
+        "seq": 13119,
+        "time_us": 6559835,
+        "ready": true,
+        "patched": false
+      }
+    ],
+    "audio": {
+      "callbacks": 0,
+      "independent_marker": "verified idle"
+    },
+    "generator": {
+      "schema": 1,
+      "status": "software timing passed; physical verification pending",
+      "info": {
+        "protocol": 1,
+        "kind": "daisy-pulse-generator",
+        "board": "seed3",
+        "build_id": "4e68efce89b64d686cf11c63",
+        "timer_hz": 240000000,
+        "armed": false,
+        "released": true,
+        "max_edges": 64,
+        "max_us": 30000000,
+        "max_late_us": 25
+      },
+      "token": 3969919098,
+      "edges": [
+        {
+          "seq": 0,
+          "due_us": 3000000,
+          "before_us": 3000000,
+          "after_us": 3000000,
+          "pressed": 1
+        },
+        {
+          "seq": 1,
+          "due_us": 6500000,
+          "before_us": 6500000,
+          "after_us": 6500000,
+          "pressed": 0
+        }
+      ],
+      "end_us": 6500000,
+      "max_lateness_us": 0,
+      "raw_sha256": "6035b59d9184988dd21ebdf9726a4527c0a1a4a1281befe6c460cfe24c2b04dd"
+    },
+    "service_alignment": {
+      "clock_scale_ppm": 40.95381849666957,
+      "max_fit_residual_us": 0.24544195382623002,
+      "max_interval_error_us": 0.3254292183532925,
+      "max_work_width_error_us": 0.6660000005681468,
+      "pre_application_high_intervals_s": []
+    },
+    "probe_max_error_us": 1.0398501899544499,
+    "terminal_release_error_us": 0.8478460244987218,
+    "clamp_onset_bounds_s": [
+      3.756279889,
+      3.757295889
+    ],
+    "clamp_release_bounds_s": [
+      7.255975888999999,
+      7.2579918889999995
+    ],
+    "source_timing_evidence": "Three interior native analog samples per service pulse, checked against digital sense; full ADC aperture review unchanged",
+    "physical_clamp_duration_bounds_s": [
+      3.4986799999999993,
+      3.5017119999999995
+    ],
+    "invalid_observations": 0,
+    "ambiguous_analog_apertures": 0,
+    "digital_transition_apertures": 0,
+    "recovery_tail_samples": 2000,
+    "raw_sha256": "9cb3e6d82c0ea6983bae696c3d38981562a338a4fcb65850c358d0c560c15b0e",
+    "limitation": "One passive electrical-clamp fixture; deterministic FIR/delay processing and optional SDRAM DMA with silent codec outputs. Not codec audio quality, arbitrary DSP/DMA traffic, mechanical motion, calibrated absolute latency or protected-input qualification.",
+    "workload": {
+      "dsp": "disabled",
+      "dma": "disabled",
+      "dma_payload_bytes": 0,
+      "dma_verified_transfers": 0,
+      "dma_skipped_launches": 0,
+      "dma_max_gap_us": 0,
+      "limitation": "The DSP reference reuses the tested integer kernel. DMA timing/counters are device-reported; D4 independently checks audio callbacks, not the DMA2 bus. Silent outputs do not qualify codec audio quality."
+    }
+  },
+  "native_scope_sha256": {
+    "analog_0.bin": "6a0a4ceabaf964d6d32a0c859965abd640d7e5fb7be20a6e7df21e1e921a6232",
+    "settings.json": "5d6d91b658c08457a42e2f1ca06cb05b8942b54dd0c081d8daec4b0665a08087",
+    "capture.sal": "63fb6c960a101472c39173ee2e5fa0b19c5a9df02942b7ca2fac2ad3cce390cf",
+    "digital_2_0.bin": "a3ed1acb226177f2082fafed4b3b6347ef54275102137f6b40ff104f45a6e0a9",
+    "digital_1_2.bin": "887c3f521c50a29716ba0b22e83749ba837a03d3b4956151df37cd7205427f5d",
+    "digital_1_3.bin": "4968e518714fc0ce96e572810618b640b147e52b4cce7a7a69c58374b2baf916",
+    "digital_1_1.bin": "9e30a389a871f874d3dbeae8598d28303bbf2c92a1f5796bf31f31309fd48463",
+    "digital_1_0.bin": "225265c364b2ee22ffecf474d5412c67bb777550c639096dedd4b73bfafd9de1"
+  },
+  "limitation": "One passive electrical-clamp fixture; deterministic FIR/delay processing and optional SDRAM DMA with silent codec outputs. Not codec audio quality, arbitrary DSP/DMA traffic, mechanical motion, calibrated absolute latency or protected-input qualification. All acquired digital transitions and complete wire evidence; analog payload contains extrema over captured service apertures, not the full waveform.",
+  "generator_times_us": [
+    3000000,
+    6500000
+  ],
+  "generator_build": {
+    "build_id": "4e68efce89b64d686cf11c63",
+    "source_commit": "3dab3a483c103928898a13bf91fd1844e23790d2",
+    "sdk_revision": "e1f740a5a7fe38e6d6d41281bf99fe7a2bb3827b",
+    "binary_sha256": "2f132cc4c0bd65dbff4430799ab20bf2386f7520122ceb66b85f4609de89693c"
+  },
+  "raw_sha256": "9cb3e6d82c0ea6983bae696c3d38981562a338a4fcb65850c358d0c560c15b0e",
+  "raw_compressed_sha256": "2e96e94ca7f219e1f4baa5f706961d8bbff4d3b8d947e3053961ee73e1cfc2eb",
+  "channels_sha256": "91020a944db8e2909808a271caa4fae19d4151c2cf7bf07702ef1955fa420289",
+  "channels_compressed_sha256": "e5ade368ee7c949767e55de63b14eabe51fa989f64fccb7c99cb11572722ce10",
+  "analog_sha256": "e93534ca8219f4445a085ce22ac7c1ac4d133ae19281d4387dd089c4503fc547",
+  "analog_compressed_sha256": "9ff0216ad319328546c04e648690ed00dfdab69d7d3a0d957d58d126b761ccc0",
+  "generator_sha256": "6035b59d9184988dd21ebdf9726a4527c0a1a4a1281befe6c460cfe24c2b04dd",
+  "generator_compressed_sha256": "803e37b4f36767595a5361016b0331c1dd5188803b4dcc002b23ef807409cfe9"
+}

@@ -1,0 +1,826 @@
+{
+  "name": "pair-3-r0-p2000",
+  "early_finish": false,
+  "review": {
+    "schema": 1,
+    "name": "pair-3-r0-p2000",
+    "status": "diagnostic complete; no absolute clock or behavior qualification",
+    "run": {
+      "token": 2026792139,
+      "duration_ms": 10000,
+      "fault": 0,
+      "policy": 1,
+      "count": 20000,
+      "missed": 0,
+      "adc_failures": 0,
+      "elapsed_us": 10000001,
+      "fault_begin_us": 0,
+      "fault_end_us": 0,
+      "finish_reason": "duration",
+      "finish_request_us": 0,
+      "acquisition_limit_us": 10000000,
+      "trigger": 0,
+      "fault_delay_slots": 0,
+      "fault_duration_us": 25000,
+      "trigger_seq": 4294967295,
+      "trigger_us": 0,
+      "fault_due_us": 0,
+      "audio": {
+        "block": 16,
+        "permille": 0,
+        "off_ms": 8000,
+        "end_us": 8000002,
+        "callbacks": 24007,
+        "max_work_ticks": 36352,
+        "max_interval_ticks": 85240,
+        "over_budget": 0,
+        "late_intervals": 0,
+        "bad_size": 0,
+        "period_ticks": 80000,
+        "timer_hz": 240000000
+      },
+      "dsp": {
+        "voices": 16,
+        "frames": 384112,
+        "hash": 1374700990,
+        "peak": 1311,
+        "nonzero": 384111,
+        "macs": 196665344
+      },
+      "dma": {
+        "kib": 16,
+        "period_us": 2000,
+        "started": 3999,
+        "completed": 3999,
+        "verified": 3999,
+        "bytes": 65519616,
+        "errors": 0,
+        "corrupt_words": 0,
+        "timeouts": 0,
+        "skipped": 0,
+        "first_us": 3153,
+        "last_us": 7999103,
+        "max_gap_us": 2168,
+        "max_transfer_ticks": 280606,
+        "irqs": 3999,
+        "max_irq_wall_ticks": 31016,
+        "irq_priority": 2,
+        "stream": 6
+      },
+      "dma_memory": {
+        "region": 0,
+        "source": 3221225472,
+        "destination": 3221241856,
+        "capacity_bytes": 16384,
+        "cache_line_bytes": 32
+      },
+      "acquisition": {
+        "tick_us": 50,
+        "timer_priority": 0,
+        "adc_priority": 0,
+        "audio_priority": 1,
+        "timer_irqs": 200000,
+        "adc_irqs": 20000,
+        "max_timer_ticks": 522,
+        "max_adc_ticks": 704,
+        "work_ticks_low": 30914472,
+        "work_ticks_high": 0,
+        "timeouts": 0,
+        "overruns": 0,
+        "unexpected_irqs": 0,
+        "cpu_padding": 1
+      }
+    },
+    "clock_stability": {
+      "alignment": {
+        "clock_scale_ppm": 39.478212168653215,
+        "max_fit_residual_us": 1.0058013927191496,
+        "max_interval_error_us": 0.6332608939650299,
+        "max_work_width_error_us": 0.7089999999894019,
+        "pre_application_high_intervals_s": []
+      },
+      "status": "pass",
+      "failures": [],
+      "local_diagnostic": {
+        "window_seconds": 1,
+        "blocks": [
+          {
+            "window": 0,
+            "first_seq": 0,
+            "samples": 2001,
+            "clock_scale_ppm": 39.32940789952433,
+            "max_fit_residual_us": 0.6406410788185894
+          },
+          {
+            "window": 1,
+            "first_seq": 2001,
+            "samples": 2000,
+            "clock_scale_ppm": 39.464164554914305,
+            "max_fit_residual_us": 0.45560526358895004
+          },
+          {
+            "window": 2,
+            "first_seq": 4001,
+            "samples": 2000,
+            "clock_scale_ppm": 39.48995713098924,
+            "max_fit_residual_us": 0.4835379919677507
+          },
+          {
+            "window": 3,
+            "first_seq": 6001,
+            "samples": 2000,
+            "clock_scale_ppm": 39.34488553802851,
+            "max_fit_residual_us": 0.4901372774038464
+          },
+          {
+            "window": 4,
+            "first_seq": 8001,
+            "samples": 2000,
+            "clock_scale_ppm": 39.34725570675646,
+            "max_fit_residual_us": 0.41703538363799453
+          },
+          {
+            "window": 5,
+            "first_seq": 10001,
+            "samples": 2000,
+            "clock_scale_ppm": 39.10802350359788,
+            "max_fit_residual_us": 0.47421945387031883
+          },
+          {
+            "window": 6,
+            "first_seq": 12001,
+            "samples": 2000,
+            "clock_scale_ppm": 39.49014043636012,
+            "max_fit_residual_us": 0.5652621647382148
+          },
+          {
+            "window": 7,
+            "first_seq": 14001,
+            "samples": 2000,
+            "clock_scale_ppm": 39.723104042543866,
+            "max_fit_residual_us": 0.5147435409016907
+          },
+          {
+            "window": 8,
+            "first_seq": 16001,
+            "samples": 2000,
+            "clock_scale_ppm": 39.97627256824288,
+            "max_fit_residual_us": 0.21424079115968198
+          },
+          {
+            "window": 9,
+            "first_seq": 18001,
+            "samples": 1999,
+            "clock_scale_ppm": 39.985661601127376,
+            "max_fit_residual_us": 0.20440390339354053
+          }
+        ],
+        "limitation": "Diagnostic only; no qualification override or attribution to either clock."
+      }
+    },
+    "scheduling": {
+      "status": "pass",
+      "basis": "Counted HSE/15 cycles at fixed nominal frequency; one constant offset; no fitted rate",
+      "samples": 20000,
+      "offset_us": 1.0984691141767426,
+      "max_residual_us": 0.6047726145351306,
+      "max_interval_error_us": 0.6335301899816841,
+      "max_work_width_error_us": 0.7143143005669117,
+      "limits_us": {
+        "offset": 5,
+        "interval": 5,
+        "work_width": 3
+      }
+    },
+    "hardware_clock": {
+      "status": "diagnostic only",
+      "cycles": 10666670,
+      "nominal_hz": 1066666.6666666667,
+      "minimum_period_s": 8.720000002071515e-07,
+      "maximum_period_s": 9.4600000011269e-07,
+      "first_gated_period_s": 8.310000001454654e-07,
+      "boundary_high_widths_s": [
+        3.310000000755764e-07,
+        4.359999969949513e-07
+      ],
+      "blocks": [
+        {
+          "begin_s": 1.2220982770000035,
+          "end_s": 11.222028662000003,
+          "first_cycle": 268,
+          "last_cycle": 10666438,
+          "clock_scale_ppm": 39.53674092960213
+        }
+      ],
+      "limitation": "Every interior full clock period checked; initial gated period and boundary half-pulse widths reported separately. Relative clocks only; no DUT acceptance override."
+    },
+    "independent": {
+      "status": "diagnostic only; separate reference via analog-derived hysteretic receiver",
+      "generator_vs_scope": {
+        "status": "pass",
+        "failures": [],
+        "edges": 64,
+        "scale": 1.00003884048691,
+        "max_residual_us": 0.33243738126475364,
+        "max_interval_error_us": 0.5941588860878255,
+        "physical_press_us": [
+          137924.95100000023,
+          153763.36200000008,
+          144600.71100000027,
+          135438.4899999994,
+          151276.9500000002,
+          142114.71799999976,
+          132952.39800000002,
+          148791.02300000025,
+          139628.56399999966,
+          130466.29499999974,
+          146305.18199999898,
+          137142.81399999972,
+          152981.0910000009,
+          143818.6969999995,
+          134656.46999999948,
+          150495.16900000093,
+          141332.6099999992,
+          132170.21000000084,
+          148009.22500000003,
+          138846.60100000002,
+          154685.3350000008,
+          145522.97900000078,
+          136360.46799999947,
+          152199.21800000157,
+          143036.7290000003,
+          133874.48399999968,
+          149712.96599999917,
+          140550.6429999992,
+          131388.35500000036,
+          147226.74499999933,
+          138064.75700000042,
+          153903.11200000005
+        ],
+        "limitation": "Stimulus-only check; does not qualify DUT behavior or service phase coverage."
+      },
+      "visible_edges": 64,
+      "hidden_edges": [],
+      "matched": [
+        {
+          "seq": 0,
+          "physical_s": 1.528440299999998
+        },
+        {
+          "seq": 1,
+          "physical_s": 1.6663652509999982
+        },
+        {
+          "seq": 2,
+          "physical_s": 1.812208430999998
+        },
+        {
+          "seq": 3,
+          "physical_s": 1.965971792999998
+        },
+        {
+          "seq": 4,
+          "physical_s": 2.102652757999998
+        },
+        {
+          "seq": 5,
+          "physical_s": 2.247253468999998
+        },
+        {
+          "seq": 6,
+          "physical_s": 2.399773386999998
+        },
+        {
+          "seq": 7,
+          "physical_s": 2.5352118769999974
+        },
+        {
+          "seq": 8,
+          "physical_s": 2.6785692139999977
+        },
+        {
+          "seq": 9,
+          "physical_s": 2.829846163999998
+        },
+        {
+          "seq": 10,
+          "physical_s": 2.964041077999998
+        },
+        {
+          "seq": 11,
+          "physical_s": 3.1061557959999977
+        },
+        {
+          "seq": 12,
+          "physical_s": 3.256189693999998
+        },
+        {
+          "seq": 13,
+          "physical_s": 3.389142091999998
+        },
+        {
+          "seq": 14,
+          "physical_s": 3.5300131309999974
+        },
+        {
+          "seq": 15,
+          "physical_s": 3.6788041539999976
+        },
+        {
+          "seq": 16,
+          "physical_s": 3.810513016999998
+        },
+        {
+          "seq": 17,
+          "physical_s": 3.950141580999998
+        },
+        {
+          "seq": 18,
+          "physical_s": 4.097689254999998
+        },
+        {
+          "seq": 19,
+          "physical_s": 4.228155549999998
+        },
+        {
+          "seq": 20,
+          "physical_s": 4.366540527999999
+        },
+        {
+          "seq": 21,
+          "physical_s": 4.512845709999998
+        },
+        {
+          "seq": 22,
+          "physical_s": 4.667069216999998
+        },
+        {
+          "seq": 23,
+          "physical_s": 4.804212030999998
+        },
+        {
+          "seq": 24,
+          "physical_s": 4.949273371999998
+        },
+        {
+          "seq": 25,
+          "physical_s": 5.102254462999999
+        },
+        {
+          "seq": 26,
+          "physical_s": 5.238153617999998
+        },
+        {
+          "seq": 27,
+          "physical_s": 5.381972314999998
+        },
+        {
+          "seq": 28,
+          "physical_s": 5.533710066999999
+        },
+        {
+          "seq": 29,
+          "physical_s": 5.668366536999998
+        },
+        {
+          "seq": 30,
+          "physical_s": 5.810941783999998
+        },
+        {
+          "seq": 31,
+          "physical_s": 5.961436952999999
+        },
+        {
+          "seq": 32,
+          "physical_s": 6.094849839999998
+        },
+        {
+          "seq": 33,
+          "physical_s": 6.236182449999998
+        },
+        {
+          "seq": 34,
+          "physical_s": 6.385434097999998
+        },
+        {
+          "seq": 35,
+          "physical_s": 6.517604307999999
+        },
+        {
+          "seq": 36,
+          "physical_s": 6.657693555999998
+        },
+        {
+          "seq": 37,
+          "physical_s": 6.805702780999998
+        },
+        {
+          "seq": 38,
+          "physical_s": 6.936629591999998
+        },
+        {
+          "seq": 39,
+          "physical_s": 7.075476192999998
+        },
+        {
+          "seq": 40,
+          "physical_s": 7.222241457999998
+        },
+        {
+          "seq": 41,
+          "physical_s": 7.376926792999999
+        },
+        {
+          "seq": 42,
+          "physical_s": 7.514529982999998
+        },
+        {
+          "seq": 43,
+          "physical_s": 7.660052961999999
+        },
+        {
+          "seq": 44,
+          "physical_s": 7.813494409999999
+        },
+        {
+          "seq": 45,
+          "physical_s": 7.949854877999998
+        },
+        {
+          "seq": 46,
+          "physical_s": 8.094134258999997
+        },
+        {
+          "seq": 47,
+          "physical_s": 8.246333476999999
+        },
+        {
+          "seq": 48,
+          "physical_s": 8.381450699999998
+        },
+        {
+          "seq": 49,
+          "physical_s": 8.524487428999999
+        },
+        {
+          "seq": 50,
+          "physical_s": 8.675442980999996
+        },
+        {
+          "seq": 51,
+          "physical_s": 8.809317464999996
+        },
+        {
+          "seq": 52,
+          "physical_s": 8.951110729999996
+        },
+        {
+          "seq": 53,
+          "physical_s": 9.100823695999996
+        },
+        {
+          "seq": 54,
+          "physical_s": 9.233454830999998
+        },
+        {
+          "seq": 55,
+          "physical_s": 9.374005473999997
+        },
+        {
+          "seq": 56,
+          "physical_s": 9.522474752999997
+        },
+        {
+          "seq": 57,
+          "physical_s": 9.653863107999998
+        },
+        {
+          "seq": 58,
+          "physical_s": 9.793170576999998
+        },
+        {
+          "seq": 59,
+          "physical_s": 9.940397321999997
+        },
+        {
+          "seq": 60,
+          "physical_s": 10.070542229999997
+        },
+        {
+          "seq": 61,
+          "physical_s": 10.208606986999998
+        },
+        {
+          "seq": 62,
+          "physical_s": 10.354590346999997
+        },
+        {
+          "seq": 63,
+          "physical_s": 10.508493458999997
+        }
+      ],
+      "limitation": "Every generator edge recorded independently; no occlusion or local clock fit; no calibrated accuracy claim"
+    },
+    "generator_vs_hse": {
+      "status": "pass",
+      "failures": [],
+      "pairs": 64,
+      "scale": 0.9999993950473046,
+      "offset_s": 0.00658167012013422,
+      "clock_scale_ppm": -0.6049526953821882,
+      "max_residual_us": 0.5911545493120229,
+      "max_interval_error_us": 0.5656367293993547
+    },
+    "blocks": [
+      {
+        "second": 0,
+        "hse_period_ppm": 39.40713196382006,
+        "service_period_ppm": 39.288573143503314
+      },
+      {
+        "second": 1,
+        "hse_period_ppm": 39.47671368420558,
+        "service_period_ppm": 39.46473236604575
+      },
+      {
+        "second": 2,
+        "hse_period_ppm": 39.4912579708695,
+        "service_period_ppm": 39.47873937115709
+      },
+      {
+        "second": 3,
+        "hse_period_ppm": 39.440692382486375,
+        "service_period_ppm": 39.314623041741825
+      },
+      {
+        "second": 4,
+        "hse_period_ppm": 39.27061076058891,
+        "service_period_ppm": 39.39069534686368
+      },
+      {
+        "second": 5,
+        "hse_period_ppm": 39.098524825975645,
+        "service_period_ppm": 39.25262631243598
+      },
+      {
+        "second": 6,
+        "hse_period_ppm": 39.548821686663516,
+        "service_period_ppm": 39.51878345254123
+      },
+      {
+        "second": 7,
+        "hse_period_ppm": 39.686355577606136,
+        "service_period_ppm": 39.744872436298095
+      },
+      {
+        "second": 8,
+        "hse_period_ppm": 39.9734992397871,
+        "service_period_ppm": 40.0690345174759
+      },
+      {
+        "second": 9,
+        "hse_period_ppm": 39.97449974413314,
+        "service_period_ppm": 40.020010006358575
+      }
+    ],
+    "dsp_dma": {
+      "dsp": "full deterministic sample signature matched",
+      "dma": "every completed destination word verified",
+      "dma_payload_bytes": 65519616,
+      "dma_verified_transfers": 3999,
+      "dma_skipped_launches": 0,
+      "dma_max_gap_us": 2168,
+      "limitation": "The DSP reference reuses the tested integer kernel. DMA timing/counters are device-reported; the separate audio marker independently checks audio callbacks, not the DMA2 bus. Silent outputs do not qualify codec audio quality."
+    },
+    "raw_sha256": "8eb6fe3961d4a16985ed29479c7b6373f30bcaaf9472e8be29f7ff06d9b95648",
+    "digital_sha256": {
+      "sense": "0bee4210afb1188aca2d265f1b27bb24759d58fc1d9f404d82c61a67f6eea1e7",
+      "service": "560ed07482ccdc6ccb4c3b18d1d56e5d7d9aaaff59ca4c894bcf88d083364a32",
+      "presence": "48be74677dfa8c220aa75fd3488fa6eab1f32e6b27e4ff084e7a6ea297c05b9b",
+      "probe": "a220d1328394eb100087b519fc7f374d8b6ffb50a16d72b75a4c878d93172e3c",
+      "clock": "d4c6e2cd98b19ec4430e248ed67ce3636b95aba0539dfc5ae45654704cae5d44",
+      "audio": "e7cd677812bd17deea5490147d8ad0a178af719fbe0114f1e30e0ba3825eb2df"
+    },
+    "raw_reference": {
+      "status": "fail",
+      "reason": "incomplete physical pulse sequence",
+      "observed_edges": 84,
+      "expected_edges": 64
+    },
+    "derived_reference": {
+      "sha256": "c9af1634120aa45ef0276b86bc91daabb0ff2f672231272698683ccb6d83004f",
+      "initial_high": true,
+      "edges_s": [
+        1.528440299999998,
+        1.6663652509999982,
+        1.812208430999998,
+        1.965971792999998,
+        2.102652757999998,
+        2.247253468999998,
+        2.399773386999998,
+        2.5352118769999974,
+        2.6785692139999977,
+        2.829846163999998,
+        2.964041077999998,
+        3.1061557959999977,
+        3.256189693999998,
+        3.389142091999998,
+        3.5300131309999974,
+        3.6788041539999976,
+        3.810513016999998,
+        3.950141580999998,
+        4.097689254999998,
+        4.228155549999998,
+        4.366540527999999,
+        4.512845709999998,
+        4.667069216999998,
+        4.804212030999998,
+        4.949273371999998,
+        5.102254462999999,
+        5.238153617999998,
+        5.381972314999998,
+        5.533710066999999,
+        5.668366536999998,
+        5.810941783999998,
+        5.961436952999999,
+        6.094849839999998,
+        6.236182449999998,
+        6.385434097999998,
+        6.517604307999999,
+        6.657693555999998,
+        6.805702780999998,
+        6.936629591999998,
+        7.075476192999998,
+        7.222241457999998,
+        7.376926792999999,
+        7.514529982999998,
+        7.660052961999999,
+        7.813494409999999,
+        7.949854877999998,
+        8.094134258999997,
+        8.246333476999999,
+        8.381450699999998,
+        8.524487428999999,
+        8.675442980999996,
+        8.809317464999996,
+        8.951110729999996,
+        9.100823695999996,
+        9.233454830999998,
+        9.374005473999997,
+        9.522474752999997,
+        9.653863107999998,
+        9.793170576999998,
+        9.940397321999997,
+        10.070542229999997,
+        10.208606986999998,
+        10.354590346999997,
+        10.508493458999997
+      ],
+      "low_threshold_volts": 1.2,
+      "high_threshold_volts": 2.0,
+      "minimum_pulse_width_seconds": 0,
+      "limitation": "Separate recorded receiver; does not convert raw D0 failures into passes"
+    },
+    "audio": {
+      "callbacks": 24007,
+      "independent_marker": "verified every callback",
+      "minimum_work_us": 122.99940031978984,
+      "maximum_work_us": 151.43176360821187,
+      "maximum_interval_us": 355.16857675954583,
+      "measured_end_us": 8000002
+    },
+    "period_populations": {
+      "status": "diagnostic only",
+      "nominal_period_ns": 937.4999999999999,
+      "population_boundary_ns": 31.249999999999996,
+      "blocks": [
+        {
+          "begin_s": 1.2220983440000037,
+          "end_s": 9.221863116000002,
+          "periods": 8532746,
+          "min_period_ns": 872.0000002071515,
+          "max_period_ns": 946.00000011269,
+          "mean_period_ns": 937.5369631300402,
+          "short_periods": 67,
+          "long_periods": 0,
+          "short_mean_ns": 875.7164178550721,
+          "long_mean_ns": null,
+          "ordinary_mean_ns": 937.5374485551375,
+          "short_deficit_us": 4.139500003710161,
+          "histogram_ns": {
+            "872": 1,
+            "873": 6,
+            "874": 16,
+            "875": 17,
+            "876": 10,
+            "877": 4,
+            "878": 5,
+            "879": 4,
+            "881": 2,
+            "883": 1,
+            "885": 1,
+            "928": 1,
+            "929": 1,
+            "930": 4,
+            "931": 53,
+            "932": 447,
+            "933": 3611,
+            "934": 25872,
+            "935": 177855,
+            "936": 907114,
+            "937": 3034070,
+            "938": 3191141,
+            "939": 892714,
+            "940": 242615,
+            "941": 48477,
+            "942": 7366,
+            "943": 1181,
+            "944": 137,
+            "945": 19,
+            "946": 1
+          }
+        },
+        {
+          "begin_s": 9.222813780000005,
+          "end_s": 11.221893062000003,
+          "periods": 2132266,
+          "min_period_ns": 935.0000027552596,
+          "max_period_ns": 939.999997839891,
+          "mean_period_ns": 937.5374751555381,
+          "short_periods": 0,
+          "long_periods": 0,
+          "short_mean_ns": null,
+          "long_mean_ns": null,
+          "ordinary_mean_ns": 937.5374751555381,
+          "short_deficit_us": 0.0,
+          "histogram_ns": {
+            "935": 1,
+            "936": 410,
+            "937": 986054,
+            "938": 1145151,
+            "939": 649,
+            "940": 1
+          }
+        }
+      ],
+      "limitation": "Every contained full period counted; histogram rounded to 1 ns for display only. Short/long mean more than half a nominal source-clock period from nominal; no periods removed from timing acceptance and no physical cause assigned."
+    }
+  },
+  "payloads": {
+    "wire": {
+      "file": "pair-3-r0-p2000-wire.txt.gz",
+      "bytes": 1543273,
+      "sha256": "8eb6fe3961d4a16985ed29479c7b6373f30bcaaf9472e8be29f7ff06d9b95648",
+      "compressed_sha256": "618b019c7ff0aba3f3e20002f620f1cb7d21b80f132816c1218d86e7b2267859"
+    },
+    "sense": {
+      "file": "pair-3-r0-p2000-sense.bin.gz",
+      "bytes": 732,
+      "sha256": "0bee4210afb1188aca2d265f1b27bb24759d58fc1d9f404d82c61a67f6eea1e7",
+      "compressed_sha256": "0f24e07a51dfb789367ba9a74c1028b28f9123b75ef3a461f0f5035aaa81b124"
+    },
+    "service": {
+      "file": "pair-3-r0-p2000-service.bin.gz",
+      "bytes": 320060,
+      "sha256": "560ed07482ccdc6ccb4c3b18d1d56e5d7d9aaaff59ca4c894bcf88d083364a32",
+      "compressed_sha256": "04ed6f90094c6c20286708c7e4d45e817c933c3886cbea407c013ec9feb7f5be"
+    },
+    "presence": {
+      "file": "pair-3-r0-p2000-presence.bin.gz",
+      "bytes": 60,
+      "sha256": "48be74677dfa8c220aa75fd3488fa6eab1f32e6b27e4ff084e7a6ea297c05b9b",
+      "compressed_sha256": "ee5f0a8f15625b8d3deaa3d1ba3dc195638031d20afd3653c5b676528560dc77"
+    },
+    "probe": {
+      "file": "pair-3-r0-p2000-probe.bin.gz",
+      "bytes": 79324,
+      "sha256": "a220d1328394eb100087b519fc7f374d8b6ffb50a16d72b75a4c878d93172e3c",
+      "compressed_sha256": "30ae3d9dce14f7051106efe6006804e41fda7bb37c80fa38235b4c5896e98cbe"
+    },
+    "clock": {
+      "file": "pair-3-r0-p2000-clock.bin.xz",
+      "bytes": 170666780,
+      "sha256": "d4c6e2cd98b19ec4430e248ed67ce3636b95aba0539dfc5ae45654704cae5d44",
+      "compressed_sha256": "7cfff677bd7bc025fd18b0423600f7a11d1cfaf7d1efe9bb9f2612beb2c20e59"
+    },
+    "audio": {
+      "file": "pair-3-r0-p2000-audio.bin.gz",
+      "bytes": 384172,
+      "sha256": "e7cd677812bd17deea5490147d8ad0a178af719fbe0114f1e30e0ba3825eb2df",
+      "compressed_sha256": "010a848b1807a59fc64cd20f7c15c594c8512c8d85cb42f306e6a83d461e41ed"
+    },
+    "hysteretic": {
+      "file": "pair-3-r0-p2000-hysteretic.bin.gz",
+      "bytes": 572,
+      "sha256": "c9af1634120aa45ef0276b86bc91daabb0ff2f672231272698683ccb6d83004f",
+      "compressed_sha256": "8c289b8144e9e3609c443dd4a3914ed542d9edc53a70f9ba735e40fa5b893282"
+    },
+    "generator": {
+      "file": "pair-3-r0-p2000-generator.txt.gz",
+      "bytes": 2637,
+      "sha256": "f2d8ad5cf4c97e87346d777c499a39d3f6484bc96ab377197360039c2f0c5dd7",
+      "compressed_sha256": "8c9a566d5cbb261e681f8bbd7a92874eb99d2ad2eae3f8eadbe197e6c4fb6dfd"
+    }
+  },
+  "native_analog_sha256": "8d33b3d7c97f89971d10dcea078fe4712b0880bca8032e2319f4c409dfb1a4f4"
+}

@@ -12,6 +12,7 @@ import sys
 import tempfile
 import time
 from capture import LineReader, fnv, require
+import dma_memory
 
 COLUMNS = ('seq,slot,drive_us,sample_us,adc_end_us,end_us,missed,windows,raw,'
            'last_mismatches,bad_windows,probe,adc_valid,injected,evidence,'
@@ -33,7 +34,7 @@ def validate_plan(duration, fault, policy, trigger=0, delay=0, fault_us=25000):
 
 def add_fault_arguments(parser):
     parser.add_argument('--fault', type=int, choices=(0, 1, 2), default=0,
-                        help='0 none, 1 invalidate ADC evidence, 2 pause foreground sampling')
+                        help='0 none, 1 invalidate ADC evidence, 2 pause acquisition (foreground on protocols before 5)')
     parser.add_argument('--policy', type=int, choices=(0, 1), default=1)
     parser.add_argument('--trigger', type=int, choices=range(len(TRIGGERS)), default=0,
                         help=', '.join(f'{i} {name}' for i, name in enumerate(TRIGGERS)))
@@ -60,11 +61,55 @@ def add_audio_arguments(parser):
                         help='Stop audio before the final unloaded second; 0 with audio disabled')
 
 
-def digital_layout(protocol):
+def dsp_arguments(args):
+    return tuple(getattr(args, k, 0) for k in ('dsp_voices', 'dma_kib'))
+
+
+def validate_dsp(duration, block, permille, voices, kib):
+    require(0 <= voices <= 32 and kib in (0, 4, 16) and
+            (not (voices or kib) or (block and not permille and duration <= 30000)),
+            'invalid DSP/DMA plan')
+
+
+def add_dsp_arguments(parser):
+    parser.add_argument('--dsp-voices', type=int, default=0)
+    parser.add_argument('--dma-kib', type=int, choices=(0,4,16), default=0)
+    parser.add_argument('--dma-region', type=int, choices=range(10), default=0, help='0 low SDRAM, 1 AXI SRAM (protocol 7+), 2 high SDRAM (protocol 8+), 3–9 alignment views (protocol 9; see dma_alignment.py)')
+    parser.add_argument('--dma-period-us', type=int, choices=(1000,2000), default=1000)
+
+
+def digital_layout(protocol, clock_diagnostic=False, diagnostic_audio=False, clock_reference=False):
     # MSO single-ended probes have four local channels per port. User-facing
     # D4 is port 1 / channel 0, exported as digital_2_0.bin by the MSO server.
+    require(not clock_reference or (protocol in (6, 7, 8, 9) and not clock_diagnostic and not diagnostic_audio),
+            'clock reference requires its own protocol-6/7/8/9 layout')
+    require(not diagnostic_audio or (clock_diagnostic and protocol in (6, 7, 8, 9)),
+            'separate diagnostic audio marker requires clock diagnostic mode')
     return [(name, i//4, i%4) for i,name in enumerate(
-        ['sense','service','presence','probe'] + (['audio'] if protocol >= 4 else []))]
+        ['sense','service','presence','probe'] +
+        (['clock' if clock_diagnostic or clock_reference else 'audio'] if protocol >= 4 else []) +
+        (['audio'] if diagnostic_audio or clock_reference else []))]
+
+
+CLOCK_REFERENCE = 'M command; HSE/15 on PC9; audio on PC8; max 10 seconds; faults allowed'
+
+
+def validate_clock_reference(manifest, duration, permille):
+    require(manifest.get('clock_reference') == CLOCK_REFERENCE and
+            manifest.get('protocol') in (6, 7, 8, 9) and 1000 <= duration <= 10000 and not permille,
+            'unsupported clock reference or plan')
+
+
+def validate_diagnostic_audio(manifest, diagnostic, enabled):
+    require(not enabled or (diagnostic and manifest.get('clock_diagnostic_audio') ==
+            'PC8 / D4 / physical pin 5; K mode only'),
+            'separate diagnostic audio marker is not supported by this mode/build')
+
+
+def validate_clock_diagnostic(manifest, duration, fault, permille):
+    require(manifest.get('clock_diagnostic') == 'HSE/15 on PC9; K command; max 10 seconds' and
+            manifest.get('protocol') in (6, 7, 8, 9) and 1000 <= duration <= 10000 and not fault and not permille,
+            'unsupported clock diagnostic or plan')
 
 
 def publish_json(path, value):
@@ -76,13 +121,18 @@ def publish_json(path, value):
     finally: temp.unlink(missing_ok=True)
 
 
-def identity(line, build_id=None):
+def identity(line, build_id=None, *, clock_diagnostic=False, clock_reference=False):
+    require(not (clock_diagnostic and clock_reference), 'conflicting clock modes')
     require(line.startswith(b'JINFO,'), 'unexpected device; no run requested')
     info = json.loads(line[6:])
-    require(info.get('kind') == 'daisy-jack-bench' and info.get('board') == 'seed3'
+    role = ('daisy-jack-clock-reference' if clock_reference else
+            'daisy-jack-clock-diagnostic' if clock_diagnostic else 'daisy-jack-bench')
+    require(info.get('kind') == role and info.get('board') == 'seed3'
             and info.get('ready') is True, 'wrong firmware role or initialization failed')
     require(all(info.get(k) == v for k, v in CONFIG.items()), 'unsupported jack configuration')
-    require(info.get('protocol') in (1, 2, 3, 4, 5), 'unsupported jack protocol')
+    require(info.get('protocol') in (1, 2, 3, 4, 5, 6, 7, 8, 9), 'unsupported jack protocol')
+    require(not clock_diagnostic or info['protocol'] in (6, 7, 8, 9), 'clock diagnostic requires protocol 6–9')
+    require(not clock_reference or info['protocol'] in (6, 7, 8, 9), 'clock reference requires protocol 6–9')
     require(isinstance(info.get('build_id'), str) and len(info['build_id']) == 24,
             'missing build identity')
     if build_id: require(info['build_id'] == build_id, 'build identity mismatch')
@@ -100,17 +150,26 @@ def fields(line, prefix, count):
     return values
 
 
-def parse(data, build_id=None):
+def parse(data, build_id=None, *, clock_diagnostic=False, clock_reference=False):
     lines = data.splitlines(keepends=True)
     require(len(lines) >= 6 and data.endswith(b'\n'), 'incomplete capture')
-    info = identity(lines[0], build_id)
+    info = identity(lines[0], build_id, clock_diagnostic=clock_diagnostic, clock_reference=clock_reference)
     protocol = info['protocol']
-    plan = fields(lines[1], b'JSTART', 10 if protocol >= 4 else 7 if protocol >= 3 else 4)
+    plan = fields(lines[1], b'MSTART' if clock_reference else b'KSTART' if clock_diagnostic else b'JSTART', 14 if protocol >= 7 else 12 if protocol >= 6 else 10 if protocol >= 4 else 7 if protocol >= 3 else 4)
     token, duration, fault, policy = plan[:4]
     trigger, delay, fault_us = plan[4:7] if protocol >= 3 else (0, 0, 25000)
     validate_plan(duration, fault, policy, trigger, delay, fault_us)
-    audio_plan = plan[7:] if protocol >= 4 else [0, 0, 0]
+    audio_plan = plan[7:10] if protocol >= 4 else [0, 0, 0]
+    dsp_plan = plan[10:12] if protocol >= 6 else [0, 0]
+    memory_plan = plan[12:14] if protocol >= 7 else [0, 1000]
+    dma_memory.validate_plan(dsp_plan[1], *memory_plan, protocol)
+    memory = None
+    validate_dsp(duration, audio_plan[0], audio_plan[1], *dsp_plan)
     validate_audio(duration, *audio_plan)
+    require(not clock_diagnostic or (duration <= 10000 and not fault and not audio_plan[1]),
+            'unsupported clock diagnostic plan')
+    require(not clock_reference or (duration <= 10000 and not audio_plan[1]),
+            'unsupported clock reference plan')
     column = 3
     limit, request, reason = duration * 1000, 0, 0
     if protocol >= 2:
@@ -155,6 +214,42 @@ def parse(data, build_id=None):
             'timer_irqs','adc_irqs','max_timer_ticks','max_adc_ticks','work_ticks_low',
             'work_ticks_high','timeouts','overruns','unexpected_irqs','cpu_padding'), values))
         require(values[:4] == [50,0,0,1] and values[-1] == 1, 'unsupported acquisition scheduling')
+        column += 1
+    dsp = dma = None
+    if protocol >= 6:
+        dsp = dict(zip(('voices','frames','hash','peak','nonzero','macs'),
+                       fields(lines[column-1], b'JDSP', 6)))
+        require(dsp['voices'] == dsp_plan[0], 'DSP plan differs')
+        if dsp['voices']:
+            require(dsp['frames'] == load['callbacks']*load['block'] and
+                    dsp['macs'] == dsp['frames']*dsp['voices']*32 and
+                    0 < dsp['peak'] <= 10923 and 0 < dsp['nonzero'] <= dsp['frames'],
+                    'DSP frame coverage or range differs')
+        else:
+            require(dsp == dict(voices=0,frames=0,hash=2166136261,peak=0,nonzero=0,macs=0),
+                    'DSP activity while disabled')
+        column += 1
+        values = fields(lines[column-1], b'JDMA', 18)
+        dma = dict(zip(('kib','period_us','started','completed','verified','bytes','errors',
+            'corrupt_words','timeouts','skipped','first_us','last_us','max_gap_us',
+            'max_transfer_ticks','irqs','max_irq_wall_ticks','irq_priority','stream'), values))
+        require(dma['kib'] == dsp_plan[1], 'DMA plan differs')
+        if dma['kib']:
+            require(dma['period_us'] == memory_plan[1] and dma['irq_priority'] == 2 and dma['stream'] == 6,
+                    'DMA configuration differs')
+            require(0 < dma['started'] == dma['completed'] == dma['verified'] == dma['irqs'] and
+                    dma['bytes'] == dma['verified']*dma['kib']*1024 and
+                    not any(dma[k] for k in ('errors','corrupt_words','timeouts')),
+                    'DMA incomplete, corrupted or failed')
+            require(0 < dma['first_us'] < dma['last_us'] and dma['max_gap_us'] > 0 and
+                    0 < dma['max_transfer_ticks'] <= info['timer_hz']//200 and
+                    0 < dma['max_irq_wall_ticks'] <= info['timer_hz']//100,
+                    'DMA timing outside bounded operation')
+        else:
+            require(not any(values), 'DMA activity while disabled')
+        column += 1
+    if protocol >= 7:
+        memory = dma_memory.report(fields(lines[column-1], b'JMEM', 5), dsp_plan[1], memory_plan[0])
         column += 1
     begin, end = fields(lines[column-1], b'JFAULT', 2)
     require(lines[column] == ('JCOLUMNS,' + ','.join(COLUMNS) + '\n').encode(), 'columns differ')
@@ -267,6 +362,8 @@ def parse(data, build_id=None):
         run.update(trigger=trigger, fault_delay_slots=delay, fault_duration_us=fault_us,
                    trigger_seq=timing[0], trigger_us=timing[1], fault_due_us=timing[2])
     if load is not None: run['audio'] = load
+    if dsp is not None: run.update(dsp=dsp, dma=dma)
+    if memory is not None: run['dma_memory'] = memory
     if acquisition is not None:
         require(acquisition['adc_irqs'] == count and acquisition['timer_irqs'] >= count * 9,
                 'acquisition interrupt coverage differs')
@@ -276,10 +373,11 @@ def parse(data, build_id=None):
     return info, run, rows, changes
 
 
-def analyze(data, build_id=None):
-    info, run, rows, changes = parse(data, build_id)
+def analyze(data, build_id=None, *, clock_diagnostic=False, clock_reference=False):
+    info, run, rows, changes = parse(data, build_id, clock_diagnostic=clock_diagnostic, clock_reference=clock_reference)
     return dict(protocol_integrity='verified', replay='passed',
-                hardware_validation='pending independent scope and fixture review',
+                hardware_validation=('clock diagnostic only; no behavior qualification' if clock_diagnostic
+                                     else 'pending independent scope and fixture review'),
                 build_id=info['build_id'], run=run, state_changes=changes,
                 invalid_observations=sum(r['evidence'] == 2 for r in rows),
                 raw_min=min(r['raw'] for r in rows), raw_max=max(r['raw'] for r in rows),
@@ -307,7 +405,7 @@ class FinishRequest:
 def request_finish(out):
     meta = json.loads((out / 'metadata.json').read_text())
     require(meta['build'].get('kind') == 'eurorack-patterns-daisy-jack-bench' and
-            meta['build'].get('protocol') in (2, 3, 4, 5), 'firmware has no clean finish support')
+            meta['build'].get('protocol') in (2, 3, 4, 5, 6, 7, 8, 9), 'firmware has no clean finish support')
     if (out / 'acquisition-complete.json').exists() or meta['status'] == 'complete':
         return 'Acquisition already finished; download/review may still be running.'
     started = json.loads((out / 'started.json').read_text())
@@ -320,7 +418,12 @@ def request_finish(out):
 
 def capture(a):
     manifest = json.loads(a.manifest.read_text())
-    require(manifest.get('kind') == 'eurorack-patterns-daisy-jack-bench' and manifest.get('protocol') in (1, 2, 3, 4, 5),
+    diagnostic = getattr(a, 'clock_diagnostic', False)
+    reference = getattr(a, 'clock_reference', False)
+    require(not (reference and diagnostic), 'conflicting clock modes')
+    if reference: validate_clock_reference(manifest, a.seconds*1000, a.audio_permille)
+    if diagnostic: validate_clock_diagnostic(manifest, a.seconds*1000, a.fault, a.audio_permille)
+    require(manifest.get('kind') == 'eurorack-patterns-daisy-jack-bench' and manifest.get('protocol') in (1, 2, 3, 4, 5, 6, 7, 8, 9),
             'wrong manifest role')
     validate_plan(a.seconds * 1000, a.fault, a.policy, a.trigger, a.fault_delay_slots, a.fault_us)
     require(manifest['protocol'] >= 3 or (a.trigger, a.fault_delay_slots, a.fault_us) == (0, 0, 25000),
@@ -328,6 +431,11 @@ def capture(a):
     audio_plan = audio_arguments(a)
     validate_audio(a.seconds * 1000, *audio_plan)
     require(manifest['protocol'] >= 4 or audio_plan == (0, 0, 0), 'audio load requires protocol 4')
+    dsp_plan = dsp_arguments(a)
+    memory_plan = dma_memory.arguments(a)
+    dma_memory.validate_plan(dsp_plan[1], *memory_plan, manifest['protocol'])
+    validate_dsp(a.seconds*1000, audio_plan[0], audio_plan[1], *dsp_plan)
+    require(manifest['protocol'] >= 6 or dsp_plan == (0,0), 'DSP/DMA requires protocol 6–9')
     require(not a.out.exists(), 'output must be new')
     import serial
     a.out.mkdir(parents=True)
@@ -342,17 +450,20 @@ def capture(a):
         port.port = a.port
         with port, (a.out / 'raw.txt').open('wb') as raw:
             reader = LineReader(port, raw)
-            port.write(b'?\n'); port.flush()
-            info = identity(reader.read_line(time.monotonic() + 8), manifest['build_id'])
+            port.write(b'M?\n' if reference else b'K?\n' if diagnostic else b'?\n'); port.flush()
+            info = identity(reader.read_line(time.monotonic() + 8), manifest['build_id'], clock_diagnostic=diagnostic, clock_reference=reference)
             require(info['protocol'] == manifest['protocol'], 'manifest protocol differs')
             token = secrets.randbits(32)
-            command = f'J,{token},{a.seconds * 1000},{a.fault},{a.policy}'
+            prefix = 'M' if reference else 'K' if diagnostic else 'J'
+            command = f'{prefix},{token},{a.seconds * 1000},{a.fault},{a.policy}'
             if info['protocol'] >= 3: command += f',{a.trigger},{a.fault_delay_slots},{a.fault_us}'
             if info['protocol'] >= 4: command += ',' + ','.join(map(str, audio_plan))
+            if info['protocol'] >= 6: command += ',' + ','.join(map(str, dsp_plan))
+            if info['protocol'] >= 7: command += ',' + ','.join(map(str, memory_plan))
             command = (command + '\n').encode()
             port.write(command); port.flush()
             ack = reader.read_line(time.monotonic() + 8)
-            require(ack == command.replace(b'J,', b'JSTART,', 1), 'run acknowledgement differs')
+            require(ack == command.replace(prefix.encode()+b',', prefix.encode()+b'START,', 1), 'run acknowledgement differs')
             publish_json(a.out / 'started.json', dict(token=token, seconds=a.seconds))
             finish = FinishRequest(a.out / 'finish-request.json', token, port)
             poll = finish.poll if info['protocol'] >= 2 else None
@@ -370,7 +481,8 @@ def capture(a):
                         token=token, request_us=requested, limit_us=limit, reason=reason,
                         status='acquisition ended; complete download and checksum pending'))
                 if line.startswith(b'JEND,'): break
-        summary = analyze((a.out / 'raw.txt').read_bytes(), manifest['build_id'])
+        summary = analyze((a.out / 'raw.txt').read_bytes(), manifest['build_id'], clock_diagnostic=diagnostic, clock_reference=reference)
+        dma_memory.verify_manifest(summary['run'], manifest)
         (a.out / 'summary.json').write_text(json.dumps(summary, indent=2) + '\n')
         meta['status'] = 'complete'; meta['raw_sha256'] = summary['raw_sha256']; save()
         print(json.dumps(summary, indent=2))
@@ -387,8 +499,13 @@ def main():
     c.add_argument('--out', type=Path, required=True); c.add_argument('--seconds', type=int, default=10)
     add_fault_arguments(c)
     add_audio_arguments(c)
+    add_dsp_arguments(c)
+    c.add_argument('--clock-diagnostic', action='store_true', help='Explicit K command; D4 carries HSE/15, not audio callbacks')
+    c.add_argument('--clock-reference', action='store_true', help='Explicit M command; separate scheduling and external clock checks')
     c.add_argument('--download-timeout', type=int, default=300); c.add_argument('--notes', required=True)
     v = sub.add_parser('analyze'); v.add_argument('raw', type=Path); v.add_argument('--build-id')
+    v.add_argument('--clock-diagnostic', action='store_true')
+    v.add_argument('--clock-reference', action='store_true')
     f = sub.add_parser('finish'); f.add_argument('out', type=Path)
     a = p.parse_args()
     try:
@@ -397,7 +514,7 @@ def main():
             require(a.download_timeout > 0, 'invalid download timeout')
             return capture(a)
         if a.mode == 'finish': print(request_finish(a.out)); return 0
-        print(json.dumps(analyze(a.raw.read_bytes(), a.build_id), indent=2)); return 0
+        print(json.dumps(analyze(a.raw.read_bytes(), a.build_id, clock_diagnostic=a.clock_diagnostic, clock_reference=a.clock_reference), indent=2)); return 0
     except (ValueError, OSError, TimeoutError, KeyError) as e:
         print('ERROR:', str(e), file=sys.stderr); return 2
 
