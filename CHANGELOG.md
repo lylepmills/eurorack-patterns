@@ -2,6 +2,10 @@
 
 ## Unreleased
 
+- Add a five-step pickup application example with explicit membership, snapping,
+  destination readback and unreachable-target recovery. Check its policy with
+  an independent finite-set oracle and synthetic boundary/ownership cases;
+  the public API is unchanged and no control-feel measurement is claimed.
 - Keep default tests focused on portable contracts. Make board simulations and
   measured replays explicit options; require verified evidence before replay.
 - Distribute large recordings as optional release assets with archive/member

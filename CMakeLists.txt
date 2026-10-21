@@ -44,6 +44,8 @@ if(EURORACK_PATTERNS_BUILD_TESTS)
   ep_test(example_event_paths examples/event_paths.cpp)
   ep_test(example_pickup_workflow examples/pickup_workflow.cpp)
   ep_test(test_shared_control tests/test_shared_control.cpp)
+  ep_test(example_stepped_pickup examples/stepped_pickup.cpp)
+  ep_test(test_stepped_control tests/test_stepped_control.cpp)
   find_package(Python3 3.9 COMPONENTS Interpreter REQUIRED)
   add_test(NAME test_fetch_evidence COMMAND ${Python3_EXECUTABLE}
     ${CMAKE_CURRENT_SOURCE_DIR}/tests/test_fetch_evidence.py)
