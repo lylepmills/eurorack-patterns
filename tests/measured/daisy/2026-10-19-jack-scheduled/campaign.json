@@ -1,0 +1,2198 @@
+{
+  "schema": 1,
+  "status": "complete",
+  "firmware_source": "4d6f68b37af56376c410405ef21c72e8d5834077",
+  "capture_host_source": "d206057af3f47a9c7b9f9af699eb379573179c46",
+  "cases": [
+    {
+      "name": "baseline-before",
+      "qualification": "responsive",
+      "run": {
+        "token": 4174893851,
+        "duration_ms": 10000,
+        "fault": 0,
+        "policy": 1,
+        "count": 20000,
+        "missed": 0,
+        "adc_failures": 0,
+        "elapsed_us": 10000001,
+        "fault_begin_us": 0,
+        "fault_end_us": 0,
+        "finish_reason": "duration",
+        "finish_request_us": 0,
+        "acquisition_limit_us": 10000000,
+        "trigger": 0,
+        "fault_delay_slots": 0,
+        "fault_duration_us": 25000,
+        "trigger_seq": 4294967295,
+        "trigger_us": 0,
+        "fault_due_us": 0,
+        "audio": {
+          "block": 0,
+          "permille": 0,
+          "off_ms": 0,
+          "end_us": 0,
+          "callbacks": 0,
+          "max_work_ticks": 0,
+          "max_interval_ticks": 0,
+          "over_budget": 0,
+          "late_intervals": 0,
+          "bad_size": 0,
+          "period_ticks": 0,
+          "timer_hz": 240000000
+        },
+        "acquisition": {
+          "tick_us": 50,
+          "timer_priority": 0,
+          "adc_priority": 0,
+          "audio_priority": 1,
+          "timer_irqs": 200000,
+          "adc_irqs": 20000,
+          "max_timer_ticks": 248,
+          "max_adc_ticks": 292,
+          "work_ticks_low": 27317432,
+          "work_ticks_high": 0,
+          "timeouts": 0,
+          "overruns": 0,
+          "unexpected_irqs": 0,
+          "cpu_padding": 1
+        }
+      },
+      "invalid_observations": 0,
+      "ambiguous_analog_apertures": 1,
+      "state_changes": [
+        {
+          "seq": 63,
+          "time_us": 31784,
+          "ready": true,
+          "patched": false
+        },
+        {
+          "seq": 6527,
+          "time_us": 3263784,
+          "ready": true,
+          "patched": true
+        },
+        {
+          "seq": 13119,
+          "time_us": 6559784,
+          "ready": true,
+          "patched": false
+        }
+      ],
+      "generator_times_us": [
+        3000000,
+        6500000
+      ],
+      "native_scope_sha256": {
+        "analog_0.bin": "cfc61182cb7c0a67f5af109aa8e1d6165e7cf8dbd9bd6ddac6b4fb2b44afbfa9",
+        "settings.json": "5d6d91b658c08457a42e2f1ca06cb05b8942b54dd0c081d8daec4b0665a08087",
+        "capture.sal": "d851844f04ed81bbbafeaaeb067fa937ef86f0e93190761589a0741db5ac4157",
+        "digital_2_0.bin": "9d758b4a28db96e2d9e451435d93d60ea6316a073e13cc12279268f674de82c2",
+        "digital_1_2.bin": "00853b28350964a3a29b380d900bb030abc04440e49250b7be7f25dfa4e609f6",
+        "digital_1_3.bin": "c8253283be3a6a246f22373cd5229bef909e25d362afadd2711f9575afc276a5",
+        "digital_1_1.bin": "618bd4dc575c66650dfd3b276acaa3ce378dc0dcd75ee4afba3d9a5af10b641f",
+        "digital_1_0.bin": "90e169152d9feab543e057575e1d81179953fd5ca22a486e0e070dc30721f87d"
+      },
+      "raw_sha256": "e927fd85fd31d40351df4eb64cfb733b8aa4ed979dd09d5f91ffda64319429ab",
+      "generator_sha256": "114691b2c170bbe7264804af652a9b28f5c3b8f671ec7b052a678f8cf91e8505"
+    },
+    {
+      "name": "audio-b16-p0",
+      "qualification": "responsive",
+      "run": {
+        "token": 1804683027,
+        "duration_ms": 10000,
+        "fault": 0,
+        "policy": 1,
+        "count": 20000,
+        "missed": 0,
+        "adc_failures": 0,
+        "elapsed_us": 10000001,
+        "fault_begin_us": 0,
+        "fault_end_us": 0,
+        "finish_reason": "duration",
+        "finish_request_us": 0,
+        "acquisition_limit_us": 10000000,
+        "trigger": 0,
+        "fault_delay_slots": 0,
+        "fault_duration_us": 25000,
+        "trigger_seq": 4294967295,
+        "trigger_us": 0,
+        "fault_due_us": 0,
+        "audio": {
+          "block": 16,
+          "permille": 0,
+          "off_ms": 8000,
+          "end_us": 8000001,
+          "callbacks": 24007,
+          "max_work_ticks": 450,
+          "max_interval_ticks": 80310,
+          "over_budget": 0,
+          "late_intervals": 0,
+          "bad_size": 0,
+          "period_ticks": 80000,
+          "timer_hz": 240000000
+        },
+        "acquisition": {
+          "tick_us": 50,
+          "timer_priority": 0,
+          "adc_priority": 0,
+          "audio_priority": 1,
+          "timer_irqs": 200000,
+          "adc_irqs": 20000,
+          "max_timer_ticks": 274,
+          "max_adc_ticks": 286,
+          "work_ticks_low": 28882634,
+          "work_ticks_high": 0,
+          "timeouts": 0,
+          "overruns": 0,
+          "unexpected_irqs": 0,
+          "cpu_padding": 1
+        }
+      },
+      "invalid_observations": 0,
+      "ambiguous_analog_apertures": 0,
+      "state_changes": [
+        {
+          "seq": 63,
+          "time_us": 31784,
+          "ready": true,
+          "patched": false
+        },
+        {
+          "seq": 6527,
+          "time_us": 3263784,
+          "ready": true,
+          "patched": true
+        },
+        {
+          "seq": 13119,
+          "time_us": 6559784,
+          "ready": true,
+          "patched": false
+        }
+      ],
+      "generator_times_us": [
+        3000000,
+        6500000
+      ],
+      "native_scope_sha256": {
+        "analog_0.bin": "0d8619544505b4f7da836303d47979510317bac72016512e5da3917c8fd6f411",
+        "settings.json": "5d6d91b658c08457a42e2f1ca06cb05b8942b54dd0c081d8daec4b0665a08087",
+        "capture.sal": "28c089b50f165b0ff7debd4bf8665571985db3d1c653c8b0ff0a746ef9f8cf4e",
+        "digital_2_0.bin": "d4e55983ecfaad0e081b6a43136b1d811094da0bdcd1e86f660e92b258759a1a",
+        "digital_1_2.bin": "2d0e5696bfa032bba49a760c221ecdf38bb8e34618342d555dc814869c4ea6b3",
+        "digital_1_3.bin": "c18154b5dfc44cbba0f4f450239a0862b19ef8311e7af58d8255b5c1f9b7caf7",
+        "digital_1_1.bin": "407d39b582f37fae08e6f123e45a90531d877f8a18392d9575fe012200b6edf9",
+        "digital_1_0.bin": "03d0ed206ab7ff1de77b01836733ab93e3353238be25091987b6729bd8416168"
+      },
+      "raw_sha256": "8698fc59b15136251e650664d6def379af7abd553f3b2e516fceb1a7c7b39d8b",
+      "generator_sha256": "a04f6c4bae3de44920826dc36bc37a7a45081a198b99c6080102a5f8c28d74af"
+    },
+    {
+      "name": "audio-b16-p250",
+      "qualification": "responsive",
+      "run": {
+        "token": 2968682679,
+        "duration_ms": 10000,
+        "fault": 0,
+        "policy": 1,
+        "count": 20000,
+        "missed": 0,
+        "adc_failures": 0,
+        "elapsed_us": 10000001,
+        "fault_begin_us": 0,
+        "fault_end_us": 0,
+        "finish_reason": "duration",
+        "finish_request_us": 0,
+        "acquisition_limit_us": 10000000,
+        "trigger": 0,
+        "fault_delay_slots": 0,
+        "fault_duration_us": 25000,
+        "trigger_seq": 4294967295,
+        "trigger_us": 0,
+        "fault_due_us": 0,
+        "audio": {
+          "block": 16,
+          "permille": 250,
+          "off_ms": 8000,
+          "end_us": 8000001,
+          "callbacks": 24007,
+          "max_work_ticks": 20578,
+          "max_interval_ticks": 80304,
+          "over_budget": 0,
+          "late_intervals": 0,
+          "bad_size": 0,
+          "period_ticks": 80000,
+          "timer_hz": 240000000
+        },
+        "acquisition": {
+          "tick_us": 50,
+          "timer_priority": 0,
+          "adc_priority": 0,
+          "audio_priority": 1,
+          "timer_irqs": 200000,
+          "adc_irqs": 20000,
+          "max_timer_ticks": 270,
+          "max_adc_ticks": 298,
+          "work_ticks_low": 28954986,
+          "work_ticks_high": 0,
+          "timeouts": 0,
+          "overruns": 0,
+          "unexpected_irqs": 0,
+          "cpu_padding": 1
+        }
+      },
+      "invalid_observations": 0,
+      "ambiguous_analog_apertures": 0,
+      "state_changes": [
+        {
+          "seq": 63,
+          "time_us": 31784,
+          "ready": true,
+          "patched": false
+        },
+        {
+          "seq": 6527,
+          "time_us": 3263784,
+          "ready": true,
+          "patched": true
+        },
+        {
+          "seq": 13119,
+          "time_us": 6559784,
+          "ready": true,
+          "patched": false
+        }
+      ],
+      "generator_times_us": [
+        3000000,
+        6500000
+      ],
+      "native_scope_sha256": {
+        "analog_0.bin": "286d75cd7f21a4f22269b1fb5e421f98cf08575622b0dc3aedfd49c134ee42d3",
+        "settings.json": "5d6d91b658c08457a42e2f1ca06cb05b8942b54dd0c081d8daec4b0665a08087",
+        "capture.sal": "3cc793a708e9241dfb5aa5c43b10f17525a0acb814bb2a50ca513b758fd24877",
+        "digital_2_0.bin": "b1910a9ca7f3c737ebb480b6dcc2d3eec673d2be469d39e81d102a3b732d29fc",
+        "digital_1_2.bin": "56ed7e94d1d2bf1063d7d7e93cfc21ee73eadbffb8294ffe1b0efe04e5b223e6",
+        "digital_1_3.bin": "8c6cbb9e3d9fa962409278c46f236d3c231ee0b40f8c40c4a6d010e32290dd4e",
+        "digital_1_1.bin": "90814e546359e9fc9df54a4ee62c20325cd29df674184cb65b527d5ab712c58b",
+        "digital_1_0.bin": "e798c18033fcb6b0b465000a3dfd200a421fdbbf1ca2b525d729de498e8098e2"
+      },
+      "raw_sha256": "7199bfb79fd00a72473cdbc279a89a0b1425e0e78ef25d32a4190f0180e0ce3b",
+      "generator_sha256": "01bf6fb9c50828e71dca9ac0483c0127cb7c03c58bae25293c377da885407aab"
+    },
+    {
+      "name": "audio-b16-p500",
+      "qualification": "responsive",
+      "run": {
+        "token": 2615204839,
+        "duration_ms": 10000,
+        "fault": 0,
+        "policy": 1,
+        "count": 20000,
+        "missed": 0,
+        "adc_failures": 0,
+        "elapsed_us": 10000000,
+        "fault_begin_us": 0,
+        "fault_end_us": 0,
+        "finish_reason": "duration",
+        "finish_request_us": 0,
+        "acquisition_limit_us": 10000000,
+        "trigger": 0,
+        "fault_delay_slots": 0,
+        "fault_duration_us": 25000,
+        "trigger_seq": 4294967295,
+        "trigger_us": 0,
+        "fault_due_us": 0,
+        "audio": {
+          "block": 16,
+          "permille": 500,
+          "off_ms": 8000,
+          "end_us": 8000059,
+          "callbacks": 24007,
+          "max_work_ticks": 40832,
+          "max_interval_ticks": 80314,
+          "over_budget": 0,
+          "late_intervals": 0,
+          "bad_size": 0,
+          "period_ticks": 80000,
+          "timer_hz": 240000000
+        },
+        "acquisition": {
+          "tick_us": 50,
+          "timer_priority": 0,
+          "adc_priority": 0,
+          "audio_priority": 1,
+          "timer_irqs": 200000,
+          "adc_irqs": 20000,
+          "max_timer_ticks": 278,
+          "max_adc_ticks": 284,
+          "work_ticks_low": 28710998,
+          "work_ticks_high": 0,
+          "timeouts": 0,
+          "overruns": 0,
+          "unexpected_irqs": 0,
+          "cpu_padding": 1
+        }
+      },
+      "invalid_observations": 0,
+      "ambiguous_analog_apertures": 0,
+      "state_changes": [
+        {
+          "seq": 63,
+          "time_us": 31784,
+          "ready": true,
+          "patched": false
+        },
+        {
+          "seq": 6527,
+          "time_us": 3263785,
+          "ready": true,
+          "patched": true
+        },
+        {
+          "seq": 13119,
+          "time_us": 6559784,
+          "ready": true,
+          "patched": false
+        }
+      ],
+      "generator_times_us": [
+        3000000,
+        6500000
+      ],
+      "native_scope_sha256": {
+        "analog_0.bin": "92d272194961ba902a92f28d986ca15b07849b03d163a819e54cc4c481cfeffd",
+        "settings.json": "5d6d91b658c08457a42e2f1ca06cb05b8942b54dd0c081d8daec4b0665a08087",
+        "capture.sal": "955a50e946ee23d5a2430d6462c5edfa0d29e23230d0875c08d0214ddca562d1",
+        "digital_2_0.bin": "a2b7d618cdb703bb2277d95f3c7a8e16ed7bfe4fc88965b2b5668c60b5c1dae9",
+        "digital_1_2.bin": "bc65b21dcc9e1e02c9434d43ca11338d44405d4dcea1ee39bdf49d7fcf91c6a2",
+        "digital_1_3.bin": "264fd9b27fcb8258b60ca7647bfe0bf6055b847be204ee5aafbea60dc61c778a",
+        "digital_1_1.bin": "d800491b1d109a27b5042c8290ff4fcbd0c6a7419a11070581ed122c6d35246d",
+        "digital_1_0.bin": "816b21e9609a3a86ad30a5d4ab732cf130acf1479e890e3d209b9a81f49fff11"
+      },
+      "raw_sha256": "e54799f8f91f02b17879864f2e84f6bfce3e2e12177cb92423b6987a974e402d",
+      "generator_sha256": "6d7ed233f05d8c2d211afe67e27306762977c5db33b4906776611908df7afe61"
+    },
+    {
+      "name": "audio-b16-p700",
+      "qualification": "responsive",
+      "run": {
+        "token": 1071741225,
+        "duration_ms": 10000,
+        "fault": 0,
+        "policy": 1,
+        "count": 20000,
+        "missed": 0,
+        "adc_failures": 0,
+        "elapsed_us": 10000001,
+        "fault_begin_us": 0,
+        "fault_end_us": 0,
+        "finish_reason": "duration",
+        "finish_request_us": 0,
+        "acquisition_limit_us": 10000000,
+        "trigger": 0,
+        "fault_delay_slots": 0,
+        "fault_duration_us": 25000,
+        "trigger_seq": 4294967295,
+        "trigger_us": 0,
+        "fault_due_us": 0,
+        "audio": {
+          "block": 16,
+          "permille": 700,
+          "off_ms": 8000,
+          "end_us": 8000061,
+          "callbacks": 24007,
+          "max_work_ticks": 56998,
+          "max_interval_ticks": 80310,
+          "over_budget": 0,
+          "late_intervals": 0,
+          "bad_size": 0,
+          "period_ticks": 80000,
+          "timer_hz": 240000000
+        },
+        "acquisition": {
+          "tick_us": 50,
+          "timer_priority": 0,
+          "adc_priority": 0,
+          "audio_priority": 1,
+          "timer_irqs": 200000,
+          "adc_irqs": 20000,
+          "max_timer_ticks": 282,
+          "max_adc_ticks": 292,
+          "work_ticks_low": 28518946,
+          "work_ticks_high": 0,
+          "timeouts": 0,
+          "overruns": 0,
+          "unexpected_irqs": 0,
+          "cpu_padding": 1
+        }
+      },
+      "invalid_observations": 0,
+      "ambiguous_analog_apertures": 0,
+      "state_changes": [
+        {
+          "seq": 63,
+          "time_us": 31784,
+          "ready": true,
+          "patched": false
+        },
+        {
+          "seq": 6527,
+          "time_us": 3263785,
+          "ready": true,
+          "patched": true
+        },
+        {
+          "seq": 13119,
+          "time_us": 6559784,
+          "ready": true,
+          "patched": false
+        }
+      ],
+      "generator_times_us": [
+        3000000,
+        6500000
+      ],
+      "native_scope_sha256": {
+        "analog_0.bin": "976b123da42498ca53d593622dfab54a4933bb573afcc3d99ea6afc1d41765d7",
+        "settings.json": "5d6d91b658c08457a42e2f1ca06cb05b8942b54dd0c081d8daec4b0665a08087",
+        "capture.sal": "b2072142ea65a70c9e672837ad4463901b28109c1134c907e9878c26ea9e3708",
+        "digital_2_0.bin": "016c54a07a92764fdc120ec12abcced4f4edebba405bfd639cec118d27b43926",
+        "digital_1_2.bin": "22eec0baa7b1e471d14a15b0deecf8ccd306347e9a0466dabd890e1c24c1567a",
+        "digital_1_3.bin": "eb59ecd40082209374cdb770f344e304be8e2dc62a75f269a1c2e20308c63bef",
+        "digital_1_1.bin": "2d7510f47f5f04e9d9239ceffe925da236fe60aff489f48bc0175f586933c1cf",
+        "digital_1_0.bin": "ae8031996f4bde7c1a19d36b84a2d2d7c000fedccc8cf0a01d1ee9ed16f7c54f"
+      },
+      "raw_sha256": "9b8960e502655f9f288ce0dc6924697e4df4bc179bf3541e9af2778eba3f0ed5",
+      "generator_sha256": "8bbc33868c036470b7b4254f3dd81192b2b03a5e9805efe2fb0f17f5713474e8"
+    },
+    {
+      "name": "audio-b48-p0",
+      "qualification": "responsive",
+      "run": {
+        "token": 1988214558,
+        "duration_ms": 10000,
+        "fault": 0,
+        "policy": 1,
+        "count": 20000,
+        "missed": 0,
+        "adc_failures": 0,
+        "elapsed_us": 10000000,
+        "fault_begin_us": 0,
+        "fault_end_us": 0,
+        "finish_reason": "duration",
+        "finish_request_us": 0,
+        "acquisition_limit_us": 10000000,
+        "trigger": 0,
+        "fault_delay_slots": 0,
+        "fault_duration_us": 25000,
+        "trigger_seq": 4294967295,
+        "trigger_us": 0,
+        "fault_due_us": 0,
+        "audio": {
+          "block": 48,
+          "permille": 0,
+          "off_ms": 8000,
+          "end_us": 8000001,
+          "callbacks": 8002,
+          "max_work_ticks": 484,
+          "max_interval_ticks": 240050,
+          "over_budget": 0,
+          "late_intervals": 0,
+          "bad_size": 0,
+          "period_ticks": 240000,
+          "timer_hz": 240000000
+        },
+        "acquisition": {
+          "tick_us": 50,
+          "timer_priority": 0,
+          "adc_priority": 0,
+          "audio_priority": 1,
+          "timer_irqs": 200000,
+          "adc_irqs": 20000,
+          "max_timer_ticks": 280,
+          "max_adc_ticks": 288,
+          "work_ticks_low": 28662910,
+          "work_ticks_high": 0,
+          "timeouts": 0,
+          "overruns": 0,
+          "unexpected_irqs": 0,
+          "cpu_padding": 1
+        }
+      },
+      "invalid_observations": 0,
+      "ambiguous_analog_apertures": 0,
+      "state_changes": [
+        {
+          "seq": 63,
+          "time_us": 31784,
+          "ready": true,
+          "patched": false
+        },
+        {
+          "seq": 6527,
+          "time_us": 3263784,
+          "ready": true,
+          "patched": true
+        },
+        {
+          "seq": 13119,
+          "time_us": 6559784,
+          "ready": true,
+          "patched": false
+        }
+      ],
+      "generator_times_us": [
+        3000000,
+        6500000
+      ],
+      "native_scope_sha256": {
+        "analog_0.bin": "3cfe30cf5df0798ae06ae8186bf1799a712c2b4319dbb3f3a3d25102770a768b",
+        "settings.json": "5d6d91b658c08457a42e2f1ca06cb05b8942b54dd0c081d8daec4b0665a08087",
+        "capture.sal": "071f3283b7692eeaf992fbb1466d6342dd9a2140be274244182eade91283273e",
+        "digital_2_0.bin": "f54e15a8fb963f54716b45e41a1dae074138e0b921cae8e26eb5b1a4df55d4cd",
+        "digital_1_2.bin": "d372b9e1a69d716983e71a24bdb2d8fe89cb7e62bcef51b7fbb3627833e523e8",
+        "digital_1_3.bin": "f7625a5e65aa5a266558e684960c24bb6e91e1582790c8b3f567ec12a68a65f9",
+        "digital_1_1.bin": "3cfdfcdc36df2ab707ba59235f94dd6947fcb70772fbc761e5bb7158404c068d",
+        "digital_1_0.bin": "f07f52ea13cda1467f88c9cac53de5b9648d86ce7be7a678654fa352833c2f1e"
+      },
+      "raw_sha256": "1248ba5880434b66e98e0fd7d11dcce2b66fb1a9a6f718cb575d6ba69f221def",
+      "generator_sha256": "485c0403b4c6cbd6569aec55738968e02c1c0d81b20d2a15e97181ac7f56bba3"
+    },
+    {
+      "name": "audio-b48-p250",
+      "qualification": "responsive",
+      "run": {
+        "token": 2226549565,
+        "duration_ms": 10000,
+        "fault": 0,
+        "policy": 1,
+        "count": 20000,
+        "missed": 0,
+        "adc_failures": 0,
+        "elapsed_us": 10000001,
+        "fault_begin_us": 0,
+        "fault_end_us": 0,
+        "finish_reason": "duration",
+        "finish_request_us": 0,
+        "acquisition_limit_us": 10000000,
+        "trigger": 0,
+        "fault_delay_slots": 0,
+        "fault_duration_us": 25000,
+        "trigger_seq": 4294967295,
+        "trigger_us": 0,
+        "fault_due_us": 0,
+        "audio": {
+          "block": 48,
+          "permille": 250,
+          "off_ms": 8000,
+          "end_us": 8000001,
+          "callbacks": 8002,
+          "max_work_ticks": 61114,
+          "max_interval_ticks": 240250,
+          "over_budget": 0,
+          "late_intervals": 0,
+          "bad_size": 0,
+          "period_ticks": 240000,
+          "timer_hz": 240000000
+        },
+        "acquisition": {
+          "tick_us": 50,
+          "timer_priority": 0,
+          "adc_priority": 0,
+          "audio_priority": 1,
+          "timer_irqs": 200000,
+          "adc_irqs": 20000,
+          "max_timer_ticks": 282,
+          "max_adc_ticks": 280,
+          "work_ticks_low": 28564234,
+          "work_ticks_high": 0,
+          "timeouts": 0,
+          "overruns": 0,
+          "unexpected_irqs": 0,
+          "cpu_padding": 1
+        }
+      },
+      "invalid_observations": 0,
+      "ambiguous_analog_apertures": 0,
+      "state_changes": [
+        {
+          "seq": 63,
+          "time_us": 31784,
+          "ready": true,
+          "patched": false
+        },
+        {
+          "seq": 6527,
+          "time_us": 3263784,
+          "ready": true,
+          "patched": true
+        },
+        {
+          "seq": 13119,
+          "time_us": 6559784,
+          "ready": true,
+          "patched": false
+        }
+      ],
+      "generator_times_us": [
+        3000000,
+        6500000
+      ],
+      "native_scope_sha256": {
+        "analog_0.bin": "1457cc0cb0481dfbe22ac11a4716c2e217aa18677ac271c2c16502e957f6f405",
+        "settings.json": "5d6d91b658c08457a42e2f1ca06cb05b8942b54dd0c081d8daec4b0665a08087",
+        "capture.sal": "b422c54812d4f622616fee7571d3a154057fa76c5d3b9997ed6e3f99ae24b95e",
+        "digital_2_0.bin": "a3ba2192aff2ae9b48f133940b22750149fb0b0a732677e492f1d8da831c3236",
+        "digital_1_2.bin": "b47fb843a3ed9df9e6af3c06387d91edde51fe3cf25c6ac81a7897f77c123ae3",
+        "digital_1_3.bin": "94eb8d7e7ae1a90adde007b27747f04b11e9378bbbcf20d28eb2a6b1327eac8a",
+        "digital_1_1.bin": "650f657566e16863e5bb00280b0a6d984be66859985ebdbbf44d8cb92bc0f5f9",
+        "digital_1_0.bin": "7c3f2182a7035f191fd693f61c3ee26aa4ed2e88c9f51e417ab0c152d5fb9122"
+      },
+      "raw_sha256": "337bbf5b6e22334b8dc31a2e9e1afb4dee2e99fa98d7a24486dd60af8e672423",
+      "generator_sha256": "125cd53f35ae4ee025bfa5e0a1973f8e66776779ee920ec99d4ceeebd6ee1eb7"
+    },
+    {
+      "name": "audio-b48-p500",
+      "qualification": "responsive",
+      "run": {
+        "token": 3279236699,
+        "duration_ms": 10000,
+        "fault": 0,
+        "policy": 1,
+        "count": 20000,
+        "missed": 0,
+        "adc_failures": 0,
+        "elapsed_us": 10000000,
+        "fault_begin_us": 0,
+        "fault_end_us": 0,
+        "finish_reason": "duration",
+        "finish_request_us": 0,
+        "acquisition_limit_us": 10000000,
+        "trigger": 0,
+        "fault_delay_slots": 0,
+        "fault_duration_us": 25000,
+        "trigger_seq": 4294967295,
+        "trigger_us": 0,
+        "fault_due_us": 0,
+        "audio": {
+          "block": 48,
+          "permille": 500,
+          "off_ms": 8000,
+          "end_us": 8000015,
+          "callbacks": 8002,
+          "max_work_ticks": 121766,
+          "max_interval_ticks": 240046,
+          "over_budget": 0,
+          "late_intervals": 0,
+          "bad_size": 0,
+          "period_ticks": 240000,
+          "timer_hz": 240000000
+        },
+        "acquisition": {
+          "tick_us": 50,
+          "timer_priority": 0,
+          "adc_priority": 0,
+          "audio_priority": 1,
+          "timer_irqs": 200000,
+          "adc_irqs": 20000,
+          "max_timer_ticks": 274,
+          "max_adc_ticks": 288,
+          "work_ticks_low": 28325646,
+          "work_ticks_high": 0,
+          "timeouts": 0,
+          "overruns": 0,
+          "unexpected_irqs": 0,
+          "cpu_padding": 1
+        }
+      },
+      "invalid_observations": 0,
+      "ambiguous_analog_apertures": 0,
+      "state_changes": [
+        {
+          "seq": 63,
+          "time_us": 31784,
+          "ready": true,
+          "patched": false
+        },
+        {
+          "seq": 6527,
+          "time_us": 3263784,
+          "ready": true,
+          "patched": true
+        },
+        {
+          "seq": 13119,
+          "time_us": 6559784,
+          "ready": true,
+          "patched": false
+        }
+      ],
+      "generator_times_us": [
+        3000000,
+        6500000
+      ],
+      "native_scope_sha256": {
+        "analog_0.bin": "76f72524b40555d944c50d756fa00ff041eceb407d070f3deeca68ef269c8c1c",
+        "settings.json": "5d6d91b658c08457a42e2f1ca06cb05b8942b54dd0c081d8daec4b0665a08087",
+        "capture.sal": "5b22fe73cb0068acd3147ef66a5ea16e0035612f844ef155df4b7c9d9d65cebf",
+        "digital_2_0.bin": "c60c79a4e54be7b518ca859afcc3ba6e3ae9a135f21762433eba35777c308fec",
+        "digital_1_2.bin": "1e5c140f15626857cb2f0f8c720374fbbabfc4cfa8ce499e657d0b36450ba709",
+        "digital_1_3.bin": "a9110a3a59373e8c78311f8d9171b27e58df1c6be6f4212126a00610462a9e94",
+        "digital_1_1.bin": "b8afa8d805f46364e7ed3fd8800db4f869d81caca4dc70eef9933f4688adc610",
+        "digital_1_0.bin": "4d60ab62e46ee817275b98753086864f403f6fafcfd938cd377cf97a66a93c36"
+      },
+      "raw_sha256": "1a7a16bf8bf4f1e1b397b41c4681d3583ee744de4c3d7feced05d1dac3660bfe",
+      "generator_sha256": "2f9ed6d740a34dca9dd89a7330b791170d476bb46f6e81718cf4170afb779338"
+    },
+    {
+      "name": "audio-b48-p700",
+      "qualification": "responsive",
+      "run": {
+        "token": 3264679650,
+        "duration_ms": 10000,
+        "fault": 0,
+        "policy": 1,
+        "count": 20000,
+        "missed": 0,
+        "adc_failures": 0,
+        "elapsed_us": 10000001,
+        "fault_begin_us": 0,
+        "fault_end_us": 0,
+        "finish_reason": "duration",
+        "finish_request_us": 0,
+        "acquisition_limit_us": 10000000,
+        "trigger": 0,
+        "fault_delay_slots": 0,
+        "fault_duration_us": 25000,
+        "trigger_seq": 4294967295,
+        "trigger_us": 0,
+        "fault_due_us": 0,
+        "audio": {
+          "block": 48,
+          "permille": 700,
+          "off_ms": 8000,
+          "end_us": 8000271,
+          "callbacks": 8002,
+          "max_work_ticks": 170300,
+          "max_interval_ticks": 240048,
+          "over_budget": 0,
+          "late_intervals": 0,
+          "bad_size": 0,
+          "period_ticks": 240000,
+          "timer_hz": 240000000
+        },
+        "acquisition": {
+          "tick_us": 50,
+          "timer_priority": 0,
+          "adc_priority": 0,
+          "audio_priority": 1,
+          "timer_irqs": 200000,
+          "adc_irqs": 20000,
+          "max_timer_ticks": 274,
+          "max_adc_ticks": 284,
+          "work_ticks_low": 28042226,
+          "work_ticks_high": 0,
+          "timeouts": 0,
+          "overruns": 0,
+          "unexpected_irqs": 0,
+          "cpu_padding": 1
+        }
+      },
+      "invalid_observations": 0,
+      "ambiguous_analog_apertures": 0,
+      "state_changes": [
+        {
+          "seq": 63,
+          "time_us": 31784,
+          "ready": true,
+          "patched": false
+        },
+        {
+          "seq": 6527,
+          "time_us": 3263784,
+          "ready": true,
+          "patched": true
+        },
+        {
+          "seq": 13119,
+          "time_us": 6559784,
+          "ready": true,
+          "patched": false
+        }
+      ],
+      "generator_times_us": [
+        3000000,
+        6500000
+      ],
+      "native_scope_sha256": {
+        "analog_0.bin": "f715a86eccfedecacbbaa06b669fd215dd8999ae229c17eefe770533925a1e77",
+        "settings.json": "5d6d91b658c08457a42e2f1ca06cb05b8942b54dd0c081d8daec4b0665a08087",
+        "capture.sal": "eb557a5d0e86b4945c000a74bf6ae26c7c55b0c2ea4647bd4c6bf15430d7cbf4",
+        "digital_2_0.bin": "a52c14d271b0cacc4ac5ffdc91d7b8bb7940b36796dce9b7a77a265ee5fb08db",
+        "digital_1_2.bin": "f4bca19f45e185b829349e649293d5de20d8c584ab482d89818587562a105096",
+        "digital_1_3.bin": "a8937ef54d4c1bdc8dbf644dddf2c1dfed7266e1e8c5e891fb0daa506a46191e",
+        "digital_1_1.bin": "d435a544b99388d6f72ac4aa74dab1652cb80454c023564c289c34b5f3bc6042",
+        "digital_1_0.bin": "175b9c2f5da72ebb85f9314aa1d38e3a21285eed64fc1ffdb4d6732f37c65e05"
+      },
+      "raw_sha256": "41ea7f90f6e563487deb51659804552b62d024588e58dae8f1adab8a0b3c6a3d",
+      "generator_sha256": "5d8cccb30f24269fcb02480151bba673132e0a569d254d7eab0514eade9f73a2"
+    },
+    {
+      "name": "audio-b96-p0",
+      "qualification": "responsive",
+      "run": {
+        "token": 3799413187,
+        "duration_ms": 10000,
+        "fault": 0,
+        "policy": 1,
+        "count": 20000,
+        "missed": 0,
+        "adc_failures": 0,
+        "elapsed_us": 10000001,
+        "fault_begin_us": 0,
+        "fault_end_us": 0,
+        "finish_reason": "duration",
+        "finish_request_us": 0,
+        "acquisition_limit_us": 10000000,
+        "trigger": 0,
+        "fault_delay_slots": 0,
+        "fault_duration_us": 25000,
+        "trigger_seq": 4294967295,
+        "trigger_us": 0,
+        "fault_due_us": 0,
+        "audio": {
+          "block": 96,
+          "permille": 0,
+          "off_ms": 8000,
+          "end_us": 8000001,
+          "callbacks": 4001,
+          "max_work_ticks": 526,
+          "max_interval_ticks": 480034,
+          "over_budget": 0,
+          "late_intervals": 0,
+          "bad_size": 0,
+          "period_ticks": 480000,
+          "timer_hz": 240000000
+        },
+        "acquisition": {
+          "tick_us": 50,
+          "timer_priority": 0,
+          "adc_priority": 0,
+          "audio_priority": 1,
+          "timer_irqs": 200000,
+          "adc_irqs": 20000,
+          "max_timer_ticks": 272,
+          "max_adc_ticks": 280,
+          "work_ticks_low": 28633560,
+          "work_ticks_high": 0,
+          "timeouts": 0,
+          "overruns": 0,
+          "unexpected_irqs": 0,
+          "cpu_padding": 1
+        }
+      },
+      "invalid_observations": 0,
+      "ambiguous_analog_apertures": 1,
+      "state_changes": [
+        {
+          "seq": 63,
+          "time_us": 31784,
+          "ready": true,
+          "patched": false
+        },
+        {
+          "seq": 6463,
+          "time_us": 3231784,
+          "ready": true,
+          "patched": true
+        },
+        {
+          "seq": 13119,
+          "time_us": 6559784,
+          "ready": true,
+          "patched": false
+        }
+      ],
+      "generator_times_us": [
+        3000000,
+        6500000
+      ],
+      "native_scope_sha256": {
+        "analog_0.bin": "d004b51753ee49b8902a8a1868337e3a9296d97d42a153f728a6f07c518dca62",
+        "settings.json": "5d6d91b658c08457a42e2f1ca06cb05b8942b54dd0c081d8daec4b0665a08087",
+        "capture.sal": "026a8513ba4d3fc2b351cfa5cad7cc801318a90ecad7cb76cde089c860189ac6",
+        "digital_2_0.bin": "41f7a49a934acb21e665770c4a7830d0a142e653abdc1674dc1770156b2516dc",
+        "digital_1_2.bin": "b504a8cded2ae6d927bedfb7a0fcef94a420a69462cf9554ed463518948b6019",
+        "digital_1_3.bin": "4f059e6a9106bc02d23d9e54ad85bcb774d1da47c1745d4c0fc905977b121022",
+        "digital_1_1.bin": "a7ef5b0fcd1cf42bed2ecbc24bbd8fffc3b1323bf7dbfb9f664cc2c5bb4972a2",
+        "digital_1_0.bin": "c7d2658bce4c0ad5935763bd0307ec768e5363411034af7ad86bf5f6ae413b04"
+      },
+      "raw_sha256": "6be2da5234a137815cf6763644b0e8ff3a4cbd3c5943cfda4704975e3f8c07b8",
+      "generator_sha256": "26b0c5a367d59ed0308b583a559a27d410c90412132494a6d46ff09633e038b3"
+    },
+    {
+      "name": "audio-b96-p250",
+      "qualification": "responsive",
+      "run": {
+        "token": 44838638,
+        "duration_ms": 10000,
+        "fault": 0,
+        "policy": 1,
+        "count": 20000,
+        "missed": 0,
+        "adc_failures": 0,
+        "elapsed_us": 10000001,
+        "fault_begin_us": 0,
+        "fault_end_us": 0,
+        "finish_reason": "duration",
+        "finish_request_us": 0,
+        "acquisition_limit_us": 10000000,
+        "trigger": 0,
+        "fault_delay_slots": 0,
+        "fault_duration_us": 25000,
+        "trigger_seq": 4294967295,
+        "trigger_us": 0,
+        "fault_due_us": 0,
+        "audio": {
+          "block": 96,
+          "permille": 250,
+          "off_ms": 8000,
+          "end_us": 8000029,
+          "callbacks": 4001,
+          "max_work_ticks": 121734,
+          "max_interval_ticks": 480040,
+          "over_budget": 0,
+          "late_intervals": 0,
+          "bad_size": 0,
+          "period_ticks": 480000,
+          "timer_hz": 240000000
+        },
+        "acquisition": {
+          "tick_us": 50,
+          "timer_priority": 0,
+          "adc_priority": 0,
+          "audio_priority": 1,
+          "timer_irqs": 200000,
+          "adc_irqs": 20000,
+          "max_timer_ticks": 278,
+          "max_adc_ticks": 282,
+          "work_ticks_low": 28435454,
+          "work_ticks_high": 0,
+          "timeouts": 0,
+          "overruns": 0,
+          "unexpected_irqs": 0,
+          "cpu_padding": 1
+        }
+      },
+      "invalid_observations": 0,
+      "ambiguous_analog_apertures": 0,
+      "state_changes": [
+        {
+          "seq": 63,
+          "time_us": 31784,
+          "ready": true,
+          "patched": false
+        },
+        {
+          "seq": 6527,
+          "time_us": 3263784,
+          "ready": true,
+          "patched": true
+        },
+        {
+          "seq": 13119,
+          "time_us": 6559784,
+          "ready": true,
+          "patched": false
+        }
+      ],
+      "generator_times_us": [
+        3000000,
+        6500000
+      ],
+      "native_scope_sha256": {
+        "analog_0.bin": "6931a16688dac231790b00e93d18d36d37189228135d3e8108578a945d70e00b",
+        "settings.json": "5d6d91b658c08457a42e2f1ca06cb05b8942b54dd0c081d8daec4b0665a08087",
+        "capture.sal": "ba79cb50637736903f246b3b91f23563431f4ee256f79fd4906e8175a799b75b",
+        "digital_2_0.bin": "28cd84f7c2d5a21b16f0cf50c4ef243fab3af0aaf3845b7f5ab0837529603737",
+        "digital_1_2.bin": "cea5cfcf1b8115ba2ac0f6cdf84e4b708d7e280360494a479d0c7fbd665449ac",
+        "digital_1_3.bin": "c68503942cbe615ac8b7a280b27a66fff3c118974f91f9e4df4b280d6b533d83",
+        "digital_1_1.bin": "e6f0043dd90d163a122df97847ea944283fab552eb793ebfb65e34112368b69e",
+        "digital_1_0.bin": "44a1f525130dd730b10c616d4b93a7c694d50ded729745591bf77d43c18dea65"
+      },
+      "raw_sha256": "b3de455d788ba2a3e043f63d81edca8313ce9ecff554c7cba12f3ebcda2d853a",
+      "generator_sha256": "c3cc6dbec53fb9d2df846a9e4ed90ebce4bb5d2d31e750eb3ab5e90ea6c900e1"
+    },
+    {
+      "name": "audio-b96-p500",
+      "qualification": "responsive",
+      "run": {
+        "token": 2346414977,
+        "duration_ms": 10000,
+        "fault": 0,
+        "policy": 1,
+        "count": 20000,
+        "missed": 0,
+        "adc_failures": 0,
+        "elapsed_us": 10000000,
+        "fault_begin_us": 0,
+        "fault_end_us": 0,
+        "finish_reason": "duration",
+        "finish_request_us": 0,
+        "acquisition_limit_us": 10000000,
+        "trigger": 0,
+        "fault_delay_slots": 0,
+        "fault_duration_us": 25000,
+        "trigger_seq": 4294967295,
+        "trigger_us": 0,
+        "fault_due_us": 0,
+        "audio": {
+          "block": 96,
+          "permille": 500,
+          "off_ms": 8000,
+          "end_us": 8000553,
+          "callbacks": 4001,
+          "max_work_ticks": 243140,
+          "max_interval_ticks": 480048,
+          "over_budget": 0,
+          "late_intervals": 0,
+          "bad_size": 0,
+          "period_ticks": 480000,
+          "timer_hz": 240000000
+        },
+        "acquisition": {
+          "tick_us": 50,
+          "timer_priority": 0,
+          "adc_priority": 0,
+          "audio_priority": 1,
+          "timer_irqs": 200000,
+          "adc_irqs": 20000,
+          "max_timer_ticks": 276,
+          "max_adc_ticks": 280,
+          "work_ticks_low": 28109778,
+          "work_ticks_high": 0,
+          "timeouts": 0,
+          "overruns": 0,
+          "unexpected_irqs": 0,
+          "cpu_padding": 1
+        }
+      },
+      "invalid_observations": 0,
+      "ambiguous_analog_apertures": 0,
+      "state_changes": [
+        {
+          "seq": 63,
+          "time_us": 31784,
+          "ready": true,
+          "patched": false
+        },
+        {
+          "seq": 6527,
+          "time_us": 3263784,
+          "ready": true,
+          "patched": true
+        },
+        {
+          "seq": 13119,
+          "time_us": 6559784,
+          "ready": true,
+          "patched": false
+        }
+      ],
+      "generator_times_us": [
+        3000000,
+        6500000
+      ],
+      "native_scope_sha256": {
+        "analog_0.bin": "f3f126b4cab496eaa91d1981f2961adfd4284b0c74ae4a6699a57861aa6e5ac5",
+        "settings.json": "5d6d91b658c08457a42e2f1ca06cb05b8942b54dd0c081d8daec4b0665a08087",
+        "capture.sal": "62fb5df7305d2f5f7168d85e998bad3142cfa67a5916b5c30a9d996eb06bde84",
+        "digital_2_0.bin": "e346d9e62bdae239b7e295ba7fd39f362e328a1cceca9c2dac168d16c58c3d8f",
+        "digital_1_2.bin": "82ca8198c348f6c8fb37726ce916a123296e49c3bd333263d730efa564cd784b",
+        "digital_1_3.bin": "4c6aa153db8061fec9ebe4dc6cb41c1ce78e4a232d7202c714d3518c7f15519b",
+        "digital_1_1.bin": "83783d603acb3313ab1fe644d548691e04fc2886d19e1032b5b8b2ae1a1a49c3",
+        "digital_1_0.bin": "e5d8c6b4f094deaa12e59c871a0730138b3496eaa07f429c642196adeae7d620"
+      },
+      "raw_sha256": "88a10390ea60559446861f32c88f480a08cd7a5a8554c838fee2703b1fb550e3",
+      "generator_sha256": "5d23a340872fff860bed0c4bc524e9920d980bd9dee09f7368b5a4dbce6b7f36"
+    },
+    {
+      "name": "audio-b96-p700",
+      "qualification": "responsive",
+      "run": {
+        "token": 2106275419,
+        "duration_ms": 10000,
+        "fault": 0,
+        "policy": 1,
+        "count": 20000,
+        "missed": 0,
+        "adc_failures": 0,
+        "elapsed_us": 10000001,
+        "fault_begin_us": 0,
+        "fault_end_us": 0,
+        "finish_reason": "duration",
+        "finish_request_us": 0,
+        "acquisition_limit_us": 10000000,
+        "trigger": 0,
+        "fault_delay_slots": 0,
+        "fault_duration_us": 25000,
+        "trigger_seq": 4294967295,
+        "trigger_us": 0,
+        "fault_due_us": 0,
+        "audio": {
+          "block": 96,
+          "permille": 700,
+          "off_ms": 8000,
+          "end_us": 8000945,
+          "callbacks": 4001,
+          "max_work_ticks": 340282,
+          "max_interval_ticks": 480048,
+          "over_budget": 0,
+          "late_intervals": 0,
+          "bad_size": 0,
+          "period_ticks": 480000,
+          "timer_hz": 240000000
+        },
+        "acquisition": {
+          "tick_us": 50,
+          "timer_priority": 0,
+          "adc_priority": 0,
+          "audio_priority": 1,
+          "timer_irqs": 200000,
+          "adc_irqs": 20000,
+          "max_timer_ticks": 276,
+          "max_adc_ticks": 280,
+          "work_ticks_low": 27889254,
+          "work_ticks_high": 0,
+          "timeouts": 0,
+          "overruns": 0,
+          "unexpected_irqs": 0,
+          "cpu_padding": 1
+        }
+      },
+      "invalid_observations": 0,
+      "ambiguous_analog_apertures": 2,
+      "state_changes": [
+        {
+          "seq": 63,
+          "time_us": 31784,
+          "ready": true,
+          "patched": false
+        },
+        {
+          "seq": 6527,
+          "time_us": 3263784,
+          "ready": true,
+          "patched": true
+        },
+        {
+          "seq": 13119,
+          "time_us": 6559784,
+          "ready": true,
+          "patched": false
+        }
+      ],
+      "generator_times_us": [
+        3000000,
+        6500000
+      ],
+      "native_scope_sha256": {
+        "analog_0.bin": "10e0a662d9a4db3084d376d1c08d2105e10f2b276eb713a71f661914ad94ee56",
+        "settings.json": "5d6d91b658c08457a42e2f1ca06cb05b8942b54dd0c081d8daec4b0665a08087",
+        "capture.sal": "7b9b02fa5407d5b8a1b72d660aa64147c51a3d50857860548fb7dc48e05e9a04",
+        "digital_2_0.bin": "29d533ab132f9a390db2f88f20b61ed473017c4c71c9fb4d408ce8e14a030c46",
+        "digital_1_2.bin": "dd74b14a48daf09f876d67200cd9be4c1d43fdef0251055d211d3000574d5e3a",
+        "digital_1_3.bin": "56e4d0419cc9ce0890070bcaa0f7f177e4abb062edb7798e039bb57c547fdeaa",
+        "digital_1_1.bin": "811330689040d5b62a2e4960d43e2a703d8a0faf0726b3b2cb65a774dad32fc2",
+        "digital_1_0.bin": "2c3f417ee7181c59a4a69f31dd995853bd7eb06a3e8d3b03490cdd9512105abc"
+      },
+      "raw_sha256": "46717d62ca87684148dc8f26271a51baa18f5846c051f04799246444605ebcf5",
+      "generator_sha256": "99184d58edccd45ee35aa3435fc02a77521910393868385d7e9fdba8ec4aec88"
+    },
+    {
+      "name": "baseline-after",
+      "qualification": "responsive",
+      "run": {
+        "token": 920246092,
+        "duration_ms": 10000,
+        "fault": 0,
+        "policy": 1,
+        "count": 20000,
+        "missed": 0,
+        "adc_failures": 0,
+        "elapsed_us": 10000000,
+        "fault_begin_us": 0,
+        "fault_end_us": 0,
+        "finish_reason": "duration",
+        "finish_request_us": 0,
+        "acquisition_limit_us": 10000000,
+        "trigger": 0,
+        "fault_delay_slots": 0,
+        "fault_duration_us": 25000,
+        "trigger_seq": 4294967295,
+        "trigger_us": 0,
+        "fault_due_us": 0,
+        "audio": {
+          "block": 0,
+          "permille": 0,
+          "off_ms": 0,
+          "end_us": 0,
+          "callbacks": 0,
+          "max_work_ticks": 0,
+          "max_interval_ticks": 0,
+          "over_budget": 0,
+          "late_intervals": 0,
+          "bad_size": 0,
+          "period_ticks": 0,
+          "timer_hz": 240000000
+        },
+        "acquisition": {
+          "tick_us": 50,
+          "timer_priority": 0,
+          "adc_priority": 0,
+          "audio_priority": 1,
+          "timer_irqs": 200000,
+          "adc_irqs": 20000,
+          "max_timer_ticks": 244,
+          "max_adc_ticks": 272,
+          "work_ticks_low": 27333502,
+          "work_ticks_high": 0,
+          "timeouts": 0,
+          "overruns": 0,
+          "unexpected_irqs": 0,
+          "cpu_padding": 1
+        }
+      },
+      "invalid_observations": 0,
+      "ambiguous_analog_apertures": 0,
+      "state_changes": [
+        {
+          "seq": 63,
+          "time_us": 31784,
+          "ready": true,
+          "patched": false
+        },
+        {
+          "seq": 6527,
+          "time_us": 3263784,
+          "ready": true,
+          "patched": true
+        },
+        {
+          "seq": 13119,
+          "time_us": 6559784,
+          "ready": true,
+          "patched": false
+        }
+      ],
+      "generator_times_us": [
+        3000000,
+        6500000
+      ],
+      "native_scope_sha256": {
+        "analog_0.bin": "555e5c261addcb336a9aded40a631ab65d61c7588c96bdcd846fcc77d46001cc",
+        "settings.json": "5d6d91b658c08457a42e2f1ca06cb05b8942b54dd0c081d8daec4b0665a08087",
+        "capture.sal": "9ef3e04fcf26a980de39a9ddda1805fc89912081596a5b1f7bb1e58ea779b572",
+        "digital_2_0.bin": "46aaf3f9c5c808384c0a762299b7d62dbcc3324caceb32a8fc7151f181fd82bf",
+        "digital_1_2.bin": "c7d4240a95601cb1a71b6d25a5a79d6ba0921744f442a83af62d880b43e4f22b",
+        "digital_1_3.bin": "f8bd1045c72c548aaf05bcf56b97699d12bf545387636acaf58f6b092fa596e8",
+        "digital_1_1.bin": "5f63b024f1c582b18a55d1eb992fb2a62ded150b3cf95affcf466b678bd06a07",
+        "digital_1_0.bin": "3f7d1a741597f29866e4ea031aa99d06f8a1f2f2ecd59488de52b21e88353e6f"
+      },
+      "raw_sha256": "ff28f1a83caeecabde7431ee3df397c857243f31011eb060358e5c7e3b68603a",
+      "generator_sha256": "1febe54c51264fc2c35b0d3e98ace1c972c6f86e1ebd34b0fac8ca90c9161848"
+    },
+    {
+      "name": "recovery-b16-p700",
+      "qualification": "responsive",
+      "run": {
+        "token": 4182308497,
+        "duration_ms": 14000,
+        "fault": 0,
+        "policy": 1,
+        "count": 28000,
+        "missed": 0,
+        "adc_failures": 0,
+        "elapsed_us": 14000000,
+        "fault_begin_us": 0,
+        "fault_end_us": 0,
+        "finish_reason": "duration",
+        "finish_request_us": 0,
+        "acquisition_limit_us": 14000000,
+        "trigger": 0,
+        "fault_delay_slots": 0,
+        "fault_duration_us": 25000,
+        "trigger_seq": 4294967295,
+        "trigger_us": 0,
+        "fault_due_us": 0,
+        "audio": {
+          "block": 16,
+          "permille": 700,
+          "off_ms": 8000,
+          "end_us": 8000126,
+          "callbacks": 24007,
+          "max_work_ticks": 56996,
+          "max_interval_ticks": 80310,
+          "over_budget": 0,
+          "late_intervals": 0,
+          "bad_size": 0,
+          "period_ticks": 80000,
+          "timer_hz": 240000000
+        },
+        "acquisition": {
+          "tick_us": 50,
+          "timer_priority": 0,
+          "adc_priority": 0,
+          "audio_priority": 1,
+          "timer_irqs": 280000,
+          "adc_irqs": 28000,
+          "max_timer_ticks": 274,
+          "max_adc_ticks": 292,
+          "work_ticks_low": 39581708,
+          "work_ticks_high": 0,
+          "timeouts": 0,
+          "overruns": 0,
+          "unexpected_irqs": 0,
+          "cpu_padding": 1
+        }
+      },
+      "invalid_observations": 0,
+      "ambiguous_analog_apertures": 0,
+      "state_changes": [
+        {
+          "seq": 63,
+          "time_us": 31784,
+          "ready": true,
+          "patched": false
+        },
+        {
+          "seq": 6527,
+          "time_us": 3263784,
+          "ready": true,
+          "patched": true
+        },
+        {
+          "seq": 21119,
+          "time_us": 10559784,
+          "ready": true,
+          "patched": false
+        }
+      ],
+      "generator_times_us": [
+        3000000,
+        10500000
+      ],
+      "native_scope_sha256": {
+        "analog_0.bin": "a8195c663b5535ef572fa5dca5ae356c8f290e5a8f522d49f719499f9156f224",
+        "settings.json": "5d6d91b658c08457a42e2f1ca06cb05b8942b54dd0c081d8daec4b0665a08087",
+        "capture.sal": "eb59e3686be3460f458e31b328a646d692597f53c4d751246859882a186d5163",
+        "digital_2_0.bin": "f7403bd8a1f99ab79a7f18813db8195df86d6b1ddbe2854dbcd33d7839e24833",
+        "digital_1_2.bin": "8b0c63cdca6546a50c3c07a7ee26ffc9a8a782eb3314cb534c6f90b053f06109",
+        "digital_1_3.bin": "1cc1598a12fdd8d994849afecc29cc980ed671387152f1aad76795e7948a48c1",
+        "digital_1_1.bin": "4f3df011e6031e06903d40399d5c1564aba6a51c114cdc58d78278188dfa4939",
+        "digital_1_0.bin": "18c84206b9f803ac667ecb232323fc81863fdfb97e44e7cffa99a2db32cfd201"
+      },
+      "raw_sha256": "d81d6f19d3c0457c7971f5477fb511924daeacd127f59225325fd7b861012a36",
+      "generator_sha256": "c9604f2fa3e633cfc22a63f53d9ca7f25e128317219817e8f8bc586109ea1825"
+    },
+    {
+      "name": "recovery-b48-p700",
+      "qualification": "responsive",
+      "run": {
+        "token": 2281632010,
+        "duration_ms": 14000,
+        "fault": 0,
+        "policy": 1,
+        "count": 28000,
+        "missed": 0,
+        "adc_failures": 0,
+        "elapsed_us": 14000001,
+        "fault_begin_us": 0,
+        "fault_end_us": 0,
+        "finish_reason": "duration",
+        "finish_request_us": 0,
+        "acquisition_limit_us": 14000000,
+        "trigger": 0,
+        "fault_delay_slots": 0,
+        "fault_duration_us": 25000,
+        "trigger_seq": 4294967295,
+        "trigger_us": 0,
+        "fault_due_us": 0,
+        "audio": {
+          "block": 48,
+          "permille": 700,
+          "off_ms": 8000,
+          "end_us": 8000271,
+          "callbacks": 8002,
+          "max_work_ticks": 170310,
+          "max_interval_ticks": 240246,
+          "over_budget": 0,
+          "late_intervals": 0,
+          "bad_size": 0,
+          "period_ticks": 240000,
+          "timer_hz": 240000000
+        },
+        "acquisition": {
+          "tick_us": 50,
+          "timer_priority": 0,
+          "adc_priority": 0,
+          "audio_priority": 1,
+          "timer_irqs": 280000,
+          "adc_irqs": 28000,
+          "max_timer_ticks": 274,
+          "max_adc_ticks": 284,
+          "work_ticks_low": 39120642,
+          "work_ticks_high": 0,
+          "timeouts": 0,
+          "overruns": 0,
+          "unexpected_irqs": 0,
+          "cpu_padding": 1
+        }
+      },
+      "invalid_observations": 0,
+      "ambiguous_analog_apertures": 0,
+      "state_changes": [
+        {
+          "seq": 63,
+          "time_us": 31785,
+          "ready": true,
+          "patched": false
+        },
+        {
+          "seq": 6527,
+          "time_us": 3263784,
+          "ready": true,
+          "patched": true
+        },
+        {
+          "seq": 21119,
+          "time_us": 10559785,
+          "ready": true,
+          "patched": false
+        }
+      ],
+      "generator_times_us": [
+        3000000,
+        10500000
+      ],
+      "native_scope_sha256": {
+        "analog_0.bin": "47ed01d3aba1342319690c6a739dd09ba3637cef8b6b021c6dd121bdbe48c3e9",
+        "settings.json": "5d6d91b658c08457a42e2f1ca06cb05b8942b54dd0c081d8daec4b0665a08087",
+        "capture.sal": "ff39f669d835bc2d8baad7d2063fb16f726e92de608f294c3b48c4a6bb367df4",
+        "digital_2_0.bin": "f459d3fa6b6cee492c0768a993ea5a155e4f5d263455c6023bb89b7237cfa1d3",
+        "digital_1_2.bin": "d4c091a07752e7cc0d0cf23645c78c20b57fe00ba7d1e60221c2f9581e711cd0",
+        "digital_1_3.bin": "36212a7a7a5963b95d6ae02047018369ce30f74c0780a68054ca3005e20b1eda",
+        "digital_1_1.bin": "2e5dce571e78db27ea231a6f87ceae35cb4b039ccd75b65be18d38fdeb07ca37",
+        "digital_1_0.bin": "d772e08760fb8f333f6fb7c78e194086201ae3d91f3a0f67f4f15906aed91e08"
+      },
+      "raw_sha256": "8931d2b8192bdfb2a5712f6870a75a8960f26d9d9ceb3a88c5dd1d5d1b06583c",
+      "generator_sha256": "fd3b615009aff6c9df758940c1616c48eaa9bde2662c339d0972924728380117"
+    },
+    {
+      "name": "recovery-b96-p700",
+      "qualification": "responsive",
+      "run": {
+        "token": 369958912,
+        "duration_ms": 14000,
+        "fault": 0,
+        "policy": 1,
+        "count": 28000,
+        "missed": 0,
+        "adc_failures": 0,
+        "elapsed_us": 14000001,
+        "fault_begin_us": 0,
+        "fault_end_us": 0,
+        "finish_reason": "duration",
+        "finish_request_us": 0,
+        "acquisition_limit_us": 14000000,
+        "trigger": 0,
+        "fault_delay_slots": 0,
+        "fault_duration_us": 25000,
+        "trigger_seq": 4294967295,
+        "trigger_us": 0,
+        "fault_due_us": 0,
+        "audio": {
+          "block": 96,
+          "permille": 700,
+          "off_ms": 8000,
+          "end_us": 8000916,
+          "callbacks": 4001,
+          "max_work_ticks": 340256,
+          "max_interval_ticks": 480048,
+          "over_budget": 0,
+          "late_intervals": 0,
+          "bad_size": 0,
+          "period_ticks": 480000,
+          "timer_hz": 240000000
+        },
+        "acquisition": {
+          "tick_us": 50,
+          "timer_priority": 0,
+          "adc_priority": 0,
+          "audio_priority": 1,
+          "timer_irqs": 280000,
+          "adc_irqs": 28000,
+          "max_timer_ticks": 290,
+          "max_adc_ticks": 280,
+          "work_ticks_low": 38968218,
+          "work_ticks_high": 0,
+          "timeouts": 0,
+          "overruns": 0,
+          "unexpected_irqs": 0,
+          "cpu_padding": 1
+        }
+      },
+      "invalid_observations": 0,
+      "ambiguous_analog_apertures": 0,
+      "state_changes": [
+        {
+          "seq": 63,
+          "time_us": 31784,
+          "ready": true,
+          "patched": false
+        },
+        {
+          "seq": 6463,
+          "time_us": 3231784,
+          "ready": true,
+          "patched": true
+        },
+        {
+          "seq": 21119,
+          "time_us": 10559784,
+          "ready": true,
+          "patched": false
+        }
+      ],
+      "generator_times_us": [
+        3000000,
+        10500000
+      ],
+      "native_scope_sha256": {
+        "analog_0.bin": "2e88661886190f9689f871f9987db6c81ae891a51443926f936dfa897a959f62",
+        "settings.json": "5d6d91b658c08457a42e2f1ca06cb05b8942b54dd0c081d8daec4b0665a08087",
+        "capture.sal": "fdaf7807468da5d4bbceefda5102554faa0db295d98a5b1c368d23b5150999a8",
+        "digital_2_0.bin": "e04ee03d4fd047a24d3e2d109121388b1b09f23a7ce64abda4e6a956f043b1c7",
+        "digital_1_2.bin": "c2e06a8e2efe9bc2b8771cd9f22d3ae34aa9b1a741a1d66e503e121f323313f9",
+        "digital_1_3.bin": "30763b0b47da7963b09bf1e44af107691bf5dd93920af7b7e2710c9b5fa037b4",
+        "digital_1_1.bin": "3eeafe8fd53c98f255578931048480b6341097bcced94ae1b72e63fde9c9bf8f",
+        "digital_1_0.bin": "858cf0b76fedaadf9db7d4937f52c6f68bcf8b9c22c1aa0040d2a50a200cb064"
+      },
+      "raw_sha256": "dc090a0dffcdd9392eea33a1dffbf47756143dfae5b5f56c2fb7d3315b1ab932",
+      "generator_sha256": "9a858639ba714372378f56c9a56bc460f6b4e922c03393b51ac2b7bd7c0fef69"
+    },
+    {
+      "name": "loaded-t2-f1",
+      "qualification": "responsive",
+      "run": {
+        "token": 444365430,
+        "duration_ms": 10000,
+        "fault": 1,
+        "policy": 1,
+        "count": 20000,
+        "missed": 0,
+        "adc_failures": 0,
+        "elapsed_us": 10000001,
+        "fault_begin_us": 3263650,
+        "fault_end_us": 3288650,
+        "finish_reason": "duration",
+        "finish_request_us": 0,
+        "acquisition_limit_us": 10000000,
+        "trigger": 2,
+        "fault_delay_slots": 0,
+        "fault_duration_us": 25000,
+        "trigger_seq": 6526,
+        "trigger_us": 3263285,
+        "fault_due_us": 3263500,
+        "audio": {
+          "block": 16,
+          "permille": 250,
+          "off_ms": 8000,
+          "end_us": 8000001,
+          "callbacks": 24007,
+          "max_work_ticks": 20586,
+          "max_interval_ticks": 80322,
+          "over_budget": 0,
+          "late_intervals": 0,
+          "bad_size": 0,
+          "period_ticks": 80000,
+          "timer_hz": 240000000
+        },
+        "acquisition": {
+          "tick_us": 50,
+          "timer_priority": 0,
+          "adc_priority": 0,
+          "audio_priority": 1,
+          "timer_irqs": 200000,
+          "adc_irqs": 20000,
+          "max_timer_ticks": 284,
+          "max_adc_ticks": 308,
+          "work_ticks_low": 29223314,
+          "work_ticks_high": 0,
+          "timeouts": 0,
+          "overruns": 0,
+          "unexpected_irqs": 0,
+          "cpu_padding": 1
+        }
+      },
+      "invalid_observations": 50,
+      "ambiguous_analog_apertures": 0,
+      "state_changes": [
+        {
+          "seq": 63,
+          "time_us": 31784,
+          "ready": true,
+          "patched": false
+        },
+        {
+          "seq": 7088,
+          "time_us": 3544285,
+          "ready": true,
+          "patched": true
+        },
+        {
+          "seq": 13104,
+          "time_us": 6552284,
+          "ready": true,
+          "patched": false
+        }
+      ],
+      "generator_times_us": [
+        3000000,
+        6500000
+      ],
+      "native_scope_sha256": {
+        "analog_0.bin": "9de1396139ab772a0f1b9f0e74b8c5fb6d09e9b4b232862bb86d6c0f397b54f4",
+        "settings.json": "5d6d91b658c08457a42e2f1ca06cb05b8942b54dd0c081d8daec4b0665a08087",
+        "capture.sal": "a75b0fad2378575876a807f82f9dc502b048d74dea53748c413818fa7115e688",
+        "digital_2_0.bin": "b4710d3d5a4ad26332dd9e5f67be45592adc85c72ae5f62498d0c829ccfeebea",
+        "digital_1_2.bin": "2a813f1160abcc2038c6aeaf334ebecfe98fb3174957fd88fd8facb85d0df803",
+        "digital_1_3.bin": "abc34bce0fb2f7bc6875195f6b2e9f3366e0f7baa7c24707f7333c26cd69dad5",
+        "digital_1_1.bin": "731f7fd5e99427290f156448faa4c635da5cecd3ff713b9768a9a76a52428af3",
+        "digital_1_0.bin": "241dfb8709daf1fba06f4f515d5bf4f4f08814e996c46120accad250ccbbbef2"
+      },
+      "raw_sha256": "6a20e1d5179745ce832706c013392371713bc64a7e99036229970a5a12e10057",
+      "generator_sha256": "d0bbb18d22209592d171597f9a74bc746fd25dd221afa6f568886b88d80d80e5"
+    },
+    {
+      "name": "loaded-t2-f2",
+      "qualification": "responsive",
+      "run": {
+        "token": 658097482,
+        "duration_ms": 10000,
+        "fault": 2,
+        "policy": 1,
+        "count": 19950,
+        "missed": 50,
+        "adc_failures": 0,
+        "elapsed_us": 10000001,
+        "fault_begin_us": 3263500,
+        "fault_end_us": 3288500,
+        "finish_reason": "duration",
+        "finish_request_us": 0,
+        "acquisition_limit_us": 10000000,
+        "trigger": 2,
+        "fault_delay_slots": 0,
+        "fault_duration_us": 25000,
+        "trigger_seq": 6526,
+        "trigger_us": 3263285,
+        "fault_due_us": 3263500,
+        "audio": {
+          "block": 16,
+          "permille": 250,
+          "off_ms": 8000,
+          "end_us": 8000001,
+          "callbacks": 24007,
+          "max_work_ticks": 20578,
+          "max_interval_ticks": 80310,
+          "over_budget": 0,
+          "late_intervals": 0,
+          "bad_size": 0,
+          "period_ticks": 80000,
+          "timer_hz": 240000000
+        },
+        "acquisition": {
+          "tick_us": 50,
+          "timer_priority": 0,
+          "adc_priority": 0,
+          "audio_priority": 1,
+          "timer_irqs": 200000,
+          "adc_irqs": 19950,
+          "max_timer_ticks": 276,
+          "max_adc_ticks": 298,
+          "work_ticks_low": 29073924,
+          "work_ticks_high": 0,
+          "timeouts": 0,
+          "overruns": 0,
+          "unexpected_irqs": 0,
+          "cpu_padding": 1
+        }
+      },
+      "invalid_observations": 1,
+      "ambiguous_analog_apertures": 1,
+      "state_changes": [
+        {
+          "seq": 63,
+          "time_us": 31784,
+          "ready": true,
+          "patched": false
+        },
+        {
+          "seq": 7039,
+          "time_us": 3544784,
+          "ready": true,
+          "patched": true
+        },
+        {
+          "seq": 13055,
+          "time_us": 6552785,
+          "ready": true,
+          "patched": false
+        }
+      ],
+      "generator_times_us": [
+        3000000,
+        6500000
+      ],
+      "native_scope_sha256": {
+        "analog_0.bin": "57e20e4e12c6f725535cc69cda70b3bc5ef85833af4b7bbf06476cfb846b1847",
+        "settings.json": "5d6d91b658c08457a42e2f1ca06cb05b8942b54dd0c081d8daec4b0665a08087",
+        "capture.sal": "955fb4ffcb050078481a0de40211f1f87063a71183edb45cdb4546a94d5ec896",
+        "digital_2_0.bin": "a6ce604994a49b70eb29e6ec043c989194a64442ba466d2819a0eb323292f38b",
+        "digital_1_2.bin": "699def5caf78801ca1372c57befecdb54ac3ec1d00d52bbfd1ecbfcc04513d3b",
+        "digital_1_3.bin": "7d48f65c2d655fce3ca2be1eb01cf9556cce213587d5c35e998e6bf5b4c95565",
+        "digital_1_1.bin": "5bd6e14d720fb5c0adad26f5ad25bde951b4c3544d725de3a71edeb28ce5fa49",
+        "digital_1_0.bin": "f171b004bcb3e2d311d121e13eba5746933d6c48b429929f961ec5147a408193"
+      },
+      "raw_sha256": "53d170f87828833240fd907493db936954774bdd30422155faf973848884a0d4",
+      "generator_sha256": "e837acae195017358b4518e383983c83c540dfea7575d0d588da4c736ba86a02"
+    },
+    {
+      "name": "loaded-t5-f1",
+      "qualification": "responsive",
+      "run": {
+        "token": 463348251,
+        "duration_ms": 10000,
+        "fault": 1,
+        "policy": 1,
+        "count": 20000,
+        "missed": 0,
+        "adc_failures": 0,
+        "elapsed_us": 10000001,
+        "fault_begin_us": 6591650,
+        "fault_end_us": 6616650,
+        "finish_reason": "duration",
+        "finish_request_us": 0,
+        "acquisition_limit_us": 10000000,
+        "trigger": 5,
+        "fault_delay_slots": 0,
+        "fault_duration_us": 25000,
+        "trigger_seq": 13182,
+        "trigger_us": 6591285,
+        "fault_due_us": 6591500,
+        "audio": {
+          "block": 16,
+          "permille": 250,
+          "off_ms": 8000,
+          "end_us": 8000001,
+          "callbacks": 24007,
+          "max_work_ticks": 20582,
+          "max_interval_ticks": 80340,
+          "over_budget": 0,
+          "late_intervals": 0,
+          "bad_size": 0,
+          "period_ticks": 80000,
+          "timer_hz": 240000000
+        },
+        "acquisition": {
+          "tick_us": 50,
+          "timer_priority": 0,
+          "adc_priority": 0,
+          "audio_priority": 1,
+          "timer_irqs": 200000,
+          "adc_irqs": 20000,
+          "max_timer_ticks": 272,
+          "max_adc_ticks": 298,
+          "work_ticks_low": 29251280,
+          "work_ticks_high": 0,
+          "timeouts": 0,
+          "overruns": 0,
+          "unexpected_irqs": 0,
+          "cpu_padding": 1
+        }
+      },
+      "invalid_observations": 50,
+      "ambiguous_analog_apertures": 0,
+      "state_changes": [
+        {
+          "seq": 63,
+          "time_us": 31784,
+          "ready": true,
+          "patched": false
+        },
+        {
+          "seq": 6527,
+          "time_us": 3263785,
+          "ready": true,
+          "patched": true
+        },
+        {
+          "seq": 13296,
+          "time_us": 6648284,
+          "ready": true,
+          "patched": false
+        }
+      ],
+      "generator_times_us": [
+        3000000,
+        6500000
+      ],
+      "native_scope_sha256": {
+        "analog_0.bin": "acb01cd06343997f32ce755c0208408bdae542ca855058e4a0e48dfdc378ab7b",
+        "settings.json": "5d6d91b658c08457a42e2f1ca06cb05b8942b54dd0c081d8daec4b0665a08087",
+        "capture.sal": "7f32331349da2f2e0b25ce4edb4cf11f7fa2f63d42c58a1e5d72cde69e39ad3e",
+        "digital_2_0.bin": "837d5188731ddf001edf797e78ba177e2d8d7f227aa44783a0de25a74ae0b6ca",
+        "digital_1_2.bin": "d717903e7fa136c21e8cc655e07179a4e1f23352c0e30fb94f0f406bebaf4747",
+        "digital_1_3.bin": "f4b16b2f56011f6ccf793d1a27f9cb3eb9fe6a5689cba25bd27af5547a248e30",
+        "digital_1_1.bin": "a5dddaf35294b7ed2e79af6c984ff027658e02cb4e4b454b05865ccb819ff188",
+        "digital_1_0.bin": "3710bca8df32d8c06433eb70f8b2db1f4fcb466ac85fbb3260263e7e7109ee77"
+      },
+      "raw_sha256": "56e8a290b79d34537ab7a0149b39d65cda579320a9247b16e42d5dbb5f43a279",
+      "generator_sha256": "6ffd3c78f03635b3019c0455c93b3e3cf6a7f9d56d445255421dea45d4dad444"
+    },
+    {
+      "name": "loaded-t5-f2",
+      "qualification": "responsive",
+      "run": {
+        "token": 3800734962,
+        "duration_ms": 10000,
+        "fault": 2,
+        "policy": 1,
+        "count": 19950,
+        "missed": 50,
+        "adc_failures": 0,
+        "elapsed_us": 10000001,
+        "fault_begin_us": 6559500,
+        "fault_end_us": 6584500,
+        "finish_reason": "duration",
+        "finish_request_us": 0,
+        "acquisition_limit_us": 10000000,
+        "trigger": 5,
+        "fault_delay_slots": 0,
+        "fault_duration_us": 25000,
+        "trigger_seq": 13118,
+        "trigger_us": 6559285,
+        "fault_due_us": 6559500,
+        "audio": {
+          "block": 16,
+          "permille": 250,
+          "off_ms": 8000,
+          "end_us": 8000001,
+          "callbacks": 24007,
+          "max_work_ticks": 20596,
+          "max_interval_ticks": 80318,
+          "over_budget": 0,
+          "late_intervals": 0,
+          "bad_size": 0,
+          "period_ticks": 80000,
+          "timer_hz": 240000000
+        },
+        "acquisition": {
+          "tick_us": 50,
+          "timer_priority": 0,
+          "adc_priority": 0,
+          "audio_priority": 1,
+          "timer_irqs": 200000,
+          "adc_irqs": 19950,
+          "max_timer_ticks": 278,
+          "max_adc_ticks": 296,
+          "work_ticks_low": 29112340,
+          "work_ticks_high": 0,
+          "timeouts": 0,
+          "overruns": 0,
+          "unexpected_irqs": 0,
+          "cpu_padding": 1
+        }
+      },
+      "invalid_observations": 1,
+      "ambiguous_analog_apertures": 0,
+      "state_changes": [
+        {
+          "seq": 63,
+          "time_us": 31784,
+          "ready": true,
+          "patched": false
+        },
+        {
+          "seq": 6527,
+          "time_us": 3263785,
+          "ready": true,
+          "patched": true
+        },
+        {
+          "seq": 13183,
+          "time_us": 6616785,
+          "ready": true,
+          "patched": false
+        }
+      ],
+      "generator_times_us": [
+        3000000,
+        6500000
+      ],
+      "native_scope_sha256": {
+        "analog_0.bin": "f69e61d29fb30943baf851fdca24b4f19b74eb1d1d2df0a94707c7aff1370cca",
+        "settings.json": "5d6d91b658c08457a42e2f1ca06cb05b8942b54dd0c081d8daec4b0665a08087",
+        "capture.sal": "c5493a4c3bc1c6b04c45a5ee1a2418021d2616672fb5330691884a4d4576936d",
+        "digital_2_0.bin": "2eb8f138e36bf06e2382c8802fb65da3b8d8750ae64a901eaa55cff83eb2aa8f",
+        "digital_1_2.bin": "d54caac8d009842339ad12a294cb3e09e49fed2a27d573853694075cba3278cf",
+        "digital_1_3.bin": "bc30fde7588f563ba2a9b3738498627fe1e7af22315cf914b4b4483a8704dcde",
+        "digital_1_1.bin": "5417343c4f502e043eb8c6c3ab28302b9d2fde6acd55349d45911bcc1d90b6bc",
+        "digital_1_0.bin": "df351e2a879040553c6394d9450b4a31b35aa9ff18495ea97733d82f3c1c5876"
+      },
+      "raw_sha256": "93ebc78c2ec0dcc19e55ebafcd81e45b360677da236090f0cc4193208574e41b",
+      "generator_sha256": "4f6d361be031a7b635aacdc77d4bcb8dd775624f0b350196a1031e0b31338657"
+    }
+  ],
+  "finishes": [
+    {
+      "name": "finish-unloaded",
+      "run": {
+        "token": 2911593157,
+        "duration_ms": 10000,
+        "fault": 0,
+        "policy": 1,
+        "count": 2854,
+        "missed": 0,
+        "adc_failures": 0,
+        "elapsed_us": 1427001,
+        "fault_begin_us": 0,
+        "fault_end_us": 0,
+        "finish_reason": "operator",
+        "finish_request_us": 1426971,
+        "acquisition_limit_us": 1427000,
+        "trigger": 0,
+        "fault_delay_slots": 0,
+        "fault_duration_us": 25000,
+        "trigger_seq": 4294967295,
+        "trigger_us": 0,
+        "fault_due_us": 0,
+        "audio": {
+          "block": 0,
+          "permille": 0,
+          "off_ms": 0,
+          "end_us": 0,
+          "callbacks": 0,
+          "max_work_ticks": 0,
+          "max_interval_ticks": 0,
+          "over_budget": 0,
+          "late_intervals": 0,
+          "bad_size": 0,
+          "period_ticks": 0,
+          "timer_hz": 240000000
+        },
+        "acquisition": {
+          "tick_us": 50,
+          "timer_priority": 0,
+          "adc_priority": 0,
+          "audio_priority": 1,
+          "timer_irqs": 28540,
+          "adc_irqs": 2854,
+          "max_timer_ticks": 330,
+          "max_adc_ticks": 340,
+          "work_ticks_low": 3856224,
+          "work_ticks_high": 0,
+          "timeouts": 0,
+          "overruns": 0,
+          "unexpected_irqs": 0,
+          "cpu_padding": 1
+        }
+      },
+      "raw_sha256": "3bc9b9bc080d7b5a2801ee123cee17cecf70cfa723b630843e2ac1d1b50d3356",
+      "native_scope_sha256": {
+        "analog_0.bin": "840b84ea08ae6d516dc676263dcd1554b821526cc82e477fc18b3237978908ee",
+        "settings.json": "5d6d91b658c08457a42e2f1ca06cb05b8942b54dd0c081d8daec4b0665a08087",
+        "capture.sal": "dd2c03e8597f8d43f881301d6308ed84ed2bdaa726efa507745b7ef9fc46b788",
+        "digital_2_0.bin": "a9c84fa474edb286623377f8b46280ab34697b13a2b4595078fad7b11c3e5042",
+        "digital_1_2.bin": "265626e0b6a7af52d273ff4eb239c293142860a095899047bcbaceacb99aab17",
+        "digital_1_3.bin": "4111154e981fc1e09d08316a836d20ce2f53c65140b7b81bfcf38dabe44162a5",
+        "digital_1_1.bin": "2948cbd812288eef6f58a9320de88d0ede32b32edc1cd90645ee18dac2b00f9c",
+        "digital_1_0.bin": "945a7481df5400c668eead0888eef37df7caf6130bcc972ad530473946ee77d2"
+      }
+    },
+    {
+      "name": "finish-loaded",
+      "run": {
+        "token": 3888255140,
+        "duration_ms": 10000,
+        "fault": 0,
+        "policy": 1,
+        "count": 6933,
+        "missed": 0,
+        "adc_failures": 0,
+        "elapsed_us": 3466501,
+        "fault_begin_us": 0,
+        "fault_end_us": 0,
+        "finish_reason": "operator",
+        "finish_request_us": 3466344,
+        "acquisition_limit_us": 3466500,
+        "trigger": 0,
+        "fault_delay_slots": 0,
+        "fault_duration_us": 25000,
+        "trigger_seq": 4294967295,
+        "trigger_us": 0,
+        "fault_due_us": 0,
+        "audio": {
+          "block": 96,
+          "permille": 700,
+          "off_ms": 8000,
+          "end_us": 3466501,
+          "callbacks": 1733,
+          "max_work_ticks": 340208,
+          "max_interval_ticks": 480030,
+          "over_budget": 0,
+          "late_intervals": 0,
+          "bad_size": 0,
+          "period_ticks": 480000,
+          "timer_hz": 240000000
+        },
+        "acquisition": {
+          "tick_us": 50,
+          "timer_priority": 0,
+          "adc_priority": 0,
+          "audio_priority": 1,
+          "timer_irqs": 69330,
+          "adc_irqs": 6933,
+          "max_timer_ticks": 270,
+          "max_adc_ticks": 300,
+          "work_ticks_low": 9654848,
+          "work_ticks_high": 0,
+          "timeouts": 0,
+          "overruns": 0,
+          "unexpected_irqs": 0,
+          "cpu_padding": 1
+        }
+      },
+      "raw_sha256": "362d621690e36ddda5bf4fc9c2f67c2f2592fbfc80caae9f50c158038871eab7",
+      "native_scope_sha256": {
+        "analog_0.bin": "597c362a84b35a345dbdbefa5183350e87113985875e5780e5aed6077b604c63",
+        "settings.json": "5d6d91b658c08457a42e2f1ca06cb05b8942b54dd0c081d8daec4b0665a08087",
+        "capture.sal": "930ccaebee874620575144ac7bf077e0caa97f24efcc5976d0ab1c5bdc64008e",
+        "digital_2_0.bin": "9b33cbc84acd1d88db94ebb5c3b466d459f721d2c5888f04623c33e0592fee35",
+        "digital_1_2.bin": "5dacd6067dce1dd77773fbaca6ee0f59266fa02c77666c59abffb0617d5427f1",
+        "digital_1_3.bin": "a5ee08e2276910890c680a305885388b189c7e82fd26cc3f901a05ddcc3949c9",
+        "digital_1_1.bin": "ed5af964c3b02712db5457fd6395b35632fa323a636ab76c49309a7fff0687eb",
+        "digital_1_0.bin": "1675560cfcbf01851853a21c6d9088a1aeabb12f74709af0a9fa321d1f8bcc75"
+      }
+    }
+  ],
+  "observations": 443900,
+  "missed_slots": 100,
+  "invalid_observations": 102,
+  "audio_callbacks": 276078,
+  "comparison": "Prior foreground acquisition is retained in ../2026-10-19-jack-audio/campaign.json. Protocol 5 has bounded priority-0 acquisition and priority-1 audio, with padding excluding measured acquisition handler body time.",
+  "limitation": "One passive Seed3 fixture and synthetic silent audio padding. No production front-end, arbitrary IRQ mix, audio-quality or universal utilization guarantee.",
+  "preliminary_sweep": {
+    "firmware_source": "3e3050f7193194dc4630af20aaec64c0af16155a",
+    "status": "14 responsive comparisons; complete native evidence retained separately",
+    "matrix_sha256": "086712b24ccefdd9bfedac1b1af54f112c1ec43c8dd9ef9edd671560c86c6932",
+    "cases": [
+      {
+        "name": "baseline-before",
+        "raw_sha256": "1307570e1315c78fb69d2c0a2a5c9e7aacf991d4257ebc42dc77246d5494f3e7",
+        "generator_sha256": "1b9a55b0ac1159fc7aac294db9d35ff2518f77eb92afc002a7c19a940b3537a7",
+        "qualification": "responsive"
+      },
+      {
+        "name": "audio-b16-p0",
+        "raw_sha256": "8db0e09f3698c51b6c4299662815348d742465d3dade7e057d7c8936dbe09c8a",
+        "generator_sha256": "4ce22f934b56d2fdce451e99f750d8dc25563258276577648b35d0048175357c",
+        "qualification": "responsive"
+      },
+      {
+        "name": "audio-b16-p250",
+        "raw_sha256": "11e257d5b848d0f161cfa841d8295c30035885af90f3c93437e21827d21185ef",
+        "generator_sha256": "95637569ca058ccb3d9170f89d82cd949d2570aa83cc0e702b64b49e450bc378",
+        "qualification": "responsive"
+      },
+      {
+        "name": "audio-b16-p500",
+        "raw_sha256": "5b30b65872a89fd621fcdec6ad7401571489da040aaa0333076953820b75d05c",
+        "generator_sha256": "3fff6bc942e41f072f4c7471fbef08693b6b0e16deef73ae856fe2acf2be4def",
+        "qualification": "responsive"
+      },
+      {
+        "name": "audio-b16-p700",
+        "raw_sha256": "85fbcc958efe84f7d07513faf4560ee45ffd0358ca91cfdc76c066082daa0163",
+        "generator_sha256": "101cf4a9ebb456a510446792aeafc50dc76862e0dd1614a48fd116f5933ce78f",
+        "qualification": "responsive"
+      },
+      {
+        "name": "audio-b48-p0",
+        "raw_sha256": "341d3a30533364919ef819008b3647f90b0d02b14fdb7b802479a992c4deac07",
+        "generator_sha256": "59913cd6f4a8503bbf21bdcacaf259fe0308ca21a2674ab741f41caba2b3fe0b",
+        "qualification": "responsive"
+      },
+      {
+        "name": "audio-b48-p250",
+        "raw_sha256": "da5c94c38d504af009990f8617fd8aecf63f9057625d91b5463023b9bc399a82",
+        "generator_sha256": "715c164945b42a9435403e141cb883b816fca55989e296236df50959cdf4a3a8",
+        "qualification": "responsive"
+      },
+      {
+        "name": "audio-b48-p500",
+        "raw_sha256": "f51e118c86f18ccb3dcab01ccad58f7520e48d331cbbb6381c70570c26f87b25",
+        "generator_sha256": "f1e400d678eda77a7475c4bbb51aa7994c9e320590c003c2c1c557b61887bf65",
+        "qualification": "responsive"
+      },
+      {
+        "name": "audio-b48-p700",
+        "raw_sha256": "9cb051f22db0e4b3a84a8b96e6603bf5db9e737e17d6f229720841901e109a9f",
+        "generator_sha256": "ea0b8164c2f1ce635720b3233318f40babbb29394ab5efdf98b3ba6741a2c681",
+        "qualification": "responsive"
+      },
+      {
+        "name": "audio-b96-p0",
+        "raw_sha256": "91cbd19154291e51e64437d16bf6878d65662e9f9bf014c2be97d880925fa018",
+        "generator_sha256": "d601ba72693d9bbec994d35000aeb1b23a7332daa2c01326e7857f40664ddebf",
+        "qualification": "responsive"
+      },
+      {
+        "name": "audio-b96-p250",
+        "raw_sha256": "c6bced49da1dd4a9472237e00a94574357eb3b8a6e5dbbfa15f895f5b15ef020",
+        "generator_sha256": "a9fb497d26f081fe3e97ca92d0d32d5d0b0d7ca105bdf5d4efeeefa179bc7b58",
+        "qualification": "responsive"
+      },
+      {
+        "name": "audio-b96-p500",
+        "raw_sha256": "2aee1184220ff7b8dee06431e750899f1c448836886671265d2f0b2ddc8c23fd",
+        "generator_sha256": "8fa6d384c966f4c63b7ecd17204406b8f4a85df5374f4b2cfd6c6554666531b7",
+        "qualification": "responsive"
+      },
+      {
+        "name": "audio-b96-p700",
+        "raw_sha256": "000b001676d7e07cfbffe4a375cd7a417fd33eee3515da05158586efa30588d5",
+        "generator_sha256": "10c4caa066df3bd83aa95de884dff7266d9dd0b1eca8d0557d660247a99113c7",
+        "qualification": "responsive"
+      },
+      {
+        "name": "baseline-after",
+        "raw_sha256": "e2a4a871d1f846f5658493c6341061ef7c70e332839ee5ffcbc2db0238ab72cd",
+        "generator_sha256": "a6960f95b3042a356eecd90ca6f8b00f949869f26949b810598a4f86cad8eb58",
+        "qualification": "responsive"
+      }
+    ],
+    "follow_up": "Review found an operator-finish publication race and a Windows test type warning. Both fixed before the final firmware campaign. Automatic-duration preliminary recordings were unaffected; the complete campaign was repeated on the final image."
+  },
+  "interrupted_attempt": {
+    "stage": "recovery",
+    "completed_cases": 0,
+    "reason": "Requested physical MSO not found when the capture service reopened; stopped before fixture acquisition or generator stimulus.",
+    "matrix_sha256": "ef668a9c54ef588c4eb03cb456563965da5a6fd45df7ba9fde1d2da6bd83915b",
+    "resolution": "Both board identities and MSO enumeration were rechecked, then all three recovery cases passed in a fresh capture directory. The interrupted attempt is retained in the native archive."
+  }
+}

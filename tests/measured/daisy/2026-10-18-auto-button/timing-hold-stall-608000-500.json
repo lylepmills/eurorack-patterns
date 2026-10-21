@@ -1,0 +1,152 @@
+{
+  "schema": 1,
+  "case": "hold-stall",
+  "status": "pass",
+  "acquired_utc": "2026-10-18T21:48:54.778382+00:00",
+  "times_us": [
+    1000500,
+    3000500,
+    4000500,
+    4100500
+  ],
+  "requested_input_phase_us": 500,
+  "fault_delay_us": 608000,
+  "fixture_build": {
+    "source_commit": "56ae3fc38aac6efb1551cd1b0c93c289b2cb28f2",
+    "build_id": "683afc5d1c2cfe67e4496814",
+    "artifacts_sha256": {
+      "patterns_daisy.bin": "18593bc39c15ef44772e0e4cee26dc1d50e22fa462635aa965d471c21879e2b2",
+      "patterns_daisy.elf": "a330ae190e486f82c0cda347d2f430c89c23385860a215a4d662d3df6c258968",
+      "patterns_daisy.map": "b39fba602f67e2a6c76956d23ffeeddae79cc18c54f30f1e848b98feaf66ab71"
+    }
+  },
+  "generator_build": {
+    "source_commit": "3dab3a483c103928898a13bf91fd1844e23790d2",
+    "build_id": "4e68efce89b64d686cf11c63",
+    "artifacts_sha256": {
+      "patterns_pulse_generator.bin": "2f132cc4c0bd65dbff4430799ab20bf2386f7520122ceb66b85f4609de89693c",
+      "patterns_pulse_generator.elf": "e9ca1e466b9aec3e0f92d7c507c5edb01e2a1c7289d1fad54456cb0ceaa8473e",
+      "patterns_pulse_generator.map": "f1d95c80ee485b09e0bcda0c11aaf52b9b5495cdc9e0305037a7e8a26f2e6adf"
+    }
+  },
+  "writer": {
+    "packets": 3344,
+    "skipped_slots": 331,
+    "max_lateness_s": 0.016245217993855476
+  },
+  "raw_sha256": "8eb235050c645e7f439a2f4af78e9935a842eacef0b3b6432d52c7e9c9d569a2",
+  "generator_raw_sha256": "1adf04aa0b24035bb75dd941fbe5cdb9f5fe924739e2e113e2d472f1d69b0ced",
+  "original_digital_sha256": {
+    "button": "129488f96b3b883dcb677044e58b33ccb44ef4f26b143788e484c5c8d99d96df",
+    "service": "54960b5328766f70f996635a7be0d4eff3b6910202d29913ab7af5f9bfc5218d",
+    "gesture": "d6cc525c5858ed302792748e994e286c6f2e1fe8ec75303f258d0334c2c3cbd7"
+  },
+  "transformation": "Complete firmware and generator wire bytes losslessly gzipped. All three complete continuous digital channels represented as initial level and original relative floating-point timestamps in seconds. No edge trimming or filtering. Device identifiers, host paths, and vendor logs omitted.",
+  "limitation": "8-second automated case with 4.7k external pull-up and analog probe physically attached; analog channel disabled. Explicit receiver delay where nonzero; zero retains legacy schedule. One fixture and measured phases, not exhaustive phase coverage, mechanical bounce, or audio-quality qualification.",
+  "fixture_configuration": {
+    "scope_preparation": "Retained 3s idle capture on the same MSO connection, current-command acknowledgement, 2s settling margin; complete physical coverage verified afterward",
+    "external_pullup_ohms": 4700,
+    "external_pullup": "fixture physical38 (3V3D) to physical15 (button)",
+    "internal_pullup": true,
+    "analog_probe": "10x attached to button physical15, ground40; channel disabled in this digital-only acquisition",
+    "generator": "Independent Seed3 open-drain physical1 to fixture15; shared physical40 ground; separate USB supplies"
+  },
+  "review": {
+    "schema": 1,
+    "status": "pass",
+    "case": "hold-stall",
+    "fixture_raw_sha256": "8eb235050c645e7f439a2f4af78e9935a842eacef0b3b6432d52c7e9c9d569a2",
+    "generator_raw_sha256": "1adf04aa0b24035bb75dd941fbe5cdb9f5fe924739e2e113e2d472f1d69b0ced",
+    "samples": 7975,
+    "service_alignment": {
+      "clock_scale_ppm": 40.63689033761975,
+      "max_fit_residual_us": 0.5724460696801543,
+      "max_interval_error_us": 1.0214037469364712,
+      "max_work_width_error_us": 1.016999999941504,
+      "pre_application_high_intervals_s": []
+    },
+    "source": {
+      "status": "pass",
+      "failures": [],
+      "edges": 4,
+      "scale": 1.0000393697221104,
+      "max_residual_us": 0.13797905761748552,
+      "max_interval_error_us": 0.2627221104921773,
+      "physical_press_us": [
+        2000078.904,
+        100004.12800000014
+      ],
+      "limitation": "Stimulus-only check; does not qualify DUT behavior or service phase coverage."
+    },
+    "sampled_button_disagreements": [],
+    "button_edges_s": [
+      3.116738758,
+      5.116817662,
+      6.116856769,
+      6.216860897
+    ],
+    "service_first_s": 2.166312104,
+    "service_last_s": 10.165917359,
+    "action_edges_s": [
+      6.227931809
+    ],
+    "setup_action_edges_s": [
+      2.166310491
+    ],
+    "action_latencies_us": [
+      11070.912000000098
+    ],
+    "measured_input_phase_us": [
+      389.01018304319587,
+      386.487536507193,
+      384.5925887976773,
+      384.42737640440464
+    ],
+    "phase_uncertainty_note": "Service clock alignment residual plus marker/read skew; no exact phase-bin qualification.",
+    "software_behavior": {
+      "status": "pass",
+      "boundary": {
+        "expected_events": [
+          {
+            "pair": 1,
+            "gesture": 1,
+            "seq": 4036,
+            "time_us": 4061120
+          }
+        ],
+        "qualified_press_us": [
+          961045,
+          3961150
+        ],
+        "threshold_us": 1561000,
+        "fault_begin_minus_threshold_us": -1800,
+        "last_service_before_fault_us": 1558200,
+        "first_service_after_fault_us": 1584886,
+        "first_gesture_outcome": "cancelled"
+      },
+      "expected_gestures": [
+        1
+      ],
+      "action_sequences": [
+        4036
+      ],
+      "physical_review": "pending"
+    },
+    "fault": {
+      "scenario": 6,
+      "stimulus_status": "completed",
+      "trigger_us": 951048,
+      "begin_us": 1559200,
+      "end_us": 1584886,
+      "allowed_missed": 25,
+      "allowed_cadence_breaks": 1,
+      "injected_adc_samples": 0,
+      "failures": [],
+      "behavior_review": "pending physical stimulus and recovery review"
+    },
+    "limitation": "Configurable receiver delay, measured service/edge phase, clean generated edges, one fixture. Not exhaustive phase coverage or switch-bounce qualification."
+  },
+  "fixture_compressed_sha256": "5a749ad6714e71c725eacead9f964a0a9064178a7ea66167fe2081b5b2008478",
+  "generator_compressed_sha256": "87f48cb3096796199bb23fb337acb4b783fc10ccb815ab20e39ed950f12580c7",
+  "channels_compressed_sha256": "e889dbe8f9dda457d3ad406ed2274dffd8883511a05f6389f7c4bf01f1a55e9e"
+}

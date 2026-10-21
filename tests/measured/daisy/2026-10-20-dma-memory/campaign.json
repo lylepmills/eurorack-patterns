@@ -1,0 +1,393 @@
+{
+  "schema": 1,
+  "status": "three early-finish checks and twelve memory comparisons complete; clock verdicts separate",
+  "build": {
+    "schema": 1,
+    "status": "cross-built only; hardware validation pending",
+    "board": "seed3",
+    "source_commit": "0cc9d0d64642e9b2d53270421bc0469e59f5f5ec",
+    "source_sha256": {
+      "examples/daisy/CMakeLists.txt": "2d7010266934089e5ec3a19723a3ab17b553514dac2ed78a6d4b5583a6cf96bb",
+      "examples/daisy/audio_load.h": "954103c360f62770869787905e9f28ab8e13f4d52b4f2af4c4cdbb20c56e96b8",
+      "examples/daisy/bench.h": "d954217b2f8c314ee7f26fe5b4047786960542db10abd1ad3855f321c0d08cdb",
+      "examples/daisy/build.py": "97d19eb8dd440a17942f0398d6378e2a94ac5c4c94e772a1319edec470922656",
+      "examples/daisy/build_identity.h.in": "fd78ac8d88872fd9378149668b0f0d02dcb1caaca667ee24e489bb30832dfc03",
+      "examples/daisy/diagnostics.h": "913eab7f77d74744ea44bbb52abe17e88b5b5f686a37d8f1f24753a757d6f352",
+      "examples/daisy/dma_config.h": "9e4fa4a5f3802dfbb3d21bbd0e4bdc878c0f73f749b20c41a1eafaf0a9741cf8",
+      "examples/daisy/dma_internal.lds": "5424675d94ee7fb9244c3e3a35004ff16f9e0ddb506f5b41e02cbbe210a4cd04",
+      "examples/daisy/dma_memory.py": "35e0522d85edbaf5604811985ccd9b1b9b426c660e05dfc5d7dfb9e33d7d55cb",
+      "examples/daisy/dma_workload.h": "bfada4eca71424eaf287f7d35cc6aef286963f912b8f933e162484a463736bfe",
+      "examples/daisy/dsp_workload.h": "ac3cfb5963c809182fcb1e487b48ac7b71f5c1a448a4f5a4b9ff5b49c9bb1461",
+      "examples/daisy/experiment.h": "34d79dc8c45e076de5392cc196e1d5cfb3a75858262245816621251bb8759613",
+      "examples/daisy/jack.cpp": "35120a27fcff67f5acc3b98d43d9b9d7217d5f89e0e57b8f3e37b54d13ed0971",
+      "examples/daisy/jack_acquisition.h": "22bdf59cb7f0925604ef145b49550ebe06123a1ec6b5bdbe32f4a36f0305e467",
+      "examples/daisy/jack_bench.h": "4765e46425fd1e905378d061839cc3f26352a2fab8b85f0c3dcf8ce156d82a17",
+      "examples/daisy/load.h": "286525685df63c637cbea238a8dbf95f5c4870dab4dbad8763808301986e9880",
+      "examples/daisy/main.cpp": "cba85b151fc4c831b7527189257399b42d6b475145f113cf05603c7e74e8144c",
+      "examples/daisy/protocol.h": "337f9b62c7926ebb04cd264e7468dba0dbe7828d02b092eb862397ab8ed7c352",
+      "examples/daisy/pulse_generator.h": "e2f8d751b083f32adee9a709404d4b3d5f08885ff3d1f210674f12853e67ce0d",
+      "examples/shared_control.h": "2b3d3d3232d6611bb036ecb2e5fabe2633bc36aa7e9c9b834f613c363be229a7",
+      "include/eurorack_patterns/controls.h": "9c8c0650034a2278eefc4f7500cfec03072e0e189623420c03192d361678e467",
+      "include/eurorack_patterns/events.h": "c887574788f8ece7dbcbaa643537b950ca5071335db3a04b2130e0751b775ade",
+      "include/eurorack_patterns/gestures.h": "c825b10a540f7180b4581be878be5f41b4791ff75c112c3e5cd79cbbe1b361f8",
+      "include/eurorack_patterns/pickup.h": "378bda5b84775124298f0403993608774822db3a829a59dadc94b5e139d197a2",
+      "include/eurorack_patterns/presence.h": "7884c320389d00d79a789b612b613f77e4120b196cc6b9b7f204baf35d5bba18",
+      "include/eurorack_patterns/pulses.h": "b6297e0f70efd13bc84495caf98926b1f75065d342efbd55e1d8ffc92b65c854",
+      "include/eurorack_patterns/timing.h": "01d73080b3397d76815e7e1a7aa6342ae84716a653a684d4a6c7f5566eb1546c",
+      "include/eurorack_patterns/transitions.h": "86b8eaaef30852868acfcf9b895d7910e43feb5667c361540768d7372b21e053",
+      "include/eurorack_patterns/trigger_delay.h": "db596072922b0f893608978b13fe952cd99dce6815c4961b265a6ff5d2bb2815"
+    },
+    "sdk_revision": "e1f740a5a7fe38e6d6d41281bf99fe7a2bb3827b",
+    "sdk_submodules": {
+      "Drivers/CMSIS-DSP": "3a04f817a4380c00ff51f9bcdc6c4e4bb7a18b80",
+      "Drivers/CMSIS_5": "2b7495b8535bdcb306dac29b9ded4cfb679d7e5c",
+      "Drivers/CMSIS-Device/ST/STM32H7xx": "6dac8c24d7b38ab20806d27dd7d8285a6433b8f7",
+      "Drivers/STM32H7xx_HAL_Driver": "404a70d4c19c124636c78801ff7c0dbc87bc4256",
+      "Middlewares/ST/STM32_USB_Device_Library": "7b5e6886d2f11ad15d2b46364e8a96984358f639"
+    },
+    "compiler": "arm-none-eabi-gcc (Arm GNU Toolchain 15.3.Rel1 (Build arm-15.149)) 15.3.1 20260627",
+    "flash_address": "0x90040000",
+    "storage": "bootloader SRAM application",
+    "kind": "eurorack-patterns-daisy-jack-bench",
+    "protocol": 7,
+    "acquisition": "TIM7 50us phase service plus single ADC EOC interrupt",
+    "acquisition_irq_priority": 0,
+    "audio_irq_priority": 1,
+    "audio_padding": "CPU work excluding measured acquisition ISR body time",
+    "pause_fault": "acquisition suspended; timer and audio continue",
+    "dsp_workload": "1-32 deterministic fixed-point 32-tap FIR and SDRAM feedback-delay voices; silent codec outputs",
+    "dma_workload": "DMA2 stream6 SDRAM or AXI SRAM 4/16KiB; 1/2ms requested cadence; cache ownership and full data verification",
+    "dma_irq_priority": 2,
+    "max_dsp_dma_duration_ms": 30000,
+    "clock_diagnostic": "HSE/15 on PC9; K command; max 10 seconds",
+    "clock_diagnostic_audio": "PC8 / D4 / physical pin 5; K mode only",
+    "clock_reference": "M command; HSE/15 on PC9; audio on PC8; max 10 seconds; faults allowed",
+    "audio_sample_rate_hz": 48000,
+    "audio_block_sizes": [
+      16,
+      48,
+      96
+    ],
+    "max_audio_padding_permille": 700,
+    "audio_marker": "PC9 / D3 / physical pin 4",
+    "fault_triggers": 6,
+    "max_fault_us": 100000,
+    "max_fault_delay_slots": 64,
+    "sample_period_us": 500,
+    "settle_us": 150,
+    "sample_cycles": 810.5,
+    "adc_bits": 16,
+    "max_duration_ms": 300000,
+    "max_records": 600000,
+    "window_size": 64,
+    "mismatch_threshold": 3,
+    "bad_windows_required": 8,
+    "low_code": 16384,
+    "high_code": 49151,
+    "probe": "PC10 / D2 / physical pin 3 through 1k to tip-normal",
+    "input": "PA3 / A1 / physical pin 23 on tip, 100k to ground",
+    "markers": "physical pin 1 sampling, physical pin 2 qualified patched",
+    "startup": "unknown state reset at each commanded acquisition; no automatic boot capture",
+    "build_id": "aab2580756cc2ee42fde40a0",
+    "dma_linked_buffers": {
+      "0": {
+        "region": 0,
+        "source": 3221225472,
+        "destination": 3221241856,
+        "capacity_bytes": 16384,
+        "cache_line_bytes": 32
+      },
+      "1": {
+        "region": 1,
+        "source": 604065920,
+        "destination": 604082304,
+        "capacity_bytes": 16384,
+        "cache_line_bytes": 32
+      }
+    },
+    "artifacts_sha256": {
+      "patterns_jack.bin": "3bb711cc5060b2fa6a173c4da64f245953c84e32130e280f86a26b48f24bd228",
+      "patterns_jack.elf": "0cf150e54d7a4f337ed0c20b717a8aa931ef80508bb1c1b2b29aa84d9a353fc9",
+      "patterns_jack.map": "63ab29468b72d1ca8c94e48643c1ea4d66474f7bcc74fda906a265a543ebeeb8"
+    }
+  },
+  "host_commit": "0cc9d0d64642e9b2d53270421bc0469e59f5f5ec",
+  "generator_build_id": "4e68efce89b64d686cf11c63",
+  "times_us": [
+    300000,
+    437919,
+    583757,
+    737514,
+    874190,
+    1018785,
+    1171299,
+    1306732,
+    1450084,
+    1601355,
+    1735545,
+    1877654,
+    2027682,
+    2160629,
+    2301495,
+    2450280,
+    2581984,
+    2721607,
+    2869149,
+    2999610,
+    3137990,
+    3284289,
+    3438507,
+    3575644,
+    3720700,
+    3873675,
+    4009569,
+    4153382,
+    4305114,
+    4439765,
+    4582335,
+    4732824,
+    4866232,
+    5007559,
+    5156805,
+    5288970,
+    5429054,
+    5577057,
+    5707979,
+    5846820,
+    5993580,
+    6148259,
+    6285857,
+    6431374,
+    6584810,
+    6721165,
+    6865439,
+    7017632,
+    7152744,
+    7295775,
+    7446725,
+    7580594,
+    7722382,
+    7872089,
+    8004715,
+    8145260,
+    8293724,
+    8425107,
+    8564409,
+    8711630,
+    8841770,
+    8979829,
+    9125807,
+    9279704
+  ],
+  "cases": [
+    {
+      "name": "early-idle",
+      "early_finish": true
+    },
+    {
+      "name": "early-sdram",
+      "early_finish": true
+    },
+    {
+      "name": "early-axi",
+      "early_finish": true
+    },
+    {
+      "name": "idle-before",
+      "early_finish": false
+    },
+    {
+      "name": "dsp-before",
+      "early_finish": false
+    },
+    {
+      "name": "pair-1-r0-p1000",
+      "early_finish": false
+    },
+    {
+      "name": "pair-1-r1-p1000",
+      "early_finish": false
+    },
+    {
+      "name": "pair-2-r1-p2000",
+      "early_finish": false
+    },
+    {
+      "name": "pair-2-r0-p2000",
+      "early_finish": false
+    },
+    {
+      "name": "pair-3-r0-p2000",
+      "early_finish": false
+    },
+    {
+      "name": "pair-3-r1-p2000",
+      "early_finish": false
+    },
+    {
+      "name": "pair-4-r1-p1000",
+      "early_finish": false
+    },
+    {
+      "name": "pair-4-r0-p1000",
+      "early_finish": false
+    },
+    {
+      "name": "dsp-after",
+      "early_finish": false
+    },
+    {
+      "name": "idle-after",
+      "early_finish": false
+    }
+  ],
+  "pairs": [
+    {
+      "names": [
+        "pair-1-r0-p1000",
+        "pair-1-r1-p1000"
+      ],
+      "runs": [
+        {
+          "region": 0,
+          "verified": 5984,
+          "skipped": 2014,
+          "payload_bytes": 98041856,
+          "loaded_us": 8000013,
+          "transfers_per_second": 747.9987845019751,
+          "payload_bytes_per_second": 12255212.08528036,
+          "dsp_frames": 384112,
+          "audio_callbacks": 24007
+        },
+        {
+          "region": 1,
+          "verified": 7999,
+          "skipped": 0,
+          "payload_bytes": 131055616,
+          "loaded_us": 8000002,
+          "transfers_per_second": 999.8747500313125,
+          "payload_bytes_per_second": 16381947.904513024,
+          "dsp_frames": 384112,
+          "audio_callbacks": 24007
+        }
+      ],
+      "completion_counts_matched": false,
+      "interpretation": "Achieved work differs; memory-region effects are confounded with throughput or callback coverage."
+    },
+    {
+      "names": [
+        "pair-2-r1-p2000",
+        "pair-2-r0-p2000"
+      ],
+      "runs": [
+        {
+          "region": 1,
+          "verified": 3999,
+          "skipped": 0,
+          "payload_bytes": 65519616,
+          "loaded_us": 8000004,
+          "transfers_per_second": 499.87475006262497,
+          "payload_bytes_per_second": 8189947.9050260475,
+          "dsp_frames": 384112,
+          "audio_callbacks": 24007
+        },
+        {
+          "region": 0,
+          "verified": 3999,
+          "skipped": 0,
+          "payload_bytes": 65519616,
+          "loaded_us": 8000002,
+          "transfers_per_second": 499.87487503128125,
+          "payload_bytes_per_second": 8189949.952512512,
+          "dsp_frames": 384112,
+          "audio_callbacks": 24007
+        }
+      ],
+      "completion_counts_matched": true,
+      "interpretation": "Counts agree within one transfer/callback, no skipped launches; compare clock results with cache/verification costs included."
+    },
+    {
+      "names": [
+        "pair-3-r0-p2000",
+        "pair-3-r1-p2000"
+      ],
+      "runs": [
+        {
+          "region": 0,
+          "verified": 3999,
+          "skipped": 0,
+          "payload_bytes": 65519616,
+          "loaded_us": 8000002,
+          "transfers_per_second": 499.87487503128125,
+          "payload_bytes_per_second": 8189949.952512512,
+          "dsp_frames": 384112,
+          "audio_callbacks": 24007
+        },
+        {
+          "region": 1,
+          "verified": 3999,
+          "skipped": 0,
+          "payload_bytes": 65519616,
+          "loaded_us": 8000005,
+          "transfers_per_second": 499.8746875783203,
+          "payload_bytes_per_second": 8189946.881283199,
+          "dsp_frames": 384112,
+          "audio_callbacks": 24007
+        }
+      ],
+      "completion_counts_matched": true,
+      "interpretation": "Counts agree within one transfer/callback, no skipped launches; compare clock results with cache/verification costs included."
+    },
+    {
+      "names": [
+        "pair-4-r1-p1000",
+        "pair-4-r0-p1000"
+      ],
+      "runs": [
+        {
+          "region": 1,
+          "verified": 7999,
+          "skipped": 0,
+          "payload_bytes": 131055616,
+          "loaded_us": 8000004,
+          "transfers_per_second": 999.8745000627499,
+          "payload_bytes_per_second": 16381943.809028095,
+          "dsp_frames": 384112,
+          "audio_callbacks": 24007
+        },
+        {
+          "region": 0,
+          "verified": 5981,
+          "skipped": 2018,
+          "payload_bytes": 97992704,
+          "loaded_us": 8000019,
+          "transfers_per_second": 747.623224394842,
+          "payload_bytes_per_second": 12249058.908485092,
+          "dsp_frames": 384112,
+          "audio_callbacks": 24007
+        }
+      ],
+      "completion_counts_matched": false,
+      "interpretation": "Achieved work differs; memory-region effects are confounded with throughput or callback coverage."
+    }
+  ],
+  "setup": {
+    "generator": "Independent Seed3 open-drain output, 4.7k pull-up; no connection to DUT sense input",
+    "raw_reference": "D0 threshold 1.65 V, no pulse filter",
+    "hysteretic_reference": "CH1-derived digital: low 1.2 V, high 2.0 V, no pulse filter",
+    "analog": "CH1 on generator output, 10x probe; full native analog retained separately by hash",
+    "service": "D1",
+    "presence": "D2",
+    "probe": "D3",
+    "clock": "D4 HSE/15",
+    "audio": "D5",
+    "duration_seconds": 10,
+    "load_off_seconds": 8
+  },
+  "limitations": [
+    "Complete serial and digital waveforms published without trimming, including every clock period. Native analog and instrument sessions retained separately by hash.",
+    "Relative clocks only, no calibrated absolute frequency or physical cause identified.",
+    "Same requested DSP workload; CPU cache maintenance and verification costs remain included. Actual transfer and callback counts must be considered.",
+    "Both jacks remain empty; this is clock/workload diagnosis, not mechanical jack or audio-fidelity qualification."
+  ]
+}

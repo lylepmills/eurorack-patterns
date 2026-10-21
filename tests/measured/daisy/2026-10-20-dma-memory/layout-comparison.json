@@ -1,0 +1,22 @@
+{
+  "08fcb8204e917cf8af8d1601710e56e765b9f59b": {
+    "build_id": "a1d9b81fd4cbcb1726439e4a",
+    "elf_sha256": "2d7640cc64a4bb5855304c59a4cb51877be3b7425128e55bd23d6a4cb8d9f63e",
+    "symbols": [
+      "c0000000 00200000 b delay_storage",
+      "c1d7b400 00004000 b dmabench::destination",
+      "c1d77400 00004000 b dmabench::source"
+    ]
+  },
+  "0cc9d0d64642e9b2d53270421bc0469e59f5f5ec": {
+    "build_id": "aab2580756cc2ee42fde40a0",
+    "elf_sha256": "0cf150e54d7a4f337ed0c20b717a8aa931ef80508bb1c1b2b29aa84d9a353fc9",
+    "symbols": [
+      "c0008000 00200000 b delay_storage",
+      "20001a04 00000004 b dmabench::destination",
+      "20001a10 00000004 b dmabench::source",
+      "24015080 00008000 B ep_dma_internal_buffers",
+      "c0000000 00008000 B ep_dma_sdram_buffers"
+    ]
+  }
+}

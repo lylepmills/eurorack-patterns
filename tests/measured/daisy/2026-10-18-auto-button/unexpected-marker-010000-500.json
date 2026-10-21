@@ -1,0 +1,62 @@
+{
+  "schema": 1,
+  "case": "press-stall",
+  "status": "failed unexpected action-marker transitions",
+  "fault_delay_us": 10000,
+  "acquired_utc": "2026-10-18T21:45:28.264886+00:00",
+  "times_us": [
+    1000500,
+    3000500,
+    4000500,
+    4100500
+  ],
+  "requested_input_phase_us": 500,
+  "fixture_build": {
+    "source_commit": "56ae3fc38aac6efb1551cd1b0c93c289b2cb28f2",
+    "build_id": "683afc5d1c2cfe67e4496814",
+    "artifacts_sha256": {
+      "patterns_daisy.bin": "18593bc39c15ef44772e0e4cee26dc1d50e22fa462635aa965d471c21879e2b2",
+      "patterns_daisy.elf": "a330ae190e486f82c0cda347d2f430c89c23385860a215a4d662d3df6c258968",
+      "patterns_daisy.map": "b39fba602f67e2a6c76956d23ffeeddae79cc18c54f30f1e848b98feaf66ab71"
+    }
+  },
+  "generator_build": {
+    "source_commit": "3dab3a483c103928898a13bf91fd1844e23790d2",
+    "build_id": "4e68efce89b64d686cf11c63",
+    "artifacts_sha256": {
+      "patterns_pulse_generator.bin": "2f132cc4c0bd65dbff4430799ab20bf2386f7520122ceb66b85f4609de89693c",
+      "patterns_pulse_generator.elf": "e9ca1e466b9aec3e0f92d7c507c5edb01e2a1c7289d1fad54456cb0ceaa8473e",
+      "patterns_pulse_generator.map": "f1d95c80ee485b09e0bcda0c11aaf52b9b5495cdc9e0305037a7e8a26f2e6adf"
+    }
+  },
+  "fixture_configuration": {
+    "scope_preparation": "Retained 3s idle capture on the same MSO connection, current-command acknowledgement, 2s settling margin; complete physical coverage verified afterward",
+    "external_pullup_ohms": 4700,
+    "external_pullup": "fixture physical38 (3V3D) to physical15 (button)",
+    "internal_pullup": true,
+    "analog_probe": "10x attached to button physical15, ground40; channel disabled in this digital-only acquisition",
+    "generator": "Independent Seed3 open-drain physical1 to fixture15; shared physical40 ground; separate USB supplies"
+  },
+  "writer": {
+    "packets": 3380,
+    "skipped_slots": 295,
+    "max_lateness_s": 0.016568554565310478
+  },
+  "raw_sha256": "63d76173dec1c9aca001dc5d48bc0a34abfdf5236020bcf8cb994e3692849595",
+  "generator_raw_sha256": "f56b8936880874dde9c167c1f09336438b98a5e555a6b711161f81788595d519",
+  "original_digital_sha256": {
+    "button": "8ebb4f1bfa616ded0fe785fb46cb58786cdc892451f59d3ebd90c0043d610c88",
+    "service": "4ca9f7a4c1883f35710b94426e5a3637a6a6fb202df43c4caad8c003a303cff2",
+    "gesture": "cd8d5745d3f96b52c6ac169b50e8e1c0b45fc263a6d08d2e7dde4a3421d40918"
+  },
+  "firmware_samples": 7976,
+  "physical_service_pulses": 7976,
+  "physical_action_edges": 47,
+  "unexpected_post_acquisition_action_edges": 46,
+  "failure": "One expected action during service, followed by 46 uncommanded marker transitions after service ended. Source and complete service alignment pass; physical review rejects the extra action edges. Cause unresolved.",
+  "transformation": "Complete firmware and generator wire bytes losslessly gzipped. All three complete recorded digital channels retained as initial level and original relative floating-point timestamps. No reconstruction, trimming or filtering. Device IDs, host paths and vendor logs omitted.",
+  "limitation": "A clean subsequent idle recording does not explain the original marker burst. Do not trim outside edges or count a retry as explaining this failure.",
+  "fixture_compressed_sha256": "e1b7868709ede51931bb8b3eba30f9b5c22479302cb6ffb873cc7fa8978b8a86",
+  "generator_compressed_sha256": "06ea15b359c72c2caf834005ea8c51d77319573216e479b960c16494685661a0",
+  "channels_compressed_sha256": "5b946d7012d1e9ebfa294f31821e0da4059829be5cbc4fde70682487e56039ee"
+}

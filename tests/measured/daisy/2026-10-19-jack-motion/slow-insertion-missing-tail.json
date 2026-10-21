@@ -1,0 +1,66 @@
+{
+  "schema": 1,
+  "evidence": "measured on hardware",
+  "status": "missing-motion-tail",
+  "build": {
+    "build_id": "82c0f452973b6519855f649f",
+    "source_commit": "a49570218e6bba31f864b433adc3faefb5dd0347",
+    "sdk_revision": "e1f740a5a7fe38e6d6d41281bf99fe7a2bb3827b",
+    "binary_sha256": "31f4cfdc50b6bb3548bd09a7105262c309d4a0cd8067fc1005ddb3506bb1fe9c"
+  },
+  "fixture": {
+    "board": "Seed3",
+    "case": "manual-slow-insertion-silent",
+    "jack": "switched mono; attempted slow insertion with ordinary withdrawal; passive terminated far end",
+    "probe_series_ohms": 1000,
+    "sense_pulldown_ohms": 100000,
+    "scope_probe": "10x; sense node",
+    "analog_rate_hz": 250000.0
+  },
+  "run": {
+    "token": 906612109,
+    "duration_ms": 300000,
+    "fault": 0,
+    "policy": 1,
+    "count": 119282,
+    "missed": 0,
+    "adc_failures": 0,
+    "elapsed_us": 59641000,
+    "fault_begin_us": 0,
+    "fault_end_us": 0,
+    "finish_reason": "operator",
+    "finish_request_us": 59640792,
+    "acquisition_limit_us": 59641000
+  },
+  "review": null,
+  "native_scope_sha256": {
+    "analog_0.bin": "1718dfe33c85c5336bb420cfa42c07d75a3d2d3be299870e25d5690e9ebf621b",
+    "settings.json": "8294e3c19c5592f6a6df2992da3cba22bcd2c56afcf8f493b274952f667e0926",
+    "capture.sal": "35d2b96ce7df47c85edf8b9aaddcb04081ae573d3be6fa95c81dbeca8af7b2a4",
+    "digital_1_2.bin": "c1c022a7f166cc8af3ac7cf0d5277c0f6a2a5dca52558b600489053432ef39b4",
+    "digital_1_3.bin": "da0dc4092be523175caa139aaa9afa20fa9ac1987f656ffcf3b4eba83bd2bae9",
+    "digital_1_1.bin": "b367afaf3e9d31311ed63f4009491a18a06cff9448f79b059261b54be0e6a67f",
+    "digital_1_0.bin": "d2a82216d71f0e8dddc256b60c03b2f530bcf586cf3cca8ef9ec62b0fd8e27a0"
+  },
+  "limitation": "Physical motion review rejected; independent evidence is incomplete or disagrees with the ADC. No complete physical pass or mechanical-position qualification. All acquired digital transitions and complete wire evidence; analog payload contains extrema over captured service apertures, not the full waveform.",
+  "rejection": "Scope digital/analog coverage ends before the firmware acquisition boundary; missing tail evidence, not a hardware pass.",
+  "rejection_detail": {
+    "firmware_samples": 119282,
+    "scope_service_samples": 119253,
+    "missing_tail_samples": 29,
+    "prefix_timing_diagnostic": {
+      "clock_scale_ppm": 39.793436522383985,
+      "max_fit_residual_us": 0.4582424254185753,
+      "max_interval_error_us": 0.31189672142022573,
+      "max_work_width_error_us": 0.2129999997493428,
+      "pre_application_high_intervals_s": []
+    },
+    "limitation": "Prefix alignment locates the missing tail; it does not qualify the complete recording."
+  },
+  "raw_sha256": "eec5bdb4988f14a9ac4c0dc0a729ab161be4627bc87eba3f6f2631658db5c97d",
+  "raw_compressed_sha256": "571fdde2da40fba493f56c6a05454d6e283aa734f514ff13c75bf9e472af496f",
+  "channels_sha256": "40e3cc54975b31cd3998d616e49d23bbfc0a33729066fa64d3d96973989b3dc1",
+  "channels_compressed_sha256": "39b4e19d6ee6754354e434499c80615eaa373c593e74ec00023fe4546662bae0",
+  "analog_sha256": "4e69c331c7c5501c817f5255508182b2f133496310948a8ad37e1f9b27efd474",
+  "analog_compressed_sha256": "0f92d967835e4b54276fbb33b95693b1fa3763f8b2f67c1e809f68cb610b433f"
+}

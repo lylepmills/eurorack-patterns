@@ -1,0 +1,1732 @@
+{
+  "schema": 1,
+  "status": "complete",
+  "cases": [
+    {
+      "name": "baseline-before",
+      "qualification": "responsive",
+      "run": {
+        "token": 231732564,
+        "duration_ms": 10000,
+        "fault": 0,
+        "policy": 1,
+        "count": 20000,
+        "missed": 0,
+        "adc_failures": 0,
+        "elapsed_us": 10000000,
+        "fault_begin_us": 0,
+        "fault_end_us": 0,
+        "finish_reason": "duration",
+        "finish_request_us": 0,
+        "acquisition_limit_us": 10000000,
+        "trigger": 0,
+        "fault_delay_slots": 0,
+        "fault_duration_us": 25000,
+        "trigger_seq": 4294967295,
+        "trigger_us": 0,
+        "fault_due_us": 0,
+        "audio": {
+          "block": 0,
+          "permille": 0,
+          "off_ms": 0,
+          "end_us": 0,
+          "callbacks": 0,
+          "max_work_ticks": 0,
+          "max_interval_ticks": 0,
+          "over_budget": 0,
+          "late_intervals": 0,
+          "bad_size": 0,
+          "period_ticks": 0,
+          "timer_hz": 240000000
+        }
+      },
+      "invalid_observations": 0,
+      "ambiguous_analog_apertures": 1,
+      "state_changes": [
+        {
+          "seq": 63,
+          "time_us": 31789,
+          "ready": true,
+          "patched": false
+        },
+        {
+          "seq": 6527,
+          "time_us": 3263789,
+          "ready": true,
+          "patched": true
+        },
+        {
+          "seq": 13119,
+          "time_us": 6559789,
+          "ready": true,
+          "patched": false
+        }
+      ],
+      "audio": {
+        "callbacks": 0,
+        "independent_marker": "verified idle"
+      },
+      "raw_sha256": "c5a594fc9ce82c84fd99829964473b93b55349791da6de2799e1f9549483ab6c",
+      "generator_sha256": "6ae2639dad56d62420cc9d8f48eb99c2d28d21cc1522f2f781d52d9fbf8448ad",
+      "native_scope_sha256": {
+        "analog_0.bin": "21b6105bab9764ba42314369196c6bb34111213544e9219f59f6229206a7bd56",
+        "settings.json": "5d6d91b658c08457a42e2f1ca06cb05b8942b54dd0c081d8daec4b0665a08087",
+        "capture.sal": "835d33f410c974ec2d5acad1fe9464aeaee299e697aa2f07425f82a747a8a4b8",
+        "digital_2_0.bin": "3d3e5004c02604040ef02f29e51bf8af6aa273994308df5d0979bc401e7db2a7",
+        "digital_1_2.bin": "0eedd396e52e058751541f708da70f7e34a4c4e02c325c3b66c53de6804edbfd",
+        "digital_1_3.bin": "b0db8fbeda3d931be75f437df4782cad78eb8afb863c57a83d92e5d1928540c0",
+        "digital_1_1.bin": "fca0b3a0c750a74295ac0da4e333f75eafaed77356594803eeb6b179afe6a76c",
+        "digital_1_0.bin": "715839dc5c0dbc731fbe6b7605a4fa919ad5c71c34080cea592a3d7637602078"
+      },
+      "generator_times_us": [
+        3000000,
+        6500000
+      ],
+      "acquisition_tools_source_commit": "82a7c0bcb151e526b4d0480c80cd7083a1af9a09"
+    },
+    {
+      "name": "audio-b16-p0",
+      "qualification": "responsive",
+      "run": {
+        "token": 3965413811,
+        "duration_ms": 10000,
+        "fault": 0,
+        "policy": 1,
+        "count": 20000,
+        "missed": 0,
+        "adc_failures": 0,
+        "elapsed_us": 10000000,
+        "fault_begin_us": 0,
+        "fault_end_us": 0,
+        "finish_reason": "duration",
+        "finish_request_us": 0,
+        "acquisition_limit_us": 10000000,
+        "trigger": 0,
+        "fault_delay_slots": 0,
+        "fault_duration_us": 25000,
+        "trigger_seq": 4294967295,
+        "trigger_us": 0,
+        "fault_due_us": 0,
+        "audio": {
+          "block": 16,
+          "permille": 0,
+          "off_ms": 8000,
+          "end_us": 8000000,
+          "callbacks": 24007,
+          "max_work_ticks": 128,
+          "max_interval_ticks": 80072,
+          "over_budget": 0,
+          "late_intervals": 0,
+          "bad_size": 0,
+          "period_ticks": 80000,
+          "timer_hz": 240000000
+        }
+      },
+      "invalid_observations": 0,
+      "ambiguous_analog_apertures": 0,
+      "state_changes": [
+        {
+          "seq": 63,
+          "time_us": 31789,
+          "ready": true,
+          "patched": false
+        },
+        {
+          "seq": 6527,
+          "time_us": 3263789,
+          "ready": true,
+          "patched": true
+        },
+        {
+          "seq": 13119,
+          "time_us": 6559792,
+          "ready": true,
+          "patched": false
+        }
+      ],
+      "audio": {
+        "callbacks": 24007,
+        "independent_marker": "verified every callback",
+        "minimum_work_us": 0.42698296864630797,
+        "maximum_work_us": 0.6319747922930673,
+        "maximum_interval_us": 333.63269232487994,
+        "measured_end_us": 8000000
+      },
+      "raw_sha256": "4b550c81821eff84b2edc55a2ef7a4f32f00e57b82f4fd0e5eb71f829b301bb4",
+      "generator_sha256": "002e0a18376f9b240d70746ae728c80d1c94af4b6066672c4145319161e87741",
+      "native_scope_sha256": {
+        "analog_0.bin": "3d812d144b580fc276466fe47fc55bac337357959dec3f343595a0649d1c7bd2",
+        "settings.json": "5d6d91b658c08457a42e2f1ca06cb05b8942b54dd0c081d8daec4b0665a08087",
+        "capture.sal": "70c9f75e43206b227f597f1f4db7b4cab90b596cdf79c3580a9fbcb16a3bed80",
+        "digital_2_0.bin": "ad4f4a6f627e85c701d17991ded178713dd7469f6a5ec2f52e8b8a275f1aaa63",
+        "digital_1_2.bin": "f792b2f91a0bc81f656946c470ab90e81d918d4bb954ba5b0c4a927079ec2426",
+        "digital_1_3.bin": "bd2cde58e30f809ab65366d2ee1e5f09989735bebc1f73a93d77a29e30bb3c01",
+        "digital_1_1.bin": "21a39b992e4bdc3cade1837f415502baa3e79e341ba21a922641be2d51aa078b",
+        "digital_1_0.bin": "78c09c74b627708cb94c1224888020f7a62bc43b09221c34084a667c3da549f0"
+      },
+      "generator_times_us": [
+        3000000,
+        6500000
+      ],
+      "acquisition_tools_source_commit": "82a7c0bcb151e526b4d0480c80cd7083a1af9a09"
+    },
+    {
+      "name": "audio-b16-p250",
+      "qualification": "responsive",
+      "run": {
+        "token": 1860605458,
+        "duration_ms": 10000,
+        "fault": 0,
+        "policy": 1,
+        "count": 20000,
+        "missed": 0,
+        "adc_failures": 0,
+        "elapsed_us": 10000000,
+        "fault_begin_us": 0,
+        "fault_end_us": 0,
+        "finish_reason": "duration",
+        "finish_request_us": 0,
+        "acquisition_limit_us": 10000000,
+        "trigger": 0,
+        "fault_delay_slots": 0,
+        "fault_duration_us": 25000,
+        "trigger_seq": 4294967295,
+        "trigger_us": 0,
+        "fault_due_us": 0,
+        "audio": {
+          "block": 16,
+          "permille": 250,
+          "off_ms": 8000,
+          "end_us": 8000000,
+          "callbacks": 24007,
+          "max_work_ticks": 20024,
+          "max_interval_ticks": 80060,
+          "over_budget": 0,
+          "late_intervals": 0,
+          "bad_size": 0,
+          "period_ticks": 80000,
+          "timer_hz": 240000000
+        }
+      },
+      "invalid_observations": 0,
+      "ambiguous_analog_apertures": 1,
+      "state_changes": [
+        {
+          "seq": 63,
+          "time_us": 31789,
+          "ready": true,
+          "patched": false
+        },
+        {
+          "seq": 6527,
+          "time_us": 3263816,
+          "ready": true,
+          "patched": true
+        },
+        {
+          "seq": 13119,
+          "time_us": 6559833,
+          "ready": true,
+          "patched": false
+        }
+      ],
+      "audio": {
+        "callbacks": 24007,
+        "independent_marker": "verified every callback",
+        "minimum_work_us": 83.42766976447146,
+        "maximum_work_us": 83.49066725308832,
+        "maximum_interval_us": 333.5826841814121,
+        "measured_end_us": 8000000
+      },
+      "raw_sha256": "12f3ea94c0b643a3f476682de6893981baf672a70f76fd40eef2bc7807fd4e5a",
+      "generator_sha256": "365cb6098f2e1050de4bc4931cd47e5686bfb908a3f2f9297838508ed2b52316",
+      "native_scope_sha256": {
+        "analog_0.bin": "28fb8318581533ece80318e443407b0102dbad5c54df2b45e9d20eb2ad9c48f2",
+        "settings.json": "5d6d91b658c08457a42e2f1ca06cb05b8942b54dd0c081d8daec4b0665a08087",
+        "capture.sal": "60a79a2faff64f2196dde67faf28266e9a89c9b9ff970c36d73cec85309195e0",
+        "digital_2_0.bin": "bc335f3fd9b337a33317c1d47c25744223be3da817970ef22ef8fc9faa7523f2",
+        "digital_1_2.bin": "c37fed142e1a2669a2262644db43fa778573462637ca8ea974aa15fcbb8fc297",
+        "digital_1_3.bin": "61314fca3cb857f3e4e0269e607638abb23d1e0540b915fa8fb0e5351b6c39eb",
+        "digital_1_1.bin": "61e240cd3259a069edf7e89aad787c6302a77b380cf6eecf56043b8db754ef79",
+        "digital_1_0.bin": "8d661c57792641d307816f458e82fe3d418fcd945d95868d7f665a7d54ee949a"
+      },
+      "generator_times_us": [
+        3000000,
+        6500000
+      ],
+      "acquisition_tools_source_commit": "82a7c0bcb151e526b4d0480c80cd7083a1af9a09"
+    },
+    {
+      "name": "audio-b16-p500",
+      "qualification": "responsive",
+      "run": {
+        "token": 3310053342,
+        "duration_ms": 10000,
+        "fault": 0,
+        "policy": 1,
+        "count": 20000,
+        "missed": 0,
+        "adc_failures": 0,
+        "elapsed_us": 10000000,
+        "fault_begin_us": 0,
+        "fault_end_us": 0,
+        "finish_reason": "duration",
+        "finish_request_us": 0,
+        "acquisition_limit_us": 10000000,
+        "trigger": 0,
+        "fault_delay_slots": 0,
+        "fault_duration_us": 25000,
+        "trigger_seq": 4294967295,
+        "trigger_us": 0,
+        "fault_due_us": 0,
+        "audio": {
+          "block": 16,
+          "permille": 500,
+          "off_ms": 8000,
+          "end_us": 8000057,
+          "callbacks": 24007,
+          "max_work_ticks": 40024,
+          "max_interval_ticks": 80078,
+          "over_budget": 0,
+          "late_intervals": 0,
+          "bad_size": 0,
+          "period_ticks": 80000,
+          "timer_hz": 240000000
+        }
+      },
+      "invalid_observations": 298,
+      "ambiguous_analog_apertures": 137,
+      "state_changes": [
+        {
+          "seq": 63,
+          "time_us": 31907,
+          "ready": true,
+          "patched": false
+        },
+        {
+          "seq": 6852,
+          "time_us": 3426423,
+          "ready": true,
+          "patched": true
+        },
+        {
+          "seq": 13106,
+          "time_us": 6553490,
+          "ready": true,
+          "patched": false
+        }
+      ],
+      "audio": {
+        "callbacks": 24007,
+        "independent_marker": "verified every callback",
+        "minimum_work_us": 166.76034334500088,
+        "maximum_work_us": 166.84833983368816,
+        "maximum_interval_us": 333.65768122397793,
+        "measured_end_us": 8000057
+      },
+      "raw_sha256": "eeca4326c15ac4bcc33e3b50731043a5cd6a6d6a4211ed5adc12b0b6a95942d8",
+      "generator_sha256": "762eebbab722beb49b00e4ad15ef48d9a569022aa6d8cba50946e2a57c0d7fb3",
+      "native_scope_sha256": {
+        "analog_0.bin": "ae61080c985417589e022415e500c57a6c6da7bb4d7daca9e2384bc1854ce0f6",
+        "settings.json": "5d6d91b658c08457a42e2f1ca06cb05b8942b54dd0c081d8daec4b0665a08087",
+        "capture.sal": "a33ca4aef49ca4d1d2837ceb740ea2bef621393a4760a3bbb46ddc060cc088cf",
+        "digital_2_0.bin": "5bc96816d360836fa4740dacbece5866ac422e742d5c004a9b06703164c55db7",
+        "digital_1_2.bin": "a5a91f4dbb486250969064944d085760deb6b5598716992d3ca2fb182b9ddbc4",
+        "digital_1_3.bin": "e80f038f4d9ded40dd8dc56c1e8a8a8070954823aac2f3e0dcc3c57283d119e4",
+        "digital_1_1.bin": "5d77696a45d8dd011470260f71914f0a707d48bd3b294245f90169605eb1f26b",
+        "digital_1_0.bin": "c0f0fd7c71fe590e6f47dede9172b635d4579c35e9846eefd002a07a2161d9b7"
+      },
+      "generator_times_us": [
+        3000000,
+        6500000
+      ],
+      "acquisition_tools_source_commit": "82a7c0bcb151e526b4d0480c80cd7083a1af9a09"
+    },
+    {
+      "name": "audio-b16-p700",
+      "qualification": "starved under load; recovered empty",
+      "run": {
+        "token": 2377409748,
+        "duration_ms": 10000,
+        "fault": 0,
+        "policy": 1,
+        "count": 16004,
+        "missed": 3996,
+        "adc_failures": 0,
+        "elapsed_us": 10000000,
+        "fault_begin_us": 0,
+        "fault_end_us": 0,
+        "finish_reason": "duration",
+        "finish_request_us": 0,
+        "acquisition_limit_us": 10000000,
+        "trigger": 0,
+        "fault_delay_slots": 0,
+        "fault_duration_us": 25000,
+        "trigger_seq": 4294967295,
+        "trigger_us": 0,
+        "fault_due_us": 0,
+        "audio": {
+          "block": 16,
+          "permille": 700,
+          "off_ms": 8000,
+          "end_us": 8000123,
+          "callbacks": 24007,
+          "max_work_ticks": 56024,
+          "max_interval_ticks": 80016,
+          "over_budget": 0,
+          "late_intervals": 0,
+          "bad_size": 0,
+          "period_ticks": 80000,
+          "timer_hz": 240000000
+        }
+      },
+      "invalid_observations": 12005,
+      "ambiguous_analog_apertures": 3397,
+      "state_changes": [
+        {
+          "seq": 12068,
+          "time_us": 8032289,
+          "ready": true,
+          "patched": false
+        }
+      ],
+      "audio": {
+        "callbacks": 24007,
+        "independent_marker": "verified every callback",
+        "minimum_work_us": 233.42768673313822,
+        "maximum_work_us": 233.52368290615507,
+        "maximum_interval_us": 333.4046978685198,
+        "measured_end_us": 8000123
+      },
+      "raw_sha256": "9172b0eb3bd5668fcb87f563d0cd26f3935f46993f68783c965e2ea5ca150f79",
+      "generator_sha256": "233e69e38d468b6ee71c7a4cdae4748ae9f5a93c46bfcd02d8107814f74f72a3",
+      "native_scope_sha256": {
+        "analog_0.bin": "5a373e80ba2ce5217cc53423064e7d519213f066a2fbd047dfe5e3b106891a49",
+        "settings.json": "5d6d91b658c08457a42e2f1ca06cb05b8942b54dd0c081d8daec4b0665a08087",
+        "capture.sal": "c719a51fa8c2fe8fd7be190dab08da92d0266c9ac0b1e72ab08acf5bf08ce61d",
+        "digital_2_0.bin": "951b161352a89f8c2768f486330216b7ef013b7837655267040f03faf6505552",
+        "digital_1_2.bin": "d94cf167e85fc6fb607ae3ed89422817358dc70e19a1ed2a074c013fb9323a34",
+        "digital_1_3.bin": "7929a014f99ee3b795ab0699dbe6333a3f5f5a87b2319f5a1ea5ce4c4b33bbdc",
+        "digital_1_1.bin": "6c1668189304b39570a330898843d61f0ca69bb79736a812221cec56fe876674",
+        "digital_1_0.bin": "723d050002027a3e7bb6626bc5d2a36b287818b0563b23720e842c2c2e481c2b"
+      },
+      "generator_times_us": [
+        3000000,
+        6500000
+      ],
+      "acquisition_tools_source_commit": "82a7c0bcb151e526b4d0480c80cd7083a1af9a09"
+    },
+    {
+      "name": "audio-b48-p0",
+      "qualification": "responsive",
+      "run": {
+        "token": 1166984544,
+        "duration_ms": 10000,
+        "fault": 0,
+        "policy": 1,
+        "count": 20000,
+        "missed": 0,
+        "adc_failures": 0,
+        "elapsed_us": 10000000,
+        "fault_begin_us": 0,
+        "fault_end_us": 0,
+        "finish_reason": "duration",
+        "finish_request_us": 0,
+        "acquisition_limit_us": 10000000,
+        "trigger": 0,
+        "fault_delay_slots": 0,
+        "fault_duration_us": 25000,
+        "trigger_seq": 4294967295,
+        "trigger_us": 0,
+        "fault_due_us": 0,
+        "audio": {
+          "block": 48,
+          "permille": 0,
+          "off_ms": 8000,
+          "end_us": 8000000,
+          "callbacks": 8002,
+          "max_work_ticks": 158,
+          "max_interval_ticks": 240030,
+          "over_budget": 0,
+          "late_intervals": 0,
+          "bad_size": 0,
+          "period_ticks": 240000,
+          "timer_hz": 240000000
+        }
+      },
+      "invalid_observations": 0,
+      "ambiguous_analog_apertures": 0,
+      "state_changes": [
+        {
+          "seq": 63,
+          "time_us": 31789,
+          "ready": true,
+          "patched": false
+        },
+        {
+          "seq": 6527,
+          "time_us": 3263789,
+          "ready": true,
+          "patched": true
+        },
+        {
+          "seq": 13119,
+          "time_us": 6559789,
+          "ready": true,
+          "patched": false
+        }
+      ],
+      "audio": {
+        "callbacks": 8002,
+        "independent_marker": "verified every callback",
+        "minimum_work_us": 0.5609775995007208,
+        "maximum_work_us": 0.7239710929226479,
+        "maximum_interval_us": 1000.1250665761875,
+        "measured_end_us": 8000000
+      },
+      "raw_sha256": "7f8bb23503be8a108225e908a8920625d0ca346e39ed4c57d0b75ada54c674e9",
+      "generator_sha256": "3529e8fcfb69f9d28f8ec732111d0a2978e3e91abf0ac0b8f740977b965c2255",
+      "native_scope_sha256": {
+        "analog_0.bin": "ae344ba8f26d294163e02cba016532f353dfb59cf99431986924199b84aeb2a8",
+        "settings.json": "5d6d91b658c08457a42e2f1ca06cb05b8942b54dd0c081d8daec4b0665a08087",
+        "capture.sal": "8725846b0e0e582f69e17c534acf6ec8c303b09c352a6c9662ccf4df69185951",
+        "digital_2_0.bin": "cae467f2ac951342c4d53e5961b22ed1a8fee225a0c33e08825ba7a0a945d301",
+        "digital_1_2.bin": "4c25a23b69e335f475855735bce80c38740d07a6c254a4ae8922c32869ef1182",
+        "digital_1_3.bin": "b596b557f3a73fa1b1f92fb801d52ac32482a80ce1b73ed09955f7fdf071c5d1",
+        "digital_1_1.bin": "8965703aadb78e02bd84e5f6d5608f6e04f0e0aa46f2ce46f3a83f248604b48e",
+        "digital_1_0.bin": "286618c3477beda111ea3b274bc77b851ba84ae2d8b958208a3288201ff5c11e"
+      },
+      "generator_times_us": [
+        3000000,
+        6500000
+      ],
+      "acquisition_tools_source_commit": "82a7c0bcb151e526b4d0480c80cd7083a1af9a09"
+    },
+    {
+      "name": "audio-b48-p250",
+      "qualification": "responsive",
+      "run": {
+        "token": 4260623410,
+        "duration_ms": 10000,
+        "fault": 0,
+        "policy": 1,
+        "count": 20000,
+        "missed": 0,
+        "adc_failures": 0,
+        "elapsed_us": 10000000,
+        "fault_begin_us": 0,
+        "fault_end_us": 0,
+        "finish_reason": "duration",
+        "finish_request_us": 0,
+        "acquisition_limit_us": 10000000,
+        "trigger": 0,
+        "fault_delay_slots": 0,
+        "fault_duration_us": 25000,
+        "trigger_seq": 4294967295,
+        "trigger_us": 0,
+        "fault_due_us": 0,
+        "audio": {
+          "block": 48,
+          "permille": 250,
+          "off_ms": 8000,
+          "end_us": 8000040,
+          "callbacks": 8002,
+          "max_work_ticks": 60024,
+          "max_interval_ticks": 240026,
+          "over_budget": 0,
+          "late_intervals": 0,
+          "bad_size": 0,
+          "period_ticks": 240000,
+          "timer_hz": 240000000
+        }
+      },
+      "invalid_observations": 2505,
+      "ambiguous_analog_apertures": 750,
+      "state_changes": [
+        {
+          "seq": 63,
+          "time_us": 31789,
+          "ready": true,
+          "patched": false
+        },
+        {
+          "seq": 6718,
+          "time_us": 3359423,
+          "ready": true,
+          "patched": true
+        },
+        {
+          "seq": 13102,
+          "time_us": 6551471,
+          "ready": true,
+          "patched": false
+        }
+      ],
+      "audio": {
+        "callbacks": 8002,
+        "independent_marker": "verified every callback",
+        "minimum_work_us": 250.08600139544936,
+        "maximum_work_us": 250.13699935929338,
+        "maximum_interval_us": 1000.1090149769739,
+        "measured_end_us": 8000040
+      },
+      "raw_sha256": "c3606e2fbbf30bb3832501f916aedc952090b85c54ad8b057ee6db66cfef9625",
+      "generator_sha256": "3d178a2fec2b8a5a141c3a9284562b51729409760b731ba6da949a949fd1cb1f",
+      "native_scope_sha256": {
+        "analog_0.bin": "7a486fefb7265e650060d04d4aa4d348f092d43f6d75a064a39975e1f515b059",
+        "settings.json": "5d6d91b658c08457a42e2f1ca06cb05b8942b54dd0c081d8daec4b0665a08087",
+        "capture.sal": "da5119424794b2c5639edab9fd7199c0133115fa292850e8f658a8d6b2db9ab0",
+        "digital_2_0.bin": "1bac26f793c070207662c8bf255637d0c6abd2784ad743adfcfad8dec85e905a",
+        "digital_1_2.bin": "8c4bdf63c28719f5791bfdbeed91b8fc6837d828789019ffd1c1cca81f580562",
+        "digital_1_3.bin": "31bd7d0c87fbf8f34069bba7bade1276df447f9d50a2858a2b6b912d35e87bc9",
+        "digital_1_1.bin": "a1040c8ce117ff8be9b4f49e99a6b49686f32a0271a7b68651b789422092f167",
+        "digital_1_0.bin": "9a1cd670c7e3af1652aa7a41626fdc921fb8d7bf99358c4df1b083948c3f7757"
+      },
+      "generator_times_us": [
+        3000000,
+        6500000
+      ],
+      "acquisition_tools_source_commit": "82a7c0bcb151e526b4d0480c80cd7083a1af9a09"
+    },
+    {
+      "name": "audio-b48-p500",
+      "qualification": "starved under load; recovered empty",
+      "run": {
+        "token": 735817120,
+        "duration_ms": 10000,
+        "fault": 0,
+        "policy": 1,
+        "count": 19821,
+        "missed": 179,
+        "adc_failures": 0,
+        "elapsed_us": 10000000,
+        "fault_begin_us": 0,
+        "fault_end_us": 0,
+        "finish_reason": "duration",
+        "finish_request_us": 0,
+        "acquisition_limit_us": 10000000,
+        "trigger": 0,
+        "fault_delay_slots": 0,
+        "fault_duration_us": 25000,
+        "trigger_seq": 4294967295,
+        "trigger_us": 0,
+        "fault_due_us": 0,
+        "audio": {
+          "block": 48,
+          "permille": 500,
+          "off_ms": 8000,
+          "end_us": 8000205,
+          "callbacks": 8002,
+          "max_work_ticks": 120024,
+          "max_interval_ticks": 240014,
+          "over_budget": 0,
+          "late_intervals": 0,
+          "bad_size": 0,
+          "period_ticks": 240000,
+          "timer_hz": 240000000
+        }
+      },
+      "invalid_observations": 14296,
+      "ambiguous_analog_apertures": 4052,
+      "state_changes": [
+        {
+          "seq": 15885,
+          "time_us": 8032289,
+          "ready": true,
+          "patched": false
+        }
+      ],
+      "audio": {
+        "callbacks": 8002,
+        "independent_marker": "verified every callback",
+        "minimum_work_us": 500.09401362349575,
+        "maximum_work_us": 500.1740104286941,
+        "maximum_interval_us": 1000.058032447051,
+        "measured_end_us": 8000205
+      },
+      "raw_sha256": "b9da4e3c392711799a9aefe8ed297b41b6ef12e2492e127b2233399b22396c37",
+      "generator_sha256": "27107a2acc2648027a2db1ec2de15f92160d97ac1d5ff417684047289a321710",
+      "native_scope_sha256": {
+        "analog_0.bin": "d9c47b4c0489b761ec50b003c6734cfc4e55e11399fd6e945f18096ee379eea1",
+        "settings.json": "5d6d91b658c08457a42e2f1ca06cb05b8942b54dd0c081d8daec4b0665a08087",
+        "capture.sal": "3deec39c90b8bbc7db013f3868558fc5a03a28d4b0f9be7e628498806154217b",
+        "digital_2_0.bin": "999be07ab39dfd19fe8a4dc45f7c8ca703c4dd8422df99ab5c9f7a56df168cc4",
+        "digital_1_2.bin": "cdfaafa611cc86c4708d31a4993d840585765e8b1e06eb284720ef4bc918d61f",
+        "digital_1_3.bin": "18ffc523ed7d3915b54666ac128901223776b0a3f9f7addda6396d11784ee6fb",
+        "digital_1_1.bin": "497864c5f695e78937306e094c00b1532f959825cd8c0094a5c0679698a143f9",
+        "digital_1_0.bin": "81ffd260d796a723d14e8e5a289af36438bcd9e3245a1b7ddb26c19fec7db4ba"
+      },
+      "generator_times_us": [
+        3000000,
+        6500000
+      ],
+      "acquisition_tools_source_commit": "82a7c0bcb151e526b4d0480c80cd7083a1af9a09"
+    },
+    {
+      "name": "audio-b48-p700",
+      "qualification": "starved under load; recovered empty",
+      "run": {
+        "token": 1986385185,
+        "duration_ms": 10000,
+        "fault": 0,
+        "policy": 1,
+        "count": 12003,
+        "missed": 7997,
+        "adc_failures": 0,
+        "elapsed_us": 10000000,
+        "fault_begin_us": 0,
+        "fault_end_us": 0,
+        "finish_reason": "duration",
+        "finish_request_us": 0,
+        "acquisition_limit_us": 10000000,
+        "trigger": 0,
+        "fault_delay_slots": 0,
+        "fault_duration_us": 25000,
+        "trigger_seq": 4294967295,
+        "trigger_us": 0,
+        "fault_due_us": 0,
+        "audio": {
+          "block": 48,
+          "permille": 700,
+          "off_ms": 8000,
+          "end_us": 8000259,
+          "callbacks": 8002,
+          "max_work_ticks": 168024,
+          "max_interval_ticks": 239954,
+          "over_budget": 0,
+          "late_intervals": 0,
+          "bad_size": 0,
+          "period_ticks": 240000,
+          "timer_hz": 240000000
+        }
+      },
+      "invalid_observations": 8002,
+      "ambiguous_analog_apertures": 2277,
+      "state_changes": [
+        {
+          "seq": 8067,
+          "time_us": 8032289,
+          "ready": true,
+          "patched": false
+        }
+      ],
+      "audio": {
+        "callbacks": 8002,
+        "independent_marker": "verified every callback",
+        "minimum_work_us": 700.0940315449178,
+        "maximum_work_us": 700.1530291903157,
+        "maximum_interval_us": 999.8090580629711,
+        "measured_end_us": 8000259
+      },
+      "raw_sha256": "6b58615a3e08af56db1a401f0ab7a6aaff12c4557e9a55138ce584adeea15340",
+      "generator_sha256": "b1b8eb88d93a3ac01f5b901818a92aee106d3b45de05d31293e21f5a295b6094",
+      "native_scope_sha256": {
+        "analog_0.bin": "b06db72ed918bc209eb1b9a62499e897b27c6cead3a44cc517d2cf1203d541f4",
+        "settings.json": "5d6d91b658c08457a42e2f1ca06cb05b8942b54dd0c081d8daec4b0665a08087",
+        "capture.sal": "19599d2d2da843d8647505f9455447a0fbf2b0a99595dacdb92ffbb772ff1593",
+        "digital_2_0.bin": "1bc045dff9b39eb07dc94305f07a07efcdc44ba3237565834042ad99c8ee4222",
+        "digital_1_2.bin": "48246f68b87f273e1db09d882d86f35052498c41288daa97271f49fc857e8310",
+        "digital_1_3.bin": "dca2e530d158670628c528e007b94466d50169befebf68e29a7431ce42db7809",
+        "digital_1_1.bin": "41d1ba7c8b0637eea019b4b1950df45a8879387a065e0d6ea3343833f4c532fa",
+        "digital_1_0.bin": "939b2cee7d8860fbf473d0023e1d1a0cc4512bf75c3feb4671fb16bc11cfc7dc"
+      },
+      "generator_times_us": [
+        3000000,
+        6500000
+      ],
+      "acquisition_tools_source_commit": "82a7c0bcb151e526b4d0480c80cd7083a1af9a09"
+    },
+    {
+      "name": "audio-b96-p0",
+      "qualification": "responsive",
+      "run": {
+        "token": 93968441,
+        "duration_ms": 10000,
+        "fault": 0,
+        "policy": 1,
+        "count": 20000,
+        "missed": 0,
+        "adc_failures": 0,
+        "elapsed_us": 10000000,
+        "fault_begin_us": 0,
+        "fault_end_us": 0,
+        "finish_reason": "duration",
+        "finish_request_us": 0,
+        "acquisition_limit_us": 10000000,
+        "trigger": 0,
+        "fault_delay_slots": 0,
+        "fault_duration_us": 25000,
+        "trigger_seq": 4294967295,
+        "trigger_us": 0,
+        "fault_due_us": 0,
+        "audio": {
+          "block": 96,
+          "permille": 0,
+          "off_ms": 8000,
+          "end_us": 8000000,
+          "callbacks": 4001,
+          "max_work_ticks": 206,
+          "max_interval_ticks": 479920,
+          "over_budget": 0,
+          "late_intervals": 0,
+          "bad_size": 0,
+          "period_ticks": 480000,
+          "timer_hz": 240000000
+        }
+      },
+      "invalid_observations": 0,
+      "ambiguous_analog_apertures": 0,
+      "state_changes": [
+        {
+          "seq": 63,
+          "time_us": 31789,
+          "ready": true,
+          "patched": false
+        },
+        {
+          "seq": 6527,
+          "time_us": 3263789,
+          "ready": true,
+          "patched": true
+        },
+        {
+          "seq": 13119,
+          "time_us": 6559789,
+          "ready": true,
+          "patched": false
+        }
+      ],
+      "audio": {
+        "callbacks": 4001,
+        "independent_marker": "verified every callback",
+        "minimum_work_us": 0.760969668256286,
+        "maximum_work_us": 0.9029640096199656,
+        "maximum_interval_us": 1999.667297178906,
+        "measured_end_us": 8000000
+      },
+      "raw_sha256": "481e2c390165ba36d930a23134a4caeef704ec75dab10adecd00b98e3c7777a5",
+      "generator_sha256": "2a5e724bd6b1e513ed77859043cffb24f02217393adcbb188e74bc0231f6d295",
+      "native_scope_sha256": {
+        "analog_0.bin": "a5cf6cb01949c36877750855f5ddfc1c7539a80fbb222630c5c7519fafb9a6c6",
+        "settings.json": "5d6d91b658c08457a42e2f1ca06cb05b8942b54dd0c081d8daec4b0665a08087",
+        "capture.sal": "6ac75244afce934da4c1ea0553311e4fab17de80df9b52d092265b61fa2f47fb",
+        "digital_2_0.bin": "d176c7cfdc938bdb60bbcf5b9fbeb8d732b72cd5258b1c6a893c08737b207ad3",
+        "digital_1_2.bin": "783379180ab2283aea393064a571ff3b1add2b1f89f8b1abbee4e341b3925fd3",
+        "digital_1_3.bin": "7f5ca50756efc2c88889a9bca1920e5b43c05d202a29742ae6efac6d26b84525",
+        "digital_1_1.bin": "e0ab2eb90771963e63bb7a7eab691d6a9c5565d4e5a09abedc21d529d196e91a",
+        "digital_1_0.bin": "94780e0c00526c10f7208ea3f10a364552462c1006e0e5acadc01f49de095288"
+      },
+      "generator_times_us": [
+        3000000,
+        6500000
+      ],
+      "acquisition_tools_source_commit": "21f67a9a35b883b2cb7cd2406b84deb04fa137af"
+    },
+    {
+      "name": "audio-b96-p250",
+      "qualification": "starved under load; recovered empty",
+      "run": {
+        "token": 3326242746,
+        "duration_ms": 10000,
+        "fault": 0,
+        "policy": 1,
+        "count": 19818,
+        "missed": 182,
+        "adc_failures": 0,
+        "elapsed_us": 10000000,
+        "fault_begin_us": 0,
+        "fault_end_us": 0,
+        "finish_reason": "duration",
+        "finish_request_us": 0,
+        "acquisition_limit_us": 10000000,
+        "trigger": 0,
+        "fault_delay_slots": 0,
+        "fault_duration_us": 25000,
+        "trigger_seq": 4294967295,
+        "trigger_us": 0,
+        "fault_due_us": 0,
+        "audio": {
+          "block": 96,
+          "permille": 250,
+          "off_ms": 8000,
+          "end_us": 8000003,
+          "callbacks": 4001,
+          "max_work_ticks": 120024,
+          "max_interval_ticks": 479940,
+          "over_budget": 0,
+          "late_intervals": 0,
+          "bad_size": 0,
+          "period_ticks": 480000,
+          "timer_hz": 240000000
+        }
+      },
+      "invalid_observations": 6267,
+      "ambiguous_analog_apertures": 1686,
+      "state_changes": [
+        {
+          "seq": 15882,
+          "time_us": 8032289,
+          "ready": true,
+          "patched": false
+        }
+      ],
+      "audio": {
+        "callbacks": 4001,
+        "independent_marker": "verified every callback",
+        "minimum_work_us": 500.0940505859006,
+        "maximum_work_us": 500.1530482349567,
+        "maximum_interval_us": 1999.750227323839,
+        "measured_end_us": 8000003
+      },
+      "raw_sha256": "6d5ebae9da5a8c347d69603665eb42237056cef4e6c7291ee290fee084da5632",
+      "generator_sha256": "c0be58ebd68058d3c4723cc25304a45f29bc813db1dad7d4aacb7d4cd0590ae9",
+      "native_scope_sha256": {
+        "analog_0.bin": "e11a1d8988874cdb230f0b7d2b193f650113ab7349097ab531bb79d71596173b",
+        "settings.json": "5d6d91b658c08457a42e2f1ca06cb05b8942b54dd0c081d8daec4b0665a08087",
+        "capture.sal": "68793765ee60fc386945f71c9cd7edb4d1c2384adcdb43c0b4cff8ce947ad65f",
+        "digital_2_0.bin": "71c8a6a66c1dfb73295d85605717d23e041bfeacac665d633cd2118dd3c4275b",
+        "digital_1_2.bin": "64405e29700132e818354e55abdfb7d13402e45bbae8c169dc5f67556c4d348b",
+        "digital_1_3.bin": "109f06caf3ff31274b270c197dd0559003b44542bb1394c96d9017b5586254ea",
+        "digital_1_1.bin": "9976ed2f745f18522b1d14d8ae02bfc754fd900b2bac195004475765f6984e6b",
+        "digital_1_0.bin": "d3f2f43693b824f76885feb1dc4843fc0dd0092e413933028eeb5074e07fee82"
+      },
+      "generator_times_us": [
+        3000000,
+        6500000
+      ],
+      "acquisition_tools_source_commit": "21f67a9a35b883b2cb7cd2406b84deb04fa137af"
+    },
+    {
+      "name": "audio-b96-p500",
+      "qualification": "starved under load; recovered empty",
+      "run": {
+        "token": 3553128339,
+        "duration_ms": 10000,
+        "fault": 0,
+        "policy": 1,
+        "count": 15849,
+        "missed": 4151,
+        "adc_failures": 0,
+        "elapsed_us": 10000000,
+        "fault_begin_us": 0,
+        "fault_end_us": 0,
+        "finish_reason": "duration",
+        "finish_request_us": 0,
+        "acquisition_limit_us": 10000000,
+        "trigger": 0,
+        "fault_delay_slots": 0,
+        "fault_duration_us": 25000,
+        "trigger_seq": 4294967295,
+        "trigger_us": 0,
+        "fault_due_us": 0,
+        "audio": {
+          "block": 96,
+          "permille": 500,
+          "off_ms": 8000,
+          "end_us": 8000696,
+          "callbacks": 4001,
+          "max_work_ticks": 240024,
+          "max_interval_ticks": 479954,
+          "over_budget": 0,
+          "late_intervals": 0,
+          "bad_size": 0,
+          "period_ticks": 480000,
+          "timer_hz": 240000000
+        }
+      },
+      "invalid_observations": 6932,
+      "ambiguous_analog_apertures": 1774,
+      "state_changes": [
+        {
+          "seq": 11914,
+          "time_us": 8032789,
+          "ready": true,
+          "patched": false
+        }
+      ],
+      "audio": {
+        "callbacks": 4001,
+        "independent_marker": "verified every callback",
+        "minimum_work_us": 1000.0941091635401,
+        "maximum_work_us": 1000.1371074511336,
+        "maximum_interval_us": 1999.808233485432,
+        "measured_end_us": 8000696
+      },
+      "raw_sha256": "017822a3fc5bd86fc7de8a114b9bd05ebb712630cb58b89e1fa1300eeb7407f4",
+      "generator_sha256": "a701134060da32622dd68034ec4059cf7b6d29a32d7e7792233afd1c59989ecb",
+      "native_scope_sha256": {
+        "analog_0.bin": "096e73c3955aff8f90c8883f144acd564976bbcde4199020f27f3e87675a0343",
+        "settings.json": "5d6d91b658c08457a42e2f1ca06cb05b8942b54dd0c081d8daec4b0665a08087",
+        "capture.sal": "2444dd147d4958c3cedc553bf210bba435376b629307517a9408de4c1f920e38",
+        "digital_2_0.bin": "184b9f81bddec3a4f0cedec03c18f93159491983b820845bc3c2a6654348991d",
+        "digital_1_2.bin": "2ef363ef8c2ed742f0460ab26cec9cbf9a52ac8927eebfa6ccf7cbe7e17d9fd9",
+        "digital_1_3.bin": "bca26995ecd9ee6496bbdd33d711f243effa4474a4e27d4c9b4151e450999477",
+        "digital_1_1.bin": "96a984d0027c00e061b91b90b3ed5a25636c73da5a0a1b33aeb84e3837149ce6",
+        "digital_1_0.bin": "1bb91332c506f6e8dc9eb25db5c189098c08c7079d8b4d6f47a3aae341af97b1"
+      },
+      "generator_times_us": [
+        3000000,
+        6500000
+      ],
+      "acquisition_tools_source_commit": "21f67a9a35b883b2cb7cd2406b84deb04fa137af"
+    },
+    {
+      "name": "audio-b96-p700",
+      "qualification": "starved under load; recovered empty",
+      "run": {
+        "token": 2358854587,
+        "duration_ms": 10000,
+        "fault": 0,
+        "policy": 1,
+        "count": 11998,
+        "missed": 8002,
+        "adc_failures": 0,
+        "elapsed_us": 10000000,
+        "fault_begin_us": 0,
+        "fault_end_us": 0,
+        "finish_reason": "duration",
+        "finish_request_us": 0,
+        "acquisition_limit_us": 10000000,
+        "trigger": 0,
+        "fault_delay_slots": 0,
+        "fault_duration_us": 25000,
+        "trigger_seq": 4294967295,
+        "trigger_us": 0,
+        "fault_due_us": 0,
+        "audio": {
+          "block": 96,
+          "permille": 700,
+          "off_ms": 8000,
+          "end_us": 8001114,
+          "callbacks": 4001,
+          "max_work_ticks": 336024,
+          "max_interval_ticks": 479912,
+          "over_budget": 0,
+          "late_intervals": 0,
+          "bad_size": 0,
+          "period_ticks": 480000,
+          "timer_hz": 240000000
+        }
+      },
+      "invalid_observations": 7997,
+      "ambiguous_analog_apertures": 1660,
+      "state_changes": [
+        {
+          "seq": 8064,
+          "time_us": 8033289,
+          "ready": true,
+          "patched": false
+        }
+      ],
+      "audio": {
+        "callbacks": 4001,
+        "independent_marker": "verified every callback",
+        "minimum_work_us": 1400.082159524365,
+        "maximum_work_us": 1400.149156852033,
+        "maximum_interval_us": 1999.6332472003776,
+        "measured_end_us": 8001114
+      },
+      "raw_sha256": "e58319e83ab1260b47fc71b1d076a59afc6f1668144541a3ad3903bf6edf79e9",
+      "generator_sha256": "9029b89d11e78f9cd56ca053e2bd2be0e07f642e61dd8e2567c532dc0445c203",
+      "native_scope_sha256": {
+        "analog_0.bin": "bae6a6945787a0b2cf471eccc8b5518c14b8480df46917f4abbc154945875a3f",
+        "settings.json": "5d6d91b658c08457a42e2f1ca06cb05b8942b54dd0c081d8daec4b0665a08087",
+        "capture.sal": "c99f3a2a38a1d4e830059a9a4d431e7a799d3cca49d3a80a1c501b10329e47f8",
+        "digital_2_0.bin": "60268d2cc8297ae66ac4ff9f9f7a84538798e741a60d761d3266a4884f84c9bb",
+        "digital_1_2.bin": "7ca9c389bd3c1d741c72c0ce64bc42f738c41a9dbe812268f9f3bb4e80c6e312",
+        "digital_1_3.bin": "759a67ec9db257a223a52f15a2a05160bb93d11c0fe1f65cf15b411ed20aa3e0",
+        "digital_1_1.bin": "8a15ec50d5471c3b558e07aef667610936f40f2fe1722384b76ad6791dd91553",
+        "digital_1_0.bin": "5c017b5b8b4329f835d4d00edb1872d373111cbb532fcc57f800a1a346415d76"
+      },
+      "generator_times_us": [
+        3000000,
+        6500000
+      ],
+      "acquisition_tools_source_commit": "21f67a9a35b883b2cb7cd2406b84deb04fa137af"
+    },
+    {
+      "name": "baseline-after",
+      "qualification": "responsive",
+      "run": {
+        "token": 2506525550,
+        "duration_ms": 10000,
+        "fault": 0,
+        "policy": 1,
+        "count": 20000,
+        "missed": 0,
+        "adc_failures": 0,
+        "elapsed_us": 10000000,
+        "fault_begin_us": 0,
+        "fault_end_us": 0,
+        "finish_reason": "duration",
+        "finish_request_us": 0,
+        "acquisition_limit_us": 10000000,
+        "trigger": 0,
+        "fault_delay_slots": 0,
+        "fault_duration_us": 25000,
+        "trigger_seq": 4294967295,
+        "trigger_us": 0,
+        "fault_due_us": 0,
+        "audio": {
+          "block": 0,
+          "permille": 0,
+          "off_ms": 0,
+          "end_us": 0,
+          "callbacks": 0,
+          "max_work_ticks": 0,
+          "max_interval_ticks": 0,
+          "over_budget": 0,
+          "late_intervals": 0,
+          "bad_size": 0,
+          "period_ticks": 0,
+          "timer_hz": 240000000
+        }
+      },
+      "invalid_observations": 0,
+      "ambiguous_analog_apertures": 0,
+      "state_changes": [
+        {
+          "seq": 63,
+          "time_us": 31789,
+          "ready": true,
+          "patched": false
+        },
+        {
+          "seq": 6527,
+          "time_us": 3263789,
+          "ready": true,
+          "patched": true
+        },
+        {
+          "seq": 13119,
+          "time_us": 6559789,
+          "ready": true,
+          "patched": false
+        }
+      ],
+      "audio": {
+        "callbacks": 0,
+        "independent_marker": "verified idle"
+      },
+      "raw_sha256": "664665759280f7c5742111a8bd7c9b8926ce90d7b5771f563157ef0e16a91c08",
+      "generator_sha256": "a4f700240f460fe8c4a0ec1f97084513413dcf4fd9e12e7b08e93ad8202b4667",
+      "native_scope_sha256": {
+        "analog_0.bin": "cf18b83136967af93a2dc5cf75eb0b02fbf3dd5c8bb870b99a817f5fc2124c3e",
+        "settings.json": "5d6d91b658c08457a42e2f1ca06cb05b8942b54dd0c081d8daec4b0665a08087",
+        "capture.sal": "81e65c47d8c69c6d113a022e86c83d2470e9f1f7b3d01b0dcad7990d1129600c",
+        "digital_2_0.bin": "2624c88ee46aa3d93f8b160bfe3af0bfb66e3038b4d4f7cbdbda1e8a75486db7",
+        "digital_1_2.bin": "7afb0a937be1250eba956435dc8c506785a3493238dc76c9b30e63bdb7a59596",
+        "digital_1_3.bin": "1bd74b1c1606e8abdac60d0ab76d4a1209a7ce3141c274ff078433e765dca561",
+        "digital_1_1.bin": "a5c2a387ec6f3d09946f49ef215fe2e7311fa3ea024ef47e05d5297c1eabcbbf",
+        "digital_1_0.bin": "9543d3d55c37c54a9adfed327308e4e83fc2a9216333d63e093970845a9a94f3"
+      },
+      "generator_times_us": [
+        3000000,
+        6500000
+      ],
+      "acquisition_tools_source_commit": "21f67a9a35b883b2cb7cd2406b84deb04fa137af"
+    },
+    {
+      "name": "recovery-b16-p700",
+      "qualification": "responsive",
+      "run": {
+        "token": 744989366,
+        "duration_ms": 14000,
+        "fault": 0,
+        "policy": 1,
+        "count": 24004,
+        "missed": 3996,
+        "adc_failures": 0,
+        "elapsed_us": 14000000,
+        "fault_begin_us": 0,
+        "fault_end_us": 0,
+        "finish_reason": "duration",
+        "finish_request_us": 0,
+        "acquisition_limit_us": 14000000,
+        "trigger": 0,
+        "fault_delay_slots": 0,
+        "fault_duration_us": 25000,
+        "trigger_seq": 4294967295,
+        "trigger_us": 0,
+        "fault_due_us": 0,
+        "audio": {
+          "block": 16,
+          "permille": 700,
+          "off_ms": 8000,
+          "end_us": 8000126,
+          "callbacks": 24007,
+          "max_work_ticks": 56024,
+          "max_interval_ticks": 80014,
+          "over_budget": 0,
+          "late_intervals": 0,
+          "bad_size": 0,
+          "period_ticks": 80000,
+          "timer_hz": 240000000
+        }
+      },
+      "invalid_observations": 12005,
+      "ambiguous_analog_apertures": 2302,
+      "state_changes": [
+        {
+          "seq": 12516,
+          "time_us": 8256289,
+          "ready": true,
+          "patched": true
+        },
+        {
+          "seq": 17124,
+          "time_us": 10560289,
+          "ready": true,
+          "patched": false
+        }
+      ],
+      "audio": {
+        "callbacks": 24007,
+        "independent_marker": "verified every callback",
+        "minimum_work_us": 233.42670675351607,
+        "maximum_work_us": 233.498703887109,
+        "maximum_interval_us": 333.396726720831,
+        "measured_end_us": 8000126
+      },
+      "raw_sha256": "9cfdc8f127ce8e67a7d261d8648914428815b706104cf3d0535291e06797e083",
+      "generator_sha256": "ea635c8c772dc6dfa4e22a6e480086fe83028cb57beb84d68c558a66d8e05731",
+      "native_scope_sha256": {
+        "analog_0.bin": "db799026a61664b2b08a13f16ed1e3d7423ae62cf42922314795e3f572424530",
+        "settings.json": "5d6d91b658c08457a42e2f1ca06cb05b8942b54dd0c081d8daec4b0665a08087",
+        "capture.sal": "433ba557ab3c7162dee66c5f72900623b2ab7761b349fecbbd3ae0fe537885fd",
+        "digital_2_0.bin": "531162dbbc2c448e4f37d37a1c7f4e51fe607e89796d60dd67b2509bb172ba7c",
+        "digital_1_2.bin": "f1ecb830fa8c8b387d190f283b4d30a9f7ec171bdcc4b04ca7736ada97956575",
+        "digital_1_3.bin": "9da839f06c9c666c4af453ea5bd8af6bce0be05955f7d7584c46d520b49b7767",
+        "digital_1_1.bin": "2a1527bd1e17a0df6bb885db23b76b032958d30eb899c22b50b2bfbfd2a05dfa",
+        "digital_1_0.bin": "945605594b010075e39a06863e58321fd870adfe18b353b7a447b500dd459032"
+      },
+      "generator_times_us": [
+        3000000,
+        10500000
+      ],
+      "acquisition_tools_source_commit": "91b2df7db2c282ef23c394614b9aa9a611394058"
+    },
+    {
+      "name": "recovery-b48-p700",
+      "qualification": "responsive",
+      "run": {
+        "token": 1410610909,
+        "duration_ms": 14000,
+        "fault": 0,
+        "policy": 1,
+        "count": 20003,
+        "missed": 7997,
+        "adc_failures": 0,
+        "elapsed_us": 14000000,
+        "fault_begin_us": 0,
+        "fault_end_us": 0,
+        "finish_reason": "duration",
+        "finish_request_us": 0,
+        "acquisition_limit_us": 14000000,
+        "trigger": 0,
+        "fault_delay_slots": 0,
+        "fault_duration_us": 25000,
+        "trigger_seq": 4294967295,
+        "trigger_us": 0,
+        "fault_due_us": 0,
+        "audio": {
+          "block": 48,
+          "permille": 700,
+          "off_ms": 8000,
+          "end_us": 8000266,
+          "callbacks": 8002,
+          "max_work_ticks": 168024,
+          "max_interval_ticks": 239954,
+          "over_budget": 0,
+          "late_intervals": 0,
+          "bad_size": 0,
+          "period_ticks": 240000,
+          "timer_hz": 240000000
+        }
+      },
+      "invalid_observations": 8002,
+      "ambiguous_analog_apertures": 1534,
+      "state_changes": [
+        {
+          "seq": 8515,
+          "time_us": 8256289,
+          "ready": true,
+          "patched": true
+        },
+        {
+          "seq": 13123,
+          "time_us": 10560289,
+          "ready": true,
+          "patched": false
+        }
+      ],
+      "audio": {
+        "callbacks": 8002,
+        "independent_marker": "verified every callback",
+        "minimum_work_us": 700.0941127811794,
+        "maximum_work_us": 700.1661099154622,
+        "maximum_interval_us": 999.8091740756977,
+        "measured_end_us": 8000266
+      },
+      "raw_sha256": "a730dca7d9256f51207d97f6f3126ef63030b028b918453b56e9e661263a10d7",
+      "generator_sha256": "c28acc1daf0e398fb3c3c21457346a794115874c62a569d1161c6ca0b2f47990",
+      "native_scope_sha256": {
+        "analog_0.bin": "c37cedcab570ad6c88e81599944e31d0e73814d99e7c0b199bb4ddc8a12234cc",
+        "settings.json": "5d6d91b658c08457a42e2f1ca06cb05b8942b54dd0c081d8daec4b0665a08087",
+        "capture.sal": "f183cadb5407f7157e3495098349ae4e578a12d73f63155f31a6b47bc76f1517",
+        "digital_2_0.bin": "960e104f7acdced41097998b1abe6473cfa2d34eb5de4e6fecbf09e7a5582cff",
+        "digital_1_2.bin": "26dedf065ca6c0d7440132a4572d0057254cf0133f9cda0bac0d706c595a2476",
+        "digital_1_3.bin": "8ad998d1f5a7a7846b61e5271ce7be64dc4abc7321662a55a2399c2277a59e23",
+        "digital_1_1.bin": "6676bb184d7193c1daf78a45d1240e046bdfd3a81acd42fadef3d7c617cbb4e2",
+        "digital_1_0.bin": "e8f1338136a1ab5576158b1a72caa48475f112a810f805cb953aa5a093a8dc29"
+      },
+      "generator_times_us": [
+        3000000,
+        10500000
+      ],
+      "acquisition_tools_source_commit": "91b2df7db2c282ef23c394614b9aa9a611394058"
+    },
+    {
+      "name": "recovery-b96-p700",
+      "qualification": "responsive",
+      "run": {
+        "token": 691575134,
+        "duration_ms": 14000,
+        "fault": 0,
+        "policy": 1,
+        "count": 19998,
+        "missed": 8002,
+        "adc_failures": 0,
+        "elapsed_us": 14000000,
+        "fault_begin_us": 0,
+        "fault_end_us": 0,
+        "finish_reason": "duration",
+        "finish_request_us": 0,
+        "acquisition_limit_us": 14000000,
+        "trigger": 0,
+        "fault_delay_slots": 0,
+        "fault_duration_us": 25000,
+        "trigger_seq": 4294967295,
+        "trigger_us": 0,
+        "fault_due_us": 0,
+        "audio": {
+          "block": 96,
+          "permille": 700,
+          "off_ms": 8000,
+          "end_us": 8001114,
+          "callbacks": 4001,
+          "max_work_ticks": 336024,
+          "max_interval_ticks": 479896,
+          "over_budget": 0,
+          "late_intervals": 0,
+          "bad_size": 0,
+          "period_ticks": 480000,
+          "timer_hz": 240000000
+        }
+      },
+      "invalid_observations": 7997,
+      "ambiguous_analog_apertures": 1085,
+      "state_changes": [
+        {
+          "seq": 8512,
+          "time_us": 8257289,
+          "ready": true,
+          "patched": true
+        },
+        {
+          "seq": 13120,
+          "time_us": 10561289,
+          "ready": true,
+          "patched": false
+        }
+      ],
+      "audio": {
+        "callbacks": 4001,
+        "independent_marker": "verified every callback",
+        "minimum_work_us": 1400.094206037247,
+        "maximum_work_us": 1400.1372043290933,
+        "maximum_interval_us": 1999.566316988341,
+        "measured_end_us": 8001114
+      },
+      "raw_sha256": "7d81307837b2089b7d3292d5b280505dbb2f971a48e8b464fcf15de376be0f14",
+      "generator_sha256": "bd71bf33243a143e91c0e1dfe136ed8cc03f02798f92acd5216aebb79bbf3515",
+      "native_scope_sha256": {
+        "analog_0.bin": "0bb3a8946f8700889089143abbe4ab4143d4549ef0d7bfd5f079f1fd0e75bd64",
+        "settings.json": "5d6d91b658c08457a42e2f1ca06cb05b8942b54dd0c081d8daec4b0665a08087",
+        "capture.sal": "e2f2a474a518130931b8885111e09f21d7ce94f55f4e968fd4735731324f096a",
+        "digital_2_0.bin": "6a176b7ab7f25d12fdc5dabe46da5b97c62f0bd9e2f46e3c568d658bb6433a08",
+        "digital_1_2.bin": "7c97cf200fa1cff2ba00d026516ad334e2e63511e9e8f052fb8301c06ab551af",
+        "digital_1_3.bin": "c85e9262e9ed8d28ab1f2d6d4a282aa6d599ac57e5276d3a799e461a55fd8e1a",
+        "digital_1_1.bin": "5b1aad39d02354d964b155e387988ec5bc9921f6067c6ad8cb787321efd13ad9",
+        "digital_1_0.bin": "b48a47b9e6b0ee06e494dc0b9b64b0404409f0b58ab22f8adf829a03a80cad11"
+      },
+      "generator_times_us": [
+        3000000,
+        10500000
+      ],
+      "acquisition_tools_source_commit": "91b2df7db2c282ef23c394614b9aa9a611394058"
+    },
+    {
+      "name": "loaded-t2-f1",
+      "qualification": "responsive",
+      "run": {
+        "token": 1875250033,
+        "duration_ms": 10000,
+        "fault": 1,
+        "policy": 1,
+        "count": 20000,
+        "missed": 0,
+        "adc_failures": 0,
+        "elapsed_us": 10000000,
+        "fault_begin_us": 3263661,
+        "fault_end_us": 3288654,
+        "finish_reason": "duration",
+        "finish_request_us": 0,
+        "acquisition_limit_us": 10000000,
+        "trigger": 2,
+        "fault_delay_slots": 0,
+        "fault_duration_us": 25000,
+        "trigger_seq": 6526,
+        "trigger_us": 3263329,
+        "fault_due_us": 3263500,
+        "audio": {
+          "block": 16,
+          "permille": 250,
+          "off_ms": 8000,
+          "end_us": 8000000,
+          "callbacks": 24007,
+          "max_work_ticks": 20024,
+          "max_interval_ticks": 80076,
+          "over_budget": 0,
+          "late_intervals": 0,
+          "bad_size": 0,
+          "period_ticks": 80000,
+          "timer_hz": 240000000
+        }
+      },
+      "invalid_observations": 50,
+      "ambiguous_analog_apertures": 0,
+      "state_changes": [
+        {
+          "seq": 63,
+          "time_us": 31789,
+          "ready": true,
+          "patched": false
+        },
+        {
+          "seq": 7088,
+          "time_us": 3544289,
+          "ready": true,
+          "patched": true
+        },
+        {
+          "seq": 13104,
+          "time_us": 6552347,
+          "ready": true,
+          "patched": false
+        }
+      ],
+      "audio": {
+        "callbacks": 24007,
+        "independent_marker": "verified every callback",
+        "minimum_work_us": 83.4276725626034,
+        "maximum_work_us": 83.48667021297616,
+        "maximum_interval_us": 333.6496926968481,
+        "measured_end_us": 8000000
+      },
+      "raw_sha256": "b46eabd8b2ac18b480771345a94be9d52eac7475cb69cf6034b948c9b9706dcf",
+      "generator_sha256": "dcf2e369091edd4293bf6e90a57c2ad2cc37f34f553981e8473dfc740411f62a",
+      "native_scope_sha256": {
+        "analog_0.bin": "3a3e8aee77190b3b551de72457f377b85d0137a8e73ad6d70bb68c9c5c078e45",
+        "settings.json": "5d6d91b658c08457a42e2f1ca06cb05b8942b54dd0c081d8daec4b0665a08087",
+        "capture.sal": "defb7db001372069741eb61ef38c60f5e45ecd37ec6d507aa2990f7c1247120c",
+        "digital_2_0.bin": "877c124487a5b3aae53f043018392fba54996d1758abbae837a145a4ebe7178b",
+        "digital_1_2.bin": "c1f87b7cb98aada3a8e96bb8b802d227d621c7af69d38330b567830d9f420f3d",
+        "digital_1_3.bin": "044d125c736b479cd398000ce7523b10c1757e1990eb1c40e34700a50d0a3146",
+        "digital_1_1.bin": "16194f672e13b93e130e68b829aa9ca12d30763e252b97c402e362d3d16a64c5",
+        "digital_1_0.bin": "a2d71339b3be85f38d1db87c74a760fa8a0126a82b88297d36dd28df4d29d171"
+      },
+      "generator_times_us": [
+        3000000,
+        6500000
+      ],
+      "acquisition_tools_source_commit": "91b2df7db2c282ef23c394614b9aa9a611394058"
+    },
+    {
+      "name": "loaded-t2-f2",
+      "qualification": "responsive",
+      "run": {
+        "token": 3953174648,
+        "duration_ms": 10000,
+        "fault": 2,
+        "policy": 1,
+        "count": 19950,
+        "missed": 50,
+        "adc_failures": 0,
+        "elapsed_us": 10000000,
+        "fault_begin_us": 3263500,
+        "fault_end_us": 3288500,
+        "finish_reason": "duration",
+        "finish_request_us": 0,
+        "acquisition_limit_us": 10000000,
+        "trigger": 2,
+        "fault_delay_slots": 0,
+        "fault_duration_us": 25000,
+        "trigger_seq": 6526,
+        "trigger_us": 3263389,
+        "fault_due_us": 3263500,
+        "audio": {
+          "block": 16,
+          "permille": 250,
+          "off_ms": 8000,
+          "end_us": 8000000,
+          "callbacks": 24007,
+          "max_work_ticks": 20024,
+          "max_interval_ticks": 80084,
+          "over_budget": 0,
+          "late_intervals": 0,
+          "bad_size": 0,
+          "period_ticks": 80000,
+          "timer_hz": 240000000
+        }
+      },
+      "invalid_observations": 1,
+      "ambiguous_analog_apertures": 1,
+      "state_changes": [
+        {
+          "seq": 63,
+          "time_us": 31824,
+          "ready": true,
+          "patched": false
+        },
+        {
+          "seq": 7039,
+          "time_us": 3544789,
+          "ready": true,
+          "patched": true
+        },
+        {
+          "seq": 13055,
+          "time_us": 6552874,
+          "ready": true,
+          "patched": false
+        }
+      ],
+      "audio": {
+        "callbacks": 24007,
+        "independent_marker": "verified every callback",
+        "minimum_work_us": 83.42767092124072,
+        "maximum_work_us": 83.4946682511204,
+        "maximum_interval_us": 333.68368477696146,
+        "measured_end_us": 8000000
+      },
+      "raw_sha256": "f3eb62a4a6ad202eddf3109c0dc16c83be0759e8588a4c16bcfa87f9e9b039f5",
+      "generator_sha256": "02170dd451fca9b15b8bbfd67a005efb42680d156a5857799b2fe87a1250fee8",
+      "native_scope_sha256": {
+        "analog_0.bin": "6ba45585535023c5a828797acef7dcb3ae0bf6b7bfa2415d7be66b65aea89e0e",
+        "settings.json": "5d6d91b658c08457a42e2f1ca06cb05b8942b54dd0c081d8daec4b0665a08087",
+        "capture.sal": "9b8d5208ec63309be84cf9ccc873c09483a26b4624962961d34a1a458b6fce89",
+        "digital_2_0.bin": "fc54f35f9a3df3f9d7b265e23b258fcc2eb8a17f890165fbd94a3e2d36766296",
+        "digital_1_2.bin": "0db8937c4403253609229917dc766f1a806a990897a50df84cd78968f9435b22",
+        "digital_1_3.bin": "46a749d2d2534966a6149e0b67ae97a947b0a9686ff610d2242421b71739cf2d",
+        "digital_1_1.bin": "a1e07d70d96396968c994dabe4600fff5a0b4643104521982f178772fc0af541",
+        "digital_1_0.bin": "776e5a678fa3f192babf0ddb553ffe401d016166dead70d8ea6ab54179460187"
+      },
+      "generator_times_us": [
+        3000000,
+        6500000
+      ],
+      "acquisition_tools_source_commit": "91b2df7db2c282ef23c394614b9aa9a611394058"
+    },
+    {
+      "name": "loaded-t5-f1",
+      "qualification": "responsive",
+      "run": {
+        "token": 961107355,
+        "duration_ms": 10000,
+        "fault": 1,
+        "policy": 1,
+        "count": 20000,
+        "missed": 0,
+        "adc_failures": 0,
+        "elapsed_us": 10000000,
+        "fault_begin_us": 6559673,
+        "fault_end_us": 6584666,
+        "finish_reason": "duration",
+        "finish_request_us": 0,
+        "acquisition_limit_us": 10000000,
+        "trigger": 5,
+        "fault_delay_slots": 0,
+        "fault_duration_us": 25000,
+        "trigger_seq": 13118,
+        "trigger_us": 6559341,
+        "fault_due_us": 6559500,
+        "audio": {
+          "block": 16,
+          "permille": 250,
+          "off_ms": 8000,
+          "end_us": 8000000,
+          "callbacks": 24007,
+          "max_work_ticks": 20024,
+          "max_interval_ticks": 80072,
+          "over_budget": 0,
+          "late_intervals": 0,
+          "bad_size": 0,
+          "period_ticks": 80000,
+          "timer_hz": 240000000
+        }
+      },
+      "invalid_observations": 50,
+      "ambiguous_analog_apertures": 0,
+      "state_changes": [
+        {
+          "seq": 63,
+          "time_us": 31789,
+          "ready": true,
+          "patched": false
+        },
+        {
+          "seq": 6527,
+          "time_us": 3263795,
+          "ready": true,
+          "patched": true
+        },
+        {
+          "seq": 13232,
+          "time_us": 6616324,
+          "ready": true,
+          "patched": false
+        }
+      ],
+      "audio": {
+        "callbacks": 24007,
+        "independent_marker": "verified every callback",
+        "minimum_work_us": 83.42766908496411,
+        "maximum_work_us": 83.51566557314507,
+        "maximum_interval_us": 333.633679420969,
+        "measured_end_us": 8000000
+      },
+      "raw_sha256": "e64f3cfb3443e63befb819ac5f9e59cc30fda02dbc095d2ba122a2c3806dd6ea",
+      "generator_sha256": "1b7532d125bae26c20cafe631b89ed26c66db7a2567a16cc5944bbc46b467f84",
+      "native_scope_sha256": {
+        "analog_0.bin": "b9f687e380e91a462cf427ca55376ba5a63543715479ec83e7650f1e06f25ba1",
+        "settings.json": "5d6d91b658c08457a42e2f1ca06cb05b8942b54dd0c081d8daec4b0665a08087",
+        "capture.sal": "b584d8fcb2410eb0631f8b3bda3cce4cd6d862ed6efef8d4df79123a158b4e19",
+        "digital_2_0.bin": "2180a3a252d4a497edc14f9cc84d4608f75e2090452426091e2d74bbee9b195b",
+        "digital_1_2.bin": "339b2f1d4f94dcd9f66719b187507cbb8632b4fc6a370e32c59605a807f4394c",
+        "digital_1_3.bin": "56055e74c3b7f430062a3cba4ca38e396bea436f8593e0831e2b3db78b7295a5",
+        "digital_1_1.bin": "825a50f3d7204b2a87cfedf21438628861f23b7df283c230c0d255aca17b0ee7",
+        "digital_1_0.bin": "4f97be6e67f3189693aab07700070926c6eb1c14287c62d05b42fba5fb3fc8b1"
+      },
+      "generator_times_us": [
+        3000000,
+        6500000
+      ],
+      "acquisition_tools_source_commit": "91b2df7db2c282ef23c394614b9aa9a611394058"
+    },
+    {
+      "name": "loaded-t5-f2",
+      "qualification": "responsive",
+      "run": {
+        "token": 1304545277,
+        "duration_ms": 10000,
+        "fault": 2,
+        "policy": 1,
+        "count": 19950,
+        "missed": 50,
+        "adc_failures": 0,
+        "elapsed_us": 10000000,
+        "fault_begin_us": 6559500,
+        "fault_end_us": 6584500,
+        "finish_reason": "duration",
+        "finish_request_us": 0,
+        "acquisition_limit_us": 10000000,
+        "trigger": 5,
+        "fault_delay_slots": 0,
+        "fault_duration_us": 25000,
+        "trigger_seq": 13118,
+        "trigger_us": 6559380,
+        "fault_due_us": 6559500,
+        "audio": {
+          "block": 16,
+          "permille": 250,
+          "off_ms": 8000,
+          "end_us": 8000000,
+          "callbacks": 24007,
+          "max_work_ticks": 20024,
+          "max_interval_ticks": 80076,
+          "over_budget": 0,
+          "late_intervals": 0,
+          "bad_size": 0,
+          "period_ticks": 80000,
+          "timer_hz": 240000000
+        }
+      },
+      "invalid_observations": 1,
+      "ambiguous_analog_apertures": 1,
+      "state_changes": [
+        {
+          "seq": 63,
+          "time_us": 31799,
+          "ready": true,
+          "patched": false
+        },
+        {
+          "seq": 6527,
+          "time_us": 3263835,
+          "ready": true,
+          "patched": true
+        },
+        {
+          "seq": 13183,
+          "time_us": 6616834,
+          "ready": true,
+          "patched": false
+        }
+      ],
+      "audio": {
+        "callbacks": 24007,
+        "independent_marker": "verified every callback",
+        "minimum_work_us": 83.42766805552128,
+        "maximum_work_us": 83.47866602209184,
+        "maximum_interval_us": 333.64967467270304,
+        "measured_end_us": 8000000
+      },
+      "raw_sha256": "88558304d43e61fca13047d17cc16f3ee1d97f8a38c381c94be3b06aea6c82d1",
+      "generator_sha256": "1f5e8947914bb6713d88b4c59ce4815b14c3275d1721bd91848a9e0c97e69d4e",
+      "native_scope_sha256": {
+        "analog_0.bin": "e2a0a7263d6aff5b6571f8feac11348e4971436ec14a3189b075b51bffaf3617",
+        "settings.json": "5d6d91b658c08457a42e2f1ca06cb05b8942b54dd0c081d8daec4b0665a08087",
+        "capture.sal": "44ffd2c17e53e1cb381fe661c51956912e1bc798b8e5fb07757c751958662cc4",
+        "digital_2_0.bin": "69915ad203cff0c9e170d4f73ef8842823931bf55166ff625b720ec2bd8a932b",
+        "digital_1_2.bin": "9f01ba8aa4a18ad6464b3dbcc864f54f0822e601e03c510ba3de6c965da1ff86",
+        "digital_1_3.bin": "d7937c97f5fa0081f6b1bc9294af13c76ddd70b00cb5ac03ed4334461f87166f",
+        "digital_1_1.bin": "4a4036e2ffc70b66767f4c948770b18d4a336a3bd544a9681a0f80f9492fcf78",
+        "digital_1_0.bin": "96d0498dcd8491b8633516db5cb33657f7b487f6157a07ee6af22f3780a272f7"
+      },
+      "generator_times_us": [
+        3000000,
+        6500000
+      ],
+      "acquisition_tools_source_commit": "91b2df7db2c282ef23c394614b9aa9a611394058"
+    }
+  ],
+  "observations": 399398,
+  "missed_slots": 44602,
+  "invalid_observations": 86408,
+  "audio_callbacks": 276078,
+  "review_revision": "Interior source plateaus verified independently; full ADC aperture ambiguity retained",
+  "review_change": {
+    "case": "audio-b48-p700",
+    "original_rejection": "unbounded electrical transition",
+    "original_boundary_bracket_widths_ms": [
+      24.14517,
+      11.148088
+    ],
+    "original_review_source_commit": "82a7c0bcb151e526b4d0480c80cd7083a1af9a09",
+    "replacement_review_source_commit": "21f67a9a35b883b2cb7cd2406b84deb04fa137af",
+    "native_recording_unchanged": true,
+    "full_aperture_ambiguities_preserved": 2277
+  },
+  "limitations": "One passive electrical-clamp fixture. Silent SAI callbacks with measured timer padding, not DSP or analog audio quality. Qualification starvation is an observed limit, not responsive operation. No mechanical bounce, protected input, external voltages, other priorities, or universal utilization limit."
+}

@@ -9,8 +9,11 @@
 #include "build_identity.h"
 #include "protocol.h"
 #include "experiment.h"
+#include "load.h"
+#include "diagnostics.h"
 #include <atomic>
 #include <cstring>
+#include "audio_load.h"
 
 using namespace daisy;
 extern "C" USBD_HandleTypeDef hUsbDeviceFS;
@@ -20,21 +23,33 @@ static UsbHandle usb;
 static GPIO button_pin, sample_marker, action_marker, led;
 static ADC_HandleTypeDef adc;
 static DSY_SDRAM_BSS bench::Record records[bench::kMaxRecords];
+static DSY_SDRAM_BSS bench::Bucket buckets[bench::kMaxBuckets];
+static DSY_SDRAM_BSS bench::TimingBucket timing_buckets[bench::kMaxBuckets];
 static_assert(sizeof(records) <= 16 * 1024 * 1024, "Keep the trace buffer within its SDRAM budget");
+static_assert(sizeof(records) + sizeof(buckets) + sizeof(timing_buckets) <= 16 * 1024 * 1024, "Keep all recorders within the SDRAM budget");
 static_assert(ATOMIC_INT_LOCK_FREE == 2, "USB IRQ mailbox requires lock-free 32-bit atomics");
 static std::atomic<uint32_t> rx_head{0}, rx_tail{0}, rx_dropped{0};
 static char rx[256];
 static bool ready, startup_available;
 struct CaptureState {
-  uint32_t scenario, duration, target, count, missed, failures, overflow, elapsed, dropped;
+  uint32_t scenario, duration, target, count, missed, failures, overflow, elapsed, dropped, fault_delay_us;
   bool held;
   bench::Stimulus stimulus;
 };
 static CaptureState saved;
+static bench::Workload workload;
+static bool load_run = false, hash_output = false;
+static uint32_t output_hash = 2166136261u;
+static bench::Traffic traffic;
+static std::atomic<bool> traffic_measuring{false};
+static bench::Traffic::Counters traffic_saved;
+static audio_load::Counters audio_saved;
 
-// USB IRQ only publishes bytes; all control/state/logging work has one owner.
+// USB IRQ checks load packets or publishes command bytes. Control state and
+// record formatting have one foreground owner.
 static void Receive(uint8_t* bytes, uint32_t* size) {
   for (uint32_t i = 0; i < *size; ++i) {
+    if (traffic.Feed(bytes[i], traffic_measuring.load(std::memory_order_relaxed))) continue;
     const uint32_t head = rx_head.load(std::memory_order_relaxed);
     if (head - rx_tail.load(std::memory_order_acquire) == sizeof(rx)) {
       rx_dropped.fetch_add(1, std::memory_order_relaxed);
@@ -81,6 +96,7 @@ static bool Send(const char* text) {
   }
   start = System::GetNow();
   while (!TxIdle()) if (uint32_t(System::GetNow() - start) > 5000) return false;
+  if (hash_output) output_hash = bench::Hash(output_hash, text, size);
   return true;
 }
 static uint32_t AdcHz() {
@@ -130,7 +146,7 @@ static void Identity() {
   std::snprintf(line, sizeof(line),
       "INFO,{\"protocol\":2,\"build_id\":\"%s\",\"board\":\"seed3\",\"ready\":%s,"
       "\"cpu_hz\":%u,\"timer_hz\":%u,\"adc_hz\":%u,\"mcu_revision\":%u,\"sample_cycles_x2\":1621,"
-      "\"oversampling\":1,\"period_us\":1000,\"max_records\":%u,\"startup_available\":%s,\"startup_duration_ms\":%u}\n",
+      "\"oversampling\":1,\"period_us\":1000,\"max_records\":%u,\"startup_available\":%s,\"startup_duration_ms\":%u,\"load_protocol\":1,\"timing_diagnostics\":1,\"load_faults\":1,\"fault_timing\":1}\n",
       EP_BUILD_ID, ready ? "true" : "false", unsigned(SystemCoreClock),
       unsigned(System::GetTickFreq()), unsigned(AdcHz()), unsigned(HAL_GetREVID()),
       unsigned(bench::kMaxRecords), startup_available ? "true" : "false", unsigned(bench::kStartupDurationMs));
@@ -145,16 +161,30 @@ static bool StartLine(uint32_t token) {
 static void Collect() {
   const uint32_t scenario = saved.scenario, duration = saved.duration, target = saved.target;
   const bool held = saved.held;
-  bench::Experiment experiment(scenario, held);
+  bench::Experiment experiment(scenario, held, saved.fault_delay_us);
   bench::Controls controls;
   controls.Reset(target, held);
   bench::Clock clock(System::GetTick(), System::GetTickFreq());
   bench::Schedule schedule;
   uint32_t count = 0, missed = 0, failures = 0, overflow = 0;
+  uint32_t previous_sample_us = 0;
+  const bool diagnose = load_run && workload.mode == 2;
+  bench::Timing previous_timing{};
   const uint32_t rx_before = rx_dropped.load();
   bool action_level = false;
   uint32_t target_epoch = 0;
   action_marker.Write(false);
+  if (load_run) {
+    if (workload.mode) for (uint32_t i = 0; i < duration / 1000; ++i) buckets[i].Reset();
+    if (diagnose) for (uint32_t i = 0; i < duration / 1000; ++i) timing_buckets[i].Reset();
+    const uint32_t mask = __get_PRIMASK(); __disable_irq();
+    traffic.ResetCounters(); audio_load::counters = {};
+    traffic_measuring.store(true, std::memory_order_relaxed);
+    audio_load::measuring.store(workload.audio_permille >= 0, std::memory_order_relaxed);
+    __set_PRIMASK(mask);
+  }
+  // Bucket clearing is preparation, not acquisition time.
+  clock = bench::Clock(System::GetTick(), System::GetTickFreq());
   while (true) {
     uint32_t us = clock.Us(System::GetTick());
     if (us >= duration * 1000) break;
@@ -166,12 +196,27 @@ static void Collect() {
     }
     if (us >= duration * 1000) break;
     if (!schedule.Due(us)) continue;
-    if (count == bench::kMaxRecords) { ++overflow; break; }
+    if (!(load_run && workload.mode) && count == bench::kMaxRecords) { ++overflow; break; }
+    // Keep marker/timestamp/button observations together across audio IRQs.
+    // These short instrumentation guards are part of the measured adapter.
+    bench::Timing timing;
+    const uint32_t begin_mask = __get_PRIMASK(); __disable_irq();
+    const uint32_t begin_tick = System::GetTick();
+    us = clock.Us(begin_tick);
+    if (us >= duration * 1000) {
+      __set_PRIMASK(begin_mask); break;
+    }
+    if (diagnose) {
+      timing.seq = count; timing.time_us = us; timing.begin_tick = begin_tick;
+      timing.begin_elapsed = clock.ticks();
+      timing.rise_before = System::GetTick();
+    }
     sample_marker.Write(true);
-    us = clock.Us(System::GetTick());
-    if (us >= duration * 1000) { sample_marker.Write(false); break; }
-    missed += schedule.Take(us);
+    if (diagnose) timing.rise_after = System::GetTick();
     const bool pressed = !button_pin.Read();
+    __set_PRIMASK(begin_mask);
+    const uint32_t skipped = schedule.Take(us);
+    missed += skipped;
     const bool injected = experiment.InvalidAdc(us);
     uint16_t raw = 0;
     const uint32_t adc_start = clock.Us(System::GetTick());
@@ -191,16 +236,52 @@ static void Collect() {
       // Deliberate foreground CPU occupancy, not a model of audio/IRQ load.
       while (clock.Us(System::GetTick()) - load_start < 400) __NOP();
     }
-    records[count] = {count, us, adc_us, 0, raw, valid, injected, pressed,
-                      external, result, missed};
-    records[count].work_us = clock.Us(System::GetTick()) - us;
-    sample_marker.Write(false);
+    bench::Record record{count, us, adc_us, 0, raw, valid, injected, pressed,
+                         external, result, missed};
+    if (load_run && workload.mode) {
+      auto& bucket = buckets[us / 1000000];
+      bucket.Add(record, skipped, count ? us - previous_sample_us : 0);
+      const uint32_t end_mask = __get_PRIMASK(); __disable_irq();
+      const uint32_t end_tick = System::GetTick();
+      record.work_us = clock.Us(end_tick) - us;
+      bucket.max_work_us = std::max(bucket.max_work_us, record.work_us);
+      if (diagnose) {
+        timing.end_tick = end_tick; timing.end_elapsed = clock.ticks();
+        timing.work_us = record.work_us;
+        timing.fall_before = System::GetTick();
+      }
+      sample_marker.Write(false);
+      if (diagnose) timing.fall_after = System::GetTick();
+      __set_PRIMASK(end_mask);
+      if (diagnose) {
+        // Retention runs outside the marker/IRQ guard. Its cost can still delay
+        // the next service, so retain the observed cost (including IRQs).
+        auto& diagnostic = timing_buckets[us / 1000000];
+        diagnostic.Add(count ? previous_timing : timing, timing);
+        previous_timing = timing;
+        diagnostic.Bookkeeping(count, System::GetTick() - timing.fall_after);
+      }
+    } else {
+      records[count] = record;
+      const uint32_t end_mask = __get_PRIMASK(); __disable_irq();
+      records[count].work_us = clock.Us(System::GetTick()) - us;
+      sample_marker.Write(false);
+      __set_PRIMASK(end_mask);
+    }
+    previous_sample_us = us;
     ++count;
   }
   saved.elapsed = clock.Us(System::GetTick());
   saved.dropped = rx_dropped.load() - rx_before;
   saved.count = count; saved.missed = missed; saved.failures = failures; saved.overflow = overflow;
   saved.stimulus = experiment.stimulus();
+  if (load_run) {
+    const uint32_t mask = __get_PRIMASK(); __disable_irq();
+    traffic_measuring.store(false, std::memory_order_relaxed);
+    audio_load::measuring.store(false, std::memory_order_relaxed);
+    traffic_saved = traffic.counters(); audio_saved = audio_load::counters;
+    __set_PRIMASK(mask);
+  }
   sample_marker.Write(false);
 }
 static bool Download(uint32_t token) {
@@ -210,6 +291,11 @@ static bool Download(uint32_t token) {
                 int(saved.stimulus.begin), int(saved.stimulus.end));
   if (!Send(line)) return false;
   uint32_t hash = bench::Hash(2166136261u, line, std::strlen(line));
+  if (saved.fault_delay_us) {
+    std::snprintf(line, sizeof(line), "FAULTTIMING,%u\n", unsigned(saved.fault_delay_us));
+    hash = bench::Hash(hash, line, std::strlen(line));
+    if (!Send(line)) return false;
+  }
   std::snprintf(line, sizeof(line), "COLUMNS,%s\n", bench::kColumns);
   if (!Send(line)) return false;
   for (uint32_t i = 0; i < saved.count; ++i) {
@@ -233,8 +319,79 @@ static void Run(uint32_t token, uint32_t scenario, uint32_t duration, uint32_t t
   Collect();
   Download(token);
 }
+static void RunLoad(uint32_t token) {
+  saved = {};
+  saved.scenario = workload.scenario; saved.fault_delay_us = workload.fault_delay_us;
+  saved.duration = workload.duration; saved.target = workload.target;
+  saved.held = !button_pin.Read();
+  if (workload.audio_permille >= 0 && !audio_load::Start(workload.block, uint32_t(workload.audio_permille))) {
+    audio_load::Stop(); Send("ERROR,audio_init\n"); return;
+  }
+  load_run = true; hash_output = true; output_hash = 2166136261u;
+  char line[512];
+  if (workload.fault_delay_us) std::snprintf(line, sizeof(line), "TIMEDFAULTLOADSTART,%u,%u,%u,%u,%d,%u,%u,%u,%u,%u\n", unsigned(token),
+      unsigned(workload.mode), unsigned(workload.duration), unsigned(workload.target),
+      int(workload.audio_permille), unsigned(workload.block), unsigned(workload.usb_hz), unsigned(saved.held),
+      unsigned(workload.scenario), unsigned(workload.fault_delay_us));
+  else if (workload.scenario) std::snprintf(line, sizeof(line), "FAULTLOADSTART,%u,%u,%u,%u,%d,%u,%u,%u,%u\n", unsigned(token),
+      unsigned(workload.mode), unsigned(workload.duration), unsigned(workload.target),
+      int(workload.audio_permille), unsigned(workload.block), unsigned(workload.usb_hz), unsigned(saved.held),
+      unsigned(workload.scenario));
+  else std::snprintf(line, sizeof(line), "LOADSTART,%u,%u,%u,%u,%d,%u,%u,%u\n", unsigned(token),
+      unsigned(workload.mode), unsigned(workload.duration), unsigned(workload.target),
+      int(workload.audio_permille), unsigned(workload.block), unsigned(workload.usb_hz), unsigned(saved.held));
+  bool ok = Send(line);
+  if (ok && !workload.mode) ok = StartLine(token);
+  if (ok) {
+    System::Delay(50);
+    Collect();
+  }
+  audio_load::Stop();
+  if (ok && !workload.mode) ok = Download(token);
+  if (ok && workload.mode) {
+    for (uint32_t i = 0; ok && i < workload.duration / 1000; ++i) {
+      const auto& b = buckets[i];
+      std::snprintf(line, sizeof(line), "S,%u,%u,%u,%u,%u,%u,%u,%u,%u,%u,%u,%u\n", unsigned(i),
+        unsigned(b.count), unsigned(b.first_us), unsigned(b.last_us), unsigned(b.missed),
+        unsigned(b.failures), unsigned(b.cadence_breaks), unsigned(b.actions),
+        unsigned(b.max_work_us), unsigned(b.max_interval_us), unsigned(b.raw_min), unsigned(b.raw_max));
+      ok = Send(line);
+      if (ok && workload.mode == 2) {
+        const auto& d = timing_buckets[i];
+        std::snprintf(line, sizeof(line), "T,%u,%u,%u,%u\n", unsigned(i), unsigned(d.count),
+                      unsigned(d.max_bookkeeping_ticks), unsigned(d.bookkeeping_seq));
+        ok = Send(line);
+        // Kinds 0/1 are first/last (repeated in both slots); 2..9 are peaks.
+        for (unsigned k = 0; ok && d.count && k < bench::kTimingPeaks + 2; ++k) {
+          const auto& p = k < 2 ? (k ? d.last : d.first) : d.peak[k-2].previous;
+          const auto& t = k < 2 ? p : d.peak[k-2].current;
+          const int n = bench::FormatTiming(line, sizeof(line), i, k, p, t);
+          if (n < 0 || size_t(n) >= sizeof(line)) { Send("ERROR,timing_format\n"); ok = false; }
+          else ok = Send(line);
+        }
+      }
+    }
+  }
+  if (ok) {
+    std::snprintf(line, sizeof(line), "LOADSTATS,%u,%u,%u,%u,%u,%u,%u,%u,%u,%u,%u,%u,%u,%u,%u,%u,%u,%u\n",
+      unsigned(saved.count), unsigned(saved.missed), unsigned(saved.failures), unsigned(saved.overflow),
+      unsigned(saved.dropped), unsigned(saved.elapsed), unsigned(audio_saved.callbacks),
+      unsigned(audio_saved.max_work_ticks), unsigned(audio_saved.max_interval_ticks),
+      unsigned(audio_saved.over_budget), unsigned(audio_saved.late_intervals), unsigned(audio_saved.bad_size),
+      unsigned(traffic_saved.packets), unsigned(traffic_saved.bytes), unsigned(traffic_saved.malformed),
+      unsigned(traffic_saved.sequence_errors),
+      workload.audio_permille < 0 ? 0u : unsigned(audio_load::period_ticks), unsigned(System::GetTickFreq()));
+    ok = Send(line);
+  }
+  hash_output = false; load_run = false;
+  if (ok) {
+    std::snprintf(line, sizeof(line), "LOADEND,%u,%u\n", unsigned(token), unsigned(output_hash));
+    Send(line);
+  }
+}
 int main() {
-  // No codec/audio, QSPI erase/program, persistent settings or bootloader calls.
+  // Audio starts only for an explicit load command. No QSPI erase/program,
+  // persistent settings or bootloader calls.
   const bool old_boot = System::GetBootloaderVersion() == System::BootInfo::Version::LT_v6_0;
   System::Config cfg; cfg.Boost(); cfg.skip_clocks = old_boot;
   system_hw.Init(cfg);
@@ -272,7 +429,33 @@ int main() {
     else if (std::strcmp(command, "?") == 0) Identity();
     else {
       unsigned token, scenario, duration, target; char extra;
-      if (ready && std::sscanf(command, "B,%u%c", &token, &extra) == 1) {
+      unsigned mode, block, usb_hz, delay; int permille;
+      if (ready && std::sscanf(command, "L,%u,%u,%u,%u,%d,%u,%u%c", &token, &mode, &duration,
+            &target, &permille, &block, &usb_hz, &extra) == 7) {
+        workload = {}; // Ordinary loads never inherit a previous fault scenario.
+        workload.mode = mode; workload.duration = duration; workload.target = target;
+        workload.audio_permille = permille; workload.block = block; workload.usb_hz = usb_hz;
+        if (startup_available) Send("ERROR,download_startup_first\n");
+        else if (!workload.Valid()) Send("ERROR,load_configuration\n");
+        else RunLoad(token);
+      } else if (ready && std::sscanf(command, "F,%u,%u,%u,%u,%d,%u,%u%c", &token, &scenario, &duration,
+            &target, &permille, &block, &usb_hz, &extra) == 7) {
+        workload = {}; // Fault evidence requires a complete trace, never aggregates.
+        workload.scenario = scenario; workload.duration = duration; workload.target = target;
+        workload.audio_permille = permille; workload.block = block; workload.usb_hz = usb_hz;
+        if (startup_available) Send("ERROR,download_startup_first\n");
+        else if (!scenario || !workload.Valid()) Send("ERROR,load_configuration\n");
+        else RunLoad(token);
+      } else if (ready && std::sscanf(command, "T,%u,%u,%u,%u,%d,%u,%u,%u%c", &token, &scenario, &duration,
+            &target, &permille, &block, &usb_hz, &delay, &extra) == 8) {
+        workload = {};
+        workload.scenario = scenario; workload.duration = duration; workload.target = target;
+        workload.audio_permille = permille; workload.block = block; workload.usb_hz = usb_hz;
+        workload.fault_delay_us = delay;
+        if (startup_available) Send("ERROR,download_startup_first\n");
+        else if (!delay || !workload.Valid()) Send("ERROR,load_configuration\n");
+        else RunLoad(token);
+      } else if (ready && std::sscanf(command, "B,%u%c", &token, &extra) == 1) {
         if (!startup_available) Send("ERROR,no_startup_capture\n");
         else if (StartLine(token) && Download(token)) startup_available = false;
       } else if (ready && std::sscanf(command, "R,%u,%u,%u,%u%c", &token, &scenario, &duration,

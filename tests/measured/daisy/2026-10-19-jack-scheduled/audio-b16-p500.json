@@ -1,0 +1,253 @@
+{
+  "schema": 1,
+  "evidence": "measured on hardware",
+  "status": "pass",
+  "build": {
+    "build_id": "4dc668fe4c33b9552acc79be",
+    "source_commit": "4d6f68b37af56376c410405ef21c72e8d5834077",
+    "sdk_revision": "e1f740a5a7fe38e6d6d41281bf99fe7a2bb3827b",
+    "binary_sha256": "226b6404ea7f2823de1c5c993ce2519b9b9853a23c0c7c80b4a46f4b9b3935d8"
+  },
+  "fixture": {
+    "board": "Seed3",
+    "case": "automated-electrical-clamp",
+    "jack": "switched mono; empty jack with independent open-drain clamp on tip/sense; no cable movement",
+    "probe_series_ohms": 1000,
+    "sense_pulldown_ohms": 100000,
+    "scope_probe": "10x; sense node",
+    "analog_rate_hz": 250000.0
+  },
+  "run": {
+    "token": 2615204839,
+    "duration_ms": 10000,
+    "fault": 0,
+    "policy": 1,
+    "count": 20000,
+    "missed": 0,
+    "adc_failures": 0,
+    "elapsed_us": 10000000,
+    "fault_begin_us": 0,
+    "fault_end_us": 0,
+    "finish_reason": "duration",
+    "finish_request_us": 0,
+    "acquisition_limit_us": 10000000,
+    "trigger": 0,
+    "fault_delay_slots": 0,
+    "fault_duration_us": 25000,
+    "trigger_seq": 4294967295,
+    "trigger_us": 0,
+    "fault_due_us": 0,
+    "audio": {
+      "block": 16,
+      "permille": 500,
+      "off_ms": 8000,
+      "end_us": 8000059,
+      "callbacks": 24007,
+      "max_work_ticks": 40832,
+      "max_interval_ticks": 80314,
+      "over_budget": 0,
+      "late_intervals": 0,
+      "bad_size": 0,
+      "period_ticks": 80000,
+      "timer_hz": 240000000
+    },
+    "acquisition": {
+      "tick_us": 50,
+      "timer_priority": 0,
+      "adc_priority": 0,
+      "audio_priority": 1,
+      "timer_irqs": 200000,
+      "adc_irqs": 20000,
+      "max_timer_ticks": 278,
+      "max_adc_ticks": 284,
+      "work_ticks_low": 28710998,
+      "work_ticks_high": 0,
+      "timeouts": 0,
+      "overruns": 0,
+      "unexpected_irqs": 0,
+      "cpu_padding": 1
+    }
+  },
+  "review": {
+    "schema": 1,
+    "status": "pass",
+    "case": "automated jack audio load",
+    "samples": 20000,
+    "run": {
+      "token": 2615204839,
+      "duration_ms": 10000,
+      "fault": 0,
+      "policy": 1,
+      "count": 20000,
+      "missed": 0,
+      "adc_failures": 0,
+      "elapsed_us": 10000000,
+      "fault_begin_us": 0,
+      "fault_end_us": 0,
+      "finish_reason": "duration",
+      "finish_request_us": 0,
+      "acquisition_limit_us": 10000000,
+      "trigger": 0,
+      "fault_delay_slots": 0,
+      "fault_duration_us": 25000,
+      "trigger_seq": 4294967295,
+      "trigger_us": 0,
+      "fault_due_us": 0,
+      "audio": {
+        "block": 16,
+        "permille": 500,
+        "off_ms": 8000,
+        "end_us": 8000059,
+        "callbacks": 24007,
+        "max_work_ticks": 40832,
+        "max_interval_ticks": 80314,
+        "over_budget": 0,
+        "late_intervals": 0,
+        "bad_size": 0,
+        "period_ticks": 80000,
+        "timer_hz": 240000000
+      },
+      "acquisition": {
+        "tick_us": 50,
+        "timer_priority": 0,
+        "adc_priority": 0,
+        "audio_priority": 1,
+        "timer_irqs": 200000,
+        "adc_irqs": 20000,
+        "max_timer_ticks": 278,
+        "max_adc_ticks": 284,
+        "work_ticks_low": 28710998,
+        "work_ticks_high": 0,
+        "timeouts": 0,
+        "overruns": 0,
+        "unexpected_irqs": 0,
+        "cpu_padding": 1
+      }
+    },
+    "qualification": "responsive",
+    "first_ready_us": 31784,
+    "patched_while_audio_active": true,
+    "late_adc_observations": 0,
+    "state_changes": [
+      {
+        "seq": 63,
+        "time_us": 31784,
+        "ready": true,
+        "patched": false
+      },
+      {
+        "seq": 6527,
+        "time_us": 3263785,
+        "ready": true,
+        "patched": true
+      },
+      {
+        "seq": 13119,
+        "time_us": 6559784,
+        "ready": true,
+        "patched": false
+      }
+    ],
+    "audio": {
+      "callbacks": 24007,
+      "independent_marker": "verified every callback",
+      "minimum_work_us": 168.00324407004632,
+      "maximum_work_us": 170.08616031025804,
+      "maximum_interval_us": 334.641543029498,
+      "measured_end_us": 8000059
+    },
+    "generator": {
+      "schema": 1,
+      "status": "software timing passed; physical verification pending",
+      "info": {
+        "protocol": 1,
+        "kind": "daisy-pulse-generator",
+        "board": "seed3",
+        "build_id": "4e68efce89b64d686cf11c63",
+        "timer_hz": 240000000,
+        "armed": false,
+        "released": true,
+        "max_edges": 64,
+        "max_us": 30000000,
+        "max_late_us": 25
+      },
+      "token": 1437290366,
+      "edges": [
+        {
+          "seq": 0,
+          "due_us": 3000000,
+          "before_us": 3000000,
+          "after_us": 3000000,
+          "pressed": 1
+        },
+        {
+          "seq": 1,
+          "due_us": 6500000,
+          "before_us": 6500000,
+          "after_us": 6500000,
+          "pressed": 0
+        }
+      ],
+      "end_us": 6500000,
+      "max_lateness_us": 0,
+      "raw_sha256": "6d7ed233f05d8c2d211afe67e27306762977c5db33b4906776611908df7afe61"
+    },
+    "service_alignment": {
+      "clock_scale_ppm": 40.21308893276121,
+      "max_fit_residual_us": 0.2228421363979578,
+      "max_interval_error_us": 0.2708934548034563,
+      "max_work_width_error_us": 0.23000000059681724,
+      "pre_application_high_intervals_s": []
+    },
+    "probe_max_error_us": 0.6399975953641501,
+    "terminal_release_error_us": 0.4973541880559651,
+    "clamp_onset_bounds_s": [
+      3.7527815460000022,
+      3.754297546000002
+    ],
+    "clamp_release_bounds_s": [
+      7.252921546000002,
+      7.253937546000002
+    ],
+    "source_timing_evidence": "Three interior native analog samples per service pulse, checked against digital sense; full ADC aperture review unchanged",
+    "physical_clamp_duration_bounds_s": [
+      3.4986240000000004,
+      3.501156
+    ],
+    "invalid_observations": 0,
+    "ambiguous_analog_apertures": 0,
+    "digital_transition_apertures": 0,
+    "recovery_tail_samples": 2000,
+    "raw_sha256": "e54799f8f91f02b17879864f2e84f6bfce3e2e12177cb92423b6987a974e402d",
+    "limitation": "One passive electrical-clamp fixture; silent SAI DMA callbacks with measured busy padding. Not DSP/audio quality, mechanical motion, calibrated absolute latency, arbitrary IRQ priorities or protected-input qualification."
+  },
+  "native_scope_sha256": {
+    "analog_0.bin": "92d272194961ba902a92f28d986ca15b07849b03d163a819e54cc4c481cfeffd",
+    "settings.json": "5d6d91b658c08457a42e2f1ca06cb05b8942b54dd0c081d8daec4b0665a08087",
+    "capture.sal": "955a50e946ee23d5a2430d6462c5edfa0d29e23230d0875c08d0214ddca562d1",
+    "digital_2_0.bin": "a2b7d618cdb703bb2277d95f3c7a8e16ed7bfe4fc88965b2b5668c60b5c1dae9",
+    "digital_1_2.bin": "bc65b21dcc9e1e02c9434d43ca11338d44405d4dcea1ee39bdf49d7fcf91c6a2",
+    "digital_1_3.bin": "264fd9b27fcb8258b60ca7647bfe0bf6055b847be204ee5aafbea60dc61c778a",
+    "digital_1_1.bin": "d800491b1d109a27b5042c8290ff4fcbd0c6a7419a11070581ed122c6d35246d",
+    "digital_1_0.bin": "816b21e9609a3a86ad30a5d4ab732cf130acf1479e890e3d209b9a81f49fff11"
+  },
+  "limitation": "One passive electrical-clamp fixture; silent SAI DMA callbacks with measured busy padding. Not DSP/audio quality, mechanical motion, calibrated absolute latency, arbitrary IRQ priorities or protected-input qualification. All acquired digital transitions and complete wire evidence; analog payload contains extrema over captured service apertures, not the full waveform.",
+  "generator_times_us": [
+    3000000,
+    6500000
+  ],
+  "generator_build": {
+    "build_id": "4e68efce89b64d686cf11c63",
+    "source_commit": "3dab3a483c103928898a13bf91fd1844e23790d2",
+    "sdk_revision": "e1f740a5a7fe38e6d6d41281bf99fe7a2bb3827b",
+    "binary_sha256": "2f132cc4c0bd65dbff4430799ab20bf2386f7520122ceb66b85f4609de89693c"
+  },
+  "raw_sha256": "e54799f8f91f02b17879864f2e84f6bfce3e2e12177cb92423b6987a974e402d",
+  "raw_compressed_sha256": "0c0afd3b6f12c35c3749e1768b5078f590dd1aeccfd55b2e6d57b2e7982bb188",
+  "channels_sha256": "eac8cb83cdf025278f8a3a140600f6ad0cfa377240de8e013885eb474f31cea4",
+  "channels_compressed_sha256": "f49e9724967120f97ac2ea8fc5d7bc68147dafec3c579cdaff51219e11387565",
+  "analog_sha256": "ce11ff97e4910069637453d885bf933ffce913f597cd3d88ac37a368a32d3e09",
+  "analog_compressed_sha256": "06337d75b63efef92a70c1e0b9c850e91a0880ab738134af5d6a04606eea4099",
+  "generator_sha256": "6d7ed233f05d8c2d211afe67e27306762977c5db33b4906776611908df7afe61",
+  "generator_compressed_sha256": "7f5b9e76381cdc541cf21bb9bbbc59ed6e81be16c2eccb904733a6783489fdef"
+}

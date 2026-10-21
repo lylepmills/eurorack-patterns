@@ -1,0 +1,54 @@
+{
+  "schema": 1,
+  "status": "clock diagnosis only; DSP qualification remains incomplete",
+  "firmware_source": "aaadfd58b5ec97b733851de7f2c49b5b4e458257",
+  "diagnostics": [
+    {
+      "name": "clock-unloaded",
+      "samples": 6000,
+      "service_residual_us": 0.20738077617716044,
+      "clock_cycle_residual_us": 0.20624422047383661,
+      "public_full_clock": true
+    },
+    {
+      "name": "clock-dsp-only",
+      "samples": 6000,
+      "service_residual_us": 0.2590213547227904,
+      "clock_cycle_residual_us": 0.23980686631948833,
+      "public_full_clock": false
+    },
+    {
+      "name": "clock-combined",
+      "samples": 6000,
+      "service_residual_us": 5.195338719990104,
+      "clock_cycle_residual_us": 0.25338507538444444,
+      "public_full_clock": false
+    },
+    {
+      "name": "clock-combined-full",
+      "samples": 20000,
+      "service_residual_us": 14.703227955847979,
+      "clock_cycle_residual_us": 0.3064805758485365,
+      "public_full_clock": true
+    },
+    {
+      "name": "clock-unloaded-after",
+      "samples": 20000,
+      "service_residual_us": 0.2296531479805708,
+      "clock_cycle_residual_us": 0.21112180331099872,
+      "public_full_clock": false
+    }
+  ],
+  "normal_checks": [
+    {
+      "name": "normal-before",
+      "samples": 2852
+    },
+    {
+      "name": "normal-after",
+      "samples": 2864
+    }
+  ],
+  "qualification": "Two normal early-finish checks passed. Five clock diagnostics do not qualify jack response or audio callback timing. Original timing rejections are unchanged.",
+  "limitations": "Relative references only; no calibrated absolute frequency or physical cause established. Native captures retained by digest; two complete clock waveforms published for independent replay."
+}

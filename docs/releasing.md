@@ -13,7 +13,10 @@ CMake `SameMinorVersion` package policy. Patch releases preserve public contract
    Run `python3 tools/check_public.py`; an optional local `EP_PRIVATE_TERMS`
    newline-separated list can catch names without publishing them. The checker
    is an aid, not a confidentiality or provenance guarantee.
-3. Run Release host tests with sanitizers, installed consumers, ARM header smoke,
+3. Run portable and synthetic bench checks, then the complete measured suite
+   with the [verified evidence download](evidence.md). Require the **Measured
+   evidence** workflow for changes to evidence interpretation or validation
+   releases. Also run Release host tests with sanitizers, installed consumers, ARM header smoke,
    the Pico link build, and `python3 tools/render_traces.py
    build/example_behavior_traces --check`. See CI for the exact commands. No
    hardware qualification follows from a successful cross-build.
@@ -34,3 +37,10 @@ GitHub documents [immutable releases](https://docs.github.com/en/code-security/c
 Contributor issues should ask for a bounded public result and acceptance checks.
 A maintainer reviews source claims, API contracts and evidence before merging;
 there is no promised response time or implied endorsement by cited makers.
+
+Before merging a long exploratory branch, consolidate it into coherent, tested
+changes. Archive exact historical source revisions alongside evidence before
+retiring development branches; old measured build identities must remain
+recoverable. Verify download URLs and asset hashes before relying on the archive.
+Keep evidence-only releases separate from the latest library version. Never
+rewrite an existing library release to make history shorter.

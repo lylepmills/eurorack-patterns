@@ -1,0 +1,101 @@
+{
+  "schema": 1,
+  "evidence": "measured on hardware",
+  "status": "pass",
+  "build": {
+    "build_id": "82c0f452973b6519855f649f",
+    "source_commit": "a49570218e6bba31f864b433adc3faefb5dd0347",
+    "sdk_revision": "e1f740a5a7fe38e6d6d41281bf99fe7a2bb3827b",
+    "binary_sha256": "31f4cfdc50b6bb3548bd09a7105262c309d4a0cd8067fc1005ddb3506bb1fe9c"
+  },
+  "fixture": {
+    "board": "Seed3",
+    "case": "empty",
+    "jack": "switched mono; empty jack",
+    "probe_series_ohms": 1000,
+    "sense_pulldown_ohms": 100000,
+    "scope_probe": "10x; sense node",
+    "analog_rate_hz": 250000.0
+  },
+  "run": {
+    "token": 1521018816,
+    "duration_ms": 60000,
+    "fault": 0,
+    "policy": 1,
+    "count": 120000,
+    "missed": 0,
+    "adc_failures": 0,
+    "elapsed_us": 60000000,
+    "fault_begin_us": 0,
+    "fault_end_us": 0,
+    "finish_reason": "duration",
+    "finish_request_us": 0,
+    "acquisition_limit_us": 60000000
+  },
+  "review": {
+    "schema": 1,
+    "status": "pass",
+    "case": "empty jack",
+    "samples": 120000,
+    "run": {
+      "token": 1521018816,
+      "duration_ms": 60000,
+      "fault": 0,
+      "policy": 1,
+      "count": 120000,
+      "missed": 0,
+      "adc_failures": 0,
+      "elapsed_us": 60000000,
+      "fault_begin_us": 0,
+      "fault_end_us": 0,
+      "finish_reason": "duration",
+      "finish_request_us": 0,
+      "acquisition_limit_us": 60000000
+    },
+    "raw_sha256": "02a0076c4a093adb6aa6da4ef35519bf9ba774e983e9eb4e6cbe125c37a67dc3",
+    "service_alignment": {
+      "clock_scale_ppm": 39.810318466670935,
+      "max_fit_residual_us": 0.7993314897830714,
+      "max_interval_error_us": 0.3199051637037087,
+      "max_work_width_error_us": 0.20400000011443353,
+      "pre_application_high_intervals_s": []
+    },
+    "probe_edges": 59990,
+    "probe_max_error_us": 0.6839715496198551,
+    "terminal_release_error_us": null,
+    "propagation_min_us": 0.03299999207229121,
+    "propagation_max_us": 0.04200001058052294,
+    "invalid_observations": 0,
+    "state_changes": [
+      {
+        "seq": 63,
+        "time_us": 31789,
+        "ready": true,
+        "patched": false
+      }
+    ],
+    "analog_min_volts": -0.14638881385326385,
+    "analog_max_volts": 3.356462001800537,
+    "limitation": "One stationary fixture, no audio load, insertion/withdrawal, calibrated voltage or absolute time qualification. Command-start qualification is not mechanical insertion latency. Analog plateau samples cannot exclude between-sample glitches."
+  },
+  "native_scope_sha256": {
+    "analog_0.bin": "ec41b145f3b95f89c610db7213e54ef8853a620d56f1feac8c65f6da93d7bd6b",
+    "settings.json": "8294e3c19c5592f6a6df2992da3cba22bcd2c56afcf8f493b274952f667e0926",
+    "capture.sal": "dd5709f06b23bb8d5c25a1e88d3501dd09e4dc57211cdaac383475a3341c7a94",
+    "digital_1_2.bin": "c6c70789270f3197b80b5fe4628f04244945f4b184dfc685fb151918082a0788",
+    "digital_1_3.bin": "cb42317dc6ae8bdfac164d484ad2dfe3ed6aa7df5db09a1b6fb4c3bf9a1740f3",
+    "digital_1_1.bin": "677fd24827531b2e3eefe68186018b9287daba1fe43ac12df9a6c79290e0d673",
+    "digital_1_0.bin": "dcdbc4aa69cd320d8973cac719c838d142d2578019a1e177944a5335c9879dc0"
+  },
+  "limitation": "Complete digital timelines and wire records; analog export is one plateau sample per observation plus extrema, not the full waveform. No insertion or external-module voltage qualification.",
+  "raw_sha256": "02a0076c4a093adb6aa6da4ef35519bf9ba774e983e9eb4e6cbe125c37a67dc3",
+  "raw_compressed_sha256": "bf0a06f91a53fd7d6b3580e368dfe1c815773f141697ad6ef7dd44f2b8393c6e",
+  "channels_sha256": "56e8b2a072f80d2631a62a288a105ee4da21a211e51e139a66c04910c4bc64b0",
+  "channels_compressed_sha256": "8b557736b50b9a9b7f8f12d73eda694181fb945165c841f382fa148069d26526",
+  "analog_sha256": "b8d3b1ba50a06d06ff5bb70d294d55faaa21ffea86c0a55e4ded220511aa689e",
+  "analog_compressed_sha256": "8e5a5447119ec849ab98e4dedb068df1ef4e82ca3cfdd3696a91176b2bed7ec7",
+  "capture_tail": {
+    "scope_postroll_seconds": 0.509683582931757,
+    "scope_stop_seconds": 0.08104779198765755
+  }
+}

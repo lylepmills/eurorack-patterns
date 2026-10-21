@@ -16,17 +16,42 @@ The [catalog](catalog.md) contains 88 patterns. This table describes the public 
 
 The code expresses mechanisms with caller-defined time and electrical units. A host must establish its scan rate, voltage scaling, thread/interrupt ownership, invalid-sample policy, event overflow response, startup behavior, and acceptance criteria. Numeric values cited in the catalog describe particular source products. They are not drop-in defaults for new hardware.
 
-The [Daisy fault/startup measurements](validation.md#active-fault-and-startup-measurements)
+The [validation guide](validation.md) collects the reusable lessons, evidence
+levels and remaining limits. The Daisy campaign is closed. Its separate
+[clock investigation](investigations/daisy-clock.md) remains unresolved and does
+not gate these contracts or imply a portable hardware fix.
+
+The [Daisy fault/startup measurements](bench/daisy.md#active-fault-and-startup-measurements)
 add bounded physical evidence for pickup rearming/history breaks, gesture
 cancellation and startup-held suppression in the example adapter. The public
 corpus contains 15 complete runs across both passes. These checks do not promote
 jack detection, audio/IRQ timing, brownout behavior or other boards to measured status.
 
+The [switched-jack measurements](bench/daisy.md#daisy-seed3-jack-presence-bench)
+cover stationary contacts, ordinary and slow insertion, open-ended cables of
+two lengths, four manual transition faults and a 110-case automated electrical
+fault matrix. Rejected loose-probe and incomplete-tail captures remain retained.
+The [21-case jack audio/IRQ campaign](bench/daisy.md#jack-audiointerrupt-load-results)
+adds complete callback timing, six explicit qualification-starvation profiles,
+three sustained-insertion recoveries and four faults under a responsive load.
+Published state and validity handling behaved as specified; responsiveness
+still depends on scheduling. The [scheduled-acquisition follow-up](bench/daisy.md#scheduled-jack-acquisition-results)
+passes all 21 comparisons, including the six previously starved profiles, and two
+early-finish checks. The fix is in the Seed3 adapter, with the portable detector
+unchanged. None of this qualifies powered inputs, production
+protection, every cable or calibrated mechanical insertion latency.
+
+The separate [audio/USB load measurements](bench/daisy.md#audiousb-load-and-continuous-soak)
+add stationary comparisons, isolated controls, taps and holds during motion, and
+quick reversals on that fixture. Complete replay is paired with physical timing
+and stimulus checks. Synthetic callback padding is not production DSP or audio
+quality qualification; an earlier long-soak timing disagreement remains open.
+
 See [research scope and unresolved reports](research-pass-2.md) and [executed checks versus hardware evidence](validation.md). Upstream tests cited in the catalog were read, not executed.
 
 ## Integration examples
 
-The [shared-knob walkthrough](quickstart.md) and optional [Pico adapter](../examples/pico/README.md) compose pickup and motion acceptance with explicit validity and ownership. Host checks cover the application policy; ARM compile/link checks cover the example's build boundary. The [Daisy control bench](validation.md#daisy-seed3-control-bench) adds fresh ADC acquisition, buffered traces, gesture/gap policies and host replay. These add no hardware-qualified catalog entries.
+The [shared-knob walkthrough](quickstart.md) and optional [Pico adapter](../examples/pico/README.md) compose pickup and motion acceptance with explicit validity and ownership. Host checks cover the application policy; ARM compile/link checks cover the example's build boundary. The [Daisy control bench](bench/daisy.md#daisy-seed3-control-bench) adds fresh ADC acquisition, buffered traces, gesture/gap policies and host replay. These add no hardware-qualified catalog entries.
 
 ## Per-pattern map
 

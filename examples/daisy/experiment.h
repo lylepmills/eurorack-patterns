@@ -20,7 +20,8 @@ struct Stimulus {
 // All times fit the bounded 150-second experiment, with -1 meaning not observed.
 class Experiment {
  public:
-  Experiment(uint32_t scenario, bool held) : scenario_(scenario), pressed_(held) {}
+  Experiment(uint32_t scenario, bool held, uint32_t fault_delay_us = 0)
+      : scenario_(scenario), delay_(fault_delay_us), pressed_(held) {}
   uint32_t Stall(uint32_t us) {
     if (stall_done_) return 0;
     if (scenario_ == kStall && us >= 5000000) {
@@ -72,7 +73,8 @@ class Experiment {
     previous_raw_ = raw;
     if (!trigger) return -1;
     stimulus_.trigger = static_cast<int32_t>(us);
-    const uint32_t delay = scenario_ == kPressStall ? 100000 :
+    const uint32_t delay = delay_ && scenario_ >= kPressStall && scenario_ <= kPressAdcGap ? delay_ :
+                           scenario_ == kPressStall ? 100000 :
                            scenario_ == kHoldStall ? 605000 :
                            scenario_ == kPressAdcGap ? 20000 : 1;
     due_ = us + delay;
@@ -84,7 +86,7 @@ class Experiment {
   }
   const Stimulus& stimulus() const { return stimulus_; }
  private:
-  uint32_t scenario_, due_ = 0, gap_end_ = 0;
+  uint32_t scenario_, delay_, due_ = 0, gap_end_ = 0;
   bool pressed_, saw_press_ = false, have_raw_ = false, stall_done_ = false;
   uint16_t previous_raw_ = 0;
   Stimulus stimulus_;

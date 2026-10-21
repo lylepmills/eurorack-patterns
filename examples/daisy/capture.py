@@ -62,12 +62,19 @@ def parse(data, build_id=None):
     require(scenario != 12 or (duration == 20000 and target == 250), 'invalid startup configuration')
     require(scenario not in (9, 10, 11) or target == 250, 'invalid movement scenario target')
     stimulus = [-1, -1, -1]
+    fault_delay_us = 0
     column_index = 2
     if protocol == 2:
         fields = lines[2].decode('ascii').strip().split(',')
         require(len(fields) == 4 and fields[0] == 'STIMULUS', 'missing stimulus evidence')
         stimulus = list(map(int, fields[1:]))
         column_index = 3
+        if lines[column_index].startswith(b'FAULTTIMING,'):
+            timing = lines[column_index].decode('ascii').strip().split(',')
+            require(len(timing) == 2 and info.get('fault_timing') == 1, 'invalid fault timing capability/record')
+            fault_delay_us = int(timing[1])
+            require(5 <= scenario <= 8 and 1 <= fault_delay_us <= 1000000, 'invalid fault delay')
+            column_index += 1
     require(lines[column_index].decode('ascii').strip() == 'COLUMNS,' + ','.join(COLUMNS), 'column mismatch')
     end = lines[-1].decode('ascii').strip().split(',')
     require(len(end) == 9 and end[0] == 'END', 'missing END (capture incomplete)')
@@ -77,7 +84,7 @@ def parse(data, build_id=None):
     require(min(missed, failures, rx_dropped, overflow) >= 0 and elapsed >= duration * 1000,
             'invalid completion counters')
     rows, digest, actions, adc_failures = [], 2166136261, 0, 0
-    if protocol == 2: digest = fnv(lines[2], digest)
+    if protocol == 2: digest = fnv(b''.join(lines[2:column_index]), digest)
     previous_time = None
     target_epoch = 0
     for i, line in enumerate(lines[column_index + 1:-1]):
@@ -121,14 +128,15 @@ def parse(data, build_id=None):
         rows.append(r)
     require(digest == checksum, 'record checksum mismatch')
     require(rows[-1]['missed'] == missed and adc_failures == failures, 'completion count mismatch')
-    stimulus_status = validate_stimulus(scenario, stimulus, rows, bool(held), elapsed)
+    stimulus_status = validate_stimulus(scenario, stimulus, rows, bool(held), elapsed, fault_delay_us)
     return info, dict(token=token, scenario=scenario, duration_ms=duration, target_milli=target,
                       startup_held=bool(held), elapsed_us=elapsed, missed=missed,
                       stimulus=dict(zip(('trigger_us', 'begin_us', 'end_us'), stimulus)),
+                      **({'fault_delay_us': fault_delay_us} if fault_delay_us else {}),
                       stimulus_status=stimulus_status,
                       adc_failures=failures, rx_dropped=rx_dropped, buffer_overflow=overflow), rows
 
-def validate_stimulus(scenario, stimulus, rows, held, elapsed):
+def validate_stimulus(scenario, stimulus, rows, held, elapsed, fault_delay_us=0):
     """Independent checks against recorded input edges and elapsed times."""
     if scenario not in EVENT_SCENARIOS:
         require(stimulus == [-1, -1, -1], 'unexpected event stimulus')
@@ -153,7 +161,7 @@ def validate_stimulus(scenario, stimulus, rows, held, elapsed):
         require(begin == end == -1, 'untriggered stimulus executed')
         return 'not_triggered'
     delay = {5: 100000, 6: 605000, 8: 20000, 11: 0}.get(scenario, 1)
-    due = trigger + delay
+    due = trigger + (fault_delay_us or delay)
     require(begin == -1 or due <= begin <= elapsed, 'stimulus began before its deadline')
     if begin < 0:
         require(end == -1 and all(r['time_us'] < due for r in rows), 'due stimulus not executed')
@@ -229,7 +237,7 @@ class LineReader:
         self.port, self.raw = port, raw
         self.pending = bytearray()
 
-    def read_line(self, deadline):
+    def read_line(self, deadline, poll=None):
         while True:
             newline = self.pending.find(b'\n')
             size = newline + 1 if newline >= 0 else len(self.pending)
@@ -240,6 +248,8 @@ class LineReader:
                 return line
             if time.monotonic() >= deadline:
                 raise TimeoutError('No complete response before timeout; raw data preserved')
+            if poll is not None:
+                poll()
             # pyserial.read_until performs a separate read for every byte.
             # Buffered draining avoids that overhead during multi-megabyte
             # downloads. A one-byte read waits when no bytes are ready.

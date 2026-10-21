@@ -1,0 +1,139 @@
+{
+  "schema": 1,
+  "case": "press-stall",
+  "status": "pass",
+  "acquired_utc": "2026-10-18T21:05:39.628449+00:00",
+  "times_us": [
+    1000500,
+    3000500,
+    4000500,
+    4100500
+  ],
+  "requested_input_phase_us": 500,
+  "fixture_build": {
+    "source_commit": "d30437a42a71796a8cb912d355df0743b6273e6e",
+    "build_id": "0085c1d651d7c2e945e6a648",
+    "artifacts_sha256": {
+      "patterns_daisy.bin": "39dc56b2f8db50ac2fa25bf5b4ed982fea8d1516e191014ecf9a883538abecd8",
+      "patterns_daisy.elf": "72e8c43dc51468bcffb52eeb9a10d39d1fae7f5fa1574baace64ea46fdf9b34b",
+      "patterns_daisy.map": "9accba7e536f5a68cf6445e61191181aaddb5a3705b4470150ae7bdb4e81c0ba"
+    }
+  },
+  "generator_build": {
+    "source_commit": "3dab3a483c103928898a13bf91fd1844e23790d2",
+    "build_id": "4e68efce89b64d686cf11c63",
+    "artifacts_sha256": {
+      "patterns_pulse_generator.bin": "2f132cc4c0bd65dbff4430799ab20bf2386f7520122ceb66b85f4609de89693c",
+      "patterns_pulse_generator.elf": "e9ca1e466b9aec3e0f92d7c507c5edb01e2a1c7289d1fad54456cb0ceaa8473e",
+      "patterns_pulse_generator.map": "f1d95c80ee485b09e0bcda0c11aaf52b9b5495cdc9e0305037a7e8a26f2e6adf"
+    }
+  },
+  "writer": {
+    "packets": 3524,
+    "skipped_slots": 151,
+    "max_lateness_s": 0.013857885263860226
+  },
+  "raw_sha256": "caf0d119c4283b805e6a4c6ef243b79c6794f16f26e79d6790e3fdd8ada1fe78",
+  "generator_raw_sha256": "d7323a5afa9ba025029bf6e0fa93bceb4b870d4f632791573a7b273efe495b71",
+  "original_digital_sha256": {
+    "button": "e9f294dbece4ef9e218e4dd9aa11431b0a4294b03572ca033025c22348ea1c39",
+    "service": "f18522ada50d773ff6fa6a3650584040891920659ab547046e0f12b158f37a79",
+    "gesture": "f4468b80d05c3171525c8bbf5391dbb35ffacad61179853325d0e71c8040f18c"
+  },
+  "transformation": "Complete firmware and generator wire bytes losslessly gzipped. All three complete continuous digital channels represented as initial level and original relative floating-point timestamps in seconds. No edge trimming or filtering. Device identifiers, host paths, and vendor logs omitted.",
+  "limitation": "8-second fixed-delay case with added 4.7k external pull-up and analog probe physically attached; channel disabled during the digital capture. One fixture, measured phase estimates only; no programmable fault-offset qualification.",
+  "fixture_configuration": {
+    "external_pullup_ohms": 4700,
+    "external_pullup": "fixture physical38 (3V3D) to physical15 (button)",
+    "internal_pullup": true,
+    "analog_probe": "10x attached to button physical15, ground40; channel disabled in this digital-only acquisition",
+    "generator": "Independent Seed3 open-drain physical1 to fixture15; shared physical40 ground; separate USB supplies"
+  },
+  "review": {
+    "schema": 1,
+    "status": "pass",
+    "case": "press-stall",
+    "fixture_raw_sha256": "caf0d119c4283b805e6a4c6ef243b79c6794f16f26e79d6790e3fdd8ada1fe78",
+    "generator_raw_sha256": "d7323a5afa9ba025029bf6e0fa93bceb4b870d4f632791573a7b273efe495b71",
+    "samples": 7975,
+    "service_alignment": {
+      "clock_scale_ppm": 40.31121477909849,
+      "max_fit_residual_us": 0.6267095636576414,
+      "max_interval_error_us": 1.0297290971993789,
+      "max_work_width_error_us": 1.0790000003014484,
+      "pre_application_high_intervals_s": []
+    },
+    "source": {
+      "status": "pass",
+      "failures": [],
+      "edges": 4,
+      "scale": 1.0000390652839308,
+      "max_residual_us": 0.20515183312818408,
+      "max_interval_error_us": 0.38528393139131367,
+      "physical_press_us": [
+        2000078.3680000005,
+        100004.19400000027
+      ],
+      "limitation": "Stimulus-only check; does not qualify DUT behavior or service phase coverage."
+    },
+    "sampled_button_disagreements": [],
+    "button_edges_s": [
+      1.594821946,
+      3.5949003140000007,
+      4.594938994,
+      4.694943188
+    ],
+    "service_first_s": 0.645105123,
+    "service_last_s": 8.644707712,
+    "action_edges_s": [
+      4.70572412
+    ],
+    "setup_action_edges_s": [
+      0.64510354
+    ],
+    "action_latencies_us": [
+      10780.932000000299
+    ],
+    "measured_input_phase_us": [
+      679.1285987506853,
+      677.2344968901016,
+      675.3089854014106,
+      675.3167757513002
+    ],
+    "phase_uncertainty_note": "Service clock alignment residual plus marker/read skew; no exact phase-bin qualification.",
+    "software_behavior": {
+      "status": "pass",
+      "expected_gestures": [
+        1
+      ],
+      "action_sequences": [
+        4035
+      ],
+      "observed_presses": [
+        950049,
+        3950153
+      ],
+      "observed_releases": [
+        2950119,
+        4050124
+      ],
+      "physical_review": "pending"
+    },
+    "fault": {
+      "scenario": 5,
+      "stimulus_status": "completed",
+      "trigger_us": 950049,
+      "begin_us": 1050355,
+      "end_us": 1076011,
+      "allowed_missed": 25,
+      "allowed_cadence_breaks": 1,
+      "injected_adc_samples": 0,
+      "failures": [],
+      "behavior_review": "pending physical stimulus and recovery review"
+    },
+    "limitation": "Fixed receiver fault delays, clean generated edges, one fixture. Not a programmable fault-boundary matrix or switch-bounce qualification."
+  },
+  "fixture_compressed_sha256": "cda775446c72333e7a07e0255e6be49aad26f38c384c828e35f41bf2f93f74cb",
+  "generator_compressed_sha256": "8210c23ecb5092c0873a8c51a9505c4ab59e644972f51e173c9d7ecdd7ec5add",
+  "channels_compressed_sha256": "dafaf86d7b04fd73da9b71271f430cd3ca46685ba97c0290c7778d91911958d1"
+}

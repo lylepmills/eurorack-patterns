@@ -1,0 +1,109 @@
+{
+  "schema": 1,
+  "evidence": "measured on hardware",
+  "status": "pass",
+  "build": {
+    "build_id": "c3a3acff313df127ea766ede",
+    "source_commit": "1fd5f20a93eff5643d8c00d7ca49072ae68f4674",
+    "sdk_revision": "e1f740a5a7fe38e6d6d41281bf99fe7a2bb3827b",
+    "binary_sha256": "2646b105e8c570a2f3f0c647608e7bce52adf7d71dda9c273db0bb347cf0dcfb"
+  },
+  "fixture": {
+    "board": "Seed3",
+    "case": "empty",
+    "jack": "switched mono; empty jack",
+    "probe_series_ohms": 1000,
+    "sense_pulldown_ohms": 100000,
+    "scope_probe": "10x; sense node",
+    "analog_rate_hz": 250000.0
+  },
+  "run": {
+    "token": 3360616677,
+    "duration_ms": 3000,
+    "fault": 1,
+    "policy": 1,
+    "count": 6000,
+    "missed": 0,
+    "adc_failures": 0,
+    "elapsed_us": 3000000,
+    "fault_begin_us": 2000150,
+    "fault_end_us": 2025150,
+    "finish_reason": "duration",
+    "finish_request_us": 0,
+    "acquisition_limit_us": 3000000,
+    "trigger": 0,
+    "fault_delay_slots": 0,
+    "fault_duration_us": 25000,
+    "trigger_seq": 4294967295,
+    "trigger_us": 0,
+    "fault_due_us": 2000000
+  },
+  "review": {
+    "schema": 1,
+    "status": "pass",
+    "case": "empty jack",
+    "samples": 6000,
+    "run": {
+      "token": 3360616677,
+      "duration_ms": 3000,
+      "fault": 1,
+      "policy": 1,
+      "count": 6000,
+      "missed": 0,
+      "adc_failures": 0,
+      "elapsed_us": 3000000,
+      "fault_begin_us": 2000150,
+      "fault_end_us": 2025150,
+      "finish_reason": "duration",
+      "finish_request_us": 0,
+      "acquisition_limit_us": 3000000,
+      "trigger": 0,
+      "fault_delay_slots": 0,
+      "fault_duration_us": 25000,
+      "trigger_seq": 4294967295,
+      "trigger_us": 0,
+      "fault_due_us": 2000000
+    },
+    "raw_sha256": "68d0dd4182e88b1a1560634725fdd6ec6cc8465208e17aa197fd6b4fb9d0ee77",
+    "service_alignment": {
+      "clock_scale_ppm": 39.899086385464244,
+      "max_fit_residual_us": 0.19271791173378006,
+      "max_interval_error_us": 0.2960504566824511,
+      "max_work_width_error_us": 0.467000000115263,
+      "pre_application_high_intervals_s": []
+    },
+    "probe_edges": 3024,
+    "probe_max_error_us": 0.7639848631502133,
+    "terminal_release_error_us": 0.3234187073708483,
+    "propagation_min_us": 0.032999999621807774,
+    "propagation_max_us": 0.04100000028373074,
+    "invalid_observations": 50,
+    "state_changes": [
+      {
+        "seq": 63,
+        "time_us": 31789,
+        "ready": true,
+        "patched": false
+      }
+    ],
+    "analog_min_volts": -0.09677336364984512,
+    "analog_max_volts": 3.366384983062744,
+    "limitation": "One stationary fixture, no audio load, insertion/withdrawal, calibrated voltage or absolute time qualification. Command-start qualification is not mechanical insertion latency. Analog plateau samples cannot exclude between-sample glitches."
+  },
+  "native_scope_sha256": {
+    "analog_0.bin": "4ab4b3aa75bf8449dfd222a381a6090f94690a2e4dbfca9cc7266825ce767227",
+    "settings.json": "8294e3c19c5592f6a6df2992da3cba22bcd2c56afcf8f493b274952f667e0926",
+    "capture.sal": "baafe53e14d60f9de2cc3ecc5a62e4f2f52a56edd62b13b996b66af9d8e9398d",
+    "digital_1_2.bin": "09afa04154b6d4dda54af6b1b2714606e0f67c6d62bd425a482d1d3b9226ff75",
+    "digital_1_3.bin": "6f55f3b89f471835015ff482abb7e8bc20bb23f2010a81829aa4741a210a52a4",
+    "digital_1_1.bin": "26de289155b826a4c8709cbcddf97c3c5b5b89bf28d8edc1860231960180e5e3",
+    "digital_1_0.bin": "4d514c3c1a07c71f31bb862bbb69e2fb87581396501499c2de0f7d4541839c8c"
+  },
+  "limitation": "Complete digital timelines and wire records; analog export is one plateau sample per observation plus extrema, not the full waveform. No insertion or external-module voltage qualification.",
+  "raw_sha256": "68d0dd4182e88b1a1560634725fdd6ec6cc8465208e17aa197fd6b4fb9d0ee77",
+  "raw_compressed_sha256": "1827aebe6cfeb034056310fffc2fd131c979a2977e7563b9e8a7f31d21f0935c",
+  "channels_sha256": "ca406e672afacc460800644686955d6d62028a94e1110f0d67361a2c1840261d",
+  "channels_compressed_sha256": "e822aadedd427189390093425cd34f02f87c85694701e172e5b640e2c92e54ce",
+  "analog_sha256": "3edcb40016fd81d336d9c98be40a4bc21d1b2a570ea945544fa06ac5ad64f6f2",
+  "analog_compressed_sha256": "d9e36876ebd3b9b52a549e87ff78c4c82c98c18416c2a89c78d175a6c936364d"
+}

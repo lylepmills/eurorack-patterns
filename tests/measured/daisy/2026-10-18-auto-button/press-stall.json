@@ -1,0 +1,58 @@
+{
+  "schema": 1,
+  "case": "press-stall",
+  "status": "failed physical source edge count",
+  "acquired_utc": "2026-10-18T20:49:18.098816+00:00",
+  "times_us": [
+    1000000,
+    3000000,
+    4000000,
+    4100000
+  ],
+  "requested_input_phase_us": 0,
+  "fixture_build": {
+    "source_commit": "d30437a42a71796a8cb912d355df0743b6273e6e",
+    "build_id": "0085c1d651d7c2e945e6a648",
+    "artifacts_sha256": {
+      "patterns_daisy.bin": "39dc56b2f8db50ac2fa25bf5b4ed982fea8d1516e191014ecf9a883538abecd8",
+      "patterns_daisy.elf": "72e8c43dc51468bcffb52eeb9a10d39d1fae7f5fa1574baace64ea46fdf9b34b",
+      "patterns_daisy.map": "9accba7e536f5a68cf6445e61191181aaddb5a3705b4470150ae7bdb4e81c0ba"
+    }
+  },
+  "generator_build": {
+    "source_commit": "3dab3a483c103928898a13bf91fd1844e23790d2",
+    "build_id": "4e68efce89b64d686cf11c63",
+    "artifacts_sha256": {
+      "patterns_pulse_generator.bin": "2f132cc4c0bd65dbff4430799ab20bf2386f7520122ceb66b85f4609de89693c",
+      "patterns_pulse_generator.elf": "e9ca1e466b9aec3e0f92d7c507c5edb01e2a1c7289d1fad54456cb0ceaa8473e",
+      "patterns_pulse_generator.map": "f1d95c80ee485b09e0bcda0c11aaf52b9b5495cdc9e0305037a7e8a26f2e6adf"
+    }
+  },
+  "writer": {
+    "packets": 3470,
+    "skipped_slots": 204,
+    "max_lateness_s": 0.020574957598000765
+  },
+  "raw_sha256": "84f85ef94a391de908405fa63fa2429be6ec40fd8010a485d04d4033bc5ee74a",
+  "generator_raw_sha256": "fd677961bd1f146a55437920c8b7a22dcc2031f94e26ae3a4077d873837def39",
+  "original_digital_sha256": {
+    "button": "8887c3f73895a2939beb53b1e6809010e75b10aa6741b638dec3dde7e02fde58",
+    "service": "ef25ff1df41c619b97c09f22e31bc8ddbc411e4fd13282cdfd958d03a66a95b9",
+    "gesture": "5fbe65206c552cab0c7b7558f47c2557d531c4b36dc9e758f1c91a4f76be21d2"
+  },
+  "transformation": "Complete firmware and generator wire bytes losslessly gzipped. All three complete continuous digital channels represented as initial level and original relative floating-point timestamps in seconds. No edge trimming or filtering. Device identifiers, host paths, and vendor logs omitted.",
+  "limitation": "8-second fixed-delay case on one two-board fixture; no analog input waveform or programmable fault-offset qualification.",
+  "failure": {
+    "expected_edges": 4,
+    "observed_edges": 6,
+    "extra_intervals_ns": [
+      5,
+      6
+    ],
+    "source_attribution": "unknown; analog follow-up pending",
+    "software_checks": "passed; physical source check rejected this run"
+  },
+  "fixture_compressed_sha256": "1368ab436de7ff3ea68f227cbfbc32d3dcddd60494e924f6795dffa04c9ad8be",
+  "generator_compressed_sha256": "35b52267903bcce5ff45711e70e5d5982689d343f131f21e09f93d49fbff0c0c",
+  "channels_compressed_sha256": "15782196b6d933d11f6854c3425dd2d542f063b7c9b575a5cc75ab20d2cbb3f4"
+}

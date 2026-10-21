@@ -1,0 +1,97 @@
+{
+  "schema": 1,
+  "evidence": "measured on hardware",
+  "status": "pass",
+  "build": {
+    "build_id": "82c0f452973b6519855f649f",
+    "source_commit": "a49570218e6bba31f864b433adc3faefb5dd0347",
+    "sdk_revision": "e1f740a5a7fe38e6d6d41281bf99fe7a2bb3827b",
+    "binary_sha256": "31f4cfdc50b6bb3548bd09a7105262c309d4a0cd8067fc1005ddb3506bb1fe9c"
+  },
+  "fixture": {
+    "board": "Seed3",
+    "case": "empty",
+    "jack": "switched mono; empty jack",
+    "probe_series_ohms": 1000,
+    "sense_pulldown_ohms": 100000,
+    "scope_probe": "10x; sense node",
+    "analog_rate_hz": 250000.0
+  },
+  "run": {
+    "token": 3625744244,
+    "duration_ms": 3000,
+    "fault": 0,
+    "policy": 1,
+    "count": 6000,
+    "missed": 0,
+    "adc_failures": 0,
+    "elapsed_us": 3000000,
+    "fault_begin_us": 0,
+    "fault_end_us": 0,
+    "finish_reason": "duration",
+    "finish_request_us": 0,
+    "acquisition_limit_us": 3000000
+  },
+  "review": {
+    "schema": 1,
+    "status": "pass",
+    "case": "empty jack",
+    "samples": 6000,
+    "run": {
+      "token": 3625744244,
+      "duration_ms": 3000,
+      "fault": 0,
+      "policy": 1,
+      "count": 6000,
+      "missed": 0,
+      "adc_failures": 0,
+      "elapsed_us": 3000000,
+      "fault_begin_us": 0,
+      "fault_end_us": 0,
+      "finish_reason": "duration",
+      "finish_request_us": 0,
+      "acquisition_limit_us": 3000000
+    },
+    "raw_sha256": "c8bb25a25d33d80378246b0dcc90803089790824daf2bd48f0bbbbaa91bc4998",
+    "service_alignment": {
+      "clock_scale_ppm": 39.78474558619105,
+      "max_fit_residual_us": 0.17429450247436762,
+      "max_interval_error_us": 0.2881076264692979,
+      "max_work_width_error_us": 0.20399999989240314,
+      "pre_application_high_intervals_s": []
+    },
+    "probe_edges": 3024,
+    "probe_max_error_us": 0.6419677117674993,
+    "terminal_release_error_us": 0.22439458113865385,
+    "propagation_min_us": 0.03299999984385238,
+    "propagation_max_us": 0.04200000014442651,
+    "invalid_observations": 0,
+    "state_changes": [
+      {
+        "seq": 63,
+        "time_us": 31789,
+        "ready": true,
+        "patched": false
+      }
+    ],
+    "analog_min_volts": -0.10669645667076111,
+    "analog_max_volts": 3.346538782119751,
+    "limitation": "One stationary fixture, no audio load, insertion/withdrawal, calibrated voltage or absolute time qualification. Command-start qualification is not mechanical insertion latency. Analog plateau samples cannot exclude between-sample glitches."
+  },
+  "native_scope_sha256": {
+    "analog_0.bin": "260f3ae881da0226bc3da387ff71e15d8ed72b0c89acaf244ad72674965ca2a0",
+    "settings.json": "8294e3c19c5592f6a6df2992da3cba22bcd2c56afcf8f493b274952f667e0926",
+    "capture.sal": "65b61e84ec8c98be77aa98e072649d81efc6be2d88c47367fd743c97b13d654a",
+    "digital_1_2.bin": "34afc70d04bced083455b3f9924871b2ccebe294d072ec0a1dadd3a1d2423f0a",
+    "digital_1_3.bin": "1e8c951b701081ce6197b9ea054549c9fc9eac7bec439efcaf96f37ab107e741",
+    "digital_1_1.bin": "f3d174cd0255949b46b63053baf79ed25658406ccc969f8999cf081af66c361d",
+    "digital_1_0.bin": "bcb69298f7bc82a09dcc9f2591f7fd473641db6f3853e645582b8be5d53bb30d"
+  },
+  "limitation": "Complete digital timelines and wire records; analog export is one plateau sample per observation plus extrema, not the full waveform. No insertion or external-module voltage qualification.",
+  "raw_sha256": "c8bb25a25d33d80378246b0dcc90803089790824daf2bd48f0bbbbaa91bc4998",
+  "raw_compressed_sha256": "37d663acabebf06c503cf7e676d81acea57144a754d9df6018d3589af77f953f",
+  "channels_sha256": "d847ef72ee4901b2ffd26cde7c10644c4b1c9dccf4653b92be486a930e782318",
+  "channels_compressed_sha256": "2c42117c7c715422827bcac5115d60eb258ccd1375d379aa9b8a263ae7c730df",
+  "analog_sha256": "2bd8fd96862009e9f22ed3862bfc9aad87b8db923a264d6ff96dd70a7616fa8e",
+  "analog_compressed_sha256": "90cc5d9b70c1636e1bedb68295196f014883aebcfd37d2a40a3304fe959fbac3"
+}

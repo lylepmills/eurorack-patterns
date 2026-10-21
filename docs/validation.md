@@ -1,10 +1,79 @@
 # Evidence and validation
 
-Source confidence and product qualification are different. A verified fix can motivate a good contract; a host test can establish that our implementation follows it; neither proves that a chosen threshold, scan cadence or electrical interface works on a particular module.
+Use this guide to decide what the library supplies and what your firmware still
+needs to establish. The [coverage map](coverage.md) distinguishes the 88 catalog
+patterns from the nine implemented component families. Source confidence,
+implementation correctness and product qualification are separate claims.
+
+## Evidence levels
+
+| Evidence | What it establishes | What it does not establish |
+| --- | --- | --- |
+| Pinned source/manual or bug-history observation | A documented behavior or a narrowly identified failure motivates a contract. | Our implementation is correct, or an old report describes a current upstream defect. |
+| Synthetic host tests and independent reference models | The component follows its stated contract for the tested traces and boundaries. | ADC freshness, electrical limits, real scheduling or comfortable control feel. |
+| Complete measured trace on a named fixture | The recorded adapter, circuit and workload behaved as reported; failures remain explicit. | A different board, broader workload, production circuit or universal tuning constant. |
+| Product qualification | The intended hardware and integrated UX meet a product's declared requirements. | This repository does not currently claim production-module qualification. |
+
+The source survey is curated, not exhaustive. See its
+[scope and unresolved reports](research-pass-2.md). Inspected upstream tests
+were read, not executed. The measured work used one Seed3 control/jack fixture
+and a second Seed3 as an independent stimulus generator; that is not validation
+on two hardware families. The Pico example was compiled/linked, not measured.
+
+## Reusable lessons from the hardware work
+
+| Contract to carry into an adapter | Evidence and counterexample | Integration obligation |
+| --- | --- | --- |
+| Treat freshness and validity as part of each sample. | ADC gaps held accepted values; hidden crossings did not grant pickup. A held value alone cannot identify missing acquisition. | Report invalidity before motion filtering; detect duplicate/missing acquisition, and pair a conversion with the probe used for it. |
+| Give each shared knob an explicit owner and target. | Bidirectional movement, reversals and target edits reacquired without an early overwrite. | Rearm on external target/owner changes; reset history across gaps; choose effective bounds and UI feedback. |
+| Give each press one role and a cancellation policy. | Holds did not also tap on release; interrupted gestures stayed cancelled; selected startup-held cases required a fresh press. | Keep button validity separate from ADC validity, define startup/recovery, and evaluate thresholds at actual service observations. |
+| Qualify jack presence separately from signal value and musical gate edges. | Silent/open-ended cables, slow insertion and transition faults exercised the window/streak policy. Correlated input or a prolonged partial insertion can still satisfy a detector. | Generate valid probe evidence, expose unknown/stale state, and choose latency and electrical thresholds for the circuit. |
+| Budget the longest interruption, not only CPU utilization. | Six jack-load profiles starved qualification while audio deadlines passed. Bounded acquisition phases restored responsiveness in all 21 reruns. | Establish acquisition ownership/deadlines and measure both audio and control paths; do not copy one board's interrupt priorities as a universal fix. |
+| Validate the recorder as well as the firmware. | Loose probes, missing capture tails and extra receiver edges caused real rejections. | Require complete coverage and independent stimulus; retain failed runs and do not filter them into passes. |
+
+Holding a published value or presence state is a defined recovery behavior, not
+proof that it is still current. An application may need a stale-state indication
+or a timeout policy. The library does not choose that musical decision.
+
+## Measured scope and remaining limits
+
+| Area | Recorded evidence | Still outside the claim |
+| --- | --- | --- |
+| Pickup, motion and gestures | [Initial and fault/startup recordings](bench/daisy.md#first-daisy-measurements), moving targets, bidirectional hidden crossings, taps/holds during motion and fast reversals under the stated load. | Every mapping, control feel, every reset phase, brownout recovery, multiplexed ADC behavior or other boards. |
+| Button timing and recovery | [22 accepted threshold/fault cases](bench/daisy.md#configurable-receiver-fault-timing), plus fixed-delay comparisons; original failed attempts retained. | Exhaustive service-phase coverage, arbitrary contact bounce, universal debounce/hold durations. |
+| Jack presence | [Physical jack records](bench/daisy.md#recorded-jack-transition-and-motion-evidence): ordinary/slow movement, passive silent source, two open-ended cables, four manual transition faults; 110 automated electrical cases including baselines. | Electrical clamp stimulus is not mechanical insertion. Powered Eurorack voltages, all sockets/cables, correlated sources and mechanical seating time remain unqualified. |
+| Acquisition under interrupt load | [21 scheduled-acquisition comparisons](bench/daisy.md#scheduled-jack-acquisition-results) and two stop/drain checks; all previously starved profiles became responsive. | Arbitrary IRQ masking, interrupt priorities, display/storage/USB combinations or production audio quality. |
+| Real DSP/DMA and clock observations | [Archived fixture investigation](investigations/daisy-clock.md): matched-work diagnostics separate counted-clock scheduling from external stability; failed results preserved. | External clock failures remain unresolved. No absolute calibration, oscillator diagnosis, audio-fidelity qualification or portable memory-placement rule. |
+| Event counts, physical pulses, trigger delay and deferred changes | Host contracts and adversarial reference tests; runnable compositions. | Minimum physical pulse widths, delivery jitter, receiver compatibility, CV/gate skew, queue synchronization and safe audio transition boundaries. |
+| Storage, protection and recovery recipes | Attributed catalog observations and proposed checks. | Power-cut atomicity, brownout behavior, hot-patching survival or production electrical certification. |
+
+These counts describe distinct campaigns and accepted captures, not a single
+exhaustive qualification suite. A regression that expects a historical failure
+passes by detecting that failure; it does not promote the recording to a
+hardware pass. Numerical tolerances, windows, filters and resistor values belong
+to their recorded setup and are not recommended defaults for a new module.
+
+## What changed, and where
+
+The nine portable headers are unchanged from v0.2.0 through this consolidation.
+Version 0.2.1 added integration guidance, examples and host checks; that release
+predates the hardware measurements. Later work added measured regression data
+and repaired the Seed3 adapter's acquisition scheduling, stop/drain ownership,
+and capture integrity. Those are useful reference implementations with
+board-specific dependencies. They do not add a new portable scheduling API.
+
+The source-history pass supplied `PickupLatch`, `PulseTimer` and `TriggerDelay`;
+their source provenance is distinct from later bench evidence. See the
+[changelog](../CHANGELOG.md) and [attribution](../ATTRIBUTION.md).
 
 ## Executed host checks
 
-The suite combines synthetic adversarial fixtures with the explicitly labeled [Daisy measurements below](#first-daisy-measurements). The published 0.2.1 release predates those measurements. The CMake tests use always-active checks in release builds, compile as C++11 with warnings as errors and no exceptions/RTTI, compile every public header independently, and exercise an installed-package consumer. The existing CI matrix covers Linux, macOS and Windows; Linux enables address and undefined-behavior sanitizers. The second pass also ran the local suite with those sanitizers on Apple Clang.
+The default build exercises portable contracts. Board-adapter simulations and
+measured replays are separate opt-in configurations; see [test boundaries and
+evidence downloads](evidence.md). Downloaded traces retain their original hashes,
+and missing or changed data fails configuration rather than skipping a test.
+
+The suite combines synthetic adversarial fixtures with the explicitly labeled [Daisy measurements](bench/daisy.md#first-daisy-measurements). The published 0.2.1 release predates those measurements. The CMake tests use always-active checks in release builds, compile as C++11 with warnings as errors and no exceptions/RTTI, compile every public header independently, and exercise an installed-package consumer. The existing CI matrix covers Linux, macOS and Windows; Linux enables address and undefined-behavior sanitizers. The second pass also ran the local suite with those sanitizers on Apple Clang.
 
 | Mechanism | Evidence executed in this repository | What the check cannot establish |
 | --- | --- | --- |
@@ -21,376 +90,86 @@ Independent review corrected test blind spots before release: the event referenc
 
 ## How to promote a pattern
 
-1. **Pin the observation.** Record product, source revision or manual version, exact behavior and whether it is a merged fix, branch proposal, user report or measured result. Read the patch and its callers; avoid inferring a current defect from an old issue title.
-2. **Specify the boundary.** State units, ownership, initialization, invalid-data behavior, bounds/overflow, cancellation and ordering. Include a counterexample to an overly broad version of the advice.
-3. **Build a small adversarial replay.** Include the reported failure shape, exact boundaries, reset/rearm, gaps, nonfinite inputs where applicable and time wrap. Use an independent representation for an oracle where practical. A test that copies the implementation formula has limited independence.
-4. **Measure the adapter.** Establish sample freshness, scan/service cadence, clock domain crossings and worst-case load on the intended board. Instrumentation must not introduce the fault it measures; buffer traces and drain them outside timing-critical work.
-5. **Validate product behavior.** Use receiving modules, real patching and musicians. Record false actions, lost events, latency distribution, recovery and control feel against stated acceptance criteria. A second unrelated hardware adapter tests portability better than another wrapper around the same board SDK.
+1. Pin the source or failing observation and inspect its context. Distinguish a
+   merged fix, branch proposal, user report and measured result.
+2. Specify units, ownership, startup, invalidity, bounds, cancellation and order.
+   Include a counterexample to an overly broad recommendation.
+3. Build a small adversarial replay, with an independent oracle where practical.
+   Exercise exact boundaries, reset/rearm, missing data and time wrap.
+4. Measure the adapter on its actual circuit and schedule. Buffer instrumentation
+   outside timing-critical work and establish complete physical coverage.
+5. Validate musical behavior with intended receivers, real patching and users.
+   Record latency, false/lost actions, recovery and control feel against a stated
+   requirement. A second hardware family adds stronger portability evidence than
+   another wrapper around the same SDK.
 
 ## Next measurements, in useful order
 
-| Experiment | Capture | Acceptance question |
-| --- | --- | --- |
-| Jack insertion and removal | Raw probe/sample, freshness/sequence, expected probe, qualified state, independent physical/electrical ground truth | Does tentative insertion cause unwanted routing changes? How long do genuine changes take? Repeat silent sources, slow insertion, worn sockets and separately powered cases. |
-| Output pulse under load | Requested event time, logical deadline, actual pin high/low edges; stress display, storage and communications | Are minimum high/low widths and worst-case jitter acceptable to the receiver? Can late service join pulses? |
-| CV-before-gate acquisition | Independent CV step and gate timing, ADC sample timing, captured value and emitted trigger | What delay preserves intended pitch without losing fast notes? Sweep positive and negative skew. |
-| Shared-control takeover | Raw/mapped knob, target, validity, owner/bank changes and resulting value | Is pickup reliable across noise, slow/coarse movement, endpoints, invalid gaps and external edits? Do unreachable indications help the player recover? |
-| Saves and teardown | Interrupt/worker timelines, command acceptance, saved bytes, load result, resource lifetime | Are writes coherent and readers quiescent? A separate controlled power-cut campaign is required for atomicity claims. |
+The Daisy investigation is closed; further clock diagnosis is not a prerequisite
+for using or extending these components. New experiments should start with a
+named reusable contract or product decision, a finite case list, an acceptance
+budget, and a stopping rule. Expand the scope only when a failure changes that
+decision. Unexplained fixture anomalies can remain documented open questions.
 
-Do not set universal numeric thresholds from these host fixtures. Hardware tests should specify an acceptance budget before tuning and keep failing traces as regression inputs afterward.
+| Candidate | Decision it can inform | Bounded starting point |
+| --- | --- | --- |
+| Second hardware family | Does the sample/time/ownership boundary transfer? | Replay selected validity, pickup, gesture and presence cases through one unrelated adapter. |
+| Physical output pulses | Does the receiver see the requested events under load? | Measure high/low widths and delivery jitter across restart, cancel and late service. |
+| CV-before-gate acquisition | Which acquisition/latency policy preserves the intended note? | Sweep positive/negative CV-to-gate skew against a declared note-rate and latency budget. |
+| Integrated control feel | Are technically correct takeover and gestures understandable? | Try endpoints, slow/fast movement, mode changes and target edits with real users. |
+| Persistence, when implemented | Can interrupted writes recover a coherent supported state? | A separate controlled power-cut campaign against the actual storage backend. |
 
 ## Trace provenance
 
-When contributing a measured trace, include device/board revision, firmware commit, acquisition date and method, raw units/scaling, sample period or timestamps, calibration, dropped/duplicate-sample indicators, workload and trigger/ground-truth method. Record the expected result and why it is independent of the algorithm under test. Label generated stimuli separately from recorded samples. Remove device serial numbers, personal data and private patches.
+Record board revision, firmware commit, acquisition date/method, units/scaling,
+sample timestamps, calibration limits, missed/duplicate indicators, achieved
+workload and independent stimulus or ground truth. State the expected result
+and why it is independent of the algorithm under test. Separate generated
+stimuli from physical contacts and measured samples from synthetic fixtures.
+Remove device identifiers, personal information and private patches.
 
-Keep both the original acquisition and a minimal replay, with a documented transformation between them. A replay can validate the pure component while a scope/logic-analyzer capture validates the adapter. Neither should silently stand in for the other.
+Retain original acquisitions and a minimal replay with a documented
+transformation. A replay tests behavior; independent physical capture tests the
+adapter. Neither substitutes for the other. Short windows, selected samples,
+aggregate soaks and full recordings must keep their different coverage labels.
 
-## Integration preparation in 0.2.1
+## Detailed records
 
-The release adds a host-tested shared-knob adapter, a complete takeover/reset
-walkthrough and three synthetic illustrations generated from checked executable
-traces. CI checks illustration freshness. The public core headers are unchanged.
-The host suite has 24 checks, plus installed-package consumers. A separate ARM
-build instantiates all nine headers and compiles each independently for Cortex-M0+.
-The optional Pico SDK example links a firmware ELF using the same adapter.
-These cross-builds establish compiler/SDK compatibility only: the Pico has not
-been flashed or measured as part of this release. See its [remaining bench
-checks](../examples/pico/README.md#adapter-decisions-and-checks-still-needed).
+- [Daisy procedures and measured cases](bench/daisy.md): historical firmware,
+  wiring, commands, accepted results and retained rejections.
+- [Closed clock investigation](investigations/daisy-clock.md): full diagnostic
+  chronology, unresolved physical cause and native-evidence limits.
+- [Shared-knob integration](quickstart.md) and [Pico adapter](../examples/pico/README.md):
+  application boundaries and compiler checks. The Pico has not been measured.
 
-## Daisy Seed3 control bench
+<!-- Compatibility anchors for the former long-form validation guide. -->
+<a id="daisy-seed3-jack-presence-bench"></a>
+<a id="jack-audiointerrupt-load-results"></a>
+<a id="scheduled-jack-acquisition-results"></a>
+<a id="recorded-jack-transition-and-motion-evidence"></a>
+<a id="daisy-seed3-control-bench"></a>
+<a id="first-daisy-measurements"></a>
+<a id="active-fault-and-startup-measurements"></a>
+<a id="fixture-and-saleae-connections"></a>
+<a id="build-without-accessing-hardware"></a>
+<a id="capture-and-replay"></a>
+<a id="automatic-startup-recording"></a>
+<a id="audiousb-load-and-continuous-soak"></a>
+<a id="transfer-integrity"></a>
+<a id="first-measurements-and-acceptance"></a>
+<a id="independent-button-stimulus-apparatus"></a>
+<a id="automated-two-board-button-cases-2026-10-18"></a>
+<a id="configurable-receiver-fault-timing"></a>
 
-The [firmware](../examples/daisy/main.cpp), [builder](../examples/daisy/build.py)
-and [capture tool](../examples/daisy/capture.py) prepare a reproducible control
-experiment. Both the initial controls and the newer event-triggered fault/startup
-scenarios have bounded physical evidence below. Public library headers are
-unchanged. The host suite has 30 CTest entries, including protocol/mock-serial
-tests, synthetic scenarios, scope-alignment rejection tests and 15 complete
-measured replays. The firmware itself is not simulated by those host tests.
+These historical sections moved to the [Daisy bench record](bench/daisy.md).
 
-### First Daisy measurements
+<a id="jack-dsp-and-memory-dma-campaign-partial-hardware-results"></a>
+<a id="internal-ram-versus-sdram-measured-comparison"></a>
+<a id="controlled-firmware-comparison-current-previous-current"></a>
+<a id="fixed-sdram-buffer-placement-in-one-image"></a>
+<a id="fixed-storage-buffer-alignment-comparison"></a>
 
-Measured on 2026-10-14 in America/Los_Angeles (some UTC acquisitions are dated
-2026-10-15), using one Seed3, a B100k linear pot without an added capacitor,
-a normally open button and paired Saleae MSO captures. The measured firmware is
-commit `cc730b48d3284561ea4cbf9fde907be3acf4f98c`, build ID
-`1f0d42db39622ab699e03d0b`; subsequent firmware must establish its own evidence.
+These historical sections moved to the [clock investigation archive](investigations/daisy-clock.md).
 
-Twelve selected complete paired runs contained 199,974 serviced observations.
-Six complete windows (136,000 observations) are included as
-[losslessly compressed wire traces](../tests/measured/daisy/2026-10-14), with
-allowlisted provenance and scope-derived button/action edges beside each file.
-These are recorded inputs; the ADC gap is explicitly a software injection.
-
-| Observation | Result and boundary |
-| --- | --- |
-| Five short taps and one approximately two-second hold | Exactly five tap actions and one hold; no action on hold release. Tap latency from physical release 10.16–11.13 ms; hold about 610.73 ms from physical press. One observed bounce cluster spanned about 109 us. |
-| Ascending and descending pickup | Acquired at 25.0752% and 24.8859% for a 25% target; no earlier overwrite. Ascending capture ended before the clockwise endpoint. The descending repeat's 99-to-1% travel took 3.151 s; it was not an actual one-second sweep. |
-| Settled endpoint | Descending repeat ended at output zero with no output changes during the last five seconds, despite raw ADC variation. Separate clockwise capture established ADC full-scale reachability. |
-| Invalid observations while tracking | 250 deliberately invalid samples did not change the owned value; tracking resumed on the next valid observation. Pot was stationary. |
-| External target edit | A stationary input did not overwrite the new 0.75 target; pickup rearmed. |
-| Initially held button | Initial hold/release ignored, then one fresh tap accepted. This was initialization at **run start**, not power-on. |
-| Deliberate stall and foreground load | Stall accounted for 26 skipped slots and a measured 27.000692 ms service interval. A separate 400 us busy-loop load had no missed slots. Neither exercised audio/interrupt load. |
-
-All twelve selected runs had complete checksummed transport, matching replay and
-scope coverage, and no unexpected missed slots or ADC failures. An earlier
-maximum-length download was incomplete; buffered host reads fixed the observed
-failure, without establishing the exact OS/USB failure mechanism. A possible
-pot contact disturbance invalidated another run for clean-fixture conclusions;
-the inspected/reseated repeat is the published descending trace. Early wiring
-and scope-coverage failures remain retained privately and excluded from passes.
-
-[The exporter](../tools/export_daisy_trace.py) preserves the original complete
-USB bytes and derives relative digital edge times from native recordings. It
-checks every service pulse and sampled button level, then copies only allowed
-metadata fields. Original and compressed hashes, firmware identity and hashes
-of native scope source files are recorded. Device identifiers, local paths and
-operator notes are excluded. Full native originals remain retained privately;
-the public edge extracts are a subset, not a complete analog recording.
-
-[The measured regression](../tests/test_daisy_measured.py) verifies hashes,
-replays the recorded input, and checks explicit outcomes and scope timing
-bounds established in the bench review. Replay tests the application adapter;
-it does not replace independent physical observations. These measurements do
-not choose universal thresholds or establish electrical disconnect detection,
-calibrated analog accuracy, jack behavior, power-cycle behavior or portability.
-
-To export another reviewed capture, use an environment containing
-`saleae-mso-api` 0.5.8; the exporter reads saved files and never opens hardware:
-
-```sh
-python tools/export_daisy_trace.py --capture CAPTURE_DIRECTORY --out-prefix tests/measured/daisy/DATE/CASE
-```
-
-The exporter accepts the reviewed protocol 1/2 identity and fixture fields only.
-For startup captures, specify `--startup-kind reset` or `--startup-kind usb-power-cycle`
-from the recorded operator procedure. Review any new identity fields before
-extending the allowlist; add independent expectations before treating a trace as a pass.
-
-### Active fault and startup measurements
-
-Measured on 2026-10-15 and 2026-10-16 in America/Los_Angeles, on the same Seed3,
-B100k pot and normally open button fixture. The [second corpus](../tests/measured/daisy/2026-10-16)
-contains nine complete runs totaling 609,923 observations. Each file identifies
-its actual acquisition timestamp, firmware commit/build and binary hash. The
-fault-button runs used firmware commit `9b5442910fd9f4e9851c56b5a80e07e1f245137f`;
-the longer movement and startup runs used `5c9b10e9d344e103421d763eeb97c2c85fe57f7f`.
-
-| Experiment | Observed result |
-| --- | --- |
-| Service gap during a held press or across its hold threshold | Cancelled press and eventual release caused no action; a later fresh tap acted once. Each gap was approximately 27 ms and accounted for 26 skipped service slots. |
-| Service gap during release qualification | Interrupted tap cancelled; release qualification restarted after the gap. A subsequent fresh tap acted once. The approximately 26 ms gap accounted for 25 skipped slots. |
-| ADC-only invalid interval during a tap | Button sampling continued; the first release/action occurred inside the 250 ms ADC gap, and the second tap acted normally. Invalid ADC samples were not applied. |
-| Upward and downward pickup crossings hidden by a one-second ADC gap | Output held at 25% through the unobserved crossing and recovery. The later observed reverse crossings acquired at 25.0462% and 24.6983%, within the configured tolerance. Scope analog medians corroborated the crossings during invalidity. |
-| Target changed while the knob moved | Pickup first acquired at 25.0004%. A raw midpoint crossing changed the target to 75%, revoked ownership, and held that value for 3.181 s until reacquisition at 75.0134%. |
-| Physical RESET, released button, high knob position | All 20,000 application samples matched the scope; no button actions or unintended pickup. |
-| USB power-on with button held and knob near midpoint | Initial hold and release caused no action. One fresh 131.292 ms tap acted once, 10.863 ms after release. ADC and analog midpoint readings stayed consistent. |
-
-All nine runs have verified transport and C++ replay, complete application
-service-pulse coverage and sampled button agreement, with no unexpected skipped
-slots or ADC failures. Gaps are deliberate software invalidation or foreground
-stalls; they do not establish physical disconnection detection or audio/IRQ-load
-behavior. The [new measured checks](../tests/test_daisy_fault_measured.py) preserve
-these expectations alongside the first-pass regressions.
-
-Reset and power-on captures included a roughly 2.287-second high service-marker
-level **before application sampling**. It ended about 130 ms before the first
-application pulse. A released button input also changed electrical level before
-its application sampling began. These observations remain explicit in exported
-metadata; their electrical/boot-stage cause is not established here. The
-[scope matcher](../tools/daisy_scope.py) accepts only the reviewed long prefix,
-then matches every application pulse by count, timestamp, interval and recorded
-work width. Unknown extra pulses, missing pulses and timing mismatches fail.
-
-Protocol 2 exports retain actual analog sample rates, service-gap intervals and
-10 ms voltage medians, with pre-application analog medians for startup captures.
-Medians are rounded to six decimals for reproducibility, not calibrated precision.
-Full original USB windows remain losslessly compressed; native scope files remain
-private and are represented by hashes. These derived analog data are not full-bandwidth
-noise or transient measurements.
-
-Untriggered operator windows and disconnected-probe recordings were retained
-privately and excluded from these published passes. A disconnected analog probe
-read approximately zero while the MCU continued reporting valid full-scale ADC
-conversions. Reconnecting the probe restored agreement. This is a measurement
-fault, not evidence that the ADC's conversion-success flag detects cable health.
-Longer fixed windows provided about two minutes for the operator to begin while
-retaining the complete waiting period.
-
-This remains one fixture and a small set of manually operated runs. Remaining
-work includes repeated/varied startup and fault phases, other pots and boards,
-audio/IRQ workloads and soaks, real jack/gate circuitry, pulse/CV timing, and a
-separate power-cut/brownout/storage campaign. No library control behavior changed
-as a result of this pass.
-
-### Fixture and Saleae connections
-
-Wire with power disconnected. Physical pin numbers below are for **Daisy Seed3**;
-use its [official pinout](https://daisy.nyc3.cdn.digitaloceanspaces.com/products/seed3/Seed3-Pinout.pdf)
-for orientation. A B100k linear pot is the initial fixture. Keep wires short and
-start without an added capacitor. No audio or external CV source is needed.
-
-| Connection | Physical pin / signal |
-| --- | --- |
-| Pot outer terminals | 21 / 3V3_A and 20 / AGND |
-| Pot wiper; Saleae analog probe tip | 22 / D15 / A0 |
-| Normally open button | 15 / D14 to 40 / DGND; internal pull-up enabled |
-| Required ground jumper | 20 / AGND to 40 / DGND |
-| Saleae digital input: raw button | 15 / D14, active low |
-| Saleae digital input: service marker | 1 / D0, high around each serviced observation |
-| Optional Saleae digital input: gesture marker | 2 / D1, toggles once per tap/hold action |
-| Scope and logic probe ground | 40 / DGND |
-
-Use the MSO's 10x scope probe on the wiper and match its software attenuation;
-the supplied probe is approximately 10 MΩ in parallel with 15 pF. Record actual
-probe settings and any filtering added later. All grounds are common. ADC and
-logic signals in this fixture stay between ground and 3.3 V. Eurorack voltages
-require a separate protected input circuit.
-
-Start Saleae recording before requesting a run. Use DC coupling for the wiper
-and an appropriate 3.3 V digital threshold. A digital rate of at least 1 MS/s is a
-reasonable starting point for the service/button markers; record the actual
-rate. The first **application** D0 service-marker pulse aligns the run with the USB trace,
-subject to the small GPIO/timestamp instruction offset. These D0/D1 names refer
-to Daisy pins, not the scope's channel numbers. D0 width includes acquisition,
-state updates, record storage and synthetic foreground load; `work_us` excludes the final
-marker write. D1 marks the action immediately after the state update. Save the
-native Saleae recording with the USB evidence. Saleae capture is currently
-operator-controlled; the Python tool captures USB, not the MSO.
-For startup, retain pre-application transitions separately; a reset-time high
-level is not automatically an application service pulse. Use complete-window
-timing/width checks rather than dropping unexpected edges until counts agree.
-
-The onboard LED shows pickup ownership during a run. It retains the last state
-afterward; it is not a progress indicator or a voltage readout.
-
-### Build without accessing hardware
-
-Use an ARM GNU embedded toolchain on PATH and CMake 3.24 or newer. The tested
-libDaisy revision is 7.0.1, pinned for reproducibility. Initialize these SDK
-submodules in a separate checkout; the builder only reads that checkout and
-builds its sources in the output directory.
-
-```sh
-git clone https://github.com/electro-smith/libDaisy.git ../libDaisy
-git -C ../libDaisy checkout e1f740a5a7fe38e6d6d41281bf99fe7a2bb3827b
-git -C ../libDaisy submodule update --init Drivers/CMSIS-DSP Drivers/CMSIS_5 Drivers/CMSIS-Device/ST/STM32H7xx Drivers/STM32H7xx_HAL_Driver Middlewares/ST/STM32_USB_Device_Library
-python3 examples/daisy/build.py --libdaisy ../libDaisy --out build-daisy
-cmake -S . -B build -DCMAKE_BUILD_TYPE=Release
-cmake --build build --config Release
-ctest --test-dir build -C Release --output-on-failure
-```
-
-`--gcc /path/to/toolchain/bin` can select a compiler outside PATH. The output
-contains `patterns_daisy.bin`, `.elf`, `.map` and `manifest.json` with source,
-dependency, compiler and artifact hashes. The binary is a Daisy bootloader SRAM
-application stored at **0x90040000**, not an internal-flash bootloader image.
-The builder and capture tool contain no flashing/reset commands. Before a
-separate flashing session, establish exclusive board ownership, check the
-installed bootloader and retain a verified way to restore the prior application.
-No bootloader, asset or settings region should be overwritten by this test.
-
-### Capture and replay
-
-Install pyserial in a local environment. Capture requires an explicit port and
-the matching build manifest/binary. It sends an identity query first and refuses
-to start a run on a different firmware build. It does not auto-discover boards,
-assert reset lines, write persistent settings or put the board into DFU.
-Protocol 2 firmware first records an automatic startup window; download it
-before requesting a normal run. The host also accepts archived protocol 1 traces.
-
-```sh
-python3 -m venv build-tools
-# Activate that environment using your shell's activation command.
-python3 -m pip install pyserial==3.5
-python3 examples/daisy/capture.py capture --port PORT --manifest build-daisy/manifest.json --out build-captures/startup --scenario startup --seconds 20 --replay build/daisy_replay
-python3 examples/daisy/capture.py capture --port PORT --manifest build-daisy/manifest.json --out build-captures/stationary --seconds 20 --scenario manual --replay build/daisy_replay --notes "Stationary pot near midpoint; button untouched"
-python3 examples/daisy/capture.py analyze build-captures/stationary/raw.txt --out build-captures/stationary-replay --replay build/daisy_replay
-```
-
-On multi-configuration builds the replay executable is typically
-`build/Release/daisy_replay.exe`. `--pot-ohms`, `--capacitor-nf`, `--probe` and
-`--notes` record the operator-declared fixture; defaults describe the 100k/no
-capacitor/10x-probe setup above. Keep notes generic and remove device serials or
-private information before publishing. Each output directory must be new.
-
-| Scenario | Behavior |
-| --- | --- |
-| `manual` | Initial target 0.25 (override with `--target 0..1`). A tap alternates 0.75/0.25 on qualified release. A 600 ms hold sets 0.5 once and consumes release. |
-| `targets` | Also re-arms at 0.75 after five seconds, then alternates 0.25/0.75 every five seconds. |
-| `gap` | Skips ADC acquisition from 5.000 to 5.250 seconds, explicitly marking those observations invalid; continues observing the button. |
-| `stall` | Stops foreground service for a nominal 25 ms at five seconds. Counts skipped deadlines; breaks pickup continuity and cancels a pending gesture. |
-| `load` | Adds a timed 400 µs foreground busy loop per observation. This is synthetic CPU occupancy, not audio/interrupt/storage-load qualification. |
-| `press-stall` | First observed fresh raw press schedules a nominal 25 ms service stall 100 ms later. Hold, release, then make a fresh tap: interrupted press must not act; fresh tap must work. |
-| `hold-stall` | Same, with the stall scheduled 605 ms after the raw press, around the illustrative hold boundary. |
-| `release-stall` | Stall on the next loop after the first observed release of a fresh press, before release qualification. Use a short press, then a separate fresh tap. |
-| `press-adc-gap` | First fresh raw press schedules a 250 ms ADC gap beginning 20 ms later. Button observation continues: a roughly 100 ms tap during the gap should still act once. |
-| `pickup-gap-up` | Crossing raw code 9831 (about 15%) upward schedules a one-second ADC gap at the next observation. Start below that point and move past the 25% target during the gap. Waiting pickup must not infer the missing crossing; a later observed crossing should acquire. |
-| `pickup-gap-down` | Equivalent descending test, crossing raw code 22937 (about 35%) from above before the gap. |
-| `moving-target` | Crossing raw code 32768 upward edits target to 0.75 before that sample is applied. Continue upward to reacquire. |
-| `startup` | Downloads the retained 20-second automatic post-initialization capture, target 0.25. Does not start a new run. |
-
-Normal runs last 1–150 seconds on the expanded-buffer firmware; original images
-remain limited to 30 seconds. The host checks the advertised capacity before
-sending a run command. For an operator-led test, use `--seconds 150`: begin within
-the first two minutes and leave time for the complete sequence and recovery.
-Keep the entire waiting period in both recordings. This is a fixed full window,
-not a rolling or movement-started capture; the stimulus still triggers on the
-physical input. Arm the scope for the whole window plus setup margins. Longer
-windows need more capture storage and download time. The 150,000-record buffer
-uses 10.2 MB of SDRAM in the ARM link map; the automatic startup window remains
-20 seconds.
-
-Scheduled-fault/target scenarios require at least six seconds.
-Movement-triggered scenarios use target 0.25. Event triggers use raw input
-observations, independently of the gesture or pickup result under test. Start
-with button released; an initially held button does not supply a fresh press.
-The first matching edge triggers the stimulus once. Raw bounce may affect trigger
-time; inspect the scope and recorded timestamps rather than assuming a clean edge.
-
-Protocol 2 adds `STIMULUS,trigger_us,begin_us,end_us` before `COLUMNS`; its bytes
-and the data records are checksummed together. `-1` means that phase was not
-observed. The host independently checks trigger edges, scheduling and recovery.
-A complete download with an untriggered or unfinished scenario returns exit code
-3 and retains its evidence; it is not a completed experiment. Completion means
-the stimulus occurred, not that the intended human interaction overlapped it or
-that behavior passed. Confirm those conditions in the scope/behavior review.
-
-### Automatic startup recording
-
-Start the scope **before** reset or power-on. The firmware initializes clocks,
-RAM, GPIO and ADC, then samples the initial button state and records 20 seconds
-without USB initialization or host commands. USB enumerates afterward; use
-`--scenario startup --seconds 20 --target 0.25` to retrieve that retained window.
-The existing marker pins and pot/button wiring are unchanged.
-
-For a held-button test, hold before reset/power-on, release several seconds into
-the service-marker window, then make one fresh tap. Also capture released-button
-boots at endpoints and midpoint. Require no unintended actions or ownership,
-then normal recovery on a fresh interaction. Keep reset and power-on observations
-separate; neither is brownout or storage-atomicity qualification.
-
-`B,TOKEN` retrieves the buffered startup window; its `START` line is emitted at
-download time, not acquisition time. Match scope coverage to service-marker
-edges. A successful firmware download consumes the startup availability flag;
-a new reset is needed for a new startup capture. A normal run is refused while
-an unread startup window remains. A failed firmware transmission retains it for
-retry; a host failure after successful transmission may require another reset.
-No persistent settings or automatic reset command is involved.
-
-This observes the application **after peripheral initialization**. It does not
-capture supply rise, ROM/bootloader execution, or clock/RAM/ADC setup. Record
-those separately if the question concerns earlier electrical/startup behavior.
-
-### Transfer integrity
-
-No USB output occurs during acquisition. Records are buffered in SDRAM, then
-transferred; allow time for the download. An unplugged host does not stop an
-in-progress window. The host drains available serial data in bounded blocks and
-assembles lines in memory, avoiding one operating-system read per byte. This
-reduces receiver overhead; framing and checksum checks still determine whether
-the transfer is complete. Interrupted or malformed downloads remain incomplete
-and retain their original bytes; rerun into a new directory rather than treating a
-partial trace as a pass.
-
-The tool saves original `raw.txt`, operator/build `metadata.json`, lossless
-integer `samples.csv` and a `summary.json`. It verifies framing, run identity,
-sequence order, record count, checksum, deadline accounting, validity flags and
-basic application invariants. Optional C++ replay runs recorded inputs through
-the same application adapter and compares every reported state/event/value
-(with one-millionth rounding tolerance). This proves replay consistency, not an
-independent oracle for physical events. Port/device serial identifiers are not
-stored automatically.
-
-Values ending in `_ppm` are normalized values multiplied by one million;
-`accepted_ppm = -1` means no currently valid motion anchor. State numbers are
-0 unarmed, 1 waiting, 2 tracking, 3 unreachable. `gesture` is 0 none, 1 tap,
-2 hold. Timestamps are microseconds from the start of each run, using extended
-raw timer ticks before unit conversion. `adc_us` covers start/poll/read/stop;
-conversion-complete polling establishes freshness, but not wiring health or
-analogue accuracy. No ADC averaging or additional analogue filter is enabled.
-The 810.5-cycle aperture must still be checked with the 100k source impedance.
-
-### First measurements and acceptance
-
-Start with stationary captures near both endpoints and midpoint, then slow and
-fast sweeps in both directions. Repeat after target changes, with taps/holds,
-with the button held at run start, and under each generated fault/load scenario.
-Record actual intended tap/hold counts independently of the firmware's counters.
-Before tuning, require:
-
-- Zero transport loss, buffer overflow and unexpected ADC failures. Missed
-  deadlines are reported explicitly; the stall's deliberate misses remain in
-  the evidence. Unexpected misses in other scenarios need investigation.
-- No applied sample while invalid or waiting; no crossing inferred across an
-  acquisition gap. Already-tracking controls resume from the next valid sample.
-- Exactly one action per intended tap/hold, no extra tap after a hold, and no
-  action from a button held at startup or from a cancelled press across a gap.
-- Scope evidence consistent with timestamps/action markers. Measure latency and
-  bounce before deciding whether the illustrative 10 ms qualification, 600 ms
-  hold, 0.5% pickup tolerance and motion thresholds feel appropriate.
-
-Raw spread during movement is not a stationary-noise measurement. Endpoint
-reachability requires a separate check of the real pot's attained ADC range;
-this fixture does not calibrate or stretch it automatically. Preserve original
-failures before tuning. No jack contact, external gate, audio deadline, flash
-persistence, or calibrated CV accuracy claim follows from this bench.
+<a id="integration-preparation-in-021"></a>
+The 0.2.1 preparation is described in the [release history](../CHANGELOG.md#021--2026-10-13).

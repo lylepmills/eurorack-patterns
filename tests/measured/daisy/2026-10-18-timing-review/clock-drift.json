@@ -1,0 +1,21 @@
+{
+  "schema": 1,
+  "evidence": "Complete 150-second timing-only projection of a failed physical alignment check",
+  "samples": 150000,
+  "firmware_commit": "d30437a42a71796a8cb912d355df0743b6273e6e",
+  "firmware_build_id": "0085c1d651d7c2e945e6a648",
+  "source_wire_sha256": "778e47ce2b57cb49a78e3a02c86cbfcc820261382a6f5aed8c087b1c21ff9372",
+  "source_digital_sha256": "48de93642743c4ab013786c4f557d32ab50491c4c71a8618a9205c61d67a4073",
+  "data_sha256": "054d383d71fd0493c5bd3dd913da53af080638e60ca1bf20a18d2987297d191a",
+  "compressed_sha256": "3fee41e8d21302d1ffd898380c1d53cbdc5f33d783e2479339e64cc234ea2d65",
+  "transformation": "Every firmware time_us/work_us retained; every physical service rise/fall retained as integer nanoseconds relative to the first rise (rounded at the recorded 1 GHz digital sample resolution). No crop, waveform interpolation, or fit correction. Other control fields are omitted: this is timing evidence, not a behavioral replay.",
+  "original_status": "fail",
+  "original_failure": "global_fit",
+  "original_report": {
+    "clock_scale_ppm": 39.652851622884455,
+    "max_fit_residual_us": 5.641874760447536,
+    "max_interval_error_us": 1.050692504414883,
+    "max_work_width_error_us": 1.099000000179899,
+    "pre_application_high_intervals_s": []
+  }
+}

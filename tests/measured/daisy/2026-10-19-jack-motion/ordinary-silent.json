@@ -1,0 +1,185 @@
+{
+  "schema": 1,
+  "evidence": "measured on hardware",
+  "status": "pass",
+  "build": {
+    "build_id": "f664ea4c86ad208d6560e955",
+    "source_commit": "22bbd3edbb1658342bd237687cf34ec3ed81ad1f",
+    "sdk_revision": "e1f740a5a7fe38e6d6d41281bf99fe7a2bb3827b",
+    "binary_sha256": "efd245b0e5376eeb87427f9e5f5587f4c4d8ba80965a838789370293eafd56e0"
+  },
+  "fixture": {
+    "board": "Seed3",
+    "case": "manual-ordinary-silent",
+    "jack": "switched mono; ordinary insertion/withdrawal; passive terminated far end",
+    "probe_series_ohms": 1000,
+    "sense_pulldown_ohms": 100000,
+    "scope_probe": "10x; sense node",
+    "analog_rate_hz": 250000.0
+  },
+  "run": {
+    "token": 4079806323,
+    "duration_ms": 300000,
+    "fault": 0,
+    "policy": 1,
+    "count": 600000,
+    "missed": 0,
+    "adc_failures": 0,
+    "elapsed_us": 300000000,
+    "fault_begin_us": 0,
+    "fault_end_us": 0
+  },
+  "review": {
+    "schema": 1,
+    "status": "pass",
+    "case": "ordinary insertion/withdrawal; passive terminated far end",
+    "samples": 600000,
+    "cycles": 3,
+    "run": {
+      "token": 4079806323,
+      "duration_ms": 300000,
+      "fault": 0,
+      "policy": 1,
+      "count": 600000,
+      "missed": 0,
+      "adc_failures": 0,
+      "elapsed_us": 300000000,
+      "fault_begin_us": 0,
+      "fault_end_us": 0
+    },
+    "state_changes": [
+      {
+        "seq": 63,
+        "time_us": 31789,
+        "ready": true,
+        "patched": false
+      },
+      {
+        "seq": 58268,
+        "time_us": 29134289,
+        "ready": true,
+        "patched": true
+      },
+      {
+        "seq": 76117,
+        "time_us": 38058789,
+        "ready": true,
+        "patched": false
+      },
+      {
+        "seq": 89858,
+        "time_us": 44929289,
+        "ready": true,
+        "patched": true
+      },
+      {
+        "seq": 100930,
+        "time_us": 50465289,
+        "ready": true,
+        "patched": false
+      },
+      {
+        "seq": 111630,
+        "time_us": 55815289,
+        "ready": true,
+        "patched": true
+      },
+      {
+        "seq": 124046,
+        "time_us": 62023289,
+        "ready": true,
+        "patched": false
+      }
+    ],
+    "service_alignment": {
+      "clock_scale_ppm": 39.998287932663246,
+      "max_fit_residual_us": 1.23946875333786,
+      "max_interval_error_us": 0.3249991511189023,
+      "max_work_width_error_us": 0.1379999944319934,
+      "pre_application_high_intervals_s": []
+    },
+    "probe_max_error_us": 0.616999784597283,
+    "terminal_release_error_us": 0.003439595275267493,
+    "sense_edges": 292350,
+    "presence_edges": 6,
+    "invalid_observations": 1494,
+    "ambiguous_analog_apertures": 1495,
+    "digital_transition_apertures": 1476,
+    "dwell_checks": [
+      {
+        "begin_us": 0,
+        "end_us": 1000000,
+        "patched": false,
+        "samples": 2000
+      },
+      {
+        "begin_us": 299000000,
+        "end_us": 300000000,
+        "patched": false,
+        "samples": 2000
+      },
+      {
+        "begin_us": 14083039,
+        "end_us": 15083039,
+        "patched": false,
+        "samples": 2000
+      },
+      {
+        "begin_us": 33096539,
+        "end_us": 34096539,
+        "patched": true,
+        "samples": 2000
+      },
+      {
+        "begin_us": 40994039,
+        "end_us": 41994039,
+        "patched": false,
+        "samples": 2000
+      },
+      {
+        "begin_us": 47197289,
+        "end_us": 48197289,
+        "patched": true,
+        "samples": 2000
+      },
+      {
+        "begin_us": 52640289,
+        "end_us": 53640289,
+        "patched": false,
+        "samples": 2000
+      },
+      {
+        "begin_us": 58419289,
+        "end_us": 59419289,
+        "patched": true,
+        "samples": 2000
+      },
+      {
+        "begin_us": 180511644,
+        "end_us": 181511644,
+        "patched": false,
+        "samples": 2000
+      }
+    ],
+    "raw_sha256": "afdd9961e591943d9d05e6d66927efa7ece45c5044a7483e8c43b3789374efd9",
+    "limitation": "One fixture/cable and operator-declared motion; no mechanical seating timestamp or universal insertion latency. Aperture extrema do not resolve voltage inside a conversion or qualify glitches between observations. No external powered source or audio load."
+  },
+  "native_scope_sha256": {
+    "record_result.json": "99f7531be39872a34218e30ef3339df9b4953fe435712130f02e1aa179426630",
+    "analog_0.bin": "ccec124db6c64455e033a6d91815322cc4a7bac6924e396f2e2f86a7dde0bcc2",
+    "digital_1.bin": "1aacfb63cd0e92fb9d7fe9c6dbd545af11929f860a9a2ca389a01ebc95f35d8d",
+    "digital_0.bin": "f50ca69f14a8c67dcdd8f42ce8c7148a487d4c21d8c264782da9cbad31a9846f",
+    "digital_2.bin": "368421005052050bb2981a14d0824d5c175c15bd31b72bd5e09e5972c2218c9b",
+    "digital_3.bin": "025d9cb6a4b04873b78f392a3693f1dc92030123e2a0f513a13dc58f8d75649c",
+    "capture_stdout.txt": "625c9a06737ebedb0590e80b1ddc9080e8c6469ec0b6e8abae86251f63165024",
+    "capture_config_full.json": "74cf0696c8bfae5585a341ffb97f1ba453ed2e432bba3da6af79c0ff023b50e0",
+    "record_options.json": "95f5ff470a63ec1623fd221e6f21a146b78bf88992a85dd13447a716e4cd9c20"
+  },
+  "limitation": "One fixture/cable and operator-declared motion; no mechanical seating timestamp or universal insertion latency. Aperture extrema do not resolve voltage inside a conversion or qualify glitches between observations. No external powered source or audio load. Complete digital/wire evidence; analog payload contains aperture extrema, not the full waveform.",
+  "raw_sha256": "afdd9961e591943d9d05e6d66927efa7ece45c5044a7483e8c43b3789374efd9",
+  "raw_compressed_sha256": "9bfbf23552679f713c53c76d83dca64c28f522e27c2e09246cbbef9846cfbbd6",
+  "channels_sha256": "33e15ea68e15fbacf96756785d7b3070be422d530da4954dc0a25ea6bfea7d9d",
+  "channels_compressed_sha256": "dae9f19cb08ce59f1352405717b35a49e857fe68292fc4298d5f37d2d58dd41c",
+  "analog_sha256": "7a804d0fd511908db9c8861fae8dd86f000389fe60a85799fd3590387c1b0241",
+  "analog_compressed_sha256": "821b240164962fbdd6ca0c31dffaf1f325a03a3df8eb4e7ff0900c3171823cee"
+}

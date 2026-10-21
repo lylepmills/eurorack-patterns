@@ -1,0 +1,1016 @@
+{
+  "schema": 1,
+  "status": "digest inventory; native recordings archived separately, not included in this repository",
+  "files": [
+    {
+      "path": "receivers/receiver-1000-r4/fixture/raw.txt",
+      "bytes": 1543134,
+      "sha256": "2a7261c651d5cf3b02fccff7bbf247d17c72da584c64326504f3548c6fcb9c6d"
+    },
+    {
+      "path": "receivers/receiver-1000-r4/scope/analog_0.bin",
+      "bytes": 11148280,
+      "sha256": "d7ebd0be46489d7517df7da28a10c45f89c9b15f35cd3b91dd570b3a9c4e67e0"
+    },
+    {
+      "path": "receivers/receiver-1000-r4/scope/analog_1.bin",
+      "bytes": 11148280,
+      "sha256": "064bd3e2c610c6387c042b598535a9107f322d4f6b0caf76c57bdf8ad22098ed"
+    },
+    {
+      "path": "receivers/receiver-1000-r4/scope/capture.sal",
+      "bytes": 24025960,
+      "sha256": "3426877280f46d1da83d9468a6a198706a20a44d38da36c34bf08f240e812929"
+    },
+    {
+      "path": "receivers/receiver-1000-r4/scope/digital_0.bin",
+      "bytes": 572,
+      "sha256": "cb85da7f514d808c65a75f5db2097c5468e94554247e1fc8a28872b95caf49d0"
+    },
+    {
+      "path": "receivers/receiver-1000-r4/scope/digital_1.bin",
+      "bytes": 170666780,
+      "sha256": "66c2adef84d9aa83f2baeb8b449b45464d7e48593a1f647cb010b717ed90c5c0"
+    },
+    {
+      "path": "receivers/receiver-1000-r4/scope/digital_1_0.bin",
+      "bytes": 668,
+      "sha256": "5a89afba6cd37d890f1be030e8beee150fb562d656c49e8cad657dfd394433b9"
+    },
+    {
+      "path": "receivers/receiver-1000-r4/scope/digital_1_1.bin",
+      "bytes": 320060,
+      "sha256": "9b2f29dc025f035557c92f2b4bc1c420baf239feb3e5a790790d80f88c97b127"
+    },
+    {
+      "path": "receivers/receiver-1000-r4/scope/digital_1_2.bin",
+      "bytes": 60,
+      "sha256": "e7114deec78375b7a60d7809e254a4b9a9f7a655f7072e42bea8db1853006f02"
+    },
+    {
+      "path": "receivers/receiver-1000-r4/scope/digital_1_3.bin",
+      "bytes": 79324,
+      "sha256": "05118523c7ea6f1bda8c862d0f09395be0b82bf571a488b930af2f7bdd8680c2"
+    },
+    {
+      "path": "receivers/receiver-1000-r4/scope/digital_2_0.bin",
+      "bytes": 170666812,
+      "sha256": "935c5ab9a0f21840418be36791d25285ad504aa664b2d0e34f0dd8780777ae55"
+    },
+    {
+      "path": "receivers/receiver-1000-r4/scope/digital_2_1.bin",
+      "bytes": 384220,
+      "sha256": "d1473e9a1a37e8c91bcbe4808e59d2bacd22a9270152382e569e25266e8d6bd8"
+    },
+    {
+      "path": "receivers/receiver-1650-r3/fixture/raw.txt",
+      "bytes": 1543348,
+      "sha256": "8ac91f770f8711b243f7dc53cc9426a3cfa7d6ab39be5019567db51d7ee77de3"
+    },
+    {
+      "path": "receivers/receiver-1650-r3/scope/analog_0.bin",
+      "bytes": 11164944,
+      "sha256": "e19a8ac4c4c6dcd05c282ad6cac1876cb6b53a1f4c7b0c65ac55ce0792eb6a0c"
+    },
+    {
+      "path": "receivers/receiver-1650-r3/scope/analog_1.bin",
+      "bytes": 11164944,
+      "sha256": "65ea2111dc452b9bf2bb3657b6dd54c709efb841aaf7b0db6ca23c9937bb4f4c"
+    },
+    {
+      "path": "receivers/receiver-1650-r3/scope/capture.sal",
+      "bytes": 22982894,
+      "sha256": "9d828d0aa95748d5a2ed59afcac19db52c8859dd58d9c6fd9104a159cd9f1c7f"
+    },
+    {
+      "path": "receivers/receiver-1650-r3/scope/digital_0.bin",
+      "bytes": 572,
+      "sha256": "d3a751d265a79a9b1cc6992331dc5d6a9daaf1b5f55f8e094e2dd7b6732ad886"
+    },
+    {
+      "path": "receivers/receiver-1650-r3/scope/digital_1.bin",
+      "bytes": 170666780,
+      "sha256": "57f50feafc14ba39ccbf9a04a509cd1633e0a6c9b76bffeda66df3099e4a5ad9"
+    },
+    {
+      "path": "receivers/receiver-1650-r3/scope/digital_1_0.bin",
+      "bytes": 908,
+      "sha256": "15ed52f7fab2c00890a7dd0e7e2f3bbc36dc917a88d0d48e4ae0b9863256c877"
+    },
+    {
+      "path": "receivers/receiver-1650-r3/scope/digital_1_1.bin",
+      "bytes": 320060,
+      "sha256": "e6f636686162d92520a5be37c27506d302325d7ff6175a516001807296026bbf"
+    },
+    {
+      "path": "receivers/receiver-1650-r3/scope/digital_1_2.bin",
+      "bytes": 60,
+      "sha256": "b76f33566ed3b11c5f8e7cbaf650ff6caa2d0e5fe270f08124259f7e8acb360b"
+    },
+    {
+      "path": "receivers/receiver-1650-r3/scope/digital_1_3.bin",
+      "bytes": 79324,
+      "sha256": "991a80e7215854d1b53c58b732b87c67c9a9713be34a6a6efe2c06bf90489071"
+    },
+    {
+      "path": "receivers/receiver-1650-r3/scope/digital_2_0.bin",
+      "bytes": 170666780,
+      "sha256": "0c14ff755761723119e381c20966346ea0469380dde5c76ea17df05452cb0096"
+    },
+    {
+      "path": "receivers/receiver-1650-r3/scope/digital_2_1.bin",
+      "bytes": 384172,
+      "sha256": "4092d9ab4670cd798bf486d5fb54b889e00ae31e5a6144f0e51c95d7129901c1"
+    },
+    {
+      "path": "receivers/receiver-1650-r4/fixture/raw.txt",
+      "bytes": 1543121,
+      "sha256": "a2fd91983e1283d7e0568a7b004c29988992c91fe3cb20a4c2db7b71203f98b0"
+    },
+    {
+      "path": "receivers/receiver-1650-r4/scope/analog_0.bin",
+      "bytes": 11164944,
+      "sha256": "f8f453ae30d64423f6acfc9d8c52e08fd95d074455c4dbf228171b549786f6e4"
+    },
+    {
+      "path": "receivers/receiver-1650-r4/scope/analog_1.bin",
+      "bytes": 11164944,
+      "sha256": "439953cf4dbf4312dd62205d5f3121d62209edd47f20421603fd9f495626e1b7"
+    },
+    {
+      "path": "receivers/receiver-1650-r4/scope/capture.sal",
+      "bytes": 23623069,
+      "sha256": "0301ffba97883db598351da8f41b7b74e7769f4b792daf12c308920a2b4e3682"
+    },
+    {
+      "path": "receivers/receiver-1650-r4/scope/digital_0.bin",
+      "bytes": 572,
+      "sha256": "ce6ad794dbf3d428fc933727db9a15563d59f3dafb2d3b7a2717cb104f74c7b2"
+    },
+    {
+      "path": "receivers/receiver-1650-r4/scope/digital_1.bin",
+      "bytes": 170666780,
+      "sha256": "21ce4509468db9f66d38a2908f7843b7f0f3b6b551e9026bde27da4128d57b4c"
+    },
+    {
+      "path": "receivers/receiver-1650-r4/scope/digital_1_0.bin",
+      "bytes": 844,
+      "sha256": "eea36516cd72430c4d021259476f4c48db0461a43cd8427f60bd4d0196e37a5c"
+    },
+    {
+      "path": "receivers/receiver-1650-r4/scope/digital_1_1.bin",
+      "bytes": 320060,
+      "sha256": "20fca38f1b080cb1421a74b3b529b84ff0e1453511a5be11fac6a835b60501f1"
+    },
+    {
+      "path": "receivers/receiver-1650-r4/scope/digital_1_2.bin",
+      "bytes": 60,
+      "sha256": "e08b448f75b8ba7fc50b2233ff8ded7e4b991af6153042ecad925afc058dbee5"
+    },
+    {
+      "path": "receivers/receiver-1650-r4/scope/digital_1_3.bin",
+      "bytes": 79324,
+      "sha256": "19cf50a7ba1481c3dd82134efba709418c50a288ef1177d5548308d5f88d2e90"
+    },
+    {
+      "path": "receivers/receiver-1650-r4/scope/digital_2_0.bin",
+      "bytes": 170666780,
+      "sha256": "1924d4fa86adebfa8de906384360dc3fb73da1f19f6a443c926d931027d3e5af"
+    },
+    {
+      "path": "receivers/receiver-1650-r4/scope/digital_2_1.bin",
+      "bytes": 384172,
+      "sha256": "6706fb83998c68af65826270b8da0b6d8d978d51df2037bcb80d4e6ced993ba5"
+    },
+    {
+      "path": "receiver-remaining/receiver-1000-r3/fixture/raw.txt",
+      "bytes": 1543255,
+      "sha256": "20189309efa4e750f7ecc4cd1c14b807a604de1de5b430022278dccf9c8a3c25"
+    },
+    {
+      "path": "receiver-remaining/receiver-1000-r3/scope/analog_0.bin",
+      "bytes": 11131616,
+      "sha256": "544d16a32d0c934cf8e36c2c5ed9d5f511194293edefebb612e0f82058fe3b6e"
+    },
+    {
+      "path": "receiver-remaining/receiver-1000-r3/scope/analog_1.bin",
+      "bytes": 11131616,
+      "sha256": "1b7de6e04cbb76a0ee37245bfa9e9ecaf0163b40874bb18cc7e1210d92ad21fa"
+    },
+    {
+      "path": "receiver-remaining/receiver-1000-r3/scope/capture.sal",
+      "bytes": 23389242,
+      "sha256": "4e9c996e8055386b668cb73ee49f11e4ed6254844822e20603e82e10deeffe7f"
+    },
+    {
+      "path": "receiver-remaining/receiver-1000-r3/scope/digital_0.bin",
+      "bytes": 572,
+      "sha256": "9705e97bd8cee9414f806d8956c360d310cdca4d980d269b2b1e190b2c2e52ed"
+    },
+    {
+      "path": "receiver-remaining/receiver-1000-r3/scope/digital_1.bin",
+      "bytes": 170666780,
+      "sha256": "306cd91853bf9215ee471fff9a07e9402b70641c00d753e765f009247792cb82"
+    },
+    {
+      "path": "receiver-remaining/receiver-1000-r3/scope/digital_1_0.bin",
+      "bytes": 636,
+      "sha256": "a7124aca23c25b04995686b00424ddaa8716bf423f0ef665f3a509a441e3fb2e"
+    },
+    {
+      "path": "receiver-remaining/receiver-1000-r3/scope/digital_1_1.bin",
+      "bytes": 320060,
+      "sha256": "02499796c8099f213979201bf239d51853994ef226c7afb5116fa9f4a4dbf96b"
+    },
+    {
+      "path": "receiver-remaining/receiver-1000-r3/scope/digital_1_2.bin",
+      "bytes": 60,
+      "sha256": "257b99fb0f71547c34d95c99dd59af378c773d1a842130bccf69ae091d6a9c55"
+    },
+    {
+      "path": "receiver-remaining/receiver-1000-r3/scope/digital_1_3.bin",
+      "bytes": 79324,
+      "sha256": "9fe47ae4b7cc90861106c03b677db1ab920297eedcfaffeae5240b6264c42907"
+    },
+    {
+      "path": "receiver-remaining/receiver-1000-r3/scope/digital_2_0.bin",
+      "bytes": 170666796,
+      "sha256": "c815ba285bb3ae3e5e7cab6094f6b62ea64da77132478cb02f48ca185be7cf7c"
+    },
+    {
+      "path": "receiver-remaining/receiver-1000-r3/scope/digital_2_1.bin",
+      "bytes": 384172,
+      "sha256": "c5d1d6b83e8ef1e27ef7b0b32e64ea6258e3342a4ab7712d7b44acaa935b1e2b"
+    },
+    {
+      "path": "receiver-remaining/receiver-2300-r3/fixture/raw.txt",
+      "bytes": 1543472,
+      "sha256": "8443e96a0f2246ab249fec4f281a1bec7247c1bb6edc117e2d40fc3d0fc213cc"
+    },
+    {
+      "path": "receiver-remaining/receiver-2300-r3/scope/analog_0.bin",
+      "bytes": 11131616,
+      "sha256": "83a67300e5f935505c7641ce84582d0e01bdaf099aa0ef5e9108562cfd0e6281"
+    },
+    {
+      "path": "receiver-remaining/receiver-2300-r3/scope/analog_1.bin",
+      "bytes": 11131616,
+      "sha256": "a03b512a75c955b99e03878a15fb1663c1f88744a05070ecf92e73e176fd37c5"
+    },
+    {
+      "path": "receiver-remaining/receiver-2300-r3/scope/capture.sal",
+      "bytes": 22779177,
+      "sha256": "82d7264b4751be6a9a6d11445efff9a9d56a4e1c32cf21f5477670390f3f5867"
+    },
+    {
+      "path": "receiver-remaining/receiver-2300-r3/scope/digital_0.bin",
+      "bytes": 572,
+      "sha256": "8f343f0ba42d55168c4b5234049cc2794ea3e865741b6461214ce7b7e5d09e6f"
+    },
+    {
+      "path": "receiver-remaining/receiver-2300-r3/scope/digital_1.bin",
+      "bytes": 170666780,
+      "sha256": "5548625d37eba17c2c668eb87b24d9e3f1c29e55ceeb9646b6738da7e43a2b99"
+    },
+    {
+      "path": "receiver-remaining/receiver-2300-r3/scope/digital_1_0.bin",
+      "bytes": 764,
+      "sha256": "b253bf028030c4ff8bc1ea44670d01b4d3e2219cda46cb9ab4b3d0eb8a2e4f9a"
+    },
+    {
+      "path": "receiver-remaining/receiver-2300-r3/scope/digital_1_1.bin",
+      "bytes": 320060,
+      "sha256": "15c798aad61dc86d99531126e52015882419688aa832f1c259f5aaf49bf94db6"
+    },
+    {
+      "path": "receiver-remaining/receiver-2300-r3/scope/digital_1_2.bin",
+      "bytes": 60,
+      "sha256": "12dfce5183db5ca63c6939a43985c8d40644ecfbebe00589cb30387d35bf3cf2"
+    },
+    {
+      "path": "receiver-remaining/receiver-2300-r3/scope/digital_1_3.bin",
+      "bytes": 79324,
+      "sha256": "ac3d95f1525ec56f56d1f67130dda6ce26468921c31b3e7286cf3a3f2108c7de"
+    },
+    {
+      "path": "receiver-remaining/receiver-2300-r3/scope/digital_2_0.bin",
+      "bytes": 170666780,
+      "sha256": "ed52f926fd62cb525e8c5ef2ee207d95edcbe5f7181c8b31cf180685f5325276"
+    },
+    {
+      "path": "receiver-remaining/receiver-2300-r3/scope/digital_2_1.bin",
+      "bytes": 384172,
+      "sha256": "5a26e51aa1b66e99d11417def38344c2b9947d7e975729302264b88af9a929fa"
+    },
+    {
+      "path": "receiver-remaining/receiver-2300-r4/fixture/raw.txt",
+      "bytes": 1543788,
+      "sha256": "cbb3463d7b15c6107ab24dd5ec89e4591a10789c9cf477350c027906c218f4c0"
+    },
+    {
+      "path": "receiver-remaining/receiver-2300-r4/scope/analog_0.bin",
+      "bytes": 11131616,
+      "sha256": "2d304839290c9b2d17b27552b2c9c2673448794412b852ff28daa64fe8263649"
+    },
+    {
+      "path": "receiver-remaining/receiver-2300-r4/scope/analog_1.bin",
+      "bytes": 11131616,
+      "sha256": "8239c7935dec55e4f9febff3f1eb2af82802be538a2000564ea94acb48e32bba"
+    },
+    {
+      "path": "receiver-remaining/receiver-2300-r4/scope/capture.sal",
+      "bytes": 23416434,
+      "sha256": "f9d33501bcf031cf8ab01d7a507afc73a0e7f333ef93ef2440c7e4f2ad27922d"
+    },
+    {
+      "path": "receiver-remaining/receiver-2300-r4/scope/digital_0.bin",
+      "bytes": 572,
+      "sha256": "f77ac18f59326f8df5c701854c685a4b0010b0b1063a9310a1711f001e1f24fc"
+    },
+    {
+      "path": "receiver-remaining/receiver-2300-r4/scope/digital_1.bin",
+      "bytes": 170666780,
+      "sha256": "ee0d6b2ac718369e9a1b6915a16cf1351f7e6464fea65c69a9a932763e87e62c"
+    },
+    {
+      "path": "receiver-remaining/receiver-2300-r4/scope/digital_1_0.bin",
+      "bytes": 812,
+      "sha256": "fc3ce40cdd295f2ca785e02fdebd1b2056ce10b63f015789d952cec612161a2d"
+    },
+    {
+      "path": "receiver-remaining/receiver-2300-r4/scope/digital_1_1.bin",
+      "bytes": 320060,
+      "sha256": "a21f5772a5221161ad7507d667427627c2a214d08c1b2ca616839a5aec08523e"
+    },
+    {
+      "path": "receiver-remaining/receiver-2300-r4/scope/digital_1_2.bin",
+      "bytes": 60,
+      "sha256": "40c2e0dc317144e34a158a70d8109aa3564d55e0a6e34910e67d8119d4d327cf"
+    },
+    {
+      "path": "receiver-remaining/receiver-2300-r4/scope/digital_1_3.bin",
+      "bytes": 79324,
+      "sha256": "5236e26208401758111bd900f2dfb97db848ee28293a0fe83f3c4ff9bdbd355d"
+    },
+    {
+      "path": "receiver-remaining/receiver-2300-r4/scope/digital_2_0.bin",
+      "bytes": 170666780,
+      "sha256": "c6ab0829c4410fd6af14facbf6da6fb9ecd819719d4f1b41dde0da221cda2f04"
+    },
+    {
+      "path": "receiver-remaining/receiver-2300-r4/scope/digital_2_1.bin",
+      "bytes": 384172,
+      "sha256": "0132ead7619967170cd176298d38453543ac3711e93b59388a13cd57d912e8cd"
+    },
+    {
+      "path": "waveforms/load-1-r3/fixture/raw.txt",
+      "bytes": 1543442,
+      "sha256": "22595152b00161bf9d253c02c775c6e9bf9e2cc185ae89ee808662faf2309847"
+    },
+    {
+      "path": "waveforms/load-1-r3/generator.txt",
+      "bytes": 435,
+      "sha256": "a27a5f3e04abb1277f5ec8960d3175163654c1f5040c0b38f0b3012d029702a7"
+    },
+    {
+      "path": "waveforms/load-1-r3/scope/analog_0.bin",
+      "bytes": 200000064,
+      "sha256": "ef77f3d77b435cb492e78995d75500ae0278b5a14f2d1f4894f1b2f3e0b6e794"
+    },
+    {
+      "path": "waveforms/load-1-r3/scope/analog_1.bin",
+      "bytes": 200000064,
+      "sha256": "1ec99c7cf77f9e7a8c019605cd3efd878b8d5239f7f8a17131a3286351740f86"
+    },
+    {
+      "path": "waveforms/load-1-r3/scope/capture.sal",
+      "bytes": 87522749,
+      "sha256": "764dc0ec89eb1ef1addaa0b35c14960deb5fead99bece1fa81ea85e281335a4e"
+    },
+    {
+      "path": "waveforms/load-1-r3/scope/digital_0.bin",
+      "bytes": 92,
+      "sha256": "47c619c77cf5fedacdead3c6640c5fdfb63863da69e0bf1e1015284083b89060"
+    },
+    {
+      "path": "waveforms/load-1-r3/scope/digital_1.bin",
+      "bytes": 853356,
+      "sha256": "abcb3f72f08f13ddc9f72f7fb035fdccfa096b71f22a60c2a45646dc7e8c52db"
+    },
+    {
+      "path": "waveforms/load-1-r3/scope/digital_1_0.bin",
+      "bytes": 92,
+      "sha256": "febdcde4f87e96300c4302e9ea50a5489454873bc0fde546704fca623e096ba0"
+    },
+    {
+      "path": "waveforms/load-1-r3/scope/digital_1_1.bin",
+      "bytes": 1660,
+      "sha256": "b88718baaaaa46ad9a3c114cff3b54855376aa4d426894da254aff5c29cf6edc"
+    },
+    {
+      "path": "waveforms/load-1-r3/scope/digital_1_2.bin",
+      "bytes": 60,
+      "sha256": "b75924e50ddde8b0fd8b76516187fe3c27901eb82299fbbcae9cda8b15c25bcb"
+    },
+    {
+      "path": "waveforms/load-1-r3/scope/digital_1_3.bin",
+      "bytes": 492,
+      "sha256": "1d571f5f08f9b062f02a0df08be9867454adb180b99d8eabea03673d66350122"
+    },
+    {
+      "path": "waveforms/load-1-r3/scope/digital_2_0.bin",
+      "bytes": 853356,
+      "sha256": "64eb8dd990316e7e7ed9126cdd09e4734915c8199c81e12ba352968823ffef08"
+    },
+    {
+      "path": "waveforms/load-1-r3/scope/digital_2_1.bin",
+      "bytes": 2460,
+      "sha256": "6e93308e8f63c3e52cec27f624de2fefe465095d412726ae30199e84162476c9"
+    },
+    {
+      "path": "waveforms/load-2-r4/fixture/raw.txt",
+      "bytes": 1543599,
+      "sha256": "f26b602fcc74547480d3cbace7e8d9a1f84616e787b75b468ba318b0a6bbec61"
+    },
+    {
+      "path": "waveforms/load-2-r4/generator.txt",
+      "bytes": 432,
+      "sha256": "c1528058e0a71d58fef1d439fe4e82522de464d5627f5a3c3792cdd1a6ef7872"
+    },
+    {
+      "path": "waveforms/load-2-r4/scope/analog_0.bin",
+      "bytes": 200000064,
+      "sha256": "bfb09d9d8f23b6766441458e80ff13ded565f71835d2296073687e0228605640"
+    },
+    {
+      "path": "waveforms/load-2-r4/scope/analog_1.bin",
+      "bytes": 200000064,
+      "sha256": "4e84046f79233b74c8d3e63135a1386260bd71c18eb83f2ad7c5551dead2c82d"
+    },
+    {
+      "path": "waveforms/load-2-r4/scope/capture.sal",
+      "bytes": 87719300,
+      "sha256": "bcad5d7f028006fe3574c76b0d8fb8c564b7ed438d5b5d938824ab7d6b8093a8"
+    },
+    {
+      "path": "waveforms/load-2-r4/scope/digital_0.bin",
+      "bytes": 92,
+      "sha256": "21a4d66b94332e7d4a7e548ea4742c04b2f67a663e3907f8e3a1bf739cd7dd98"
+    },
+    {
+      "path": "waveforms/load-2-r4/scope/digital_1.bin",
+      "bytes": 853452,
+      "sha256": "e33887ace0dc0325cf0a265fa610e89126ef4eeab3f65e40fa43f2b814c8f7bb"
+    },
+    {
+      "path": "waveforms/load-2-r4/scope/digital_1_0.bin",
+      "bytes": 92,
+      "sha256": "6c8a40f019e597f10ef28123eb3874f33692c01a268cfec2df64c4510725934a"
+    },
+    {
+      "path": "waveforms/load-2-r4/scope/digital_1_1.bin",
+      "bytes": 1660,
+      "sha256": "0a1e8a22a0a209e327d3d617080da0f5d773877cbd8a41a79ef7e0ad6bbdc933"
+    },
+    {
+      "path": "waveforms/load-2-r4/scope/digital_1_2.bin",
+      "bytes": 60,
+      "sha256": "081b54138a37461b065ac2f18f65a0a8289bafa1ed1c251f8ba1e2735b913335"
+    },
+    {
+      "path": "waveforms/load-2-r4/scope/digital_1_3.bin",
+      "bytes": 532,
+      "sha256": "3fa1b9817ce2846ac83572297809807e0637f095e841fbf4b4cebe3f55c7ed43"
+    },
+    {
+      "path": "waveforms/load-2-r4/scope/digital_2_0.bin",
+      "bytes": 853452,
+      "sha256": "6cbbea8577b881bac1e4c2e7c7d6678dd363279a0ef347a36d752a8fcf15a7dd"
+    },
+    {
+      "path": "waveforms/load-2-r4/scope/digital_2_1.bin",
+      "bytes": 2460,
+      "sha256": "44169925c215a07695ac8da452f3892f2802fa1b05bc6971e3a9aa14680b60c3"
+    },
+    {
+      "path": "waveforms/load-3-r4/fixture/raw.txt",
+      "bytes": 1543576,
+      "sha256": "4b1b8f406c3bf4f64a207a4a376de619abc36bdad1f1699f97f94721186d4795"
+    },
+    {
+      "path": "waveforms/load-3-r4/generator.txt",
+      "bytes": 435,
+      "sha256": "a310057a340d4bec22fbf5f44919196848d019ea37d3d3aac5c0cebae1e7b58f"
+    },
+    {
+      "path": "waveforms/load-3-r4/scope/analog_0.bin",
+      "bytes": 200000064,
+      "sha256": "cc8b2b99c18951af35fcfb315c9dec81f424d7a93bb6c9ff413d4a0f9025de91"
+    },
+    {
+      "path": "waveforms/load-3-r4/scope/analog_1.bin",
+      "bytes": 200000064,
+      "sha256": "8d1a40d967dd16e4c5d6e82eec822bc4ff95a3decf56142e3903613ece284551"
+    },
+    {
+      "path": "waveforms/load-3-r4/scope/capture.sal",
+      "bytes": 87757019,
+      "sha256": "2392b093e1c71af67b9f2a1a913592ff80d2a50380ccce5add3727bfb8021052"
+    },
+    {
+      "path": "waveforms/load-3-r4/scope/digital_0.bin",
+      "bytes": 92,
+      "sha256": "35f47b6d8f26cb212c623ecc31be77dbb3c16e6325754fa6d29cd09010b0d14d"
+    },
+    {
+      "path": "waveforms/load-3-r4/scope/digital_1.bin",
+      "bytes": 853436,
+      "sha256": "86bf5fb3a9a9021ca7249650ffcbfb8e30c61eba546f1b4127b613eef98ff5bf"
+    },
+    {
+      "path": "waveforms/load-3-r4/scope/digital_1_0.bin",
+      "bytes": 140,
+      "sha256": "2c9d7b16e6bfb614ed132a7d224c45df09ec1e3c11f6276e57db813d6fbe945e"
+    },
+    {
+      "path": "waveforms/load-3-r4/scope/digital_1_1.bin",
+      "bytes": 1660,
+      "sha256": "68a67171ede8d3e22119bee380bc742072128e499de6c562ae12b4b145050fa5"
+    },
+    {
+      "path": "waveforms/load-3-r4/scope/digital_1_2.bin",
+      "bytes": 60,
+      "sha256": "aea35d94984a8ee3cc9ef7fd594bccd241517d9f3a42d6935f0d3945d3f9b8cd"
+    },
+    {
+      "path": "waveforms/load-3-r4/scope/digital_1_3.bin",
+      "bytes": 516,
+      "sha256": "1d0003f7e7686b734fe6f0a9019ba5a573533860dfb22804e3ddf200c6a4c6c9"
+    },
+    {
+      "path": "waveforms/load-3-r4/scope/digital_2_0.bin",
+      "bytes": 853436,
+      "sha256": "5bba7aff3cdf293eea1766466fc87db5b14cb0040681890bea2c9d5ab14eb27e"
+    },
+    {
+      "path": "waveforms/load-3-r4/scope/digital_2_1.bin",
+      "bytes": 2460,
+      "sha256": "d5bfb76bd4bc9f56e8da2630ffa645b016fad3382589e31ed63ef77002ea3b90"
+    },
+    {
+      "path": "waveforms/load-4-r3/fixture/raw.txt",
+      "bytes": 1543350,
+      "sha256": "829378f29c7e10e016709501d34e4a6b8e3045b6fa4d3a0b255ba3396d6c6532"
+    },
+    {
+      "path": "waveforms/load-4-r3/generator.txt",
+      "bytes": 435,
+      "sha256": "f95bc5bb07e6b7a18aee64dbb11e225aec69aaff23198d28f3e7bd4fa23b2f0d"
+    },
+    {
+      "path": "waveforms/load-4-r3/scope/analog_0.bin",
+      "bytes": 200000064,
+      "sha256": "3a58003762d2a2de9968a40347ca16145b5d24d0a9e1f202278e7d9b5a36e638"
+    },
+    {
+      "path": "waveforms/load-4-r3/scope/analog_1.bin",
+      "bytes": 200000064,
+      "sha256": "23a23a9527ec25a74718365a4be6b542fcacb8da33d7275e62d7b7250f689f70"
+    },
+    {
+      "path": "waveforms/load-4-r3/scope/capture.sal",
+      "bytes": 87355565,
+      "sha256": "3b24d0645156ed0bec69110162933b8c6587cda8bde00e5b19de8860955a8f0e"
+    },
+    {
+      "path": "waveforms/load-4-r3/scope/digital_0.bin",
+      "bytes": 92,
+      "sha256": "9d71b4527f8c2a62f6f59c49d3f7b7e0cdd3b74287a98ce5d689f0c3b6b67d88"
+    },
+    {
+      "path": "waveforms/load-4-r3/scope/digital_1.bin",
+      "bytes": 853356,
+      "sha256": "ed77ca3139576b9e84a0c3e2ca4800ab1f757217a02237817c46d4f80069ba2f"
+    },
+    {
+      "path": "waveforms/load-4-r3/scope/digital_1_0.bin",
+      "bytes": 92,
+      "sha256": "4baca922dc1d030b3973b6b01ac7d6e9cb335864d0d554d2c19e3bcd8f447823"
+    },
+    {
+      "path": "waveforms/load-4-r3/scope/digital_1_1.bin",
+      "bytes": 1660,
+      "sha256": "598bf356d5392074e589af35ad82a626b2c69880f45f78433745c72af34e9ca2"
+    },
+    {
+      "path": "waveforms/load-4-r3/scope/digital_1_2.bin",
+      "bytes": 60,
+      "sha256": "541e6aeccad889d1772e59dfbbed0aff879cdb66bc6ec7d97271605909d54f37"
+    },
+    {
+      "path": "waveforms/load-4-r3/scope/digital_1_3.bin",
+      "bytes": 492,
+      "sha256": "c84e4cd647f0fb3b0b0ffaa8c57fa7ce056d0256eab6a4daf10e65c5217fb08d"
+    },
+    {
+      "path": "waveforms/load-4-r3/scope/digital_2_0.bin",
+      "bytes": 853356,
+      "sha256": "4d9121e4ea87acb46e9f3cf8020cb2d1eea826c86cb0f1a62e5830040ad1eee1"
+    },
+    {
+      "path": "waveforms/load-4-r3/scope/digital_2_1.bin",
+      "bytes": 2460,
+      "sha256": "55258189443b0caa4b35203085f2e2f0ef9566107070c2c69596b126d0007b98"
+    },
+    {
+      "path": "waveforms/recovery-r3/fixture/raw.txt",
+      "bytes": 1543714,
+      "sha256": "68cd9001064fa21773bed8355dfed0be6c35bea2a507e8a3f32cafab10e123c7"
+    },
+    {
+      "path": "waveforms/recovery-r3/generator.txt",
+      "bytes": 435,
+      "sha256": "0613e15e6940521424396d6585cf57c768ebd7fdd194b9c7ae3ef89e4b04f236"
+    },
+    {
+      "path": "waveforms/recovery-r3/scope/analog_0.bin",
+      "bytes": 200000064,
+      "sha256": "09b6bc1d18f70eefdda7ab0aee196f7133effbe7f23dce357aae5db819d73193"
+    },
+    {
+      "path": "waveforms/recovery-r3/scope/analog_1.bin",
+      "bytes": 200000064,
+      "sha256": "eac9241a8351d3a2e8213621b74456cdb1eaef36426e04411e7ffd2cef828fa3"
+    },
+    {
+      "path": "waveforms/recovery-r3/scope/capture.sal",
+      "bytes": 82652641,
+      "sha256": "f9ce4bb7136f7a7429f5fbfa113fe49df5313276cf155bb5b22f468a5aa68c43"
+    },
+    {
+      "path": "waveforms/recovery-r3/scope/digital_0.bin",
+      "bytes": 92,
+      "sha256": "58625b053026063b7263f3bcded7f3bfa5d82c4466d094698807388d8c12ae12"
+    },
+    {
+      "path": "waveforms/recovery-r3/scope/digital_1.bin",
+      "bytes": 853356,
+      "sha256": "fd6ce2e0161c50d497efe98b0d0d8f6e97de6aaf7f7eca60bd9cac3b745dff72"
+    },
+    {
+      "path": "waveforms/recovery-r3/scope/digital_1_0.bin",
+      "bytes": 124,
+      "sha256": "d6428ec2370da28423a486864a66367de33b9bea3a5b983c0b8b391eec7f8a03"
+    },
+    {
+      "path": "waveforms/recovery-r3/scope/digital_1_1.bin",
+      "bytes": 1660,
+      "sha256": "6da56979e5848dd95587809862897828739111c3d627eeba191831962ee8a6fb"
+    },
+    {
+      "path": "waveforms/recovery-r3/scope/digital_1_2.bin",
+      "bytes": 60,
+      "sha256": "b790719b2c07e1890639bc3c7ad04322293e3634b7b694ef9f3b702fd6e4a6c3"
+    },
+    {
+      "path": "waveforms/recovery-r3/scope/digital_1_3.bin",
+      "bytes": 476,
+      "sha256": "bb5d88a84563281e944ceded4b9c1304249ad6f25ce929f9fd4e953dc1c80d0b"
+    },
+    {
+      "path": "waveforms/recovery-r3/scope/digital_2_0.bin",
+      "bytes": 853364,
+      "sha256": "dec402322e6d41e50e491900e4728d6cc68834d7bfa4b9bbcd33d847389a45e6"
+    },
+    {
+      "path": "waveforms/recovery-r3/scope/digital_2_1.bin",
+      "bytes": 60,
+      "sha256": "59585a9e7af671956cb430e8c01b350f0daf95b9ddf5ae6ddad921d0e9e21bd7"
+    },
+    {
+      "path": "waveforms/recovery-r4/fixture/raw.txt",
+      "bytes": 1543668,
+      "sha256": "b066cc0dc831fab4d62304184f5686f0287d11356b078bc0267dd1aece687229"
+    },
+    {
+      "path": "waveforms/recovery-r4/generator.txt",
+      "bytes": 435,
+      "sha256": "a6876efd35a80f3603a7d8330d283c3dc40729091ecde19b6a1a4e7da37f3d33"
+    },
+    {
+      "path": "waveforms/recovery-r4/scope/analog_0.bin",
+      "bytes": 200000064,
+      "sha256": "ebe4cca89115a4b28be1a5bca47f11af794782924445c2032b11607b54a30a67"
+    },
+    {
+      "path": "waveforms/recovery-r4/scope/analog_1.bin",
+      "bytes": 200000064,
+      "sha256": "8d94bde66a1593dd65d614c790eb902364c4f44eab110b53495ed977e932e5c3"
+    },
+    {
+      "path": "waveforms/recovery-r4/scope/capture.sal",
+      "bytes": 83103493,
+      "sha256": "27663a7fbd89bc0b4c699d89496a73e01157c5d8675b3f5787d45ae2d6695bf4"
+    },
+    {
+      "path": "waveforms/recovery-r4/scope/digital_0.bin",
+      "bytes": 92,
+      "sha256": "8b51cc89a1e4da09fd530d80cc87e1d2c0dd80d8cc7d719af9f9ed7432c2c1b0"
+    },
+    {
+      "path": "waveforms/recovery-r4/scope/digital_1.bin",
+      "bytes": 853364,
+      "sha256": "9d8e60f4963c9117d1a07dfdb704ff2085849d178c7c8ee9eea7987ccc170eff"
+    },
+    {
+      "path": "waveforms/recovery-r4/scope/digital_1_0.bin",
+      "bytes": 124,
+      "sha256": "1589baf21ee0bb29cd61754900296ebee0cc348b6a24ae77064f81cf577ad5b1"
+    },
+    {
+      "path": "waveforms/recovery-r4/scope/digital_1_1.bin",
+      "bytes": 1660,
+      "sha256": "66a022d125baa5f6f257dc559fa05e540ce2bcdf879047d68c4bb4dce926b49f"
+    },
+    {
+      "path": "waveforms/recovery-r4/scope/digital_1_2.bin",
+      "bytes": 60,
+      "sha256": "05ce6496e5636c0f9296958bf778ed17d49d0e4b675dda80327b2733494a8ebc"
+    },
+    {
+      "path": "waveforms/recovery-r4/scope/digital_1_3.bin",
+      "bytes": 468,
+      "sha256": "93fce4026614c35c226f3db5a31f594973d27ddd069603c40b94cb46fcb00ee9"
+    },
+    {
+      "path": "waveforms/recovery-r4/scope/digital_2_0.bin",
+      "bytes": 853364,
+      "sha256": "76e680c1a755fc74fc43fd6e9d0a5dce733d467475efc82488c57893739e1441"
+    },
+    {
+      "path": "waveforms/recovery-r4/scope/digital_2_1.bin",
+      "bytes": 60,
+      "sha256": "3b04b9ee6d5086eb4bd88e6772c6717441369bd0e460da383cfcdf7fd8966b92"
+    },
+    {
+      "path": "swapped-path/load-1-r3/fixture/raw.txt",
+      "bytes": 1544410,
+      "sha256": "0aa042ef514a871214dbada7251bdc2be8a7770e9d889e34560cb0f1514b667f"
+    },
+    {
+      "path": "swapped-path/load-1-r3/generator.txt",
+      "bytes": 435,
+      "sha256": "003d26ef55f87f8fb07b68b61f479aa6a6180d001820475cf15be52f1fc712de"
+    },
+    {
+      "path": "swapped-path/load-1-r3/scope/analog_0.bin",
+      "bytes": 200000064,
+      "sha256": "7adb6d0622a7968f2b2d52633f1b965239d421ece9584b9e774dd6de30cc87bf"
+    },
+    {
+      "path": "swapped-path/load-1-r3/scope/analog_1.bin",
+      "bytes": 200000064,
+      "sha256": "b3ac76cfb60c7510a13b1a46ac7d041715fbc96ed5e7f9d0e6f6030014f48118"
+    },
+    {
+      "path": "swapped-path/load-1-r3/scope/capture.sal",
+      "bytes": 86917492,
+      "sha256": "9af2710bba6c68f7b7e6f7fc074be700300ac8a0bf3fded08d145457c5c412be"
+    },
+    {
+      "path": "swapped-path/load-1-r3/scope/digital_0.bin",
+      "bytes": 853356,
+      "sha256": "1693b187cf1bbb13e79a02d4bef3dc1f2e0cceb22aeb46f4b3ef99dfe017e07a"
+    },
+    {
+      "path": "swapped-path/load-1-r3/scope/digital_1.bin",
+      "bytes": 92,
+      "sha256": "1eb8a849159e682d9e0d31669e5a5248f748317248ddba4cbf462321693a8bbe"
+    },
+    {
+      "path": "swapped-path/load-1-r3/scope/digital_1_0.bin",
+      "bytes": 92,
+      "sha256": "eba75ff2c93682b2b29de76bc27b7a5e3a14d51853f4d227965a344fe328c213"
+    },
+    {
+      "path": "swapped-path/load-1-r3/scope/digital_1_1.bin",
+      "bytes": 1660,
+      "sha256": "e5096e11795654bf33024bc595ea890d71ab3f9141b0bea6fee4ab96cab7c70c"
+    },
+    {
+      "path": "swapped-path/load-1-r3/scope/digital_1_2.bin",
+      "bytes": 60,
+      "sha256": "f391876bc96f22c74a0a16fa63dcb0b3601c437e27c34f6f5bf2b5940471c114"
+    },
+    {
+      "path": "swapped-path/load-1-r3/scope/digital_1_3.bin",
+      "bytes": 516,
+      "sha256": "42eaee7bed207c24b7afdff038c8ad2eab37d778a8d3bad6869e1ec030edd76a"
+    },
+    {
+      "path": "swapped-path/load-1-r3/scope/digital_2_0.bin",
+      "bytes": 853356,
+      "sha256": "0a0ec81e3053d8cd56354a478919b23cd83421816123ccab7714eb788f464b37"
+    },
+    {
+      "path": "swapped-path/load-1-r3/scope/digital_2_1.bin",
+      "bytes": 2460,
+      "sha256": "71c769203671edd3de49e5a410a5664b7e0aa60b404d72102e0055d0ac9255f5"
+    },
+    {
+      "path": "swapped-path/load-2-r4/fixture/raw.txt",
+      "bytes": 1543861,
+      "sha256": "49ad8be2e8ecfd8a44f26b1d660037f65fc9e4e257793a54790bbfeedca10744"
+    },
+    {
+      "path": "swapped-path/load-2-r4/generator.txt",
+      "bytes": 432,
+      "sha256": "4e3688b1c3ae70d987ad7c8a604209a7cd406b883de4406229ff1c4677b5324e"
+    },
+    {
+      "path": "swapped-path/load-2-r4/scope/analog_0.bin",
+      "bytes": 200000064,
+      "sha256": "421d874f845422f6521a3b108dc9489c8c39e51036931097a6d1f652810df5bc"
+    },
+    {
+      "path": "swapped-path/load-2-r4/scope/analog_1.bin",
+      "bytes": 200000064,
+      "sha256": "29504acbd58e8c601884943f3f7cef318de2b3e590125d6e9068ff6c5b9e8e70"
+    },
+    {
+      "path": "swapped-path/load-2-r4/scope/capture.sal",
+      "bytes": 87298050,
+      "sha256": "e19c51ccd2e4e40b9f7b8bdd91b5ddab751564a2370671bf78707cd0b2417476"
+    },
+    {
+      "path": "swapped-path/load-2-r4/scope/digital_0.bin",
+      "bytes": 853420,
+      "sha256": "9af5d6e7035a2918b49b1eec91cf27e8bae88d7ea3845dc91be2214405a47c42"
+    },
+    {
+      "path": "swapped-path/load-2-r4/scope/digital_1.bin",
+      "bytes": 92,
+      "sha256": "fbbe0ffb5954c7c5fb9fae22c1c2b27dd848c71d63c4150cb55bb75336c1d7ea"
+    },
+    {
+      "path": "swapped-path/load-2-r4/scope/digital_1_0.bin",
+      "bytes": 92,
+      "sha256": "764ef794dd108177154909e19636ab4a0e479bbb448e023ffa28f361487e11c9"
+    },
+    {
+      "path": "swapped-path/load-2-r4/scope/digital_1_1.bin",
+      "bytes": 1668,
+      "sha256": "750e27e9c5b3da9482c5867159a2219c383e8e1525194758bfae48c3e2e1a1a5"
+    },
+    {
+      "path": "swapped-path/load-2-r4/scope/digital_1_2.bin",
+      "bytes": 60,
+      "sha256": "8ae10c79b16d8d8c1555faaf9fcb122fc8a1afb5e00c792c5ff72126f39fdb6d"
+    },
+    {
+      "path": "swapped-path/load-2-r4/scope/digital_1_3.bin",
+      "bytes": 516,
+      "sha256": "c501d30fe4080188526d469da267b78bce2e829b850912094303d23d53f5c69f"
+    },
+    {
+      "path": "swapped-path/load-2-r4/scope/digital_2_0.bin",
+      "bytes": 853420,
+      "sha256": "f1be89516c038f74bfddf0502924ee1e2e3022882821724f270857e790221d7f"
+    },
+    {
+      "path": "swapped-path/load-2-r4/scope/digital_2_1.bin",
+      "bytes": 2460,
+      "sha256": "56a1e2ab0dd113fcf7e822f15e0ca8dad898ddac021a4a49ba1575651290896b"
+    },
+    {
+      "path": "swapped-path/load-3-r4/fixture/raw.txt",
+      "bytes": 1544365,
+      "sha256": "9d943bfb5eed538099f7c50d90695b6a0a8d5037e6a1c1fdd57e3c79cdd48f32"
+    },
+    {
+      "path": "swapped-path/load-3-r4/generator.txt",
+      "bytes": 435,
+      "sha256": "348d953abd4985c4b8206bfb970f58ba56bd72493230d590d847e75b748649f4"
+    },
+    {
+      "path": "swapped-path/load-3-r4/scope/analog_0.bin",
+      "bytes": 200000064,
+      "sha256": "f0702e572d837b92b9fb6fff4463366bc331be170c1fedaa7f426a7225efea0f"
+    },
+    {
+      "path": "swapped-path/load-3-r4/scope/analog_1.bin",
+      "bytes": 200000064,
+      "sha256": "fd48668cbb69083147f061cf7a7ae82ff85cad5e09970c2a435fb60c23ad2c28"
+    },
+    {
+      "path": "swapped-path/load-3-r4/scope/capture.sal",
+      "bytes": 87332630,
+      "sha256": "a3535503fd24f8201b4d49841f7ae1f570a3dcb15637a0ee4deaadf8b35946fa"
+    },
+    {
+      "path": "swapped-path/load-3-r4/scope/digital_0.bin",
+      "bytes": 853428,
+      "sha256": "7db7908a2d02d0d96a0acbff6eb678399549977d521ed7c8276452ff9b213ce2"
+    },
+    {
+      "path": "swapped-path/load-3-r4/scope/digital_1.bin",
+      "bytes": 92,
+      "sha256": "fe0cba8cbe3ee9de85c95ad15cd2064cb5799a29c3a5fcd8c0d642d94f81e929"
+    },
+    {
+      "path": "swapped-path/load-3-r4/scope/digital_1_0.bin",
+      "bytes": 92,
+      "sha256": "03f0863a08b742a89e021fd0f82b46b9dcd597a46c2625e1f525977567d907eb"
+    },
+    {
+      "path": "swapped-path/load-3-r4/scope/digital_1_1.bin",
+      "bytes": 1660,
+      "sha256": "f31d71c109ff814e76c73ac6021240b50e3487b2d441ffceee58b96ce4a52475"
+    },
+    {
+      "path": "swapped-path/load-3-r4/scope/digital_1_2.bin",
+      "bytes": 60,
+      "sha256": "32d2a7e56b250183ddbb0043515cd82c52b49a400d1dad535eb0f02df0714f8a"
+    },
+    {
+      "path": "swapped-path/load-3-r4/scope/digital_1_3.bin",
+      "bytes": 516,
+      "sha256": "37fb9b3f42c71e96396942ab13296811555ae75ccfd8cd04bb5f20e60b4d2f9a"
+    },
+    {
+      "path": "swapped-path/load-3-r4/scope/digital_2_0.bin",
+      "bytes": 853428,
+      "sha256": "69af27ffcecc740bd86cda2418c4b8a6107ffc3b5735c69e261f46bd56072cf8"
+    },
+    {
+      "path": "swapped-path/load-3-r4/scope/digital_2_1.bin",
+      "bytes": 2460,
+      "sha256": "7bea280f505095a7dc0161db1c7ef14c911a5e0bb1e98b9850e1363806d08ed3"
+    },
+    {
+      "path": "swapped-path/load-4-r3/fixture/raw.txt",
+      "bytes": 1544569,
+      "sha256": "e3a6c1349c05d6e197ce3cf8da0e6d6918369b2bb99dbc073d3b02a951b87001"
+    },
+    {
+      "path": "swapped-path/load-4-r3/generator.txt",
+      "bytes": 435,
+      "sha256": "052554f8d21bea5de8686d762498a75e1344355eabeb86c70de2250bee520bdb"
+    },
+    {
+      "path": "swapped-path/load-4-r3/scope/analog_0.bin",
+      "bytes": 200000064,
+      "sha256": "e03fa7377c300dec5e363ffe327f5475f769b22533458decd90fa4b651f42f80"
+    },
+    {
+      "path": "swapped-path/load-4-r3/scope/analog_1.bin",
+      "bytes": 200000064,
+      "sha256": "9cca94d81f34e2616816bcd0aa52b4131076c51eefcbce910ae3f85f4d8ed831"
+    },
+    {
+      "path": "swapped-path/load-4-r3/scope/capture.sal",
+      "bytes": 86938829,
+      "sha256": "7ff845c2d6e831d5ea481357a31d21d610de5a9589ea878b0fac3b9eed8d0235"
+    },
+    {
+      "path": "swapped-path/load-4-r3/scope/digital_0.bin",
+      "bytes": 853364,
+      "sha256": "fda91fb9661819af41d17b8c73a21f685b2bded34f194771d11ddd7eaf4e06ce"
+    },
+    {
+      "path": "swapped-path/load-4-r3/scope/digital_1.bin",
+      "bytes": 92,
+      "sha256": "9455afd2bc03237e6abc3c4e61b92d971c9e6f7f00e8d86061ddf3846522dd67"
+    },
+    {
+      "path": "swapped-path/load-4-r3/scope/digital_1_0.bin",
+      "bytes": 92,
+      "sha256": "a5c2d7099a0a0c1a99c8b57ad2e7a09b2188846ac6992011ab4f27971492c701"
+    },
+    {
+      "path": "swapped-path/load-4-r3/scope/digital_1_1.bin",
+      "bytes": 1660,
+      "sha256": "e5fdc7c772e95b957223d670b141a9f22aa8188a243b8e90eadd055a73472589"
+    },
+    {
+      "path": "swapped-path/load-4-r3/scope/digital_1_2.bin",
+      "bytes": 60,
+      "sha256": "3122b5e58fb2e044de4d46a1ff8afc4dc832f3cc9043906c68c86eb32999ad71"
+    },
+    {
+      "path": "swapped-path/load-4-r3/scope/digital_1_3.bin",
+      "bytes": 492,
+      "sha256": "d85b83fc9cff9fe732889bcc5113b31664a6bfdcfe280f7abe64c1bd728568b4"
+    },
+    {
+      "path": "swapped-path/load-4-r3/scope/digital_2_0.bin",
+      "bytes": 853364,
+      "sha256": "a954f64ba1df2a486e94896c820428c62a4288ffc937db4f01e3b01c1159b781"
+    },
+    {
+      "path": "swapped-path/load-4-r3/scope/digital_2_1.bin",
+      "bytes": 2460,
+      "sha256": "1d093337b22516d11270235494ad6f7c686330e64e14b7ea17f6f62adb80ea00"
+    }
+  ]
+}

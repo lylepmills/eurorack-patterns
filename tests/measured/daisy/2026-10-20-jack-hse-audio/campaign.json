@@ -1,0 +1,42 @@
+{
+  "schema": 1,
+  "status": "clock and audio diagnosis complete; DSP qualification remains incomplete",
+  "firmware_source": "9fb130f5a9425ace7c06691488ab6101d54006b8",
+  "diagnostics": [
+    {
+      "name": "clock-unloaded",
+      "samples": 6000,
+      "service_residual_us": 0.19923117524012923,
+      "clock_cycle_residual_us": 0.1970133343632452,
+      "audio_callbacks": 0
+    },
+    {
+      "name": "clock-dsp-only",
+      "samples": 6000,
+      "service_residual_us": 0.4665543530136347,
+      "clock_cycle_residual_us": 0.28931509647279774,
+      "audio_callbacks": 6001
+    },
+    {
+      "name": "clock-combined-full",
+      "samples": 20000,
+      "service_residual_us": 12.620103679597378,
+      "clock_cycle_residual_us": 0.3262713634532568,
+      "audio_callbacks": 24007
+    }
+  ],
+  "normal_checks": [
+    {
+      "name": "normal-before",
+      "samples": 2865,
+      "audio_callbacks": 0
+    },
+    {
+      "name": "normal-after",
+      "samples": 2856,
+      "audio_callbacks": 4285
+    }
+  ],
+  "qualification": "Two normal early-finish checks passed. Three simultaneous clock/audio diagnostics verify callbacks in device-clock units, without qualifying jack transitions or overriding original timing rejections.",
+  "limitations": "Relative clocks only; no calibrated absolute accuracy, audio fidelity or physical clock-change cause established. Complete native clock, service, audio and wire payloads published for all three diagnostics."
+}
