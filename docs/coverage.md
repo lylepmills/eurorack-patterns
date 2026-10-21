@@ -1,6 +1,6 @@
 # Coverage and validation
 
-The [catalog](catalog.md) contains 88 patterns. This table describes the public library's scope, not the status of any instrument. **Primitive** means a portable operation relevant to the entry exists in a header; the entry's full musical behavior still needs integration. **Recipe** means the catalog documents a design choice without a library implementation. **Measure** means the useful claim depends on a circuit, firmware schedule, UI, storage backend, or hardware test. A row can have a primitive and still require measurement. None of these rows asserts hardware qualification.
+The [catalog](catalog.md) contains 89 patterns. This table describes the public library's scope, not the status of any instrument. **Primitive** means a portable operation relevant to the entry exists in a header; the entry's full musical behavior still needs integration. **Recipe** means the catalog documents a design choice without a library implementation. **Measure** means the useful claim depends on a circuit, firmware schedule, UI, storage backend, or hardware test. A row can have a primitive and still require measurement. None of these rows asserts hardware qualification.
 
 | Family | Public header | Contract available |
 | --- | --- | --- |
@@ -64,29 +64,30 @@ the portable API and hardware-validation scope are unchanged.
 
 | ID | Coverage | What remains outside the library |
 | --- | --- | --- |
-| A01 | Primitive: presence | Generate and validate probes; choose window/streak/startup policy and measure insertion latency. |
+| A01 | Primitive: presence | Generate and validate probes; choose window/streak/startup policy and measure insertion latency; choose between interrupt-phased and hardware-timed acquisition (B07). |
 | A02 | Measure | Verify ground/reference behavior with a single cable across power domains. |
 | A03 | Recipe + measure | Design physical normalization and test silent/partially inserted cables. |
 | A04 | Primitive: events | Scale thresholds to the circuit and test slow/noisy edges. |
-| A05 | Primitive: events | Sample fast enough, synchronize producer/consumer, choose overflow policy. |
+| A05 | Primitive: events | Sample fast enough, synchronize producer/consumer, choose overflow policy; a block-rate read instead needs a stated and tested minimum pulse width. |
 | A06 | Primitive: timing + measure | Button debounce exists; keep external clock capture on its own fast path and verify maximum rate. |
 | A07 | Recipe | Test logical-to-physical mapping across every acquisition path and board variant. |
 | A08 | Recipe; branch evidence | Aggregate internal/panel/MIDI ownership; cited fix is unmerged at snapshot. |
 | B01 | Recipe + measure | Design per-role filters and measure response at the actual update rate. |
 | B02 | Measure | Choose ADC topology and measure small CV after software attenuation. |
 | B03 | Primitive: controls | Endpoints bypass motion rejection; other filters and endpoint remaps remain host work. |
-| B04 | Measure | Characterize ADC settling at worst source impedance and mux jumps. |
+| B04 | Measure | Characterize ADC settling at worst source impedance and mux jumps; evaluate a park step against scan bandwidth. |
 | B05 | Measure | Calibrate gain/offset separately from noise reduction; verify intermediate points. |
 | B06 | Recipe + measure | Provide raw per-path diagnostics in the host/factory protocol. |
+| B07 | Recipe + measure | Chain timer, ADC and DMA in the host; measure frame rate against the schedule, count missed frames, invalidate probe pairing on half-buffer misalignment. |
 | C01 | Primitive: controls | Neutral plateau mapping exists; choose physical tolerance and transfer law. |
 | C02 | Recipe + measure | Define musical landing zones and test monotonicity/fine adjustment. |
 | C03 | Primitive: controls | Stateful step hysteresis exists; choose scale and thresholds for the control. |
 | C04 | Recipe | Implement hidden-edit entry threshold and stored secondary value in the UI. |
-| C05 | Recipe | Relative catch-up is described; controls.h offers crossing pickup, a distinct policy. |
-| C06 | Primitive: controls | Pickup exists; LEDs, CV target semantics, and mode transitions are host policy. |
+| C05 | Recipe | Relative catch-up is described; controls.h offers crossing pickup, a distinct policy whose dead travel needs a visible waiting value. |
+| C06 | Primitive: controls | Pickup exists; LEDs, the waiting-value indicator, CV target semantics, and mode transitions are host policy. |
 | C07 | Primitive: controls (partial) | Motion rejection exists; the source's active tracking window is not implemented. |
 | C08 | Primitive: gestures | Role consumption exists; timing and modifier precedence remain host policy. |
-| C09 | Recipe | Expose and validate configurable hold timing in the product UI. |
+| C09 | Recipe | Expose and validate configurable hold timing in the product UI, or fix and state one verified hold time. |
 | C10 | Primitive: gestures (partial) | Consume navigation modifier; channel selection and transport behavior remain host work. |
 | C11 | Recipe | Decide which guard states persist with presets. |
 | C12 | Recipe | Build every quantizer region from allowed membership; test negative/positive octaves and empty mask. |
@@ -106,7 +107,7 @@ the portable API and hardware-validation scope are unchanged.
 | D12 | Recipe | Keep edit/play targets separate, render mismatch and define unlock/mode-exit behavior. |
 | D13 | Recipe | Preserve stable focus identity across rebuild; choose fallback when the target disappears. |
 | E01 | Primitive: trigger delay + measure | Delay mechanism exists; choose CV/gate skew budget and verify actual acquisition on hardware. |
-| E02 | Recipe | Latch mode CV at note events; define behavior with trigger disconnected. |
+| E02 | Recipe | Latch mode CV at note events; define behavior with trigger disconnected; decide whether latching is fixed or a per-input toggle. |
 | E03 | Recipe + measure | Set source-specific refractory time; test flams and fast attacks. |
 | E04 | Recipe | Define reset/clock precedence at one processing boundary. |
 | E05 | Recipe | Maintain pending/active rhythmic state and commit at a chosen boundary. |
@@ -149,6 +150,6 @@ the portable API and hardware-validation scope are unchanged.
 | G09 | Recipe | Test real packed schemas, guard bytes and migration of changed wire layouts. |
 | G10 | Recipe + measure | Specify page validity, initial/wrapped generation ordering, gap scan and power-cut recovery. |
 | G11 | Recipe | Test all persisted semantic names against runtime mappings across schema versions. |
-| H01 | Measure | Specify useful and survival input ranges including powered-off behavior. |
+| H01 | Measure | Specify useful and survival input ranges including powered-off behavior; check voltage-only ratings behind coupling capacitors and during insertion. |
 | H02 | Measure | Test output shorts and precision under realistic loads. |
 | H03 | Measure | Measure loaded-jack pitch voltage and fan-out error. |

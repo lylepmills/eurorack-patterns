@@ -11,6 +11,10 @@ changes yet; pin a tagged release, not `main`.
   library's own tests. The evidence downloader installs the unchanged, immutable
   release archives (whose members keep the `tests/measured/` prefix) under the
   new directory; no library, test or report content changes.
+- Add B07, hardware-timed acquisition (a timer-triggered, DMA-chained pot scan
+  inspected in Beads), and cross-link it from A01 and the validation guide.
+  Add labelled counterexamples and proposed tradeoffs to A05, B04, C05, C06,
+  C09, E02 and H01; the catalog now lists 89 patterns.
 - Add a five-step pickup application example with explicit membership, snapping,
   destination readback and unreachable-target recovery. Check its policy with
   an independent finite-set oracle and synthetic boundary/ownership cases;

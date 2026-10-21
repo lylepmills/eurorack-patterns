@@ -1,6 +1,6 @@
 # Source and bug-history pass, October 2026
 
-This pass expands the catalog from **66 to 88 patterns**, adds three original portable components, and strengthens six existing entries. Its question was: *what small assumptions actually failed in maintained instruments, and what narrowly specified behavior would prevent that class of failure?*
+This pass expands the catalog from **66 to 88 patterns** (a later acquisition entry, B07, brings the total to 89), adds three original portable components, and strengthens six existing entries. Its question was: *what small assumptions actually failed in maintained instruments, and what narrowly specified behavior would prevent that class of failure?*
 
 The [catalog](catalog.md) contains the findings and proposed checks. [Validation](validation.md) separates executed host tests from further evidence needed on hardware. New source observations credit Ornament & Crime, monome Ansible and Teletype, and 4ms MetaModule. These projects do not endorse this library.
 
