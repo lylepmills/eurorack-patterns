@@ -64,11 +64,11 @@ the portable API and hardware-validation scope are unchanged.
 
 | ID | Coverage | What remains outside the library |
 | --- | --- | --- |
-| A01 | Primitive: presence | Generate and validate probes; choose window/streak/startup policy and measure insertion latency. |
+| A01 | Primitive: presence | Generate and validate probes; choose window/streak/startup policy and measure insertion latency; choose between interrupt-phased and hardware-timed acquisition (B07). |
 | A02 | Measure | Verify ground/reference behavior with a single cable across power domains. |
 | A03 | Recipe + measure | Design physical normalization and test silent/partially inserted cables. |
 | A04 | Primitive: events | Scale thresholds to the circuit and test slow/noisy edges. |
-| A05 | Primitive: events | Sample fast enough, synchronize producer/consumer, choose overflow policy. |
+| A05 | Primitive: events | Sample fast enough, synchronize producer/consumer, choose overflow policy; a block-rate read instead needs a stated and tested minimum pulse width. |
 | A06 | Primitive: timing + measure | Button debounce exists; keep external clock capture on its own fast path and verify maximum rate. |
 | A07 | Recipe | Test logical-to-physical mapping across every acquisition path and board variant. |
 | A08 | Recipe; branch evidence | Aggregate internal/panel/MIDI ownership; cited fix is unmerged at snapshot. |
