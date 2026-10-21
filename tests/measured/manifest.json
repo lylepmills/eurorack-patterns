@@ -1,0 +1,861 @@
+{
+  "schema_version": 1,
+  "download_base": "https://github.com/lylepmills/eurorack-patterns/releases/download/evidence-daisy-2026-10-20",
+  "original_source_head": "077d816dd94322a421468d98086fb14601c2ecbd",
+  "archives": [
+    {
+      "name": "daisy-2026-10-14.tar",
+      "campaign": "2026-10-14",
+      "size": 870400,
+      "sha256": "845cb35fc5754bee640d91618e5806ab7baf2ca35e0c177cb07e49aed4e7b1c7",
+      "files": [
+        {
+          "path": "tests/measured/daisy/2026-10-14/initial-held.txt.gz",
+          "size": 180722,
+          "sha256": "297de2f23f8514bf44b12b33b7c13c2842fa397059824231cceb1be247ddcd82"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-14/pickup-down.txt.gz",
+          "size": 183384,
+          "sha256": "becb320042d3a72914a4ad6529862701b6f5bf07138edf26946d891dae201483"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-14/pickup-up.txt.gz",
+          "size": 193381,
+          "sha256": "5d35d023c514ffaf6e66aaa7fdc748db3531decdf2390e0258895b05ca4d37a5"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-14/tap-hold.txt.gz",
+          "size": 207974,
+          "sha256": "a3695ca7276b0fda0199db2da8f9363d12b39bc629d9f2f2e8c1417c7b3e0b9c"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-14/target-rearm.txt.gz",
+          "size": 48513,
+          "sha256": "be0be8c0038a1e6a9b201ff7473a779ec3b1731438125966bf144a8144ec9ab6"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-14/tracking-gap.txt.gz",
+          "size": 45968,
+          "sha256": "4061b94ca8814ca322b6974793b8fe82557edd6d21bbd94f0eeaab8740a83adc"
+        }
+      ]
+    },
+    {
+      "name": "daisy-2026-10-16.tar",
+      "campaign": "2026-10-16",
+      "size": 3921920,
+      "sha256": "e034c5cceb9ea245ece1a7c886bd5f681aab3101328ffe872ccf6c93d0957d91",
+      "files": [
+        {
+          "path": "tests/measured/daisy/2026-10-16/hold-stall.txt.gz",
+          "size": 188357,
+          "sha256": "551e20a10bbdb25cbd016965b5766467e83055e95fb78cd8dedfddfb6d9a9784"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-16/moving-target.txt.gz",
+          "size": 880715,
+          "sha256": "57ef5fc34aee8f84ca1e64042b873d89a5d8069864606aa9cbcda911214c170c"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-16/pickup-gap-down.txt.gz",
+          "size": 1108241,
+          "sha256": "a30969fdcc2f3c68a265a7cf638bd7ebe532f7e3ae7fa465e476ef5616f71ba8"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-16/pickup-gap-up.txt.gz",
+          "size": 914751,
+          "sha256": "2e08790578e783d21923afc572976963e4bbc2796220e0c72647d14d912db0a8"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-16/power-held.txt.gz",
+          "size": 148989,
+          "sha256": "075eb7b6424c2032055e3892520c325eed6df81b68fecfad71cff2de9648d53f"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-16/press-adc-gap.txt.gz",
+          "size": 182620,
+          "sha256": "3f094102def4d7cbb46144f67e0504c096c9de905b143a9c41bf80e1b6ba4086"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-16/press-stall.txt.gz",
+          "size": 184402,
+          "sha256": "90763ecbca156a570986cf880edebd5bd404776b051a45b36c6a5befdc87023c"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-16/release-stall.txt.gz",
+          "size": 187963,
+          "sha256": "c4a56951004c167769281de9d64b9bed6522eb16ed2554b6ac418bd31ee3cacb"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-16/reset-released.txt.gz",
+          "size": 115449,
+          "sha256": "fd490189a710feb0e9696c07edb97df2451e4a8d60c206d5a23cd07d7931c3e8"
+        }
+      ]
+    },
+    {
+      "name": "daisy-2026-10-16-load.tar",
+      "campaign": "2026-10-16-load",
+      "size": 389120,
+      "sha256": "032fdce8fab4e09ed75310019c7b8abf0298bbce83661d087ffed07a79db03ea",
+      "files": [
+        {
+          "path": "tests/measured/daisy/2026-10-16-load/audio-dma.txt.gz",
+          "size": 78537,
+          "sha256": "8ed15b56175a56544f207e13b0ea15215819272cd2a77c95ce635541e30557cb"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-16-load/baseline.txt.gz",
+          "size": 77140,
+          "sha256": "977b38689a96af0f98382508abeea6b431c8da3d14245992743c83306fa6c418"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-16-load/boundary-96.txt.gz",
+          "size": 90809,
+          "sha256": "d96f847b6e65a6b2fe47b6a48a7fb9540cc8d3e2aa1d864e8884b84daa175b4c"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-16-load/combined.txt.gz",
+          "size": 102018,
+          "sha256": "e25a41bb15cb68038f3ff36822f31c43f36f434af856e968a2e540d44971caa8"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-16-load/soak-30m.txt.gz",
+          "size": 30450,
+          "sha256": "4c0b1d3dd365401fbfe229aa0822b0191e04d811ddd5d61a8b7d00ad08ebc16f"
+        }
+      ]
+    },
+    {
+      "name": "daisy-2026-10-17-timing.tar",
+      "campaign": "2026-10-17-timing",
+      "size": 880640,
+      "sha256": "3625e15ab9db1cad9f2a0b7c68c70416f75bf87f57435cb57ea32ded0b75cd58",
+      "files": [
+        {
+          "path": "tests/measured/daisy/2026-10-17-timing/aggregate-baseline.txt.gz",
+          "size": 455,
+          "sha256": "f7e0335d9183eda49828cb9d9dd7f10923b8d476b548c094ff33261ebd17a5fd"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-17-timing/aggregate-combined.txt.gz",
+          "size": 524,
+          "sha256": "841a40af4de219f52be99762e00891585551fac865c7c1440dae95288ba7ad7b"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-17-timing/diagnostic-baseline.txt.gz",
+          "size": 4636,
+          "sha256": "c168f81635be85f31c0114ccc1be791617533465db2ab15e8cf271e76c75a144"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-17-timing/diagnostic-combined.txt.gz",
+          "size": 5006,
+          "sha256": "3df88aa5995b162a17e725fb372384ac4e022f76be9e30ef4074c49cdd7f3b08"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-17-timing/soak-30m.txt.gz",
+          "size": 861585,
+          "sha256": "b76ca2507b2562d51cd32b1d45ef230376a69f83b11ea54047f6375a256ee62d"
+        }
+      ]
+    },
+    {
+      "name": "daisy-2026-10-18-auto-button.tar",
+      "campaign": "2026-10-18-auto-button",
+      "size": 5888000,
+      "sha256": "faac967638a4ea444378c069fde357397eb644ef4027098b3beec52e2689b8c2",
+      "files": [
+        {
+          "path": "tests/measured/daisy/2026-10-18-auto-button/4k7-baseline-000-channels.txt.gz",
+          "size": 79350,
+          "sha256": "ff778e40039959e93467bfbc06aaf143b3d9175f70a3a3282ffa3a862d696e5f"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-18-auto-button/4k7-baseline-000-fixture.txt.gz",
+          "size": 73386,
+          "sha256": "5b3ba2474416765d28f385802a783d2c54ef0f6818adb4c4f02c1f171906ae8f"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-18-auto-button/4k7-baseline-000-generator.txt.gz",
+          "size": 269,
+          "sha256": "7b7f96e80f55feb41a5a4f814d60aa013342d59e0348b67a67f67536b46fda18"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-18-auto-button/4k7-baseline-500-channels.txt.gz",
+          "size": 79350,
+          "sha256": "8bc8f5f8d45f51cbf8c84cc0e88667739bd1e97bfacf4c5270db4c7982f7cd7f"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-18-auto-button/4k7-baseline-500-fixture.txt.gz",
+          "size": 70843,
+          "sha256": "f1a663ec580e45092ad06018e88ea0c5e11088cf02c4b6253c75e65c2809648d"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-18-auto-button/4k7-baseline-500-generator.txt.gz",
+          "size": 272,
+          "sha256": "5feed786a81c2df73ffc71552cc6d5560a98c9855c748c1295dba74f5d52939b"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-18-auto-button/4k7-hold-stall-000-channels.txt.gz",
+          "size": 79181,
+          "sha256": "769491a6f16871e6cbe91d62b1f9b954ee447599fa2237c2b7e0f7be9359d4ae"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-18-auto-button/4k7-hold-stall-000-fixture.txt.gz",
+          "size": 76947,
+          "sha256": "406d1acbd4629a738737e1734959b2ed27693a57e22097411ca7fba6184a0025"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-18-auto-button/4k7-hold-stall-000-generator.txt.gz",
+          "size": 250,
+          "sha256": "7b2ac8e0dabc0537b5a0bca7e775e955bd08068db6338037a684c3319b6c82e2"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-18-auto-button/4k7-hold-stall-500-channels.txt.gz",
+          "size": 79153,
+          "sha256": "b3a0361cd55700c7487535fe586c6727d5cb0fba52f5d8313d30aa66f3665363"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-18-auto-button/4k7-hold-stall-500-fixture.txt.gz",
+          "size": 74977,
+          "sha256": "474cc9d5215115a18468247caefddac2565d43ef514d3348219e5d8f2dd9680b"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-18-auto-button/4k7-hold-stall-500-generator.txt.gz",
+          "size": 255,
+          "sha256": "5847a2e90b4488345c6201b45352dbd25ca70eed64b1725a12447fd9c57f8910"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-18-auto-button/4k7-press-adc-gap-000-channels.txt.gz",
+          "size": 79033,
+          "sha256": "8f6f2c7600dded0b842d11d7fc6fd2725da5e096be84497140bba7243a6d4ddd"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-18-auto-button/4k7-press-adc-gap-000-fixture.txt.gz",
+          "size": 71511,
+          "sha256": "03e50b41a903a5f232d2d6526f79ddbf637e1b922238e99d646bfc281f134a15"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-18-auto-button/4k7-press-adc-gap-000-generator.txt.gz",
+          "size": 254,
+          "sha256": "2234220001dd93e19454dbacf2074be47f10415a1b8eb536acbb0f06e9ce3d61"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-18-auto-button/4k7-press-adc-gap-500-channels.txt.gz",
+          "size": 79192,
+          "sha256": "94a4a0f0aaaddc6c75a70d084c64c5b23ac2a0655ce8da2b5390859bd1eef4a9"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-18-auto-button/4k7-press-adc-gap-500-fixture.txt.gz",
+          "size": 69271,
+          "sha256": "1919cc49b7e73e7f2ea6a9d27a64f5f76578751f6444b8d9ee2c8fe6984f1082"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-18-auto-button/4k7-press-adc-gap-500-generator.txt.gz",
+          "size": 253,
+          "sha256": "a50a50d6fac624d6d2188ce2d742eb6d3d0ce6a22e97c3ffffa4c433d09429cf"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-18-auto-button/4k7-press-stall-000-channels.txt.gz",
+          "size": 79203,
+          "sha256": "52be55f2b436d4d0f180b493ab82bfd3952c36340bc1a2210c6e2395db505a0d"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-18-auto-button/4k7-press-stall-000-fixture.txt.gz",
+          "size": 77392,
+          "sha256": "634bfa744483b35ceeab6a1c2104742dc5e291ece8433e190b9f99557fde1a20"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-18-auto-button/4k7-press-stall-000-generator.txt.gz",
+          "size": 250,
+          "sha256": "8da940b232ce5f33515decd97d2156e930fbdcf43864ad064cf97535ee43aad6"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-18-auto-button/4k7-press-stall-500-channels.txt.gz",
+          "size": 79089,
+          "sha256": "dafaf86d7b04fd73da9b71271f430cd3ca46685ba97c0290c7778d91911958d1"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-18-auto-button/4k7-press-stall-500-fixture.txt.gz",
+          "size": 76692,
+          "sha256": "cda775446c72333e7a07e0255e6be49aad26f38c384c828e35f41bf2f93f74cb"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-18-auto-button/4k7-press-stall-500-generator.txt.gz",
+          "size": 255,
+          "sha256": "8210c23ecb5092c0873a8c51a9505c4ab59e644972f51e173c9d7ecdd7ec5add"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-18-auto-button/4k7-release-stall-000-channels.txt.gz",
+          "size": 79061,
+          "sha256": "0d950b889c0d8546f7f192f8c05163ccfd2844ccf90f26e0497930f8fd0ea77a"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-18-auto-button/4k7-release-stall-000-fixture.txt.gz",
+          "size": 75775,
+          "sha256": "f94ba5f2f2b241a3dbe7a15995a3d437809486f2b8240395b2931dd44a7d691e"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-18-auto-button/4k7-release-stall-000-generator.txt.gz",
+          "size": 250,
+          "sha256": "fff00fa595c60818fa40d47e05a79a30a6cdd8df76cad114e02fbf27a3d60330"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-18-auto-button/4k7-release-stall-500-channels.txt.gz",
+          "size": 79233,
+          "sha256": "a3b87b8caf75e9c7ad74115796cdde151372626460d1ab3ee1b347cf8daae53a"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-18-auto-button/4k7-release-stall-500-fixture.txt.gz",
+          "size": 76429,
+          "sha256": "dd6c033efb601e7e8c4062eac8bb3d9d6dccea109d0dd17cef746ebbec373a37"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-18-auto-button/4k7-release-stall-500-generator.txt.gz",
+          "size": 254,
+          "sha256": "a6ef61c166f08c7160d3a2251531e80fb1c9b207330a7583c5b189a2886b8a6f"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-18-auto-button/baseline-channels.txt.gz",
+          "size": 79268,
+          "sha256": "0cc5e70080db1d7c6bbfacfedf6081f1be65216c6580d0cc7401e58be595aac7"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-18-auto-button/baseline-fixture.txt.gz",
+          "size": 74580,
+          "sha256": "65dbdad77d0821b58297317ce47a064b6f33a6eaba4744a5df2d23afaa266d62"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-18-auto-button/baseline-generator.txt.gz",
+          "size": 269,
+          "sha256": "d262e0827e8765aa8a2702779fb4352fabb5ce3adca7f55beb9a73eabf4c4b43"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-18-auto-button/incomplete-service-610000-channels.txt.gz",
+          "size": 71348,
+          "sha256": "94c934d80ed63cbe309e87cb766db882fb23b8375f36b9da5fa6d72c3f8ba80f"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-18-auto-button/incomplete-service-610000-fixture.txt.gz",
+          "size": 75262,
+          "sha256": "4234ce83aba9a4cd2f304a9c149422a599c9c4471a452669c3e2d09a1ed88dc4"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-18-auto-button/incomplete-service-610000-generator.txt.gz",
+          "size": 251,
+          "sha256": "6e0e24d54d723aaba911feb02f7650956c31b341d630a5d853495c3c712aeb0b"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-18-auto-button/press-stall-channels.txt.gz",
+          "size": 79162,
+          "sha256": "15782196b6d933d11f6854c3425dd2d542f063b7c9b575a5cc75ab20d2cbb3f4"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-18-auto-button/press-stall-fixture.txt.gz",
+          "size": 80329,
+          "sha256": "1368ab436de7ff3ea68f227cbfbc32d3dcddd60494e924f6795dffa04c9ad8be"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-18-auto-button/press-stall-generator.txt.gz",
+          "size": 251,
+          "sha256": "35b52267903bcce5ff45711e70e5d5982689d343f131f21e09f93d49fbff0c0c"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-18-auto-button/timing-baseline-000000-000-channels.txt.gz",
+          "size": 79874,
+          "sha256": "0ce45354a65729f413bb2a64d8041b6a5f955aeb2302f1d85ccff400557361df"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-18-auto-button/timing-baseline-000000-000-fixture.txt.gz",
+          "size": 70927,
+          "sha256": "d0cf82bb0eec7a934b9386c3ea009f5d59d9086b4e4f79db65a82b80eec86d88"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-18-auto-button/timing-baseline-000000-000-generator.txt.gz",
+          "size": 269,
+          "sha256": "7264937e819de8b17cfd13b71a733b65f10b2bb7965a6073612d98cd02e78bfa"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-18-auto-button/timing-hold-stall-608000-000-channels.txt.gz",
+          "size": 79157,
+          "sha256": "8b0537918d0b1d17cb3dcf71e2ca06fd801973da4262612f2d6ae5468469d28c"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-18-auto-button/timing-hold-stall-608000-000-fixture.txt.gz",
+          "size": 75591,
+          "sha256": "e67c9e27c48b9f2e3148bc585bb1c8f082b21017f43f880b452667232952e6c5"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-18-auto-button/timing-hold-stall-608000-000-generator.txt.gz",
+          "size": 251,
+          "sha256": "0e790c64f2a2f7e8d2bb721f555befc810049e863f4068156f4c4f6d3371388f"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-18-auto-button/timing-hold-stall-608000-500-channels.txt.gz",
+          "size": 79408,
+          "sha256": "e889dbe8f9dda457d3ad406ed2274dffd8883511a05f6389f7c4bf01f1a55e9e"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-18-auto-button/timing-hold-stall-608000-500-fixture.txt.gz",
+          "size": 76245,
+          "sha256": "5a749ad6714e71c725eacead9f964a0a9064178a7ea66167fe2081b5b2008478"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-18-auto-button/timing-hold-stall-608000-500-generator.txt.gz",
+          "size": 255,
+          "sha256": "87f48cb3096796199bb23fb337acb4b783fc10ccb815ab20e39ed950f12580c7"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-18-auto-button/timing-hold-stall-610000-000-channels.txt.gz",
+          "size": 79430,
+          "sha256": "3da81bd2067600adbd7ff5e3e0ae67e6c1d670e43793e5079646ffb408ccb0ce"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-18-auto-button/timing-hold-stall-610000-000-fixture.txt.gz",
+          "size": 76107,
+          "sha256": "78017c3954d97e3aa6ad4119c8af34abe777777eca7f0ee1ab1127c463be243a"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-18-auto-button/timing-hold-stall-610000-000-generator.txt.gz",
+          "size": 250,
+          "sha256": "32969724a0798ed26314c91cfc4cd9644d793ea0bf348f1aede15d88026ef2e6"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-18-auto-button/timing-hold-stall-610000-500-channels.txt.gz",
+          "size": 86891,
+          "sha256": "5f1d9ed24cd993506967bdc3e50102dda2d85d6b3e5bb9aa2f3563e96e7a8fc9"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-18-auto-button/timing-hold-stall-610000-500-fixture.txt.gz",
+          "size": 76815,
+          "sha256": "95f2942dc196467fb9e6bcc31fc7098a5a353773cffec3a770f3b7c417acbc06"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-18-auto-button/timing-hold-stall-610000-500-generator.txt.gz",
+          "size": 256,
+          "sha256": "1daa441266a0925fc2a2c9c9194b81e6ac7a93c558da34d20e0b0d2bd9c71fce"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-18-auto-button/timing-hold-stall-612000-000-channels.txt.gz",
+          "size": 79408,
+          "sha256": "59b8edebd48da09070103114f5090f42bfaf0d0e43624e963fb8789fae61cf21"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-18-auto-button/timing-hold-stall-612000-000-fixture.txt.gz",
+          "size": 76281,
+          "sha256": "7c7724025697a138251cced7805e9689cb675290fb61929f50e8402b00537223"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-18-auto-button/timing-hold-stall-612000-000-generator.txt.gz",
+          "size": 250,
+          "sha256": "278a9651b5246dd157723fcda98d95e3a26fa649b9582ef56a152bb29e395f2c"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-18-auto-button/timing-hold-stall-612000-500-channels.txt.gz",
+          "size": 90433,
+          "sha256": "061f05a299c0101aecec1efdb8d0bc671fa594504d2f2d55f66ac67868894e7d"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-18-auto-button/timing-hold-stall-612000-500-fixture.txt.gz",
+          "size": 76713,
+          "sha256": "e04b7a24d63daafa0f2c2d5efcb429d66d858003f1767d607a316f3b63ceb82a"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-18-auto-button/timing-hold-stall-612000-500-generator.txt.gz",
+          "size": 256,
+          "sha256": "433b14186e2886399b3f419d736164da3a07924505b0de1697897a58cfc1e690"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-18-auto-button/timing-press-adc-gap-008000-000-channels.txt.gz",
+          "size": 86886,
+          "sha256": "7dad3be8b0de148abd15044b92d658771f15b803151af14662230314ec634488"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-18-auto-button/timing-press-adc-gap-008000-000-fixture.txt.gz",
+          "size": 71808,
+          "sha256": "04181705cfd380a99b1f7a3c52ebc66e18b6cc2e7f41135f275f39dff628351e"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-18-auto-button/timing-press-adc-gap-008000-000-generator.txt.gz",
+          "size": 252,
+          "sha256": "c11c1c21c613d0a619268a08b05ab0c287e907e0cb1e437d4cbcbe5d578b2092"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-18-auto-button/timing-press-adc-gap-610000-000-channels.txt.gz",
+          "size": 88327,
+          "sha256": "5abefc3b9931e5080f9a33956ab65c03c233d3be5f0d1a84b3fd93bd71fcdb9a"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-18-auto-button/timing-press-adc-gap-610000-000-fixture.txt.gz",
+          "size": 70227,
+          "sha256": "9472888085a5fb511fbac902a97b958b7fbe87363cd836aa8cf597f449eb8599"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-18-auto-button/timing-press-adc-gap-610000-000-generator.txt.gz",
+          "size": 253,
+          "sha256": "a08424ba1e39bd8d06e93e1d9a139142ac0a7ed358a1b9ab33ceebdc3942c7cf"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-18-auto-button/timing-press-stall-000000-000-channels.txt.gz",
+          "size": 79325,
+          "sha256": "ee39bc191984c89b9191d13dba435bcf04164a4e72dc43debb268d4eb774fd6e"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-18-auto-button/timing-press-stall-000000-000-fixture.txt.gz",
+          "size": 76204,
+          "sha256": "0c1653a00cc77fa966c403217a6bdeba02054a00c9b1eba4376f3891901ee690"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-18-auto-button/timing-press-stall-000000-000-generator.txt.gz",
+          "size": 250,
+          "sha256": "5b401d140f85d4f10c5419495a68b48c866a32e48c4026308dbf7159f4ba8542"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-18-auto-button/timing-press-stall-008000-000-channels.txt.gz",
+          "size": 79328,
+          "sha256": "5391977410fa810c8c1acf3a4f63018fdc43b4360478f09d772136fa1a5ace16"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-18-auto-button/timing-press-stall-008000-000-fixture.txt.gz",
+          "size": 75363,
+          "sha256": "8869bf4f27c10cdbad52491b4e763b8a3d9f54c17d9c8a7d7a37be17ff4f2aae"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-18-auto-button/timing-press-stall-008000-000-generator.txt.gz",
+          "size": 251,
+          "sha256": "637c7ab56d3456b6985946088e8854fedaeaaca1963ddfc57a8bf324417e0ad5"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-18-auto-button/timing-press-stall-008000-500-channels.txt.gz",
+          "size": 79275,
+          "sha256": "87e9c6b479511f5a52d821cded7178813f0f1f30a86fae54068d4b4e9ff19303"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-18-auto-button/timing-press-stall-008000-500-fixture.txt.gz",
+          "size": 74495,
+          "sha256": "396025b0d6488d0d9ca095c86b087068e42bd659d0e7de67e2fa045a00864c21"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-18-auto-button/timing-press-stall-008000-500-generator.txt.gz",
+          "size": 256,
+          "sha256": "bd5f30b749574613cd4c6636d458ddbf1dde4e3b5a6f7f0a95787c8ab8224757"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-18-auto-button/timing-press-stall-010000-000-channels.txt.gz",
+          "size": 79479,
+          "sha256": "550f5836e21543fe4c40b53a5e581ad9a04a75eaee6fa93aebd09e54d06bb0ef"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-18-auto-button/timing-press-stall-010000-000-fixture.txt.gz",
+          "size": 76864,
+          "sha256": "a1c46837373b367a33235bbd0b9b2dabe4e24cb86a782af487df92f4843dc8ba"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-18-auto-button/timing-press-stall-010000-000-generator.txt.gz",
+          "size": 251,
+          "sha256": "b8fafc37c7d2e9768ac973c781e8a5d2a180ae2e193b5338acdb3c44f4ed850a"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-18-auto-button/timing-press-stall-010000-500-channels.txt.gz",
+          "size": 79458,
+          "sha256": "98e6f82e761c4ddabd9da4be45e7b58a014e5b011168c263bd467f18758fe308"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-18-auto-button/timing-press-stall-010000-500-fixture.txt.gz",
+          "size": 76809,
+          "sha256": "2ab92135346bebe57936a5fc8848f782c663630ac44974665b2f9c23143c13e9"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-18-auto-button/timing-press-stall-010000-500-generator.txt.gz",
+          "size": 256,
+          "sha256": "94c695f09940acd620a339355104968d79f3e5717cf009fdc5b455963b45c0dd"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-18-auto-button/timing-press-stall-012000-000-channels.txt.gz",
+          "size": 79400,
+          "sha256": "bc595ab18cb1091ab8f8ead964662e93c3375151479a19562a2fd13ac44647e3"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-18-auto-button/timing-press-stall-012000-000-fixture.txt.gz",
+          "size": 76817,
+          "sha256": "7fbaed37d187e8e6214264b5872dea873f1a846cae295f419fc876000b5fee19"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-18-auto-button/timing-press-stall-012000-000-generator.txt.gz",
+          "size": 252,
+          "sha256": "aec3a1ef8a1c806b1274ede53d3aa5b2deeeb8fed1210fe4964d14a6dfbde7d6"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-18-auto-button/timing-press-stall-012000-500-channels.txt.gz",
+          "size": 79625,
+          "sha256": "88834fa499b0ce78251ef1f861ac1829d7e33ad2c7bd2db0f7b063cd1b264e84"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-18-auto-button/timing-press-stall-012000-500-fixture.txt.gz",
+          "size": 76970,
+          "sha256": "415c255bb43ac2a01549a756cbbb26e7866307fc1475ef1f6076f99adf586843"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-18-auto-button/timing-press-stall-012000-500-generator.txt.gz",
+          "size": 255,
+          "sha256": "a5f9b766bad88de4e55e3eb0ff3ad8f1cc6f3fa8c4f93c1288f1d378bd5761bd"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-18-auto-button/timing-release-stall-008000-000-channels.txt.gz",
+          "size": 79153,
+          "sha256": "72714c20bf915d76399827dfbd7b3104db3afac24faf56d2919dcbd495981b4d"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-18-auto-button/timing-release-stall-008000-000-fixture.txt.gz",
+          "size": 76677,
+          "sha256": "96cd5170d96fff34501055d08430c86f72736d27b03e65e25415e61614ef9f0e"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-18-auto-button/timing-release-stall-008000-000-generator.txt.gz",
+          "size": 252,
+          "sha256": "bc3a7bef6a1e9cdb92831d0e7255f7fbc98850e86e7d822a1c1770a40f88b239"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-18-auto-button/timing-release-stall-008000-500-channels.txt.gz",
+          "size": 89486,
+          "sha256": "3de425ac5cedcb322c0d0d74123e96387e7b3d704e8d28e3aa16e76058421498"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-18-auto-button/timing-release-stall-008000-500-fixture.txt.gz",
+          "size": 76610,
+          "sha256": "8a32d0f1a67b2be92a9e60fe30b5b32f068f159ffd0f4fb6b4ba1bda711974eb"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-18-auto-button/timing-release-stall-008000-500-generator.txt.gz",
+          "size": 255,
+          "sha256": "2d46f064199799dd0e105c66d3071474f095660aad52a1ad968eb303102239ed"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-18-auto-button/timing-release-stall-010000-000-channels.txt.gz",
+          "size": 79468,
+          "sha256": "ac5cd3613fdfadbd2458b782624057e4eacb1f3cef4e8e247c526f314d7fa40e"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-18-auto-button/timing-release-stall-010000-000-fixture.txt.gz",
+          "size": 77010,
+          "sha256": "bc1384b16940ef41acc4cf286cfb213ef70a7cdf684b6df9b7cee352a4184cd7"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-18-auto-button/timing-release-stall-010000-000-generator.txt.gz",
+          "size": 253,
+          "sha256": "503bbd656030fa10c48390508edaf679c253793538dfbf9096f7639dd6f73bbf"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-18-auto-button/timing-release-stall-010000-500-channels.txt.gz",
+          "size": 90004,
+          "sha256": "3ae4f73d18be1bd64ca53785ff1351af3485b0db06546a007056b1857e1fdb38"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-18-auto-button/timing-release-stall-010000-500-fixture.txt.gz",
+          "size": 76521,
+          "sha256": "776d2c8954ead6bed5075e8260532139f24c104130bf419c44db543fecff76c4"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-18-auto-button/timing-release-stall-010000-500-generator.txt.gz",
+          "size": 255,
+          "sha256": "20979877c181f8f731bdd8e94719fe5fa5e8f5cd0ae7b3ac390ec8c5107f80ed"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-18-auto-button/timing-release-stall-012000-000-channels.txt.gz",
+          "size": 79591,
+          "sha256": "4035a3081be112fd16208d7584dd7491cda77befb7aa32e69fd90b9587406f58"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-18-auto-button/timing-release-stall-012000-000-fixture.txt.gz",
+          "size": 77173,
+          "sha256": "578a7999d3bab8c7cbd61e8eefdc79a7602122bc57685b76ca66bcec6bb3450f"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-18-auto-button/timing-release-stall-012000-000-generator.txt.gz",
+          "size": 250,
+          "sha256": "bea2a74b82c8fb5567210fefa8865f78275fe9da18c2b278a8ef26d4b7543dcb"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-18-auto-button/timing-release-stall-012000-500-channels.txt.gz",
+          "size": 89343,
+          "sha256": "0b9b6e807545fda3e7302d3940606280768ef00c72fc1fbb6052226abd2bba62"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-18-auto-button/timing-release-stall-012000-500-fixture.txt.gz",
+          "size": 76376,
+          "sha256": "a9016049dd0b3826252533448b109a46016d9b857ea3280fe1897daf56012f54"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-18-auto-button/timing-release-stall-012000-500-generator.txt.gz",
+          "size": 255,
+          "sha256": "a2d0706ea9161fcbb6c4c69ad73b73ff8e9326109d58557a82fbd9f189154246"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-18-auto-button/unexpected-marker-010000-500-channels.txt.gz",
+          "size": 79695,
+          "sha256": "5b946d7012d1e9ebfa294f31821e0da4059829be5cbc4fde70682487e56039ee"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-18-auto-button/unexpected-marker-010000-500-fixture.txt.gz",
+          "size": 76629,
+          "sha256": "e1b7868709ede51931bb8b3eba30f9b5c22479302cb6ffb873cc7fa8978b8a86"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-18-auto-button/unexpected-marker-010000-500-generator.txt.gz",
+          "size": 256,
+          "sha256": "06ea15b359c72c2caf834005ea8c51d77319573216e479b960c16494685661a0"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-18-auto-button/unexpected-marker-610000-500-channels.txt.gz",
+          "size": 80626,
+          "sha256": "df1af357dd672c2e574574d1c37f7c3ff323fb6432880297dcf1d5220f6d23bd"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-18-auto-button/unexpected-marker-610000-500-fixture.txt.gz",
+          "size": 77013,
+          "sha256": "1dd50e5d3d54e413ebdd36496eef241ee1446c7e4b6a87168d941599cca97984"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-18-auto-button/unexpected-marker-610000-500-generator.txt.gz",
+          "size": 256,
+          "sha256": "c501980ea6e2291558372c6228b1531dbcdac5b2b102d2b2c2d2c34567c3b437"
+        }
+      ]
+    },
+    {
+      "name": "daisy-2026-10-18-fault-load.tar",
+      "campaign": "2026-10-18-fault-load",
+      "size": 3399680,
+      "sha256": "a2e4d61e42a9f47830e28069c4837e4022a7a9b528a4bc3a88834a33905f5cbb",
+      "files": [
+        {
+          "path": "tests/measured/daisy/2026-10-18-fault-load/hold-stall.txt.gz",
+          "size": 464325,
+          "sha256": "589369bb41209154aab6adbf9cbefdc1b15762a0bc9cf1c51bd2dd61af46d119"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-18-fault-load/pickup-gap-down.txt.gz",
+          "size": 526845,
+          "sha256": "9576cd2ec32bb991e5c922a27d27592275e82d1631c692bd9594584a2566d04d"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-18-fault-load/pickup-gap-up.txt.gz",
+          "size": 1063493,
+          "sha256": "423477b3fa1a726848545067471d968f8fcd8ddbde7f2e739d2e9b998c2f1872"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-18-fault-load/press-adc-gap.txt.gz",
+          "size": 427510,
+          "sha256": "fcdf10e03adb95df5c9be25bbffbf07339132708987ba2734001b25a2a5a9c97"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-18-fault-load/press-stall.txt.gz",
+          "size": 450869,
+          "sha256": "7fb338ac6afd5278c72ededa8670a1528ce1729aee2bafe81bde5d98cbfb0c86"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-18-fault-load/release-stall.txt.gz",
+          "size": 459170,
+          "sha256": "b7fc1858ac9fa29a0585368e6bbd3512ce99ffcba57f884f866e7ce21392ac56"
+        }
+      ]
+    },
+    {
+      "name": "daisy-2026-10-18-interaction-load.tar",
+      "campaign": "2026-10-18-interaction-load",
+      "size": 1873920,
+      "sha256": "be7795146d2c376513a2fd2fba63afeacb38ac6ea8b30a4bdd51f95227c3662e",
+      "files": [
+        {
+          "path": "tests/measured/daisy/2026-10-18-interaction-load/moving-hold.txt.gz",
+          "size": 440815,
+          "sha256": "d0dfac1313781c35e841605627be8b0131ab06cdc6eb92fd66e188cfbbca9ff2"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-18-interaction-load/moving-tap.txt.gz",
+          "size": 470738,
+          "sha256": "08776e2dc6ec35109bfdf9352da54a1cc39507fff5852b4b3a5d90088350e092"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-18-interaction-load/paced-reversals.txt.gz",
+          "size": 478734,
+          "sha256": "d7225e0b32d65592553d409f06ce10e5ffed897b86ebf78797cc21a0237767f9"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-18-interaction-load/quick-reversals.txt.gz",
+          "size": 476678,
+          "sha256": "713eb727798f561e3acdf77fda6618b6633e491a4a113f8eb5d0c7c78ab410fb"
+        }
+      ]
+    },
+    {
+      "name": "daisy-2026-10-18-manual-load.tar",
+      "campaign": "2026-10-18-manual-load",
+      "size": 3020800,
+      "sha256": "ba4525d7403f153fe5091bc3a05ba5c2bcf230756bf405bca9754b7c10ea4d2c",
+      "files": [
+        {
+          "path": "tests/measured/daisy/2026-10-18-manual-load/gestures.txt.gz",
+          "size": 1390211,
+          "sha256": "dde929dff6d33e19b8a3d8919556b46e12f45e027a69cf0b771f64bd6a65f4eb"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-18-manual-load/pickup-down.txt.gz",
+          "size": 460145,
+          "sha256": "4dff3385a1cbb852f945848a76cfbc42fbf412346c40d128b1473afcb29889d4"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-18-manual-load/pickup-up.txt.gz",
+          "size": 1159436,
+          "sha256": "701ae01fdcd36f83f578cfd7c017542cb337a934f0250505ee266d35acdb0266"
+        }
+      ]
+    },
+    {
+      "name": "daisy-2026-10-18-timing-review.tar",
+      "campaign": "2026-10-18-timing-review",
+      "size": 2570240,
+      "sha256": "b2d5d5566b2a49fac4f1d026481a99d16d70a1df7fa27766789bedc15cddddff",
+      "files": [
+        {
+          "path": "tests/measured/daisy/2026-10-18-timing-review/clock-drift.txt.gz",
+          "size": 1941802,
+          "sha256": "3fee41e8d21302d1ffd898380c1d53cbdc5f33d783e2479339e64cc234ea2d65"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-18-timing-review/ordinary-soak-30m.txt.gz",
+          "size": 29430,
+          "sha256": "a97cf060e02d5e5116a5aa6290a8c14528315199a9687dd9805ed12c6fd64690"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-18-timing-review/soak-disagreements.txt.gz",
+          "size": 592490,
+          "sha256": "bcf650c51cbc1a29dcbe41ac7185842f1307f18df726ff4a622d1ece6f882758"
+        }
+      ]
+    }
+  ],
+  "source_history": {
+    "source_commit": "077d816dd94322a421468d98086fb14601c2ecbd",
+    "bundle_sha256": "f1cbcd5d2285173232f56b84aefdf73d1f3d4e356b344e553011d3f72138c36a",
+    "size": 2030334148,
+    "parts": [
+      {
+        "name": "source-history.bundle.part01",
+        "size": 943718400,
+        "sha256": "a57bccfbf4b85b240896fdb1912fa718e79ae08ec682fbc3b86c0f2d821ec152"
+      },
+      {
+        "name": "source-history.bundle.part02",
+        "size": 943718400,
+        "sha256": "7021daac372c18c8d5ba80cead136de7ad91646e5c787b6814ee85cb9ee9e009"
+      },
+      {
+        "name": "source-history.bundle.part03",
+        "size": 142897348,
+        "sha256": "e08303f02af56a3f3cb0d1c23ea3e7cde29374000e7e50a49e3411879c76da7f"
+      }
+    ]
+  }
+}

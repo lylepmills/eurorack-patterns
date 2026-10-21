@@ -41,7 +41,9 @@ class Controls {
     if (!cadence) {
       control_.Sample(0.0f, false);
       button_.Observe(pressed, us / 1000, false);
-      role_.Cancel(); // An unseen release/repress cannot become a tap or hold.
+      // Cancel an already qualified role. A pending, unqualified press can
+      // qualify again after this gap; this is not a release-to-rearm policy.
+      role_.Cancel();
     }
     uint32_t gesture = 0;
     if (external_milli >= 0) Edit(static_cast<float>(external_milli) / 1000.0f);
@@ -92,6 +94,7 @@ class Clock {
     previous_ = tick;
     return static_cast<uint32_t>(ticks_ * 1000000ull / hz_);
   }
+  uint64_t ticks() const { return ticks_; }
  private:
   uint64_t ticks_ = 0;
   uint32_t previous_, hz_;

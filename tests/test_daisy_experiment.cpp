@@ -50,6 +50,26 @@ int main() {
   for (uint32_t scenario = bench::kPressStall; scenario <= bench::kPressAdcGap; ++scenario)
     InterruptedPress(scenario);
   MissingCrossing(true); MissingCrossing(false);
+  for (uint32_t scenario = bench::kPressStall; scenario <= bench::kPressAdcGap; ++scenario) {
+    for (uint32_t delay : {1u, 8000u, 10000u, 12000u, 608000u, 610000u, 612000u, 1000000u}) {
+      bench::Experiment timed(scenario, false, delay);
+      timed.Observe(100000, 0, true, true);
+      const uint32_t trigger = scenario == bench::kReleaseStall ? 200000 : 100000;
+      if (scenario == bench::kReleaseStall) timed.Observe(trigger, 0, true, false);
+      CHECK(timed.stimulus().trigger == int32_t(trigger));
+      if (scenario == bench::kPressAdcGap) {
+        CHECK(!timed.InvalidAdc(trigger+delay-1));
+        CHECK(timed.InvalidAdc(trigger+delay));
+        CHECK(!timed.InvalidAdc(trigger+delay+250000));
+      } else {
+        CHECK(timed.Stall(trigger+delay-1) == 0);
+        CHECK(timed.Stall(trigger+delay) == 25);
+        timed.EndStall(trigger+delay+25000);
+        CHECK(timed.Stall(trigger+delay+26000) == 0);
+      }
+      CHECK(timed.stimulus().begin == int32_t(trigger+delay));
+    }
+  }
   // A short tap is still actionable while only the ADC is unavailable.
   bench::Controls c; c.Reset(250, false);
   bench::Experiment adc(bench::kPressAdcGap, false);

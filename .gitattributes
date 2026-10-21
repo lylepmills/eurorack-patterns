@@ -1,0 +1,2 @@
+# Generated measurement reports remain available, but do not crowd code reviews.
+tests/measured/daisy/** linguist-generated=true

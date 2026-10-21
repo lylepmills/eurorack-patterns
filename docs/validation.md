@@ -63,7 +63,7 @@ The [firmware](../examples/daisy/main.cpp), [builder](../examples/daisy/build.py
 and [capture tool](../examples/daisy/capture.py) prepare a reproducible control
 experiment. Both the initial controls and the newer event-triggered fault/startup
 scenarios have bounded physical evidence below. Public library headers are
-unchanged. The host suite has 30 CTest entries, including protocol/mock-serial
+unchanged. The host suite has 32 CTest entries, including protocol/mock-serial
 tests, synthetic scenarios, scope-alignment rejection tests and 15 complete
 measured replays. The firmware itself is not simulated by those host tests.
 
@@ -178,7 +178,7 @@ retaining the complete waiting period.
 
 This remains one fixture and a small set of manually operated runs. Remaining
 work includes repeated/varied startup and fault phases, other pots and boards,
-audio/IRQ workloads and soaks, real jack/gate circuitry, pulse/CV timing, and a
+broader audio/IRQ workloads, real jack/gate circuitry, pulse/CV timing, and a
 separate power-cut/brownout/storage campaign. No library control behavior changed
 as a result of this pass.
 
@@ -341,6 +341,515 @@ This observes the application **after peripheral initialization**. It does not
 capture supply rise, ROM/bootloader execution, or clock/RAM/ADC setup. Record
 those separately if the question concerns earlier electrical/startup behavior.
 
+### Audio/USB load and continuous soak
+
+Three complete paired stationary traces from the first load pass are available
+in [the measured corpus](../tests/measured/daisy/2026-10-16-load), with
+[replay and physical-evidence checks](../tests/test_daisy_load_measured.py).
+Each contains 10,000 observations on the same Seed3/B100k fixture, with the pot
+near its midpoint and button released. All service pulses matched; no missed
+slots, ADC failures, unexpected actions or callback timing flags occurred.
+
+| Recorded workload | Maximum physical service interval | Maximum physical service width |
+| --- | --- | --- |
+| Audio stopped, no USB traffic | 1000.383 us | 141.234 us |
+| Real DMA callbacks, no padding or USB traffic | 1004.978 us | 145.576 us |
+| 650/1000 callback padding, 16-frame blocks, requested 500 USB packets/s | 1229.155 us | 566.010 us |
+
+These are extrema from bounded recordings, not universal deadlines or calibrated
+accuracy claims. The separate short matrix also passed at 48-frame blocks, but
+its firmware-reported maximum interval reached 1669 us. **Block size changes
+worst-case foreground latency even at the same callback padding fraction.**
+Control validity and button behavior still need testing while an operator moves
+the controls under these loads. Production DSP, other interrupt priorities,
+display/storage work and other boards remain separate qualification work.
+
+The fixture's actual callback rate was about 3000.9/s at 16-frame blocks. Host
+USB delivery was below its requested rate; skipped host send slots remain in
+the evidence and are not attributed to device loss. Every sent packet in these
+published windows matched the device count and sequence checks. Physical scope
+alignment kept the existing bounds: under 5 us timestamp/interval mismatch and
+under 3 us work-width mismatch; observed errors were around 1 us or less.
+
+Two counterexamples remain explicit in the same corpus:
+
+- **Scheduling boundary, independently verified:** at 96-frame blocks and
+  650/1000 padding, with no USB traffic, a complete 10-second trace contained
+  8,407 observations and 1,593 skipped control slots. No audio callback exceeded
+  its own period. Scope alignment passed, with a 2000.020 us maximum service
+  interval. The nominal-service check correctly fails. Meeting the audio
+  deadline does not guarantee the control deadline, even with average CPU
+  headroom. The replay checks the actual observations; it does not invent the
+  skipped ones.
+- **30-minute soak, not qualified:** all 1,800,000 observations, 5,401,612 audio
+  callbacks and 796,049 received USB packets were accounted for. Device counters
+  reported no missed slots, ADC failures, malformed packets or button actions;
+  all 1,800,000 physical service pulses were present. However, nine one-second
+  buckets between seconds 1611 and 1668 disagree with the scope's local maxima
+  by up to 22.016 us for intervals and 20.312 us for widths. The cause is
+  unresolved. Whole-run maxima agree within 1 us and would hide this discrepancy.
+  The unchanged 5/3 us local bounds reject it. The complete aggregate wire record
+  and a declared two-second scope excerpt reproduce the rejection in regression
+  tests; passing that regression means detecting the disagreement, not passing
+  hardware qualification. Native originals remain retained. The optional timing
+  diagnostic mode below retains raw-timer-to-marker evidence in a later run;
+  it has not yet resolved or qualified this failure. Do not widen bounds or
+  attribute this to the control library without evidence.
+
+The optional `L` command starts the Seed3 codec's real stereo SAI/DMA callbacks
+at nominal 48 kHz. Outputs are silent and inputs are ignored; the existing
+pot/button/marker wiring is sufficient. This is a scheduling experiment, not an
+audio-quality or production-DSP workload measurement. Normal captures and the
+automatic startup recorder leave audio stopped. No QSPI write or erase is added.
+
+`audio-permille=-1` disables audio; `0` exercises DMA and the SDK conversion path
+without extra work; `1..700` pads the application callback body to that fraction
+of its nominal period. The default matrix uses 250 and 650, with 16- and 48-frame
+blocks; 96 is also supported. This padding is synthetic work in a real audio IRQ,
+not a claim that a particular synth occupies that CPU percentage. Measured body
+time excludes SDK conversion and the rest of IRQ handling. Callback count, maximum
+body/interval time, over-budget bodies, >1.5-period intervals and wrong block sizes
+are retained. These counters cannot prove that the codec had no underruns.
+
+USB load is host-to-device traffic at a requested 100 or 500 64-byte packets/s.
+The IRQ checks packet contents and sequence across arbitrary USB chunk boundaries;
+traffic cannot enter the command mailbox. Host pacing is best effort. Both sides'
+counts, host skipped send slots/maximum lateness, malformed frames and sequence
+errors remain explicit. A run fails its stimulus checks if counts differ, fewer
+than 80% of the expected active-window packets arrive, more than 20% of host
+slots are skipped, or host pacing pauses exceed 50 ms. This does not exercise
+simultaneous USB transmit traffic or storage I/O.
+
+After downloading the retained startup window, use the matching manifest and
+replay executable from the build above:
+
+```sh
+python3 examples/daisy/load_capture.py capture --port PORT --manifest build-daisy/manifest.json --out build-captures/load-trace --mode trace --seconds 150 --audio-permille 650 --block-size 16 --usb-hz 100 --replay build/daisy_replay
+python3 examples/daisy/load_campaign.py --dry-run
+python3 examples/daisy/load_campaign.py --port PORT --manifest build-daisy/manifest.json --out build-captures/load-campaign --replay build/daisy_replay
+```
+
+For an interactive trace, retain the 150-second operator window and record the
+intended gesture independently. Start the scope first and verify complete service
+coverage afterward. Short IRQ-masked instrumentation windows keep the starting
+marker, timestamp and button read together, and the ending work timestamp and
+marker together. They are part of this adapter's measured interrupt latency.
+A mismatch with the first-pass tight alignment bounds requires investigation,
+not silent trimming or wider acceptance after seeing the result.
+
+The stationary campaign runs seven full-trace cases (baseline, audio DMA, two
+padding levels, USB alone, and combined loads at two block sizes), followed by
+one **continuous 30-minute soak**. Keep the button released and pot still.
+It stops at the first failed check and preserves that run. `--soak-seconds` can
+select 1..3600 seconds for bring-up or a longer follow-up. The short cases are
+separate acquisitions; only the final soak is continuous. Neither script captures
+Saleae channels or flashes/resets a device.
+
+Trace mode retains every sample for the existing C++ replay, up to 150 seconds.
+Soak mode keeps servicing controls throughout, retaining a fixed-size aggregate
+for every second: counts of samples, skips, errors and button actions, cadence breaks, first/last
+timestamps, maximum work/interval time and valid ADC range. It supports one hour
+without a RAM buffer wrap. These aggregates are **not individually replayable**
+and cannot establish the exact shape of a transient or a missed pickup crossing.
+Pickup ownership and value changes are not retained in these aggregates; use
+full traces to check that behavior. Digital-only soak recordings also do not
+establish analog wiring or voltage stability throughout the window.
+No USB output or download interrupts either acquisition; records transfer after
+audio stops. The timer is extended across raw counter wraps before conversion.
+
+`--mode diagnostic` adds selected timing observations to the continuous soak.
+It requires `timing_diagnostics=1` in both the build manifest and device identity.
+For every nonempty second it retains first/last observations and eight maxima:
+microsecond interval/work, raw marker interval/width, and start/end guard and
+GPIO-call durations. Each maximum retains its actual preceding observation,
+including across second boundaries. Raw 32-bit ticks bracket GPIO calls;
+extended ticks independently check the existing integer clock conversion.
+Ties keep the first observation. This is **selected evidence, not a complete
+sample trace**. A physical peak need not be among the retained candidates.
+
+The original clock arithmetic and aggregate acceptance limits are unchanged.
+Additional retention happens after the falling marker with interrupts enabled;
+its maximum elapsed cost and sample sequence are recorded, including any IRQ
+preemption during that work. It can affect the next deadline. Compare paired
+short runs with diagnostics off/on, both without load and with the intended
+audio/USB load, before a real elapsed-time soak. Host arithmetic tests near the
+old failure's elapsed time do not substitute for a physical long-duration run.
+
+Diagnostic wire records are `T` bucket summaries followed by ten ordered `D`
+records (first, last, then the eight maxima). They are covered by the existing
+whole-response checksum, validated against aggregate maxima and sequence/time
+boundaries, and saved as `timing.json` beside the unchanged aggregate CSV.
+The complete wire remains retained on any validation failure. The offline
+`inspect_timing_service` helper in [daisy_scope.py](../tools/daisy_scope.py)
+compares each retained observation with the same physical pulse by sequence
+number and reports whether the scope's local peaks were retained. CPU brackets
+are diagnostic evidence, not guarantees about external pad transitions. Its
+`original_acceptance` still uses the unchanged 5/3 us aggregate limits.
+The public soak exporter requires explicit `--diagnostic` review for this mode.
+It retains the complete wire record and a declared scope subset containing every
+retained firmware witness and predecessor, using original sequence numbers.
+Full physical coverage is checked before export; the published subset does not
+establish coverage or maxima for omitted pulses. Original whole-capture hashes
+are retained. Unknown identity fields, malformed rows and unexpected failures
+remain rejected.
+
+The first hardware diagnostic preflight exposed unsupported 64-bit `printf`
+formatting in the linked compact C runtime: diagnostic rows contained literal
+`lu` tokens and were rejected. The formatter now converts extended ticks to
+decimal text before using C89-compatible string/32-bit formats, with boundary
+and malformed-row regressions. This matches the documented
+[newlib-nano formatted-I/O limitation](https://sourceware.org/pipermail/newlib/2014/011493.html).
+It is a diagnostic-download defect, separate from the older soak disagreement.
+The corrected image passed a startup replay, a paired full-trace baseline, and
+four paired 10-second aggregate comparisons on one fixture (diagnostics off/on,
+each unloaded and with 650/1000 audio padding, 16-frame blocks and requested
+500 USB packets/s). All physical pulses were present and original timing limits
+passed. Diagnostic retention reached 6.217 us unloaded and 7.700 us loaded;
+retained CPU brackets contained their corresponding measured intervals and
+widths in these short runs. These are observations, not universal overhead bounds.
+
+A subsequent **continuous 30-minute diagnostic soak passed** with the same
+650/1000 padding, 16-frame blocks and requested 500 USB packets/s. All 1,800,000
+physical service pulses and 5,401,612 audio callbacks were accounted for, with
+zero skipped control slots, ADC failures, cadence breaks or button actions.
+The host sent 811,708 packets, all received with valid sequence and contents;
+87,968 host pacing slots were skipped and maximum host lateness was 31.257 ms.
+This remains best-effort traffic, not precisely periodic USB stimulation.
+
+All 1,800 per-second comparisons passed the unchanged limits. Maximum interval
+disagreement was 0.958 us and width disagreement 0.934 us; maximum physical
+service interval was 1231.583 us and marker width 571.272 us. Raw ticks crossed
+100 complete counter periods without an extended-clock validation error.
+The 18,000 retained witness slots represented 11,027 distinct current observations
+(18,347 pulses including predecessors). Each current observation's scope
+interval and width fit its corresponding CPU bracket. Two per-second interval
+maxima and three width maxima were outside the retained current observations;
+the complete native capture, rather than this selected subset, establishes their
+aggregate comparison.
+Maximum observed start/end guards were 0.467/0.450 us, and retention bookkeeping
+reached 17.883 us, including possible interrupt preemption. These maxima describe
+this run, not worst-case execution guarantees.
+
+The [timing corpus](../tests/measured/daisy/2026-10-17-timing) preserves the
+complete short and long wire recordings plus declared selected scope pulses.
+Its [regression checks](../tests/test_daisy_timing_measured.py) validate the
+extended counters and recalculate selected same-event physical comparisons.
+**The older disagreement was not reproduced and remains unexplained.**
+Instrumentation changed between the runs, so this does not establish that the
+original adapter is fixed or identify a faulty component. The manual batch below
+adds isolated gestures and slow sweeps; broader workload/startup coverage remains
+separate validation work.
+
+Three complete manual recordings now cover **360,000 observations under combined
+load**: 650/1000 audio callback padding, 16-frame blocks and requested 500 USB
+packets/s. They use the same firmware as the diagnostic soak, with full trace
+recording and individual-sample C++ replay. The [manual load corpus](../tests/measured/daisy/2026-10-18-manual-load)
+retains complete wire recordings, physical button/action edges and derived analog
+medians. [Measured regressions](../tests/test_daisy_manual_load_measured.py) check
+behavior independently of replay agreement:
+
+| Physical sequence | Observed result |
+| --- | --- |
+| Five taps, one hold, then a final tap; 150 seconds | Exactly six taps and one hold. Tap action markers followed physical releases by 10.340–11.239 ms. The hold acted once at 610.714 ms after the physical press; its release emitted no tap, and the final fresh tap worked. |
+| Slow clockwise sweep from minimum, target 25%; 150 seconds | Value stayed at 25% until pickup at 24.8157%, then followed accepted motion to 100%. No button action. |
+| Slow counterclockwise sweep from maximum, target 75%; 60 seconds | Value stayed at 75% until pickup at 75.1858%, then followed accepted motion to 0%. No button action. |
+
+All 360,000 physical service pulses were present. There were no missed control
+slots, ADC failures, cadence breaks, callback timing flags or malformed USB
+packets. The three runs received 71,234 / 70,324 / 27,558 packets, matching their
+host writers; best-effort pacing skipped 3,439 / 4,351 / 2,117 slots. Maximum
+host lateness was 26.372 ms. Maximum timestamp fit residual was 1.804 us,
+interval disagreement 1.059 us and work-width disagreement 1.187 us, within the
+unchanged 5/5/3 us full-trace bounds. Maximum physical service interval was
+1231.579 us and marker width 571.647 us.
+
+An earlier attempt contained no button activity because the operator began after
+its recording window. It is retained privately as missing stimulus, not a gesture
+pass or implementation failure. The successful recordings used an operator-held
+start: complete one-second, audio-off polling traces detected a released button
+followed by a sustained press, then stopped before the paired acquisition began.
+The operator held for 15 seconds total to cover scope setup, released, and then
+performed the sequence. Each measured run started with the button held and
+verified that the initial release emitted no action. Polls and setup are excluded
+from the qualification window; this tests capture-start ownership, not reset or
+power-on behavior. In the reverse sweep, the action marker initially remained
+high from a preceding run; the firmware cleared it 1.567 us before the first
+service edge. That setup falling edge is retained explicitly and checked
+separately from actions during acquisition.
+
+These first recordings cover isolated gestures and one slow sweep per direction
+on one fixture. A subsequent [interaction corpus](../tests/measured/daisy/2026-10-18-interaction-load)
+adds four complete 60-second recordings (**240,000 observations**) using the same
+firmware and combined load. Its [regressions](../tests/test_daisy_interaction_measured.py)
+check physical button/action timing and analog trajectories alongside full C++
+replay, including the distinction between intended and observed stimulus:
+
+| Recording | Observed behavior and coverage |
+| --- | --- |
+| Moving tap, then held return | A tap during upward motion changed the target to 75%. The action followed release by 11.240 ms; pickup resumed at 74.6426% and followed to maximum. The later hold acted at stationary maximum, changed the target to 50%, then the return sweep picked up at 50.2113% and followed to zero. This covers a moving tap; it does **not** cover a hold action during movement. |
+| Five paced sweeps | All five full sweeps tracked correctly after pickup, with no actions. Turnarounds spent 1.029–1.303 seconds in the endpoint bands. The requested six immediate sweeps were not performed; this retained attempt does **not** qualify immediate reversals. |
+| Four quick sweeps | Four alternating sweeps starting at maximum, with 5%–95% travel taking 0.493–0.778 seconds and endpoint-band turnarounds of 0.336–0.435 seconds. Pickup occurred at 75.2743%; ownership stayed engaged and every later value matched accepted motion, finishing at maximum. No button action. |
+| Hold during downward motion | The hold acted once, 611.035 ms after the press, while the knob was moving downward. It changed the target from 75% to 50%, re-armed pickup, then acquired at 49.9962% and followed to zero. The release produced no tap. |
+
+The quick-sweep trial declared four full sweeps, each traversing the 5%–95%
+range in under two seconds, with less than half a second between arrival at and
+departure from each endpoint band. Those bands include physical travel near the
+stop; their durations are not pure stationary dwell measurements. The analysis
+uses the **last departure** before the opposite endpoint is reached, so brief
+boundary chatter cannot incorrectly start a return leg. Neither these bounds
+nor the observed gesture latencies are universal limits for other controls.
+
+All four windows had complete physical service coverage and no missed slots,
+ADC failures, cadence breaks, callback timing flags, malformed USB packets or
+drops. Each contained 180,054 audio callbacks. Received USB packets were
+27,046 / 27,231 / 26,341 / 26,407, matching the host; best-effort pacing skipped
+2,629 / 2,444 / 3,334 / 3,268 slots. Maximum host lateness was 30.067 ms.
+Maximum timestamp fit, interval and work-width disagreements were
+1.550 / 1.058 / 1.080 us, passing the unchanged 5/5/3 us bounds. Maximum physical
+service interval was 1231.408 us and marker width 571.035 us.
+
+The operator-triggered start accommodated a delay of over three hours before
+one trial. Complete polling traces and scope setup remained outside the measured
+window; each acquisition retained and consumed the initial held button. A clean
+machine trace alone did not qualify missing stimulus: the two earlier attempts
+remain limited to their actual sequences, and the later trials close those gaps.
+
+These are bounded sequences on one fixture. The loaded interruption
+results are described below; broader fault/startup phases, other boards and
+protected jack/gate inputs remain separate work. The earlier long-soak timing
+disagreement remains unresolved.
+
+The load envelope has its own `load_protocol=1`, echoed configuration and whole
+response checksum around unchanged protocol-2 control traces or `S` aggregate
+records. The host rejects incomplete/reordered/count-inconsistent data and saves
+raw bytes before validation. Nominal-load gates require complete service-slot
+coverage, no unexpected skips/ADC faults/cadence breaks or callback budget/interval
+faults, and plausible callback coverage within 0.5% (at least three callbacks)
+of nominal timing. Stationary runs additionally require zero button actions.
+A machine pass still says independent scope/behavior review is pending.
+
+Firmware advertising `load_faults=1` can compose the six event-driven fault
+scenarios with the same audio/USB workload. The measured press-stall,
+hold-stall, release-stall, press-adc-gap and both pickup-gap directions below
+cover all six scenarios on one fixture. These bounded sequences do not establish
+reliability across arbitrary timing phases, workloads or capture lengths.
+Earlier unloaded fault recordings do **not** qualify recovery under audio load.
+For example, after downloading startup evidence:
+
+```sh
+python3 examples/daisy/load_capture.py capture --port PORT --manifest build-daisy/manifest.json --out build-captures/press-stall-load --mode trace --scenario press-stall --seconds 150 --audio-permille 650 --block-size 16 --usb-hz 500 --replay build/daisy_replay
+```
+
+Supported scenarios are `press-stall`, `hold-stall`, `release-stall`,
+`press-adc-gap`, `pickup-gap-up` and `pickup-gap-down`, with the same triggers
+and recovery expectations as the scenario table above. Pickup gaps require the
+25% target. Full traces are required; aggregate modes cannot establish which
+observations straddle an interruption. The new `F` command and
+`FAULTLOADSTART` envelope explicitly echo the scenario. Existing `L` commands
+and `LOADSTART` records retain their original meaning and never inherit a fault
+from an earlier run. Both the manifest and device must advertise the capability
+before the host sends a fault command.
+
+Fault acceptance requires a completed, input-verified stimulus. The declared
+25 ms foreground stall allows up to 2 ms of timer rounding, a start no more than
+1 ms after its deadline and recovery less than 1 ms after the recorded end. Only
+unserviced 1 ms schedule slots overlapping that stall and its single recovery
+cadence break are excused. This includes a partially elapsed entry slot:
+the firmware checks the stall before servicing controls, and an audio interrupt
+can delay that check within a still-serviceable slot. A complete missed slot
+before entry or outside recovery is not covered by this accounting correction.
+All original counts remain visible. Extra missed slots, real ADC failures,
+audio callback flags and USB errors still fail. ADC-only gaps excuse no missed
+service or button-cadence breaks. An untriggered/incomplete fault is retained
+but fails qualification. These machine gates establish bounded stimulus and
+trace integrity, not correct physical recovery: independently verify cancellation,
+fresh-gesture recovery, button operation during ADC loss, and observed pickup
+crossings with the scope and case-specific behavioral checks.
+
+For manual trials, use a long operator-triggered arming period before starting
+the finite capture. An initial held button is consumed at run start; release it
+and wait a second before the fresh press that should trigger the fault. Check
+baseline, DMA-only and combined-load captures on each new firmware build before
+the hands-on fault sequences. No wiring change is required for these injected
+faults; they do not establish real disconnection or brownout behavior.
+
+The [first loaded press-stall recording](../tests/measured/daisy/2026-10-18-fault-load)
+retains 59,974 observations over 60 seconds with 650/1000 callback padding,
+16-frame blocks and requested 500 USB packets/s. The scope recorded one
+26.993 ms service interruption during a 2.590-second held press. Its 26 skipped
+slots and one cadence break cancelled that gesture; the held release did not
+act. A fresh tap then changed the target once, 11.249 ms after its final release.
+That release included an observed brief open/closed bounce, preserved in the
+edge evidence. The initial held-at-start button was also consumed. All physical
+pulses/input samples and the complete C++ replay agreed, with no unrelated
+ADC, callback or USB failures. [Measured assertions](../tests/test_daisy_loaded_fault_measured.py)
+check the actual sequence and keep this claim limited to one fixture and run.
+
+A second 60-second recording on the same firmware/load covers the hold deadline.
+It retains 59,976 observations and 24 deliberately skipped slots. The observed
+25.936 ms service interruption straddled the qualified press's 600 ms deadline;
+the held press lasted 4.762 seconds and produced no hold or release action.
+A fresh 86.923 ms tap then acted once, 11.230 ms after release. All pulses/input
+states and replay agreed, with no unrelated failures. Regression checks derive
+the deadline from the qualified press, locate it inside both the recorded stall
+and physical service gap, and preserve the action marker's setup falling edge
+before acquisition. This is one successful hold-deadline sequence, not a
+statistical phase sweep.
+
+A third 60-second recording covers cancellation during release debounce. It
+retains 59,976 observations and 24 deliberately skipped slots. The first tap's
+press bounced briefly; all three press edges are retained. Its release triggered
+a 25.323 ms foreground stall while the qualified button state was still pressed,
+with a 25.660 ms physical service gap. The pending tap was cancelled. A fresh
+77.605 ms tap produced the only action, 10.999 ms after release. Every physical
+service pulse and sampled button state matched the complete replay, with no
+unrelated ADC, callback or USB failures. This adds one observed release sequence
+on the same fixture and load, with the existing timing limits unchanged.
+
+A fourth 60-second recording verifies button independence during an ADC-only gap.
+All 60,000 service observations remain present with valid button cadence. The
+250 ms injection rejected 251 consecutive knob observations: sampling recovered
+250.971 ms after the first invalid observation, at the first sample after expiry.
+The regression checks timestamps rather than assuming a duration always contains
+exactly the same number of samples. The first release and tap action occurred
+inside that interval; the second tap acted after recovery. Their physical
+release-to-action times were 10.188 and 10.739 ms. Invalid knob values were never
+applied, and the two taps changed the target 25% to 75% and back, with no extra
+actions. Full replay, scope service/input agreement and unchanged timing limits
+passed, with no unrelated failures. This is one synthetic ADC-invalidity case
+under the declared load, not a real ADC-disconnection qualification.
+
+A 150-second upward pickup-gap recording retains all 150,000 observations under
+the same load. The one-second ADC gap rejected 1,000 observations while scope
+voltage medians crossed the nominal 25% target. Readings resumed with the knob
+near 55.28%, but output remained at 25%; the missing crossing did not grant
+control. On the observed return, pickup acquired at 25.333%, within the configured
+half-percentage-point tolerance, 4.797 seconds after readings resumed. It then
+followed the knob to zero and stayed there through the final 20 seconds. No
+button actions, missed slots, cadence breaks or unrelated failures occurred.
+Every service pulse and sampled button state agreed; maximum clock-fit,
+interval and work-width disagreement was 4.356, 1.063 and 1.134 us, within the
+unchanged 5/5/3 us limits. These observations qualify this sequence on one fixture;
+the analog measurements corroborate movement, not calibrated voltage accuracy.
+
+A separate 60-second descending pickup-gap recording retains all 60,000
+observations. Scope voltage crossed the nominal target during 1,000 rejected
+ADC observations. Readings resumed near zero, but output remained at 25% until
+the observed upward return acquired at 24.799%, within the configured tolerance,
+6.507 seconds after recovery. Output then settled at 45.1713%, with no changes
+during the final 20 seconds. The initial held-button release produced no action;
+there were no missed slots, cadence breaks or unrelated ADC, callback or USB
+failures. Full replay and physical coverage passed; maximum clock-fit, interval
+and work-width disagreement was 0.868, 1.050 and 1.112 us against the same limits.
+
+The preceding 150-second descending attempt remains a failed timing check.
+Its 150,000 observations replayed successfully and all physical service pulses
+were accounted for, but global clock-fit residual reached 5.642 us, above the
+5 us limit. Interval and work-width disagreement remained within limits at
+1.051 and 1.099 us. Offline diagnostics were consistent with slow relative clock
+drift, but do not establish its cause or replace the acceptance gate. The full
+native recording and failed analysis remain retained privately. The fresh
+60-second pass above qualifies only that recording; no trace was cropped and no
+limit was relaxed. Long-window clock fitting and the earlier soak interval
+disagreement remain separate unresolved measurement questions.
+
+An [offline timing inspector](../tools/inspect_daisy_timing.py) now reports
+global fit, adjacent-interval and pulse-width failures separately. Optional
+one-second fits are diagnostics only; they cannot make a failed global fit pass.
+The [complete timing projection](../tests/measured/daisy/2026-10-18-timing-review)
+retains all 150,000 firmware timestamp/width pairs and 300,000 physical edges
+from the failed descending run, with original source hashes. Its local residuals
+stay below 0.614 us while the global residual reaches 5.642 us. That supports a
+slowly varying relative clock relationship, but cannot identify which clock or
+physical mechanism changed. A synthetic clock discontinuity at a local-window
+boundary remains rejected by the full adjacent-interval check.
+
+The older soak was independently decoded using the documented
+[Saleae version 1 binary format](https://github.com/saleae/gitbook-docs/blob/master/getting-help/troubleshooting/technical-faq/binary-and-csv-export-formats-2025-update.md).
+All 3,600,000 decoded transition timestamps exactly matched the installed reader.
+Floating-point spacing at the final timestamp is below 0.000001 us; rounding in
+that host representation cannot account for the 13–22 us discrepancies. The
+nine offending buckets remain rejected. Their aggregate maxima do not retain
+the identity of the corresponding firmware samples, so the saved data cannot
+establish a same-event cause. A later instrumented pass does not repair that
+missing evidence or prove the original problem fixed.
+The timing-review fixture also retains a declared contiguous 60-second scope
+excerpt covering all nine failures, checked against the complete original
+firmware aggregates. All nine remain rejected in regression. This excerpt does
+not stand in for the privately retained complete physical recording.
+
+A later [ordinary 30-minute repeat](../tests/measured/daisy/2026-10-18-timing-review/ordinary-soak-30m.json)
+on firmware `d30437a4`, with timing diagnostics disabled, passed at the same
+650/1000 callback padding, 16-frame block and 500 Hz requested USB traffic.
+All 1,800,000 service pulses and every second's extrema agreed; maximum interval
+and width disagreements were 0.955/0.855 us. There were no missed slots,
+cadence breaks, actions or reported ADC/audio/USB failures. The run retained
+5,401,612 callbacks and 814,490 verified USB packets. Complete firmware aggregates
+and derived physical review are public; the complete native recording is
+retained privately. This is a bounded pass on a later image, not an exact repeat
+of the original `51288c60` image or evidence that its failure's cause is fixed.
+
+```sh
+python3 tools/inspect_daisy_timing.py --raw CAPTURE/usb/raw.txt --digital CAPTURE/scope/digital_1.bin --out timing-review.json
+```
+
+This command opens saved files only, refuses to overwrite a review, retains a
+failed report and exits nonzero when timing fails. It does not qualify behavior
+or load coverage. Discontinuous digital chunks are rejected rather than joined.
+
+The automated host fault campaign runs with `build/daisy_fault_sweep` (append
+`--csv` to retain every case). Its 5,400 deterministic cases sweep input phase
+within the 1 ms slot, fixed service offsets, either side of press/hold/release
+boundaries, ADC-only loss, both pickup directions, and observation separations
+of 9,999/10,000/10,001 us. Expected boundaries come from the input timetable and
+declared qualification durations before running the adapter. It checks committed
+actions remain committed, cancelled gestures do not reappear on release, a fresh
+tap recovers, and missing crossings do not grant waiting pickup ownership.
+These are virtual observations, not measured interrupt phases or physical I/O.
+
+The campaign explicitly retains 480 pending-press counterexamples: if a service
+gap occurs before the initial 10 ms press qualification, no role has been latched
+yet. The current example adapter restarts qualification and can later accept the
+still-held press. Cancellation of an already latched role therefore does **not**
+establish suppression of every press spanning a gap. Applications requiring that
+stronger rule need a release-to-rearm policy and separate tests. No such policy
+change or new physical qualification is implied by a passing host campaign.
+
+The press-stall trial exposed a host accounting defect: the initial checker
+required every missed slot's due instant to fall inside the stall. Entry occurred
+204 us into the next slot under interrupt load, before control service. That slot
+was still serviceable at entry and was consumed by the stall. The corrected checker
+uses schedule-slot overlap, retains all original counts, and rejects complete
+missing slots before entry, unrelated later gaps and a full-period recovery
+delay. Synthetic tests vary the phase; the complete measured trace guards the
+observed boundary. Firmware and physical timing limits were unchanged. The
+original failed analysis and native recording remain retained privately.
+
+Host tests exercise framing, corrupt/missing evidence, failed measurement gates,
+mock serial interruptions, hour-long aggregate accounting and timer wrap. Begin
+new hardware qualification with paired baseline and DMA-only captures before
+ramping the load. Each measured trace identifies its exact firmware build.
+
+The [trace exporter](../tools/export_daisy_trace.py) accepts complete stationary
+load traces with `--load --pot-ohms 100000 --capacitor-nf 0`. Add `--manual-load`
+to explicitly review a nonstationary load window; export checks complete physical
+coverage, while case-specific regressions must establish the intended behavior.
+It requires an
+explicit fixture declaration, full physical pulse/input coverage and replayable
+control records. Passing machine checks are the default; a counterexample
+requires `--expected-status fail` and retains its failed quality result. The
+[soak exporter](../tools/export_daisy_soak.py) checks every digital service pulse
+against the per-second aggregate counts and maxima. It fits clocks within each
+second to allow slow oscillator drift over long recordings without hiding
+interval/width mismatches. It does not reconstruct individual observations.
+An expected failed quality outcome must be declared explicitly when exporting
+a complete soak counterexample; an independent timing disagreement requires
+`--expected-scope-status fail`. Neither becomes a qualified pass. The soak
+export retains an explicit local edge excerpt when timing comparison fails.
+Both exporters
+retain wire bytes and use an explicit metadata allowlist, excluding native
+vendor metadata and arbitrary host error text.
+
 ### Transfer integrity
 
 No USB output occurs during acquisition. Records are buffered in SDRAM, then
@@ -394,3 +903,311 @@ reachability requires a separate check of the real pot's attained ADC range;
 this fixture does not calibrate or stretch it automatically. Preserve original
 failures before tuning. No jack contact, external gate, audio deadline, flash
 persistence, or calibrated CV accuracy claim follows from this bench.
+
+### Independent button stimulus apparatus
+
+`examples/daisy/pulse_generator.cpp` runs on a second Seed3. Build it with
+the same pinned SDK/toolchain using `examples/daisy/build.py --role pulse-generator
+--libdaisy <sdk> --out build-generator`. This is a separate image: never install
+it over the control fixture. The manifest and USB identity distinguish the roles.
+No code from another module was copied for this apparatus; it uses libDaisy's
+GPIO, system timer and USB APIs under the SDK's own license.
+
+The generator's D0 / physical pin 1 (PB12) is open-drain: low means pressed,
+high-impedance means released. After installing and verifying its idle image,
+connect its DGND pin 40 to the control fixture's DGND pin 40 and its pin 1 to
+the fixture's button input on pin 15. Make these connections with both boards
+unpowered. Do not join supply rails. Existing Saleae digital 0 observes that
+same button node; digital 1/2 remain on the control fixture's service/action
+markers. Both boards use USB power. Pin assignments follow the manufacturer's
+[Seed3 documentation](https://docs.daisy.audio/hardware/Seed3/).
+
+The host sends a complete timetable of 2–64 alternating press/release edges,
+then a separate run command with a matching token. The first edge is at least
+100 ms after the generator starts its local clock; the last is at most 30 s,
+with at least 100 us between edges. Every plan ends released. Arming expires
+after 30 s and is consumed before a run, including a failed run. Malformed
+commands disarm; `X` aborts. During a run, any incoming command cancels it.
+USB disconnect detection also releases the output. None of these software
+guards promises release during an arbitrary generator MCU lockup.
+
+The generator does not format or transmit records during the timed sequence.
+Each GPIO write has before/after timestamps under a short interrupt guard.
+An edge over 25 us late cancels the sequence instead of emitting catch-up
+pulses. Completed, aborted and partial runs remain distinguishable. The host
+driver requires an explicit port and exact build manifest; it never discovers
+or flashes boards. For an apparatus check, save a JSON array such as
+`[100000,220000,400001,1200001]` and run:
+
+```sh
+python3 examples/daisy/pulse_generator.py --port <generator-port> \
+  --manifest build-generator/manifest.json --times <times.json> --out <new-directory>
+```
+
+Host tests cover rejected schedules/commands, late cancellation without catch-up,
+identity checks before mutation, lost acknowledgements, incomplete records and
+physical edge mismatch. Cross-building is not hardware qualification.
+`inspect_physical()` checks the complete Saleae edge sequence against the
+generator's write brackets, allowing relative clock scale up to 1000 ppm but
+retaining 5 us global-residual and interval-error gates. No extra edges may be
+trimmed. At least two press/release pairs are needed for this check. Recorded
+physical edges, rather than USB request time, define the stimulus.
+
+A second controller keeps the stimulus independent of the control fixture's
+foreground stall. A same-MCU timer/DMA loopback can still be useful for bounded
+foreground faults, but shares clock/reset/peripheral failure modes. Neither
+arrangement makes clean generated edges into a mechanical-contact bounce test.
+Every run still requires physical source verification. The configurable receiver
+offsets described below need measured phase coverage under load before claiming
+an automated hardware fault-boundary matrix. The existing 5,400-case host campaign
+remains virtual evidence.
+
+### Automated two-board button cases (2026-10-18)
+
+`examples/daisy/button_campaign.py` now coordinates a prepared generator and
+an eight-second full-trace acquisition on the control fixture. The generator
+starts only after exact fixture identity and workload acknowledgement. Both
+ports and both manifests must be supplied explicitly. The five cases are
+`baseline` (tap, hold, tap), `press-stall`, `hold-stall`, `release-stall`, and
+`press-adc-gap`; omission of `--fault-delay-us` retains the receiver's existing
+fixed fault schedules. The host receives both streams, retains incomplete evidence on
+failure, and checks independently prescribed outcomes as well as C++ replay.
+`--phase-us` offsets the generator timetable; it does **not** guarantee a
+particular phase of the receiver's service loop. The offline reviewer reports
+measured phase estimates separately.
+
+```sh
+python3 examples/daisy/button_campaign.py --port <fixture-port> \
+  --generator-port <generator-port> --manifest <fixture-manifest> \
+  --generator-manifest <generator-manifest> --replay build/daisy_replay \
+  --case press-stall --out <new-directory>
+```
+
+A scope must already be recording for this command. The adapter-specific
+recorder stays separate from the public coordinator. Saved continuous button,
+service and action channels can be passed to `tools/review_daisy_buttons.py`'s
+`review()` function. It requires every service pulse, every stimulus edge,
+matching sampled button states, actions inside their corresponding service
+pulses, and appropriate physical tap/hold latency. One explicitly retained
+setup edge may clear an action marker left high by the previous run.
+
+Initial observations with the internal button pull-up and the two-board wiring:
+
+- A source-only sequence passed with all eight physical edges: maximum global
+  fit residual 0.732 us and interval disagreement 1.383 us. This is a bounded
+  apparatus check, not a guarantee for every subsequent edge.
+- The loaded baseline passed all 8,000 observations, with zero physical/button
+  sample disagreements. Its two taps acted 10.784/10.709 ms after release;
+  its hold acted 611.030 ms after press. Audio padding was 650/1000, block size
+  16 at 48 kHz, with USB traffic requested at 500 packets/s. These clocks are
+  compared relatively, not calibrated absolute time references.
+- The next press-stall case passed software/replay/load checks and produced
+  only the expected recovery tap, but **failed physical source verification**:
+  Saleae recorded six transitions for four commanded edges. Two extra
+  transitions 5 ns and 6 ns apart occurred at the final release. An independent
+  binary decoder reproduces them. The campaign stopped at that failure.
+
+Complete wire records and all three continuous digital channels for the
+baseline and failed press-stall case are retained in
+`tests/measured/daisy/2026-10-18-auto-button/`. Tests replay the controls, re-run
+physical matching, reject missing/shifted scope edges, and require the failed
+source to remain rejected. No edges were filtered out to make it pass.
+
+The extra release transitions are not yet attributed to the circuit, receiver,
+or instrument. Slow edges/noise around a digital threshold are documented
+possibilities ([Saleae: what is a glitch](https://www.saleae.com/support/tutorials-learning/concepts/what-is-a-glitch));
+an initial triggered analog inspection measured a 3.906 us 10–90% release
+rise and about 2.70 V high plateau. That measurement adds a 10x analog probe
+and observes a different edge, so it does not establish what caused the
+original failure. Instrument loading is part of the fixture: the manufacturer's
+[digital probe specifications](https://www.saleae.com/products/digital-probe-single-ended)
+state input impedance of at least 200 kΩ and capacitance at most 3 pF.
+Adding a 4.7 kΩ resistor from the fixture's physical pin 38 (3V3 Digital) to
+physical pin 15 shortened a subsequently measured release to 0.658 us and
+raised the high plateau to about 3.17 V. Both analog observations use the same
+10x probe configuration, 500 MS/s actual acquisition and first threshold
+crossings relative to the measured low/high plateaus. They are separate edges,
+not repeated measurements of the original glitch. The original failing run
+remains failed. Keep the before/after circuit configurations distinct instead
+of treating improved apparatus as a software fix.
+
+![Measured release edges before and after adding the external pull-up](images/daisy-pullup-comparison.png)
+
+This 4.7 kΩ value is a measured bench configuration, not a universal pull-up
+recommendation. Select resistance for the actual input and probe loading,
+release timing, logic thresholds and output sink-current limits; inspect the
+physical edge when adding a second board or instrumentation.
+This does not show that software debounce rejected a 5 ns pulse: the 1 kHz
+service may never observe such a pulse. This fixed-delay batch does not
+establish phase-boundary qualification.
+
+With the external 4.7 kΩ pull-up, all ten complete automated cases passed:
+each of the five schedules ran twice, with requested generator offsets of
+0 and 500 us. The analog probe remained physically attached to the button node
+but its channel was disabled during the continuous digital captures.
+
+| Case | Repeats | Observed behavior in each repeat |
+| --- | --- | --- |
+| Baseline | 2 | Tap, hold, tap; no duplicate action on held release |
+| Press stall | 2 | Qualified gesture cancelled; fresh recovery tap accepted |
+| Hold stall | 2 | Pending hold cancelled; fresh recovery tap accepted |
+| Release stall | 2 | First tap cancelled; fresh recovery tap accepted |
+| ADC-only gap | 2 | Both taps accepted; first during invalid ADC, second after recovery |
+
+The records contain 79,850 control observations and all 44 commanded physical
+button edges, with no extra edges or sampled-button disagreements. All 150
+missed sample slots are accounted for by the six deliberate service stalls;
+there were no unrelated missed slots. Maximum source residual/interval
+disagreement was 0.272/0.453 us; maximum service residual/interval/width
+disagreement was 0.650/1.054/1.087 us, below the unchanged acceptance gates.
+Complete traces, generator records and digital channels are retained alongside
+the earlier failure as `4k7-*.json` and lossless compressed payloads. The
+regression suite replays and physically matches every case.
+
+This is a bounded result for one fixture at 650/1000 audio padding, 16-sample
+blocks at 48 kHz and requested 500 Hz USB traffic. The requested offsets did
+not lock the input to specific service phases. This is neither an exhaustive
+boundary sweep nor proof that the original glitch cannot recur. The earlier
+service-marker discrepancies remain a separate unresolved observation.
+
+### Configurable receiver fault timing
+
+Firmware advertising `fault_timing=1` accepts `--fault-delay-us 1..1000000`
+with the four button-triggered load scenarios. Zero or omission preserves the
+legacy schedules. Delays start at the receiver's first observed raw press
+(or raw release for `release-stall`), not the host command or the generator's
+requested edge time. The generator remains an independent controller.
+
+```sh
+python3 examples/daisy/button_campaign.py --port <fixture-port> \
+  --generator-port <generator-port> --manifest <fixture-manifest> \
+  --generator-manifest <generator-manifest> --replay build/daisy_replay \
+  --case press-stall --fault-delay-us 10000 --out <new-directory>
+```
+
+The same option is available on `load_capture.py capture`. The host checks the
+manifest and live capability before sending the new `T` command, then requires
+an exact `TIMEDFAULTLOADSTART` acknowledgement. The downloaded `FAULTTIMING`
+record is covered by both the control and load checksums and must match that
+acknowledgement. Ordinary runs reset the delay; older fixed-delay captures
+retain their original interpretation.
+
+The initial boundary plan uses 8, 10 and 12 ms from the observed press/release
+for the 10 ms debounce threshold, and 608, 610 and 612 ms from the raw press
+for the hold threshold (10 ms press qualification plus 600 ms hold). Requested
+offsets alone do not establish which side of a threshold actually ran. The
+reviewer reports the actual fault interval, surrounding service observations,
+integer-millisecond threshold, measured input phases and the expected action's
+exact observation index.
+
+Expected outcomes derive from raw input dwell intervals and missing service,
+without reading gesture flags or debouncer output. An unqualified press can
+restart its dwell after the pause and eventually emit a hold. A qualified
+pending gesture is cancelled; an action already emitted before the pause stays
+emitted. ADC-only gaps preserve button processing. All stimulus edges and
+service/action markers still require physical verification with unchanged
+source and service timing limits. For a requalified press, the hold deadline
+is measured from the new qualification, with the physical press/release still
+bounding the gesture.
+
+A first configurable run exposed a predecessor-check error: a sample at
+957033 us and fault entry at 958041 us are 1008 us apart but occupy adjacent
+scheduled slots. The original interval check rejected them. Slot accounting
+now requires a predecessor in the entry slot or its immediately preceding
+slot, then confines every skipped slot to the injection. A synthetic negative
+case removes an entire predecessor slot and must still fail. All physical
+source/service/action limits stay unchanged; the original rejection and raw
+capture are retained for reanalysis.
+
+Host tests exercise both sides and the exact nominal thresholds, old-firmware
+refusal, wrong acknowledgements, checksum/metadata tampering and replay.
+
+All **22 planned cases now have accepted captures**. The campaign stopped after
+15 accepted cases on a recurrent action-marker anomaly described below; the
+final seven used a reseated D2 probe and an analog probe moved from the button
+to the action marker. Accepted captures contain 175,525 observations and 90
+physical button edges, with zero sampled-button disagreements; all 475 missed
+slots belong to injected stalls.
+Complete wire records and all three digital timelines are retained under
+`tests/measured/daisy/2026-10-18-auto-button/timing-*`; regression tests replay
+and physically match each accepted capture. These counts describe accepted
+records, not a claim that all attempts passed.
+
+| Receiver-relative delay | Accepted observation |
+| --- | --- |
+| Press 8 / 10 ms, both requested offsets | Dwell restarts after the gap; the still-held button requalifies and emits a hold. A fresh recovery tap works. |
+| Press 12 ms, both offsets | The qualified gesture is cancelled; a fresh recovery tap works. |
+| Hold 608 / 610 ms, both offsets | The pending hold is cancelled; a fresh recovery tap works. |
+| Hold 612 ms, both offsets | The hold emitted before the gap remains; a fresh recovery tap works. |
+| Release 8 ms, both offsets; 10 ms, offset 0 | The pending tap is cancelled; a fresh recovery tap works. |
+| Release 10 ms, offset 500 us; 12 ms, both offsets | The first tap emitted before the gap remains; the recovery tap works. |
+| ADC-only gap 8 / 610 ms, offset 0 | Both taps work despite the knob-reading gap. |
+
+Baseline and legacy-delay smoke checks also passed. The two release-10 ms
+records deliberately pin different outcomes. At offset 500 us, release was
+serviced at 1061002 us, just after the nominal threshold of 1061000 us but before
+fault entry at 1061338 us. The earlier offset-0 record had no qualifying release
+service before its gap. These are observed orderings under two recorded setups,
+not proof that a requested generator offset uniquely determines the outcome.
+
+Maximum source fit/interval disagreement across accepted records was
+0.248/0.476 us; service fit/interval/width disagreement was
+0.631/1.050/1.121 us. The workload was 650/1000 audio padding, 16-sample blocks
+at 48 kHz and requested 500 Hz USB traffic. Requested generator offsets do not
+establish exact service-phase bins. In the accepted hold-610 capture the fault
+began 199 us after the nominal hold threshold, but the preceding service was
+before it: no eligible observation emitted a hold before the gap. Wall-clock
+threshold arithmetic alone would predict the wrong result.
+
+This is evidence from one fixture with clean generated edges and a 4.7k pull-up,
+not exhaustive phase coverage, mechanical-bounce or audio-quality qualification.
+
+The recording apparatus also needs a readiness contract. One scope setup failed
+with a USB initialization error before any control/generator run was requested.
+A later scope command reported successful completion but retained only 7,148
+service pulses for 7,975 firmware observations. Its full firmware and recorded
+digital channels are preserved as `incomplete-service-610000.*`; regression
+checks must reject it. The vendor log's “recording started” message preceded
+further smart-cable configuration and the beginning of retained data.
+
+The recorder now keeps a three-second idle warm-up capture on the same MSO
+connection, following [Saleae's startup guidance](https://discuss.saleae.com/t/python-api-wanting-setup-of-up-timed-capture-but-waiting-to-trigger/3575).
+It then waits for the **current command's** acknowledgement and a two-second
+settling margin. Those precautions do not prove readiness: every test still
+requires every service pulse, stimulus edge and action marker in the final
+record. The earlier incomplete recording remains unqualified, separately from
+its complete retry. No timing tolerance or edge filter was relaxed.
+
+A separate `press-stall` capture at requested delay 10 ms and generator offset
+500 us passed its firmware, source and service checks but recorded **46 extra
+action-marker transitions after the eight-second acquisition**. Its one
+expected action occurred in the correct service pulse. Complete raw records
+are retained as `unexpected-marker-010000-500.*`, and the physical reviewer
+must reject those outside transitions. A subsequent three-second warm-up and
+ten-second idle recording had no transitions on any channel, with the action
+marker steadily high. That clean interval does not identify the burst's cause;
+probe/contact, electrical and acquisition explanations remain unconfirmed.
+
+A later hold-610 ms capture at requested offset 500 us recorded **256 more
+post-acquisition action-marker transitions**, despite matching all 7,974
+firmware observations to service pulses. It is retained separately as
+`unexpected-marker-610000-500.*` and must also fail physical review. The operator
+reported no known wiring movement during the earlier occurrence. Both failures
+and the incomplete scope window remain regression cases. No edges are discarded
+to obtain a pass.
+
+After the D2 connection was reseated and the 10x analog probe moved from the
+button to the action marker, the hold-610 repeat and six remaining cases passed
+complete digital review with continuous 1 MHz voltage acquisition. The seven
+records had no extra marker transitions. In the voltage summaries beginning
+approximately 10 ms after final service, every high-state sample stayed above
+1.65 V (combined sampled range 2.989–3.426 V), and every low-state sample stayed
+below it (−0.167–0.201 V). Full native analog waveforms are retained privately;
+public records contain derived extrema/window summaries and native-file hashes.
+The complete digital timelines and firmware records are published in full.
+
+This does **not identify the earlier bursts' cause**: contacts and probe loading
+changed together, and 1 MHz sampled extrema cannot exclude shorter pulses.
+These voltage readings are not calibrated accuracy claims. Further root-cause
+work needs a recurrence measured with both voltage and digital signals, or a
+controlled probe/channel comparison; clean repeats alone are insufficient.

@@ -1,0 +1,83 @@
+{
+  "schema": 1,
+  "evidence": "Complete stationary aggregate soak with independent digital service pulses",
+  "acquired_utc": "2026-10-18T18:52:58.222850+00:00",
+  "transformation": "Original complete wire bytes, gzip mtime=0. Scope publishes derived counts/extrema/clock scales only. Metadata uses an explicit allowlist.",
+  "firmware_commit": "d30437a42a71796a8cb912d355df0743b6273e6e",
+  "firmware_build_id": "0085c1d651d7c2e945e6a648",
+  "firmware_binary_sha256": "39dc56b2f8db50ac2fa25bf5b4ed982fea8d1516e191014ecf9a883538abecd8",
+  "raw_sha256": "4fae994e983136cd8670ccddb782850b11ac9c36bfeecc30e971c8b47011f5bf",
+  "compressed_sha256": "a97cf060e02d5e5116a5aa6290a8c14528315199a9687dd9805ed12c6fd64690",
+  "configuration": {
+    "token": 1475005946,
+    "mode": 1,
+    "duration_ms": 1800000,
+    "target_milli": 250,
+    "audio_permille": 650,
+    "block_size": 16,
+    "usb_hz": 500,
+    "startup_held": 0
+  },
+  "counters": {
+    "samples": 1800000,
+    "missed": 0,
+    "adc_failures": 0,
+    "buffer_overflow": 0,
+    "rx_dropped": 0,
+    "elapsed_us": 1800000158,
+    "callbacks": 5401612,
+    "max_callback_ticks": 52030,
+    "max_callback_interval_ticks": 81284,
+    "callback_over_budget": 0,
+    "late_callback_intervals": 0,
+    "bad_callback_size": 0,
+    "usb_packets": 814490,
+    "usb_bytes": 52127360,
+    "usb_malformed": 0,
+    "usb_sequence_errors": 0,
+    "callback_period_ticks": 80000,
+    "timer_hz": 240000000
+  },
+  "host_writer": {
+    "packets": 814490,
+    "skipped_slots": 85185,
+    "max_lateness_s": 0.045670789666473866
+  },
+  "quality_status": "pass",
+  "quality_failures": [],
+  "scope_status": "pass",
+  "validation_status": "pass",
+  "fixture": {
+    "board": "Daisy Seed3",
+    "pot_ohms": 100000,
+    "capacitor_nf": 0.0,
+    "service_hz": 1000,
+    "scope_api": "saleae-mso-api 0.5.8",
+    "analog_captured": false
+  },
+  "scope": {
+    "samples": 1800000,
+    "seconds": 1800,
+    "clock_scale_ppm_min": 38.838440262534135,
+    "clock_scale_ppm_max": 41.134064462378106,
+    "max_interval_error_us": 0.954581508436263,
+    "max_work_width_error_us": 0.8547973296168152,
+    "max_service_interval_us": 1231.5209999087529,
+    "max_service_width_us": 572.5600001369457,
+    "mismatched_buckets": [],
+    "representation": "All physical service pulses; per-second counts and extrema checked, no individual sample replay",
+    "button_released_throughout": true,
+    "action_edges": 0
+  },
+  "mismatch_excerpt": null,
+  "native_scope_file_sha256": [
+    "c6e895d7de49e392f4684106667e6cd0156c7aa11b30a472e1202c191efdc56c",
+    "db9f21d9a089e0d0270b6713a5e596bafdeb24f5cdc730aaad00d4fddc61652d",
+    "62c9c8491084a6cac80de3f4e733af2ed22e876b59021b3d34c330e8b1355848",
+    "1f101527da5895f560ed55addde37315c6da2a4609f668cd2d1f082a53454872",
+    "1dd23af82e106956ebfeaae26959bb6c07a57872c3e3b43a6b92a9aaa94d5ace",
+    "40bebef35a2d39f929d9fd9e7047c2e89f31cffe01f09890f2cac5fb22bc71ed",
+    "716f776b4487fe9ab3146d0dbeea9aabacb32c20d23f2d4a80075f81243b4d65"
+  ],
+  "limits": "One fixture and declared stationary workload. Aggregates do not retain individual observations or prove pickup/gesture behavior during movement. Digital-only scope; analog preflights are separate. Synthetic callback padding, not production DSP or audio-quality qualification. Host pacing is best effort; reported quality failures remain failures."
+}

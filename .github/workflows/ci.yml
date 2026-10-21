@@ -18,7 +18,7 @@ jobs:
     runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
-      - run: cmake -S . -B build -DCMAKE_BUILD_TYPE=Release -DEURORACK_PATTERNS_SANITIZERS=${{ matrix.sanitize }}
+      - run: cmake -S . -B build -DCMAKE_BUILD_TYPE=Release -DEURORACK_PATTERNS_SANITIZERS=${{ matrix.sanitize }} -DEURORACK_PATTERNS_BUILD_BENCH_TESTS=ON
       - run: cmake --build build --config Release --parallel
       - run: ctest --test-dir build -C Release --output-on-failure
       - run: cmake --install build --config Release --prefix "${{ github.workspace }}/installed"
@@ -60,6 +60,8 @@ jobs:
           git -C "$RUNNER_TEMP/libDaisy" submodule update --init --depth 1 Drivers/CMSIS-DSP Drivers/CMSIS_5 Drivers/CMSIS-Device/ST/STM32H7xx Drivers/STM32H7xx_HAL_Driver Middlewares/ST/STM32_USB_Device_Library
           python3 examples/daisy/build.py --libdaisy "$RUNNER_TEMP/libDaisy" --out build-daisy
           arm-none-eabi-size build-daisy/patterns_daisy.elf
+          python3 examples/daisy/build.py --libdaisy "$RUNNER_TEMP/libDaisy" --out build-generator --role pulse-generator
+          arm-none-eabi-size build-generator/patterns_pulse_generator.elf
   public-content:
     runs-on: ubuntu-latest
     steps:

@@ -12,32 +12,92 @@ import gzip
 import hashlib
 import importlib.util
 import json
+import math
 from pathlib import Path
 import re
+import sys
 from daisy_scope import match_service
 
 ROOT = Path(__file__).resolve().parents[1]
 spec = importlib.util.spec_from_file_location('capture', ROOT / 'examples/daisy/capture.py')
 capture = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(capture)
+sys.path.insert(0, str(ROOT / 'examples/daisy'))
+import load_capture
 
-def export(source, prefix, startup_kind=None):
-    import numpy as np
-    from saleae.mso_api.capture import Capture, DigitalData, AnalogData
-    data = (source / 'usb/raw.txt').read_bytes()
-    info, run, rows = capture.parse(data)
+def check_identity(info, load=False):
+    assert info['board'] == 'seed3' and info['protocol'] in (1, 2) and info['ready'] is True
     allowed = {'protocol', 'build_id', 'board', 'ready', 'cpu_hz', 'timer_hz', 'adc_hz',
                'mcu_revision', 'sample_cycles_x2', 'oversampling', 'period_us', 'max_records'}
     if info['protocol'] == 2:
         allowed |= {'startup_available', 'startup_duration_ms'}
+    if load:
+        allowed.add('load_protocol')
+        if 'timing_diagnostics' in info:
+            assert type(info['timing_diagnostics']) is int and info['timing_diagnostics'] == 1
+            allowed.add('timing_diagnostics')
+        if 'load_faults' in info:
+            assert type(info['load_faults']) is int and info['load_faults'] == 1
+            allowed.add('load_faults')
+        if 'fault_timing' in info:
+            assert type(info['fault_timing']) is int and info['fault_timing'] == 1
+            allowed.add('fault_timing')
     assert set(info) == allowed, 'Review new identity fields before publishing'
     assert re.fullmatch('[0-9a-f]{24}', info['build_id'])
     assert all(type(v) in (int, bool) for k, v in info.items() if k not in ('build_id', 'board'))
+
+
+def public_identity(data, load=False):
+    # Keep the original wire bytes, so reject duplicate fields that a normal
+    # dict parser would discard before the public-data allowlist sees them.
+    def unique(pairs):
+        result = {}
+        for key, value in pairs:
+            assert key not in result, 'Duplicate identity field'
+            result[key] = value
+        return result
+    line = data.split(b'\n', 1)[0]
+    assert line.startswith(b'INFO,')
+    info = json.loads(line[5:], object_pairs_hook=unique)
+    check_identity(info, load)
+    return info
+
+
+def public_writer(writer):
+    assert writer['error'] is None, 'Do not publish arbitrary host error text'
+    assert all(type(writer[k]) is int and writer[k] >= 0 for k in ('packets', 'skipped_slots'))
+    assert (type(writer['max_lateness_s']) in (int, float)
+            and math.isfinite(writer['max_lateness_s']) and writer['max_lateness_s'] >= 0)
+    return {k: writer[k] for k in ('packets', 'skipped_slots', 'max_lateness_s')}
+
+
+def export(source, prefix, startup_kind=None, load=False, pot_ohms=None, capacitor_nf=None, expected_status='pass', manual_load=False):
+    import numpy as np
+    from saleae.mso_api.capture import Capture, DigitalData, AnalogData
+    data = (source / 'usb/raw.txt').read_bytes()
+    metadata = json.loads((source / 'usb/metadata.json').read_text())
+    workload = None
+    control_data = data
+    assert not manual_load or load, '--manual-load requires --load'
+    if load:
+        workload, control_data, _ = load_capture.parse(data)
+        assert control_data is not None, 'Aggregate soaks have no individual scope-matched control trace'
+        assert metadata['status'] == 'complete'
+        assert metadata['stationary'] is (not manual_load), 'Review moving controls explicitly with --manual-load'
+        load_capture.assess(workload, metadata['stationary'], metadata['writer'])
+        assert workload['checks']['status'] == expected_status, 'Unexpected quality outcome; review before publishing'
+        assert pot_ohms == 100000 and capacitor_nf == 0, 'Declare the recorded reference fixture explicitly'
+    else:
+        assert expected_status == 'pass', 'Expected failures are supported only for load captures'
+    _, run, rows = capture.parse(control_data)
+    info = public_identity(data, load)
+    if load and not manual_load:
+        assert all(not r['pressed'] and not r['gesture'] for r in rows), 'Expected released button throughout'
     assert all(run[k] == 0 for k in ('adc_failures', 'rx_dropped', 'buffer_overflow'))
     assert (startup_kind in ('reset', 'usb-power-cycle')) == (run['scenario'] == 12)
     assert run.get('stimulus_status', 'not_applicable') in ('completed', 'not_applicable')
-    metadata = json.loads((source / 'usb/metadata.json').read_text())
     build = metadata['build']
+    assert build['build_id'] == info['build_id'], 'Manifest and recorded build differ'
     assert re.fullmatch('[0-9a-f]{40}', build['source_commit'])
     assert re.fullmatch('[0-9a-f]{64}', build['artifacts_sha256']['patterns_daisy.bin'])
     native = Capture.from_dir(source / 'scope')
@@ -116,8 +176,34 @@ def export(source, prefix, startup_kind=None):
         native_scope_file_sha256=[hashlib.sha256(p.read_bytes()).hexdigest()
                                  for p in sorted((source/'scope').rglob('*')) if p.is_file()],
         limits='One fixture and bounded manual runs. Startup covers application sampling after peripheral initialization. No calibrated voltage, rail-rise/brownout, universal threshold, audio/IRQ-load or jack-detection claim. Native originals retained privately; published scope data are derived subsets.')
-    assert metadata['declared_fixture']['pot_ohms'] == 100000
-    assert metadata['declared_fixture']['capacitor_nf'] == 0
+    if workload is not None:
+        evidence['evidence'] = ('Measured manual controls' if manual_load else 'Measured stationary controls') + ' under declared audio-DMA and inbound USB load'
+        evidence['load'] = dict(configuration=workload['configuration'], counters=workload['counters'],
+                               host_writer=public_writer(metadata['writer']),
+                               quality_status=workload['checks']['status'], quality_failures=workload['checks']['failures'])
+        if manual_load:
+            evidence['load']['stationary'] = False
+            evidence['load']['behavior_review'] = 'Export verifies complete physical/firmware coverage, not the intended manual sequence. Case-specific behavioral assertions remain required.'
+            # Collect() clears the action marker before the first service edge.
+            # A previously latched high can therefore make one setup falling
+            # edge. Preserve it; reject extra edges or any transition after run.
+            outside = evidence['scope']['outside_application_action_edges_s']
+            evidence['scope']['action_initial_high'] = bool(gesture.initial_state)
+            assert len(outside) == int(bool(gesture.initial_state))
+            assert all(t < 0 for t in outside), 'Unexpected action edge after acquisition'
+        for key, values in [('service_interval_us', np.diff(rises) * 1e6),
+                            ('service_width_us', (np.asarray(falls) - np.asarray(rises)) * 1e6)]:
+            evidence['scope'][key] = dict(min=float(np.min(values)), max=float(np.max(values)),
+                                         median=float(np.median(values)), p99=float(np.percentile(values, 99)))
+        evidence['limits'] = ('One fixture and bounded stationary run. Callback timing excludes SDK conversion and IRQ overhead; '
+                              'padding is synthetic occupancy, not production DSP or audio-quality qualification. '
+                              'Host USB pacing is best effort. No calibrated voltage, rail/brownout, jack-detection or universal timing claim. '
+                              'Native originals retained privately; published scope data are derived subsets. Declared quality failures remain failures.')
+        if manual_load:
+            evidence['limits'] = evidence['limits'].replace('bounded stationary run', 'bounded manual run')
+    else:
+        assert metadata['declared_fixture']['pot_ohms'] == 100000
+        assert metadata['declared_fixture']['capacitor_nf'] == 0
     prefix.parent.mkdir(parents=True, exist_ok=True)
     raw_path.write_bytes(compressed)
     meta_path.write_text(json.dumps(evidence, indent=2) + '\n')
@@ -139,5 +225,10 @@ if __name__ == '__main__':
     parser.add_argument('--capture', type=Path, required=True)
     parser.add_argument('--out-prefix', type=Path, required=True)
     parser.add_argument('--startup-kind', choices=('reset', 'usb-power-cycle'))
+    parser.add_argument('--load', action='store_true', help='Export a complete load-protocol trace, not a soak')
+    parser.add_argument('--manual-load', action='store_true', help='Explicitly review nonstationary controls with --load; does not infer the intended sequence')
+    parser.add_argument('--pot-ohms', type=int, help='Required explicit fixture declaration for load traces')
+    parser.add_argument('--capacitor-nf', type=float, help='Required explicit fixture declaration for load traces')
+    parser.add_argument('--expected-status', choices=('pass', 'fail'), default='pass')
     args = parser.parse_args()
-    export(args.capture, args.out_prefix, args.startup_kind)
+    export(args.capture, args.out_prefix, args.startup_kind, args.load, args.pot_ohms, args.capacitor_nf, args.expected_status, args.manual_load)

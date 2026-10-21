@@ -1,0 +1,59 @@
+{
+  "schema": 1,
+  "case": "hold-stall",
+  "status": "failed incomplete scope window",
+  "fault_delay_us": 610000,
+  "acquired_utc": "2026-10-18T21:40:36.802214+00:00",
+  "times_us": [
+    1000000,
+    3000000,
+    4000000,
+    4100000
+  ],
+  "requested_input_phase_us": 0,
+  "fixture_build": {
+    "source_commit": "56ae3fc38aac6efb1551cd1b0c93c289b2cb28f2",
+    "build_id": "683afc5d1c2cfe67e4496814",
+    "artifacts_sha256": {
+      "patterns_daisy.bin": "18593bc39c15ef44772e0e4cee26dc1d50e22fa462635aa965d471c21879e2b2",
+      "patterns_daisy.elf": "a330ae190e486f82c0cda347d2f430c89c23385860a215a4d662d3df6c258968",
+      "patterns_daisy.map": "b39fba602f67e2a6c76956d23ffeeddae79cc18c54f30f1e848b98feaf66ab71"
+    }
+  },
+  "generator_build": {
+    "source_commit": "3dab3a483c103928898a13bf91fd1844e23790d2",
+    "build_id": "4e68efce89b64d686cf11c63",
+    "artifacts_sha256": {
+      "patterns_pulse_generator.bin": "2f132cc4c0bd65dbff4430799ab20bf2386f7520122ceb66b85f4609de89693c",
+      "patterns_pulse_generator.elf": "e9ca1e466b9aec3e0f92d7c507c5edb01e2a1c7289d1fad54456cb0ceaa8473e",
+      "patterns_pulse_generator.map": "f1d95c80ee485b09e0bcda0c11aaf52b9b5495cdc9e0305037a7e8a26f2e6adf"
+    }
+  },
+  "fixture_configuration": {
+    "external_pullup_ohms": 4700,
+    "external_pullup": "fixture physical38 (3V3D) to physical15 (button)",
+    "internal_pullup": true,
+    "analog_probe": "10x attached to button physical15, ground40; channel disabled in this digital-only acquisition",
+    "generator": "Independent Seed3 open-drain physical1 to fixture15; shared physical40 ground; separate USB supplies"
+  },
+  "writer": {
+    "packets": 3289,
+    "skipped_slots": 386,
+    "max_lateness_s": 0.016864262986928225
+  },
+  "raw_sha256": "c6791f3707f655bcee932bacf92be9e6db6d5df3477aac8c1d4fe0729952d63f",
+  "generator_raw_sha256": "fb11e21db8e4c27ee9adb6ac02a00b3b2530b9b91dded0d24579c7deb0f932ea",
+  "original_digital_sha256": {
+    "button": "91fd6ce1bfe052165592b4f7948874e459147e732f40894c80f1db8b2d44c021",
+    "service": "0aad74a132f2f536e29f41ccc3d9293683aa8c7633c37e7ca215f7815ca20874",
+    "gesture": "50d7b049266ba6d3c939b823761918e520024dc68e3e28f15a433d5c384b9ec8"
+  },
+  "firmware_samples": 7975,
+  "physical_service_pulses": 7148,
+  "failure": "Scope misses the beginning of the acquisition: 827 service pulses absent despite a successful vendor capture result. Full-window physical review rejects this case.",
+  "transformation": "Complete firmware and generator wire bytes losslessly gzipped. All three complete recorded digital channels retained as initial level and original relative floating-point timestamps. No reconstruction, trimming or filtering. Device IDs, host paths and vendor logs omitted.",
+  "limitation": "Complete firmware trace and physical button edges do not qualify a recording missing service coverage. Subsequent retry is a separate acquisition.",
+  "fixture_compressed_sha256": "4234ce83aba9a4cd2f304a9c149422a599c9c4471a452669c3e2d09a1ed88dc4",
+  "generator_compressed_sha256": "6e0e24d54d723aaba911feb02f7650956c31b341d630a5d853495c3c712aeb0b",
+  "channels_compressed_sha256": "94c934d80ed63cbe309e87cb766db882fb23b8375f36b9da5fa6d72c3f8ba80f"
+}

@@ -4,6 +4,15 @@
 
 Use [edge capture](inputs.md) for musical clocks and triggers. A button filter can deliberately reject a pulse that a musical input must retain. There is no universal debounce duration in this library. See [A06](catalog.md#a06-keep-button-debounce-out-of-high-rate-clock-paths).
 
+Restarting qualification does not require a physical release. For example, a
+press observed for 5 ms, interrupted by invalid acquisition, and then observed
+held for another 10 ms can qualify with a 10 ms debounce duration. Cancelling a
+gesture role during the gap cannot cancel a role that has not been created yet.
+If an application requires every interrupted press to be discarded, it must
+also wait for a fresh qualified release before accepting another press. The
+[Daisy host fault campaign](../examples/daisy/fault_sweep.cpp) retains this
+pending-press counterexample; release-to-rearm remains application policy.
+
 `LatestRequest<T>` in [transitions.h](../include/eurorack_patterns/transitions.h) stores at most one pending destination. Repeated `Request` calls replace it. `Peek` observes without consuming; `Take` consumes once and leaves its output unchanged when empty. `Cancel` removes pending work and does not cancel a transition already taken by the application. This supports selecting the newest preset after a busy transition, or committing an edit at a musical boundary. The application chooses that boundary and owns the actual audio transition. See catalog F02 and D06.
 
 Use a small trivially copyable, trivially default-constructible and trivially copy-assignable ID or value as `T`. The class does not allocate, but copying the chosen type still costs its size. Pass IDs rather than owning pointers; resource lifetime remains the caller's responsibility. These classes require a single owner or external synchronization. They do not synchronize an interrupt and a foreground thread.

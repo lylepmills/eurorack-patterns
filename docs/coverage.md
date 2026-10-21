@@ -22,6 +22,12 @@ cancellation and startup-held suppression in the example adapter. The public
 corpus contains 15 complete runs across both passes. These checks do not promote
 jack detection, audio/IRQ timing, brownout behavior or other boards to measured status.
 
+The separate [audio/USB load measurements](validation.md#audiousb-load-and-continuous-soak)
+add stationary comparisons, isolated controls, taps and holds during motion, and
+quick reversals on that fixture. Complete replay is paired with physical timing
+and stimulus checks. Synthetic callback padding is not production DSP or audio
+quality qualification; an earlier long-soak timing disagreement remains open.
+
 See [research scope and unresolved reports](research-pass-2.md) and [executed checks versus hardware evidence](validation.md). Upstream tests cited in the catalog were read, not executed.
 
 ## Integration examples

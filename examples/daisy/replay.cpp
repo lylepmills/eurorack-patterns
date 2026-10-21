@@ -29,18 +29,29 @@ static bool Close(int32_t a, int64_t b) { return std::llabs(int64_t(a) - b) <= 1
 static int Replay(const char* path) {
   std::ifstream file(path, std::ios::binary); if (!file) return 1;
   std::string line; bench::Controls controls; bool started = false, ended = false;
-  uint32_t count = 0, hash = 2166136261u; int64_t token = -1;
+  uint32_t count = 0, hash = 2166136261u; int64_t token = -1, scenario = -1;
+  bool stimulus_seen = false, timing_seen = false, columns_seen = false;
   std::vector<int64_t> n;
   while (std::getline(file, line)) {
     if (line.compare(0, 6, "START,") == 0) {
       if (started || !Numbers(line.substr(6), n) || n.size() != 5 ||
           n[3] < 0 || n[3] > 1000 || n[4] < 0 || n[4] > 1) return 1;
-      controls.Reset(uint32_t(n[3]), n[4] != 0); token = n[0]; started = true;
+      controls.Reset(uint32_t(n[3]), n[4] != 0); token = n[0]; scenario = n[1]; started = true;
     } else if (line.compare(0, 9, "STIMULUS,") == 0) {
-      if (!started || count || ended) return 1;
+      if (!started || stimulus_seen || columns_seen || count || ended) return 1;
+      stimulus_seen = true;
       line += '\n'; hash = bench::Hash(hash, line.data(), line.size());
+    } else if (line.compare(0, 12, "FAULTTIMING,") == 0) {
+      if (!started || !stimulus_seen || timing_seen || columns_seen || count || ended ||
+          scenario < bench::kPressStall || scenario > bench::kPressAdcGap ||
+          !Numbers(line.substr(12), n) || n.size() != 1 || n[0] < 1 || n[0] > 1000000) return 1;
+      timing_seen = true;
+      line += '\n'; hash = bench::Hash(hash, line.data(), line.size());
+    } else if (line.compare(0, 8, "COLUMNS,") == 0) {
+      if (!started || columns_seen || count || ended) return 1;
+      columns_seen = true;
     } else if (line.compare(0, 2, "D,") == 0) {
-      if (!started || ended || !Numbers(line.substr(2), n) || n.size() != 19 ||
+      if (!started || !columns_seen || ended || !Numbers(line.substr(2), n) || n.size() != 19 ||
           n[0] != count || n[1] < 0 || n[1] >= bench::kMaxDurationMs * 1000 || n[4] < 0 || n[4] > 65535 ||
           n[8] < -1 || n[8] > 1000) return 1;
       const auto r = controls.Step(uint32_t(n[1]), uint16_t(n[4]), n[5] != 0,
@@ -62,17 +73,18 @@ static int Replay(const char* path) {
   std::cout << "PASS: " << count << " samples replayed through the C++ adapter; not independent hardware validation\n";
   return 0;
 }
-static int Synthetic(unsigned scenario, bool force_v2 = false, bool long_window = false) {
-  if (scenario > bench::kStartup) return 1;
+static int Synthetic(unsigned scenario, bool force_v2 = false, bool long_window = false, uint32_t fault_delay_us = 0) {
+  if (scenario > bench::kStartup || (fault_delay_us &&
+      (scenario < bench::kPressStall || scenario > bench::kPressAdcGap || fault_delay_us > 1000000))) return 1;
   // Generated stimulus. Pipeline tests only; never physical evidence.
   const bool version2 = force_v2 || long_window || scenario >= bench::kPressStall;
   const bool startup = scenario == bench::kStartup;
   const uint32_t duration = startup ? bench::kStartupDurationMs : long_window ? bench::kMaxDurationMs : 6000;
-  std::printf("INFO,{\"protocol\":%u,\"build_id\":\"synthetic\",\"board\":\"seed3\",\"ready\":true,\"period_us\":1000,\"max_records\":%u,\"sample_cycles_x2\":1621,\"oversampling\":1,\"startup_available\":%s}\n",
+  std::printf("INFO,{\"protocol\":%u,\"build_id\":\"synthetic\",\"board\":\"seed3\",\"ready\":true,\"period_us\":1000,\"max_records\":%u,\"sample_cycles_x2\":1621,\"oversampling\":1,\"startup_available\":%s,\"fault_timing\":1}\n",
               version2 ? 2u : 1u, long_window ? unsigned(bench::kMaxRecords) : 30000u, startup ? "true" : "false");
   std::printf("START,42,%u,%u,250,%u\n", scenario, duration, unsigned(startup));
   bench::Controls controls; controls.Reset(250, startup);
-  bench::Experiment experiment(scenario, startup);
+  bench::Experiment experiment(scenario, startup, fault_delay_us);
   bench::Schedule schedule;
   uint32_t seq = 0, missed = 0;
   std::vector<bench::Record> records;
@@ -107,6 +119,10 @@ static int Synthetic(unsigned scenario, bool force_v2 = false, bool long_window 
     const int size = std::snprintf(line, sizeof(line), "STIMULUS,%d,%d,%d\n", int(s.trigger), int(s.begin), int(s.end));
     hash = bench::Hash(hash, line, size_t(size)); std::fputs(line, stdout);
   }
+  if (fault_delay_us) {
+    const int size = std::snprintf(line, sizeof(line), "FAULTTIMING,%u\n", unsigned(fault_delay_us));
+    hash = bench::Hash(hash, line, size_t(size)); std::fputs(line, stdout);
+  }
   std::printf("COLUMNS,%s\n", bench::kColumns);
   for (const auto& r : records) {
     const int size = bench::FormatRecord(line, sizeof(line), r);
@@ -117,6 +133,14 @@ static int Synthetic(unsigned scenario, bool force_v2 = false, bool long_window 
 }
 
 int main(int argc, char** argv) {
+  if (argc == 4 && std::strcmp(argv[1], "--synthetic-timed") == 0) {
+#ifdef _WIN32
+    if (_setmode(_fileno(stdout), _O_BINARY) == -1) return 1;
+#endif
+    std::vector<int64_t> delay;
+    if (!Numbers(argv[3], delay) || delay.size() != 1 || delay[0] < 1 || delay[0] > 1000000) return 1;
+    return Synthetic(unsigned(std::atoi(argv[2])), true, false, uint32_t(delay[0]));
+  }
   if (argc == 3 && (std::strcmp(argv[1], "--synthetic") == 0 || std::strcmp(argv[1], "--synthetic-v2") == 0 ||
                     std::strcmp(argv[1], "--synthetic-long") == 0)) {
 #ifdef _WIN32

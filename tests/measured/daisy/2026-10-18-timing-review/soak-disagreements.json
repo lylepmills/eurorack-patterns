@@ -1,0 +1,24 @@
+{
+  "schema": 1,
+  "evidence": "Declared contiguous 60-second timing excerpt covering all nine failed buckets of a 30-minute soak",
+  "source_wire_sha256": "601f4249a9845d64c219018e83606411c2943f86d10f262094caba1fde90a0c4",
+  "source_digital_sha256": "83fa479cc1b48ac6bd0f65a023f11b82419c168cb3454d30aeca4ed4acf96bed",
+  "data_sha256": "6cd8df007b5a6fe7d5682ab077abb024ac1c8ec64de14a02d03464d7ba5b28c9",
+  "compressed_sha256": "bcf650c51cbc1a29dcbe41ac7185842f1307f18df726ff4a622d1ece6f882758",
+  "first_original_second": 1610,
+  "seconds": 60,
+  "service_pulses": 60000,
+  "failed_original_seconds": [
+    1611,
+    1621,
+    1622,
+    1624,
+    1630,
+    1640,
+    1649,
+    1659,
+    1668
+  ],
+  "transformation": "Every service edge in original seconds 1610 through 1669 retained as integer nanoseconds relative to the first selected rise, rounded at the recorded 1 GHz resolution. No other seconds included; no interpolation or fit correction. Firmware aggregates come from the separately retained complete original wire trace.",
+  "limits": "Declared excerpt, not full physical coverage or a behavioral replay. The interval from the preceding excluded pulse into the first selected pulse is unavailable. Aggregate maxima cannot identify the corresponding individual firmware observations."
+}

@@ -1,0 +1,715 @@
+{
+  "schema": 2,
+  "evidence": "Complete stationary diagnostic soak with selected same-sample physical timing witnesses",
+  "acquired_utc": "2026-10-17T17:36:38.033851+00:00",
+  "transformation": "Original complete wire bytes, gzip mtime=0. Scope publishes derived counts/extrema/clock scales only. Metadata uses an explicit allowlist. Diagnostic scope subset is explicitly declared; every retained firmware witness and predecessor is included.",
+  "firmware_commit": "60f7b29074a519ba282add3a5f2096ea137ede84",
+  "firmware_build_id": "cda10ad946e44dd4772078fb",
+  "firmware_binary_sha256": "887f7818a601dac620304c5180d99231c3b197c0fe8fcffec2754e5826504fa5",
+  "raw_sha256": "ede41ff72d034d35782ad43e0f254eb5dbe257bbe2f90cfba153496e3d5d8114",
+  "compressed_sha256": "c168f81635be85f31c0114ccc1be791617533465db2ab15e8cf271e76c75a144",
+  "configuration": {
+    "token": 3268927044,
+    "mode": 2,
+    "duration_ms": 10000,
+    "target_milli": 250,
+    "audio_permille": -1,
+    "block_size": 16,
+    "usb_hz": 0,
+    "startup_held": 0
+  },
+  "counters": {
+    "samples": 10000,
+    "missed": 0,
+    "adc_failures": 0,
+    "buffer_overflow": 0,
+    "rx_dropped": 0,
+    "elapsed_us": 10000000,
+    "callbacks": 0,
+    "max_callback_ticks": 0,
+    "max_callback_interval_ticks": 0,
+    "callback_over_budget": 0,
+    "late_callback_intervals": 0,
+    "bad_callback_size": 0,
+    "usb_packets": 0,
+    "usb_bytes": 0,
+    "usb_malformed": 0,
+    "usb_sequence_errors": 0,
+    "callback_period_ticks": 0,
+    "timer_hz": 240000000
+  },
+  "host_writer": {
+    "packets": 0,
+    "skipped_slots": 0,
+    "max_lateness_s": 0.0
+  },
+  "quality_status": "pass",
+  "quality_failures": [],
+  "scope_status": "pass",
+  "validation_status": "pass",
+  "fixture": {
+    "board": "Daisy Seed3",
+    "pot_ohms": 100000,
+    "capacitor_nf": 0,
+    "service_hz": 1000,
+    "scope_api": "saleae-mso-api 0.5.8",
+    "analog_captured": false
+  },
+  "scope": {
+    "samples": 10000,
+    "seconds": 10,
+    "clock_scale_ppm_min": 40.545545545445094,
+    "clock_scale_ppm_max": 41.17221338573174,
+    "max_interval_error_us": 0.3250817980743932,
+    "max_work_width_error_us": 0.5177464127854705,
+    "max_service_interval_us": 1000.3660000004188,
+    "max_service_width_us": 140.80900000013054,
+    "mismatched_buckets": [],
+    "representation": "All physical service pulses; per-second counts and extrema checked, no individual sample replay",
+    "button_released_throughout": true,
+    "action_edges": 0
+  },
+  "mismatch_excerpt": null,
+  "native_scope_file_sha256": [
+    "c732ce2520db6bee4c1bdadc2da58e60408306d5c6c7781b48f918e25256bc56",
+    "133b4c6c84a3ffdd694277a0c99424e8e97255ee882aeb708e3cc35e0a1fe441",
+    "205a4e270e3e46fcae12394aca03c55efb9bfc57e4a8a949aa5b368dc22f1d72",
+    "aa729f6223ba57e847a388875c84b18806d290bb1c9b1142af97a5191518c9ea",
+    "68740f28ea5f656dc5b170827b008c3f3f7be2e4bf36874d87a265cf4fde0ffc",
+    "349928d036f27ef6491e2f720fc6da388b3301571e70d2525d826b0bf3f4fc24",
+    "c497965818a8f7c798ff2108292f858a5d88b8e38b429a2f769a7c808a122b32"
+  ],
+  "limits": "One fixture and declared stationary workload. Aggregates with selected witnesses do not retain every individual observation or prove pickup/gesture behavior during movement. Digital-only scope; analog preflights are separate. Synthetic callback padding, not production DSP or audio-quality qualification. Host pacing is best effort; reported quality failures remain failures. CPU GPIO brackets are diagnostic observations, not pad-transition guarantees. Selected witnesses are not a full trace. A new passing run does not resolve an earlier unexplained failure.",
+  "timing": {
+    "selection": "Every retained timing witness and predecessor. Original sample sequence numbers; scope times subtract the first acquisition rise. Other physical pulses are omitted, not reconstructed.",
+    "service_pulses": [
+      [
+        0,
+        0.0,
+        0.00014080900000013052
+      ],
+      [
+        1,
+        0.0009994610000001458,
+        0.00113994900000014
+      ],
+      [
+        2,
+        0.0019993270000000507,
+        0.002139698000000134
+      ],
+      [
+        71,
+        0.07100226600000026,
+        0.07114269500000003
+      ],
+      [
+        72,
+        0.07200235600000005,
+        0.07214281099999997
+      ],
+      [
+        304,
+        0.3040116030000002,
+        0.3041520660000001
+      ],
+      [
+        305,
+        0.3050119520000001,
+        0.30515239000000016
+      ],
+      [
+        328,
+        0.32801269700000013,
+        0.32815309400000015
+      ],
+      [
+        329,
+        0.32901287200000007,
+        0.329153276
+      ],
+      [
+        999,
+        0.9990401310000001,
+        0.9991805940000003
+      ],
+      [
+        1000,
+        1.0000399880000002,
+        1.0001806600000003
+      ],
+      [
+        1008,
+        1.0080403060000003,
+        1.0081807610000002
+      ],
+      [
+        1009,
+        1.009040622,
+        1.009181051
+      ],
+      [
+        1019,
+        1.0190410120000002,
+        1.019181459
+      ],
+      [
+        1020,
+        1.0200410610000001,
+        1.020181516
+      ],
+      [
+        1806,
+        1.806072768,
+        1.806213198
+      ],
+      [
+        1807,
+        1.8070731000000002,
+        1.807213522
+      ],
+      [
+        1999,
+        1.9990806930000002,
+        1.9992211229999999
+      ],
+      [
+        2000,
+        2.0000809090000002,
+        2.00022133
+      ],
+      [
+        2006,
+        2.00608117,
+        2.006221624
+      ],
+      [
+        2007,
+        2.007081252,
+        2.007221673
+      ],
+      [
+        2036,
+        2.0360822830000003,
+        2.036222721
+      ],
+      [
+        2037,
+        2.037082415,
+        2.037222845
+      ],
+      [
+        2048,
+        2.048082688,
+        2.04822316
+      ],
+      [
+        2049,
+        2.049082779,
+        2.049223275
+      ],
+      [
+        2165,
+        2.165087502,
+        2.165227923
+      ],
+      [
+        2166,
+        2.1660876350000002,
+        2.166228073
+      ],
+      [
+        2269,
+        2.269091629,
+        2.2692320500000003
+      ],
+      [
+        2270,
+        2.270091978,
+        2.270232399
+      ],
+      [
+        2999,
+        2.999121414,
+        2.99926186
+      ],
+      [
+        3000,
+        3.000121496,
+        3.000261934
+      ],
+      [
+        3001,
+        3.0011215790000003,
+        3.001262058
+      ],
+      [
+        3002,
+        3.0021217780000002,
+        3.0022621990000005
+      ],
+      [
+        3004,
+        3.0041215919999997,
+        3.0042620720000004
+      ],
+      [
+        3005,
+        3.005121817,
+        3.0052623040000004
+      ],
+      [
+        3048,
+        3.0481234170000002,
+        3.048263855
+      ],
+      [
+        3049,
+        3.0491237079999998,
+        3.049264129
+      ],
+      [
+        3311,
+        3.311134054,
+        3.311274483
+      ],
+      [
+        3312,
+        3.3121344200000005,
+        3.312274874
+      ],
+      [
+        3795,
+        3.795153829,
+        3.795294267
+      ],
+      [
+        3796,
+        3.796154078,
+        3.796294507
+      ],
+      [
+        3999,
+        3.9991623599999997,
+        3.9993027980000004
+      ],
+      [
+        4000,
+        4.000162193,
+        4.000302614
+      ],
+      [
+        4009,
+        4.009162542,
+        4.009302997
+      ],
+      [
+        4010,
+        4.010162816,
+        4.010303254
+      ],
+      [
+        4037,
+        4.037163757,
+        4.0373042120000004
+      ],
+      [
+        4038,
+        4.038163898,
+        4.0383043690000004
+      ],
+      [
+        4275,
+        4.2751735,
+        4.275313938
+      ],
+      [
+        4276,
+        4.276173574,
+        4.27631407
+      ],
+      [
+        4321,
+        4.321175247,
+        4.321315669
+      ],
+      [
+        4322,
+        4.322175505,
+        4.3223159010000005
+      ],
+      [
+        4491,
+        4.491182103,
+        4.4913225820000005
+      ],
+      [
+        4492,
+        4.492182452,
+        4.4923228900000005
+      ],
+      [
+        4999,
+        4.9992028710000005,
+        4.999343342
+      ],
+      [
+        5000,
+        5.00020292,
+        5.000343699
+      ],
+      [
+        5018,
+        5.01820372,
+        5.018344182
+      ],
+      [
+        5019,
+        5.019203927,
+        5.019344373
+      ],
+      [
+        5343,
+        5.343216797,
+        5.343357277
+      ],
+      [
+        5344,
+        5.344217146,
+        5.344357584
+      ],
+      [
+        5388,
+        5.388218705,
+        5.388359142
+      ],
+      [
+        5389,
+        5.3892187620000005,
+        5.389359233
+      ],
+      [
+        5999,
+        5.999243628,
+        5.999384007
+      ],
+      [
+        6000,
+        6.00024356,
+        6.000384214
+      ],
+      [
+        6006,
+        6.006244013,
+        6.006384467
+      ],
+      [
+        6007,
+        6.007244103,
+        6.007384566
+      ],
+      [
+        6435,
+        6.435261323,
+        6.435401769
+      ],
+      [
+        6436,
+        6.436261447,
+        6.436401893
+      ],
+      [
+        6656,
+        6.656270288,
+        6.656410751
+      ],
+      [
+        6657,
+        6.657270637,
+        6.657411092
+      ],
+      [
+        6688,
+        6.688271708,
+        6.688412137
+      ],
+      [
+        6689,
+        6.689271798,
+        6.689412236
+      ],
+      [
+        6999,
+        6.999284389,
+        6.999424810000001
+      ],
+      [
+        7000,
+        7.0002843210000005,
+        7.000424967000001
+      ],
+      [
+        7007,
+        7.007284630999999,
+        7.007425052
+      ],
+      [
+        7008,
+        7.00828488,
+        7.008425325999999
+      ],
+      [
+        7112,
+        7.1122888490000005,
+        7.112429262000001
+      ],
+      [
+        7113,
+        7.113289198,
+        7.113429652000001
+      ],
+      [
+        7734,
+        7.7343142579999995,
+        7.734454697000002
+      ],
+      [
+        7735,
+        7.735314408000001,
+        7.735454845
+      ],
+      [
+        7881,
+        7.881320361,
+        7.881460832
+      ],
+      [
+        7882,
+        7.8823202519999995,
+        7.882460706
+      ],
+      [
+        7999,
+        7.999324958000001,
+        7.999465396
+      ],
+      [
+        8000,
+        8.000325032,
+        8.000465695
+      ],
+      [
+        8005,
+        8.005325419,
+        8.005465849
+      ],
+      [
+        8006,
+        8.006325518,
+        8.006465956
+      ],
+      [
+        8029,
+        8.029326405,
+        8.029466893
+      ],
+      [
+        8030,
+        8.030326537,
+        8.030466958
+      ],
+      [
+        8267,
+        8.267335946,
+        8.267476359
+      ],
+      [
+        8268,
+        8.268336054,
+        8.268476525
+      ],
+      [
+        8686,
+        8.686352977,
+        8.686493406
+      ],
+      [
+        8687,
+        8.687353301,
+        8.68749373
+      ],
+      [
+        8999,
+        8.99936575,
+        8.999506213
+      ],
+      [
+        9000,
+        9.000365882,
+        9.000506353
+      ],
+      [
+        9008,
+        9.008366125,
+        9.008506562
+      ],
+      [
+        9009,
+        9.009366357,
+        9.009506828
+      ],
+      [
+        9406,
+        9.406382284,
+        9.406522755000001
+      ],
+      [
+        9407,
+        9.407382617,
+        9.407523063
+      ],
+      [
+        9441,
+        9.441383818,
+        9.441524256
+      ],
+      [
+        9442,
+        9.442383917,
+        9.442524413
+      ],
+      [
+        9766,
+        9.766396938,
+        9.766537351
+      ],
+      [
+        9767,
+        9.767397029,
+        9.767537467
+      ],
+      [
+        9977,
+        9.977405739,
+        9.977546211
+      ],
+      [
+        9978,
+        9.978405739,
+        9.978546251000001
+      ],
+      [
+        9999,
+        9.999406444,
+        9.999546915
+      ]
+    ],
+    "summary": {
+      "original_acceptance": "pass",
+      "max_witness_interval_outside_cpu_bracket_us": 0.0,
+      "max_witness_width_outside_cpu_bracket_us": 0.0
+    },
+    "buckets": [
+      {
+        "second": 0,
+        "raw_clock_scale_ppm": 40.713402121861364,
+        "scope_max_interval_seq": 305,
+        "scope_max_width_seq": 0,
+        "scope_interval_peak_retained": true,
+        "scope_width_peak_retained": true,
+        "max_bookkeeping_us": 3.675,
+        "bookkeeping_seq": 1
+      },
+      {
+        "second": 1,
+        "raw_clock_scale_ppm": 40.72071970173674,
+        "scope_max_interval_seq": 1926,
+        "scope_max_width_seq": 1000,
+        "scope_interval_peak_retained": false,
+        "scope_width_peak_retained": true,
+        "max_bookkeeping_us": 3.3,
+        "bookkeeping_seq": 1000
+      },
+      {
+        "second": 2,
+        "raw_clock_scale_ppm": 40.72072785410441,
+        "scope_max_interval_seq": 2270,
+        "scope_max_width_seq": 2049,
+        "scope_interval_peak_retained": true,
+        "scope_width_peak_retained": true,
+        "max_bookkeeping_us": 2.6166666666666667,
+        "bookkeeping_seq": 2000
+      },
+      {
+        "second": 3,
+        "raw_clock_scale_ppm": 40.721380581087985,
+        "scope_max_interval_seq": 3312,
+        "scope_max_width_seq": 3039,
+        "scope_interval_peak_retained": true,
+        "scope_width_peak_retained": false,
+        "max_bookkeeping_us": 3.3666666666666667,
+        "bookkeeping_seq": 3001
+      },
+      {
+        "second": 4,
+        "raw_clock_scale_ppm": 40.71871871880184,
+        "scope_max_interval_seq": 4492,
+        "scope_max_width_seq": 4276,
+        "scope_interval_peak_retained": true,
+        "scope_width_peak_retained": true,
+        "max_bookkeeping_us": 3.7583333333333333,
+        "bookkeeping_seq": 4001
+      },
+      {
+        "second": 5,
+        "raw_clock_scale_ppm": 40.72372270447211,
+        "scope_max_interval_seq": 5344,
+        "scope_max_width_seq": 5000,
+        "scope_interval_peak_retained": true,
+        "scope_width_peak_retained": true,
+        "max_bookkeeping_us": 5.8,
+        "bookkeeping_seq": 5001
+      },
+      {
+        "second": 6,
+        "raw_clock_scale_ppm": 40.71971360475324,
+        "scope_max_interval_seq": 6657,
+        "scope_max_width_seq": 6000,
+        "scope_interval_peak_retained": true,
+        "scope_width_peak_retained": true,
+        "max_bookkeeping_us": 2.775,
+        "bookkeeping_seq": 6000
+      },
+      {
+        "second": 7,
+        "raw_clock_scale_ppm": 40.719387751186886,
+        "scope_max_interval_seq": 7113,
+        "scope_max_width_seq": 7000,
+        "scope_interval_peak_retained": true,
+        "scope_width_peak_retained": true,
+        "max_bookkeeping_us": 5.275,
+        "bookkeeping_seq": 7001
+      },
+      {
+        "second": 8,
+        "raw_clock_scale_ppm": 40.725390701545905,
+        "scope_max_interval_seq": 8687,
+        "scope_max_width_seq": 8000,
+        "scope_interval_peak_retained": true,
+        "scope_width_peak_retained": true,
+        "max_bookkeeping_us": 4.541666666666667,
+        "bookkeeping_seq": 8001
+      },
+      {
+        "second": 9,
+        "raw_clock_scale_ppm": 40.72773282315367,
+        "scope_max_interval_seq": 9407,
+        "scope_max_width_seq": 9978,
+        "scope_interval_peak_retained": true,
+        "scope_width_peak_retained": true,
+        "max_bookkeeping_us": 6.216666666666667,
+        "bookkeeping_seq": 9001
+      }
+    ]
+  }
+}

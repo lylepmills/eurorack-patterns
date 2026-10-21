@@ -2,6 +2,39 @@
 
 ## Unreleased
 
+- Preserve four complete interaction recordings under audio/USB load (240,000
+  observations): taps and holds during motion, re-armed pickup and quick
+  reversals. Physical-stimulus regressions retain the earlier stationary-hold
+  and paced-sweep attempts without overstating their coverage. Core interfaces
+  and firmware are unchanged.
+- Preserve three complete manual load recordings (360,000 observations), with
+  physical gesture timing, consumed starting holds and bidirectional pickup
+  checked alongside C++ replay. Add explicit manual-load export; missing operator
+  stimulus is not a behavioral pass. Core interfaces and firmware are unchanged.
+- Preserve a passing continuous 30-minute diagnostic soak: 1.8 million physical
+  service pulses, unchanged timing limits and selected raw-timer comparisons.
+  The earlier late-run disagreement did not recur and remains unresolved.
+- Retain four measured short timing comparisons with diagnostics off/on and
+  audio/USB load off/on. Explicit diagnostic export preserves complete wire data
+  and the physical pulses for retained observations and their predecessors;
+  selected evidence never claims full-sample replay or resolves an older failure.
+- Add optional Daisy timing diagnostics with raw tick/GPIO-call brackets,
+  retained maximum-event predecessors and measured retention cost. Host checks
+  cover wrap, long elapsed time, wire integrity and same-pulse scope comparison;
+  short paired comparisons and one long stationary run now have measured evidence.
+- Add optional Seed3 audio-DMA/USB load experiments and a continuous
+  aggregate soak recorder (up to one hour), with strict capture checks and a
+  stationary campaign runner.
+- Retain attribution for the adapted libDaisy Seed3 SAI configuration.
+- Preserve three complete paired stationary load traces (30,000 observations)
+  with explicit audio/USB workload, host pacing and scope timing evidence.
+  Check long-soak pulse counts and per-second extrema independently; aggregate
+  evidence never claims individual-sample replay.
+- Retain a measured 96-frame scheduling counterexample (1,593 skipped control
+  slots despite audio callbacks meeting their period) and an unqualified
+  30-minute soak with nine local scope-timing disagreements. Regression tests
+  must continue rejecting these failures; no acceptance bounds were widened.
+
 - Allow Daisy recordings up to 150 seconds so operator-led tests can tolerate
   delayed starts. Preserve the full waiting window, check device capacity before
   requesting a run, and retain support for the original 30-second images/traces.
