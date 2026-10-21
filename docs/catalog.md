@@ -54,7 +54,7 @@ The [scheduled-acquisition follow-up](bench/daisy.md#scheduled-jack-acquisition-
 
 ### A03 Make the common patch work with one cable
 
-*Manual.* **Noise Engineering Desmodus Versio.** **Observed:** unpatched right input receives the left signal. **Reuse:** provide a predictable mono-to-stereo default. **Caveat:** document which jack breaks normalization; do not mistake silence for unplugging. **Test:** left-only, right-only, stereo, silent connected source, and partial insertion. [Desmodus Versio manual](https://portal.noiseengineering.us/manuals/desmodus-versio/).
+*Manual.* **Noise Engineering Desmodus Versio.** **Observed:** when In R is unpatched, In L feeds both input channels. **Reuse:** provide a predictable mono-to-stereo default. **Caveat:** the manual describes the routing, not its detection circuit or behavior during insertion; do not mistake silence for unplugging. **Test:** left-only, right-only, stereo, silent connected source, and partial insertion. [Desmodus Versio web manual](https://portal.noiseengineering.us/manuals/desmodus-versio/), **Interface → In L/In R**; no manual or firmware version stated, checked 2026-10-21.
 
 ### A04 Separate gate-on and gate-off thresholds
 
@@ -138,7 +138,7 @@ The [scheduled-acquisition follow-up](bench/daisy.md#scheduled-jack-acquisition-
 
 ### C09 Make gesture timing adjustable
 
-*Manual.* **ALM Pamela’s PRO Workout.** **Observed:** encoder hold time is a setting. **Reuse:** accommodate different playing styles and dexterity. **Caveat:** keep a reliable distinction between press and hold. **Test:** very short/long settings, near-threshold releases, and repeated quick clicks. (§6.4) [Pamela’s PRO manual v0.4 / firmware131](https://assets.busycircuits.com/docs/alm034-manual.pdf).
+*Manual.* **ALM Pamela’s PRO Workout.** **Observed:** the Enc Hold Time setting adjusts how long the program knob must remain pressed before a hold is recognized. **Reuse:** accommodate different playing styles and dexterity. **Caveat:** §6.4 gives no numeric range or recommended duration; keep a reliable distinction between press and hold. **Test:** the shortest/longest supported settings, near-threshold releases, and repeated quick clicks. [Pamela’s PRO operation manual](https://assets.busycircuits.com/docs/alm034-manual.pdf#page=21), **v0.4 / firmware 131**, dated 2026-10-01, **§6.4 Enc Hold Time, printed/PDF p.21**; checked 2026-10-21.
 
 ### C10 Navigate laterally across channels
 
