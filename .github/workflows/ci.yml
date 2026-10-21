@@ -72,3 +72,4 @@ jobs:
       # development branches or large historical evidence objects.
       - run: git fetch --no-tags --unshallow origin "$GITHUB_SHA"
       - run: python3 tools/check_public.py
+      - run: python3 tools/catalog_index.py --check

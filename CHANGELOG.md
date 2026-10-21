@@ -1,6 +1,10 @@
 # Changelog
 
-## Unreleased
+## Unreleased — on `main` after 0.2.1, not yet tagged
+
+Everything in this section is documentation, example, test and bench work. The
+nine public headers are unchanged since 0.2.0, and no release carries these
+changes yet; pin a tagged release, not `main`.
 
 - Add a five-step pickup application example with explicit membership, snapping,
   destination readback and unreachable-target recovery. Check its policy with
