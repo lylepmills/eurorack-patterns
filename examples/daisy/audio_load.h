@@ -26,6 +26,12 @@
 #include <atomic>
 
 namespace audio_load {
+#ifndef EP_AUDIO_MARKER
+#define EP_AUDIO_MARKER(value) ((void)0)
+#endif
+#ifndef EP_AUDIO_WORK_CLOCK
+#define EP_AUDIO_WORK_CLOCK() daisy::System::GetTick()
+#endif
 struct Counters {
   uint32_t callbacks = 0, max_work_ticks = 0, max_interval_ticks = 0;
   uint32_t over_budget = 0, late_intervals = 0, bad_size = 0;
@@ -41,11 +47,19 @@ static Counters counters;
 static uint32_t previous_tick, period_ticks, busy_ticks, block_size;
 
 static void Callback(daisy::AudioHandle::InputBuffer, daisy::AudioHandle::OutputBuffer out, size_t size) {
+  const bool measure = measuring.load(std::memory_order_relaxed);
+  // Keep timestamp/marker pairs together even when acquisition can preempt
+  // audio. Only bookkeeping is masked; silence/padding runs with IRQs enabled.
+  const uint32_t start_guard = __get_PRIMASK(); __disable_irq();
   const uint32_t start = daisy::System::GetTick();
+  const uint32_t work_start = EP_AUDIO_WORK_CLOCK();
+  if (measure) EP_AUDIO_MARKER(true);
+  __set_PRIMASK(start_guard);
   // Silence on both channels. This tests scheduling, not codec audio quality.
   for (size_t i = 0; i < size; ++i) out[0][i] = out[1][i] = 0.0f;
-  while (uint32_t(daisy::System::GetTick() - start) < busy_ticks) __NOP();
-  if (!measuring.load(std::memory_order_relaxed)) return;
+  while (uint32_t(EP_AUDIO_WORK_CLOCK() - work_start) < busy_ticks) __NOP();
+  if (!measure) return;
+  const uint32_t end_guard = __get_PRIMASK(); __disable_irq();
   const uint32_t work = daisy::System::GetTick() - start;
   if (counters.callbacks) {
     const uint32_t interval = start - previous_tick;
@@ -57,6 +71,8 @@ static void Callback(daisy::AudioHandle::InputBuffer, daisy::AudioHandle::Output
   counters.max_work_ticks = std::max(counters.max_work_ticks, work);
   counters.over_budget += work >= period_ticks;
   counters.bad_size += size != block_size;
+  EP_AUDIO_MARKER(false);
+  __set_PRIMASK(end_guard);
 }
 static bool Start(uint32_t block, uint32_t permille) {
   if (!initialized) {

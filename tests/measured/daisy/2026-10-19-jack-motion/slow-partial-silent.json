@@ -1,0 +1,55 @@
+{
+  "schema": 1,
+  "evidence": "measured on hardware",
+  "status": "motion-analog-disagreement",
+  "build": {
+    "build_id": "82c0f452973b6519855f649f",
+    "source_commit": "a49570218e6bba31f864b433adc3faefb5dd0347",
+    "sdk_revision": "e1f740a5a7fe38e6d6d41281bf99fe7a2bb3827b",
+    "binary_sha256": "31f4cfdc50b6bb3548bd09a7105262c309d4a0cd8067fc1005ddb3506bb1fe9c"
+  },
+  "fixture": {
+    "board": "Seed3",
+    "case": "manual-slow-partial-silent",
+    "jack": "switched mono; attempted slow/partial insertion/withdrawal; passive terminated far end",
+    "probe_series_ohms": 1000,
+    "sense_pulldown_ohms": 100000,
+    "scope_probe": "10x; sense node",
+    "analog_rate_hz": 250000.0
+  },
+  "run": {
+    "token": 744662368,
+    "duration_ms": 300000,
+    "fault": 0,
+    "policy": 1,
+    "count": 233089,
+    "missed": 0,
+    "adc_failures": 0,
+    "elapsed_us": 116544500,
+    "fault_begin_us": 0,
+    "fault_end_us": 0,
+    "finish_reason": "operator",
+    "finish_request_us": 116544289,
+    "acquisition_limit_us": 116544500
+  },
+  "review": null,
+  "native_scope_sha256": {
+    "analog_0.bin": "89d41ccdb7287927705b3e9d8e720ad96ddc7f5cd1a498c70afa4ca108b1d92a",
+    "settings.json": "8294e3c19c5592f6a6df2992da3cba22bcd2c56afcf8f493b274952f667e0926",
+    "capture.sal": "b3eaf28764bacc0afaad09ee51bffe306e189d8daeb96b409b2bf9d8dc3585fd",
+    "digital_1_2.bin": "a7dd4d58919052270190d487a73b38af13bff3b229ef72798715f46b476f29d4",
+    "digital_1_3.bin": "32104420c0fa1f9e6218d0042b257370e9d325f2693c88f7185d6114e7087dfe",
+    "digital_1_1.bin": "317dce061654bcf46ad834dd285082c3f13eb6e68bb9c36e22e58fa9f27a6694",
+    "digital_1_0.bin": "1cc313be939c08099b10721f2f2798a8725dd9af86c4412842df03cc875f7982"
+  },
+  "limitation": "Physical motion review rejected; analog voltage contradicts the ADC. No complete physical pass or mechanical-position qualification. Complete digital/wire evidence; analog payload contains aperture extrema, not the full waveform.",
+  "rejection": "Stable analog apertures contradict ADC readings during a motion capture. The operator later found a loose analog probe connection; this is not a complete physical pass.",
+  "raw_sha256": "cc5b9177b7d0b926029880f3bf3815ac137bcc2ad989c7b153b9da564af6f731",
+  "raw_compressed_sha256": "183e0c7c9f766b416f7f66ea2216c56d4ec69a303c0b43f85d825d2ed547dad3",
+  "channels_sha256": "259c9d5ef17d21f28d136685a0049af0276618d684de65a4124bd8eef3f7d503",
+  "channels_compressed_sha256": "0789289e17f199f4a37eb5553328676531fa6e2d839097c3fc5fad4ed92d828b",
+  "analog_sha256": "950162ec21b4aab5638795c189fc7936807944c01bfe0f8a2c1c6f293c8773d6",
+  "analog_compressed_sha256": "ae7961ed2f0d58d302b59fac52cfc3f5af1f17675a0d3af8303dccb36907ff77",
+  "operator_report": "The operator attempted two slow insertions and withdrawals with partial-position pauses, but withdrawal force made some removals abrupt. Precise mechanical positions and durations are not established.",
+  "operator_followup": "After the recording, the operator found the analog probe connection loose. The exact moment it loosened was not independently observed; the full recording remains rejected."
+}

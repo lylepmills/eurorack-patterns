@@ -1,0 +1,99 @@
+{
+  "schema": 1,
+  "evidence": "measured on hardware",
+  "status": "pass",
+  "build": {
+    "build_id": "f664ea4c86ad208d6560e955",
+    "source_commit": "22bbd3edbb1658342bd237687cf34ec3ed81ad1f",
+    "sdk_revision": "e1f740a5a7fe38e6d6d41281bf99fe7a2bb3827b",
+    "binary_sha256": "efd245b0e5376eeb87427f9e5f5587f4c4d8ba80965a838789370293eafd56e0"
+  },
+  "fixture": {
+    "board": "Seed3",
+    "case": "inserted-open",
+    "jack": "switched mono; inserted cable, far end open",
+    "probe_series_ohms": 1000,
+    "sense_pulldown_ohms": 100000,
+    "scope_probe": "10x; sense node",
+    "analog_rate_hz": 1000000.0
+  },
+  "run": {
+    "token": 1194680860,
+    "duration_ms": 3000,
+    "fault": 1,
+    "policy": 1,
+    "count": 6000,
+    "missed": 0,
+    "adc_failures": 0,
+    "elapsed_us": 3000000,
+    "fault_begin_us": 2000150,
+    "fault_end_us": 2025150
+  },
+  "review": {
+    "schema": 1,
+    "status": "pass",
+    "case": "inserted cable, far end open",
+    "samples": 6000,
+    "run": {
+      "token": 1194680860,
+      "duration_ms": 3000,
+      "fault": 1,
+      "policy": 1,
+      "count": 6000,
+      "missed": 0,
+      "adc_failures": 0,
+      "elapsed_us": 3000000,
+      "fault_begin_us": 2000150,
+      "fault_end_us": 2025150
+    },
+    "raw_sha256": "ee24cd6d90a4a053fcbecc5635cb71d8de981d910e12b2d7c6890f4316a5056c",
+    "service_alignment": {
+      "clock_scale_ppm": 39.989234031034826,
+      "max_fit_residual_us": 0.18189507024362683,
+      "max_interval_error_us": 0.29600538262684495,
+      "max_work_width_error_us": 0.19300000031498143,
+      "pre_application_high_intervals_s": []
+    },
+    "probe_edges": 3024,
+    "probe_max_error_us": 0.5999983847537749,
+    "terminal_release_error_us": 0.298437727863643,
+    "propagation_min_us": null,
+    "propagation_max_us": null,
+    "invalid_observations": 50,
+    "state_changes": [
+      {
+        "seq": 511,
+        "time_us": 255789,
+        "ready": true,
+        "patched": true
+      }
+    ],
+    "analog_min_volts": -0.037234824150800705,
+    "analog_max_volts": 0.042149897664785385,
+    "limitation": "One stationary fixture, no audio load, insertion/withdrawal, calibrated voltage or absolute time qualification. Command-start qualification is not mechanical insertion latency. Analog plateau samples cannot exclude between-sample glitches."
+  },
+  "native_scope_sha256": {
+    "record_result.json": "c7cba46516e10900825046dac1a0d855b3266ba5014b3adb2e2659a29b0caad2",
+    "analog_0.bin": "4bddb0b4955d9d0b5840f0cda48a92c46910958020368b21c5fd62f435792a38",
+    "digital_1.bin": "8f7a8ed0f095e7ea3df72c6663c92945893ea036a4df0e04883bd02b03afe9b1",
+    "digital_0.bin": "b5bd6f37eee71bb31d77869ce2b78a689c8a4059942e437d18074217c6df22c0",
+    "digital_2.bin": "4b2977884f57fbcc9855be533cdfc63810fd4cc78197a3dca89dc7f8be66abfc",
+    "digital_3.bin": "d73af3d344cd24454cc2f6e66190a3a12da3716a61f682d18b4891352276520c",
+    "capture_stdout.txt": "277880bad82a0adcdb204dacc434b5e0e6a6bbb26914c865aced4db9e5571296",
+    "capture_config_full.json": "351807b411d40ff9d9556b441124ef295f81d8c23e6a2a8cdbabef1b252f1061",
+    "record_options.json": "37fceb11bba21da41e37f0dac3e232d133de0a5c755280ce2309b2b4b9ba5f18"
+  },
+  "limitation": "Complete digital timelines and wire records; analog export is one plateau sample per observation plus extrema, not the full waveform. No insertion or external-module voltage qualification.",
+  "raw_sha256": "ee24cd6d90a4a053fcbecc5635cb71d8de981d910e12b2d7c6890f4316a5056c",
+  "raw_compressed_sha256": "50de7c60207d6dfa863b40fc2e5b5da0aa22bdb0feecdc919b7428fb4200de7c",
+  "channels_sha256": "b377e3a601d701b0f91e6666e6705d118adeac71e9d3ef7a74837c1520155727",
+  "channels_compressed_sha256": "f401380bebbdcd782b64993aeaabe050a82d877b4b5cf9a6ea04bd9fd3e2d714",
+  "analog_sha256": "14ddfcf4a0c5da5aec4e67616016619c4ad1c0b5ec3cc8388438db6e1966747d",
+  "analog_compressed_sha256": "28c4230dedddf3db73b6796f7ee2ee82fd7a6605a905036c79e3a52448b49c62",
+  "subsequent_qualification": {
+    "status": "Analog attachment unverified; digital and replay evidence retained",
+    "reason": "A later empty-jack preflight recorded near-zero analog while ADC and digital sense followed the probe. The operator then found the analog tip disconnected; reseating it restored agreement on a new high/low challenge. When it disconnected is unknown, so prior constant-low traces cannot establish probe attachment.",
+    "original_review": "Preserved below as the original consistency check, not proof of analog connection.",
+    "reference": "docs/validation.md#daisy-seed3-jack-presence-bench"
+  }
+}

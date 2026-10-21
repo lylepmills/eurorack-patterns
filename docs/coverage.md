@@ -22,6 +22,20 @@ cancellation and startup-held suppression in the example adapter. The public
 corpus contains 15 complete runs across both passes. These checks do not promote
 jack detection, audio/IRQ timing, brownout behavior or other boards to measured status.
 
+The [switched-jack measurements](validation.md#daisy-seed3-jack-presence-bench)
+cover stationary contacts, ordinary and slow insertion, open-ended cables of
+two lengths, four manual transition faults and a 110-case automated electrical
+fault matrix. Rejected loose-probe and incomplete-tail captures remain retained.
+The [21-case jack audio/IRQ campaign](validation.md#jack-audiointerrupt-load-results)
+adds complete callback timing, six explicit qualification-starvation profiles,
+three sustained-insertion recoveries and four faults under a responsive load.
+Published state and validity handling behaved as specified; responsiveness
+still depends on scheduling. The [scheduled-acquisition follow-up](validation.md#scheduled-jack-acquisition-results)
+passes all 21 comparisons, including the six previously starved profiles, and two
+early-finish checks. The fix is in the Seed3 adapter, with the portable detector
+unchanged. None of this qualifies powered inputs, production
+protection, every cable or calibrated mechanical insertion latency.
+
 The separate [audio/USB load measurements](validation.md#audiousb-load-and-continuous-soak)
 add stationary comparisons, isolated controls, taps and holds during motion, and
 quick reversals on that fixture. Complete replay is paired with physical timing

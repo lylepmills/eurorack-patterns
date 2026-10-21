@@ -1,0 +1,209 @@
+{
+  "schema": 1,
+  "evidence": "measured on hardware",
+  "status": "pass",
+  "build": {
+    "build_id": "c3a3acff313df127ea766ede",
+    "source_commit": "1fd5f20a93eff5643d8c00d7ca49072ae68f4674",
+    "sdk_revision": "e1f740a5a7fe38e6d6d41281bf99fe7a2bb3827b",
+    "binary_sha256": "2646b105e8c570a2f3f0c647608e7bce52adf7d71dda9c273db0bb347cf0dcfb"
+  },
+  "fixture": {
+    "board": "Seed3",
+    "case": "automated-electrical-clamp",
+    "jack": "switched mono; empty jack with independent open-drain clamp on tip/sense; no cable movement",
+    "probe_series_ohms": 1000,
+    "sense_pulldown_ohms": 100000,
+    "scope_probe": "10x; sense node",
+    "analog_rate_hz": 250000.0
+  },
+  "run": {
+    "token": 2999273115,
+    "duration_ms": 10000,
+    "fault": 2,
+    "policy": 1,
+    "count": 19800,
+    "missed": 200,
+    "adc_failures": 0,
+    "elapsed_us": 10000000,
+    "fault_begin_us": 6560000,
+    "fault_end_us": 6660000,
+    "finish_reason": "duration",
+    "finish_request_us": 0,
+    "acquisition_limit_us": 10000000,
+    "trigger": 6,
+    "fault_delay_slots": 0,
+    "fault_duration_us": 100000,
+    "trigger_seq": 13119,
+    "trigger_us": 6559789,
+    "fault_due_us": 6560000
+  },
+  "review": {
+    "schema": 1,
+    "status": "pass",
+    "case": "automated electrical clamp",
+    "samples": 19800,
+    "cycles": 1,
+    "run": {
+      "token": 2999273115,
+      "duration_ms": 10000,
+      "fault": 2,
+      "policy": 1,
+      "count": 19800,
+      "missed": 200,
+      "adc_failures": 0,
+      "elapsed_us": 10000000,
+      "fault_begin_us": 6560000,
+      "fault_end_us": 6660000,
+      "finish_reason": "duration",
+      "finish_request_us": 0,
+      "acquisition_limit_us": 10000000,
+      "trigger": 6,
+      "fault_delay_slots": 0,
+      "fault_duration_us": 100000,
+      "trigger_seq": 13119,
+      "trigger_us": 6559789,
+      "fault_due_us": 6560000
+    },
+    "state_changes": [
+      {
+        "seq": 63,
+        "time_us": 31789,
+        "ready": true,
+        "patched": false
+      },
+      {
+        "seq": 6463,
+        "time_us": 3231789,
+        "ready": true,
+        "patched": true
+      },
+      {
+        "seq": 13119,
+        "time_us": 6559789,
+        "ready": true,
+        "patched": false
+      }
+    ],
+    "service_alignment": {
+      "clock_scale_ppm": 39.98436684815587,
+      "max_fit_residual_us": 0.1848052617860958,
+      "max_interval_error_us": 0.3040078163654698,
+      "max_work_width_error_us": 0.42599999994254745,
+      "pre_application_high_intervals_s": []
+    },
+    "probe_max_error_us": 0.7229976555223061,
+    "terminal_release_error_us": 0.20643670239905987,
+    "sense_edges": 6318,
+    "presence_edges": 2,
+    "invalid_observations": 1,
+    "ambiguous_analog_apertures": 0,
+    "digital_transition_apertures": 0,
+    "dwell_checks": [
+      {
+        "begin_us": 0,
+        "end_us": 1000000,
+        "patched": false,
+        "samples": 2000
+      },
+      {
+        "begin_us": 9000000,
+        "end_us": 10000000,
+        "patched": false,
+        "samples": 2000
+      },
+      {
+        "begin_us": 1131789,
+        "end_us": 2131789,
+        "patched": false,
+        "samples": 2000
+      },
+      {
+        "begin_us": 4395789,
+        "end_us": 5395789,
+        "patched": true,
+        "samples": 2000
+      },
+      {
+        "begin_us": 7779894,
+        "end_us": 8779894,
+        "patched": false,
+        "samples": 2000
+      }
+    ],
+    "raw_sha256": "9433b2216bb876ec5ea9cca7b55b1861aae3f6dd67ea37f7f27c6b18df484a37",
+    "limitation": "Open-drain electrical substitution on one passive fixture; no mechanical insertion, contact bounce, powered-module input, audio-load or exact generator-edge jitter qualification. Transitions hidden by low probe voltage are bounded by independent high-probe voltage apertures. Relative clocks are not calibrated absolute time.",
+    "generator": {
+      "schema": 1,
+      "status": "software timing passed; physical verification pending",
+      "info": {
+        "protocol": 1,
+        "kind": "daisy-pulse-generator",
+        "board": "seed3",
+        "build_id": "4e68efce89b64d686cf11c63",
+        "timer_hz": 240000000,
+        "armed": false,
+        "released": true,
+        "max_edges": 64,
+        "max_us": 30000000,
+        "max_late_us": 25
+      },
+      "token": 1507336388,
+      "edges": [
+        {
+          "seq": 0,
+          "due_us": 3000000,
+          "before_us": 3000000,
+          "after_us": 3000000,
+          "pressed": 1
+        },
+        {
+          "seq": 1,
+          "due_us": 6500000,
+          "before_us": 6500000,
+          "after_us": 6500000,
+          "pressed": 0
+        }
+      ],
+      "end_us": 6500000,
+      "max_lateness_us": 0,
+      "raw_sha256": "d7ba0e19cc21414f410a15f4d5fae941dd47f49ac0fc3842010dc32a2d5a70d6"
+    },
+    "clamp_onset_bounds_s": [
+      3.727752103000027,
+      3.728612776000027
+    ],
+    "clamp_release_bounds_s": [
+      7.227391962000027,
+      7.229252741000026
+    ],
+    "physical_clamp_duration_bounds_s": [
+      3.498779186,
+      3.5015006379999987
+    ]
+  },
+  "native_scope_sha256": {
+    "analog_0.bin": "8c43b48426b75482d24c9cf8842484c82221bfe9630f220746bbdd86cb00f7b6",
+    "settings.json": "8294e3c19c5592f6a6df2992da3cba22bcd2c56afcf8f493b274952f667e0926",
+    "capture.sal": "9a950cbd184a54ccd3ad25b60394af4e836bd6c4f00c586900708f1785a4d0d7",
+    "digital_1_2.bin": "44485c7bbfb17b5ac252577104b4a437b5df2377016dfd9fe4bdec157bfc5787",
+    "digital_1_3.bin": "f627024fc5f4985da86174b1a028373675b566da17177d0aa271f0bc6e6a7295",
+    "digital_1_1.bin": "78881c769d0cdeb895bc76f481f5c18cf5cbf3b277971c4a429a40dbba341034",
+    "digital_1_0.bin": "bb2d5c853fde1721534aa09ad6f8a2f11818a473d770bce02013aae3265a67a3"
+  },
+  "limitation": "Open-drain electrical substitution on one passive fixture; no mechanical insertion, contact bounce, powered-module input, audio-load or exact generator-edge jitter qualification. Transitions hidden by low probe voltage are bounded by independent high-probe voltage apertures. Relative clocks are not calibrated absolute time. All acquired digital transitions and complete wire evidence; analog payload contains extrema over captured service apertures, not the full waveform.",
+  "generator_build": {
+    "build_id": "4e68efce89b64d686cf11c63",
+    "source_commit": "3dab3a483c103928898a13bf91fd1844e23790d2",
+    "sdk_revision": "e1f740a5a7fe38e6d6d41281bf99fe7a2bb3827b",
+    "binary_sha256": "2f132cc4c0bd65dbff4430799ab20bf2386f7520122ceb66b85f4609de89693c"
+  },
+  "raw_sha256": "9433b2216bb876ec5ea9cca7b55b1861aae3f6dd67ea37f7f27c6b18df484a37",
+  "raw_compressed_sha256": "fa174660e6db8671e76755fdfeccab35922b2310b551f6ecade4c03da400b5e2",
+  "channels_sha256": "7615da24ff3609ce53a174840ed30b8dc1772ce1e4c69ddab4df0f5321c26d2c",
+  "channels_compressed_sha256": "b743c6bca54d6e346d17e8b5957b0c59388979dcc0cd4bf5f2af3dd601b54637",
+  "analog_sha256": "539acc84e3662dc41491c5ebc71d13d1082e714d1694e66d23690f00fe4893ce",
+  "analog_compressed_sha256": "246b07f5ae79ffe35bb05fcaba950348727d9b1728119f220d9374185e355f47",
+  "generator_sha256": "d7ba0e19cc21414f410a15f4d5fae941dd47f49ac0fc3842010dc32a2d5a70d6",
+  "generator_compressed_sha256": "e0f8ecb4495f5ded2717c4ad4823456181c81894820cd1d16e5985ab79d99af0"
+}

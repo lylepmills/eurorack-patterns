@@ -57,6 +57,694 @@ These cross-builds establish compiler/SDK compatibility only: the Pico has not
 been flashed or measured as part of this release. See its [remaining bench
 checks](../examples/pico/README.md#adapter-decisions-and-checks-still-needed).
 
+## Daisy Seed3 jack-presence bench
+
+The separate `jack-bench` firmware and `jack_capture.py` exercise the existing
+`PresenceDetector` through a real switched jack. The
+[empty-jack preflights](../tests/measured/daisy/2026-10-19-jack-empty) and
+[stationary open-ended cable](../tests/measured/daisy/2026-10-19-jack-inserted-open)
+are measured, along with a
+[passive far-end termination](../tests/measured/daisy/2026-10-19-jack-inserted-silent).
+Ordinary and slow insertion/withdrawal have also passed complete physical review,
+including ordinary motion with two open-ended cables; the measurements and
+rejected attempts are detailed below. These tests do not change the public
+component or establish production electrical limits.
+
+Use a switched mono jack with accessible tip, sleeve and tip-normal contacts.
+Identify them with a meter: with a plug inserted, tip/sleeve connect to the cable;
+tip-normal connects to tip only when empty. Secure the jack and ground leads so
+plugging a cable cannot disturb the measurement connections. With power removed,
+wire these **physical Seed3 header pins**:
+
+| Connection | Destination |
+| --- | --- |
+| Jack sleeve | Pin 40, ground |
+| Jack tip | Pin 23, A1 / PA3; 100k resistor to ground |
+| Jack tip-normal | 1k series resistor to pin 3, D2 / PC10 |
+| Analog/digital grounds | Keep pin 20 connected to pin 40 |
+| Optional second jack | Sleeve to ground; tip through 1k to ground; normal unused |
+| Scope D0 / D1 / D2 / D3 | Pins 23 / 1 / 2 / 3 respectively |
+| Scope analog | 10x probe on pin 23; analog and digital grounds on pin 40 |
+
+The second jack is a passive, silent-source termination for the cable's far
+end. Keep the existing pot/button separate. Disconnect the second controller's
+button-drive jumper for this phase. **Only 0–3.3 V fixture signals are supported;
+this is not a protected Eurorack input. Do not connect powered module outputs.**
+Pin assignments and grounding follow the [Seed3 datasheet](https://daisy.nyc3.cdn.digitaloceanspaces.com/products/seed3/Daisy_Seed3_datasheet.pdf);
+the [Thonk jack reference](https://www.thonk.co.uk/shop/thonkiconn/) distinguishes
+the switched mono part from its stereo alternative.
+
+Build with the same pinned SDK/toolchain procedure as the control bench:
+
+```sh
+python3 examples/daisy/build.py --libdaisy /path/to/libDaisy \
+  --out build-jack --role jack-bench
+python3 examples/daisy/jack_capture.py capture --port <explicit-port> \
+  --manifest build-jack/manifest.json --out new-jack-capture --seconds 10 \
+  --notes "Switched mono jack empty; 1k probe series, 100k sense pull-down; 10x probe"
+python3 examples/daisy/jack_capture.py analyze new-jack-capture/raw.txt
+```
+
+The builder never flashes; the capture tool never discovers devices or flashes.
+Use the exact manifest and verify the board before replacing its application.
+The role has a distinct `JINFO` identity and image `patterns_jack.bin`.
+
+Each commanded run starts unknown, drives a deterministic 16-bit pseudo-random
+probe every nominal 500 us, waits at least 150 us and completes a fresh polled
+16-bit ADC conversion. The ADC aperture is 810.5 cycles. These are starting
+fixture settings, not measured universal settling/latency recommendations.
+Codes at or below 16384 are low; at or above 49151 are high; the intervening
+band is invalid. Missed slots, failed conversion, insufficient settling and
+conversion beyond its slot invalidate evidence. Missed work is not caught up
+with a burst. An invalid observation clears partial qualification but preserves
+the previously published state, as the component contract specifies.
+
+Qualification uses 64 observations per window, a bad-window threshold of three
+mismatches and eight consecutive bad windows. One good window publishes
+unpatched. `--policy 1` (default) requires the bad-window streak even at startup;
+`--policy 0` lets the first complete window decide. Scope D1 brackets ADC reading
+and qualification; D2 is high only for ready-and-patched; D3 is the outgoing
+probe. D2 low alone cannot distinguish unknown from ready-and-unpatched: retain
+the logged readiness flag. At idle, probe and sampling marker are low; the
+presence marker retains its last published level until the next run resets it.
+
+By default, `--fault 1` labels ADC evidence invalid for 25 ms beginning at two
+seconds while still recording the real conversions; `--fault 2` requests a
+25 ms foreground sampling pause at two seconds. The pause leaves interrupts
+enabled and uses the measurement clock rather than a millisecond HAL delay.
+The log retains observed fault boundaries. These faults run without an audio
+workload and do not simulate an interrupt stall. Runs last 1–300 seconds (at
+least three with a fault). Protocol 2 adds a token-bound `JF` finish command,
+also supported by protocol 3: it closes at
+the next 500 us slot boundary, subject to the one-second minimum (three with a
+fault). The checksummed `JFINISH` record distinguishes an operator finish from
+the maximum duration; both require every scheduled slot through that boundary.
+Exact repeated finish commands are harmless, including during download. Other
+input traffic, wrong tokens and incomplete commands invalidate the run. Disconnects, incomplete
+downloads, sequence/checksum errors, absent final slots and replay disagreements
+cannot pass validation. Capture identity, complete wire bytes and declared
+fixture are retained. Independent Python replay checks the C++ adapter output;
+synthetic tests include silent input, gaps, startup policies, ambiguous voltage,
+probe balance and an externally correlated counterexample.
+
+Protocol 3 adds one configurable fault per run, triggered by detector evidence:
+
+| `--trigger` | First eligible observation |
+| --- | --- |
+| 0 | Elapsed two seconds; the default |
+| 1 | Insertion evidence: mismatch while known unpatched |
+| 2 | Before patched: seven bad windows and 63 observations in a new bad window |
+| 3 | After patched: the detector publishes patched |
+| 4 | Removal evidence: a high-probe match while known patched |
+| 5 | Before unpatched: 63 observations in a candidate good window while patched |
+| 6 | After unpatched: the detector publishes unpatched |
+
+Triggers 1–6 require a published empty baseline in the same run and `--policy 1`.
+They cannot arm from unknown-to-patched startup. A trigger identifies electrical
+evidence or qualification state, not mechanical seating. In particular, a
+candidate good window can still fail on its last observation.
+`--fault-delay-slots 0` starts at the next nominal 500 us slot after the trigger
+observation; 0–64 extra slots are supported. `--fault-us` accepts 500–100000 us
+in 500 us increments (default 25000). A two-slot delay lets the pending window
+complete before the fault, providing a comparison across qualification.
+Completed observations are never changed retroactively. An ADC gap retains
+real conversions while invalidating their evidence; a processing pause leaves
+missing slots and invalidates the first resumed observation.
+
+For example, add `--fault 1 --trigger 2 --fault-delay-slots 0 --fault-us 25000`
+to `jack_session.py` for a gap just before patched qualification. Use `--fault 2`
+for the corresponding processing pause. Keep the maximum at 300 seconds and
+finish after one complete insert/withdraw cycle with stationary dwells. Fault
+timing is automatic; the operator does not have to synchronize movement to a
+countdown. The checksummed `JTIMING` records the plan, trigger observation and
+scheduled boundary; `JFAULT` records actual boundaries. Independent replay
+reconstructs the first eligible trigger. A requested fault that never fires or
+has no recovery observation is incomplete, even if the download is intact.
+
+The new timing path has synthetic C++/Python tests across all six triggers, both
+fault types, qualification boundaries, minimum/maximum durations and delays,
+unknown startup and untriggered runs. Synthetic independent waveforms also test
+the strict `manual-transition-fault` review profile, including rejection of
+extra presence edges and missing service edges. Physical cable evidence covers
+faults just before patched and unpatched qualification, described below. The
+following electrical-substitution matrix covers all six trigger phases at the
+listed durations and offsets; its stimulus is not a mechanical plug movement.
+The existing no-fault motion profile remains strict, and protocol 1/2 recordings
+remain replayable.
+
+The electrical timing round is automated by
+[`jack_matrix.py`](../examples/daisy/jack_matrix.py), using the already installed
+protocol-3 jack image and the independent open-drain pulse-generator image.
+Its finite plan contains **108 fault cases plus two baseline checks**: six
+triggers × two fault types × 500/25000/100000 us durations × 0/1/64 extra slots.
+Each run has one 3.5-second electrical clamp, an empty baseline and recovery
+dwell. The one-slot offset tests publication immediately across the pending
+window boundary; 64 slots exercises the supported delay bound. The matrix stops
+on its first acquisition, source or independent waveform failure and preserves
+all evidence. All 110 hardware cases passed, including both baselines; the same
+108 fault plans also have synthetic replay coverage.
+
+With both USB supplies disconnected and both jacks empty, connect the generator's
+physical pin 40 to fixture pin 40, and generator physical pin 1 to fixture pin 23.
+Retain the fixture's **1k probe series resistor** and 100k sense pulldown; remove
+the earlier generator-to-button jumper. Do not join power rails. Keep all four
+digital probes and the 10x analog sense probe in their existing positions.
+Reconnect both USB supplies. The identified generator image only sinks or
+releases the sense node; the existing 1k resistor limits the opposing probe-high
+current to approximately 3.3 mA. See the [Seed3 pin mapping](https://daisy.nyc3.cdn.digitaloceanspaces.com/products/seed3/Daisy_Seed3_datasheet.pdf)
+and [STM32H750 output characteristics](https://www.st.com/resource/en/datasheet/stm32h750ib.pdf).
+No cable movements, RESET presses or new firmware are needed for this matrix.
+
+```sh
+python3 examples/daisy/jack_matrix.py --plan-only
+python3 examples/daisy/jack_matrix.py --port <fixture-port> \
+  --generator-port <generator-port> --scope-id <physical-MSO-id> \
+  --manifest <installed-jack-manifest> --generator-manifest <installed-generator-manifest> \
+  --out <new-directory>
+```
+
+Use the official MSO automation environment with pyserial and NumPy. The runner
+reuses one headless instrument session, verifies identities, waits for the DUT
+acknowledgement before starting the independent generator, and checks every
+capture before continuing. `--case baseline-before` allows a separate setup
+check; `--case faults` selects only the 108 faults. Outputs are never overwritten.
+The [electrical reviewer](../tools/review_daisy_jack_matrix.py) retains all prior
+probe/service/presence/ADC/analog gates and requires the actual low interval to
+agree with the generator record. Because a generator transition can occur while
+the probe is already low, it reports bounded transition intervals from independent
+high-probe voltage apertures, rather than exact stimulus-edge timestamps.
+This is electrical substitution, not a measurement of contact bounce or plug
+position; it does not replace the manual cable evidence or qualify audio load
+and protected production inputs. Passing this finite matrix closes this fixture's
+planned timing round; a failure calls for a targeted diagnosis, not automatic
+expansion into more manual repetitions.
+
+The [complete campaign manifest](../tests/measured/daisy/2026-10-19-jack-matrix/campaign.json)
+records all 110 physical passes: 2,195,482 observations,
+4,518 deliberately missed slots, 4,572 invalid readings and
+220 expected presence edges. There were no ADC failures, extra output
+transitions or stable analog/digital contradictions. The 44 ambiguous analog
+apertures and 43 digital crossing apertures remain counted as uncertain,
+rather than relabelled as stable voltage agreement. Full source, service, probe,
+voltage, output and dwell checks passed before the runner advanced each case.
+Acquisition was split after a host reservation check stopped before the next
+stimulus. The 80 accepted recordings were retained; the remaining 29 fault
+cases and final baseline were acquired separately. The interruption itself
+does not count as a physical test result.
+
+All fault-invalid observations preserved the last published state and cleared
+partial qualification. In 24 cases insertion qualification was still pending
+and restarted with 512 fresh valid observations; 24 pending removal cases
+required 64. Other faults arrived after publication and preserved that state.
+The one-extra-slot comparisons around the pending-window boundary show why the
+actual publication order matters, even for a single 500 us invalid observation.
+These counts describe this configuration, not recommended universal jack delays.
+
+The public dataset includes 18 complete wire/digital/derived-analog/generator
+replay fixtures: both baselines, all six phases and both fault types at the
+100 ms duration with zero extra slots, plus the four 500 us one-extra-slot
+qualification-boundary cases. [Measured regressions](../tests/test_daisy_jack_matrix_measured.py)
+recheck these full records. The other 92 cases have individual results and
+hashes in the manifest; all 110 complete native scope recordings remain in the
+operator's archive. Full native waveforms are not embedded in the repository.
+No portable detector or firmware change was required for this round.
+The planned passive-fixture timing matrix is complete; audio/interrupt load
+and a protected production input remain separate validation stages.
+
+### Jack audio/interrupt-load results
+
+Protocol 4 adds real 48 kHz stereo SAI/DMA callbacks to the jack fixture.
+The codec outputs silence; a timer-bounded busy loop adds 0–70% of one audio
+block's nominal duration inside the callback. This is a scheduling stress test,
+not a representative DSP benchmark or an audio-quality test. Block sizes
+16/48/96 produce nominal callback rates of 3000/1000/500 Hz. The adapter,
+qualification rules, probe sequence and 500 us observation deadline are unchanged.
+A conversion that finishes outside its slot remains invalid under load.
+
+With both boards powered off, add Saleae digital input **4 → fixture physical
+pin 4 (D3 / PC9)**. Keep digital inputs 0/1/2/3 on physical pins 23/1/2/3,
+the analog sense probe on pin 23, grounds on pin 40, and the existing generator
+and resistor wiring. The new marker goes high/low for every measured audio
+callback. The MSO API addresses this input as **port 1 / local channel 0**;
+ports have four channels each, as shown in the [official MSO example](https://discuss.saleae.com/t/headless-logic2-automartion-support-for-logic-mso/3798).
+The native export is `digital_2_0.bin`. It is an output marker only. No audio-output or powered-module wiring
+is required. The generator firmware is unchanged; protocol 4 requires a new
+fixture image built with `build.py --role jack-bench`.
+
+[`jack_load_matrix.py`](../examples/daisy/jack_load_matrix.py) prepares a finite
+14-case comparison: two audio-disabled baselines and 12 combinations of the
+three block sizes with 0/25/50/70% callback padding. Each ten-second run applies
+one electrical clamp at generator times 3–6.5 seconds; audio stops at firmware
+time eight seconds. A separate three-case `--stage recovery` holds the clamp
+until generator time 10.5 seconds in a fourteen-second run, allowing a pending
+insertion to qualify after audio stops. All fourteen sweep cases and three recovery cases now have complete independent
+evidence. Four further cases inject a 25 ms ADC gap or foreground pause just
+before insertion/removal qualification, using the measured responsive 16-sample,
+25% padding profile (`--stage faults`).
+
+```sh
+python3 examples/daisy/jack_load_matrix.py --plan-only
+python3 examples/daisy/jack_load_matrix.py --stage sweep \
+  --port <fixture-port> --generator-port <generator-port> --scope-id <physical-MSO-id> \
+  --manifest <protocol-4-jack-manifest> --generator-manifest <generator-manifest> \
+  --out <new-directory>
+```
+
+The [load reviewer](../tools/review_daisy_jack_load.py) checks every callback pulse
+against firmware counts, maximum duration and maximum interval, verifies actual
+load coverage and rejects overruns, late intervals, wrong block sizes or missing
+markers. All probe/service/output edges, ADC results and analog apertures remain
+subject to independent review. A one-second unloaded tail must recover complete
+valid empty-jack service. Qualification starvation is reported explicitly and
+cannot satisfy a required-response case. The campaign stops on a collection or
+physical-integrity failure, retaining the failed evidence. These checks do not
+qualify arbitrary interrupt priorities, mechanical contact bounce, external
+powered sources, or a protected production input.
+
+Source timing uses three native analog samples around each service midpoint,
+checked against the independent digital sense level. Full boundary-inclusive
+ADC-aperture extrema are still checked separately; their ambiguities stay
+ambiguous. This matters when a long interrupt delays service until just before
+the next probe bit. That bit can enter the analog boundary sample even though
+the interior voltage is stable. Neither source transition may have a timing
+bracket wider than 10 ms. Retained captures can be re-extracted into a new
+directory without overwriting their original review. `--case` accepts exact,
+comma-separated names to continue unstarted cases in a new campaign directory.
+
+The [21-case measured campaign](../tests/measured/daisy/2026-10-19-jack-audio/campaign.json)
+retains full wire records, every digital edge, conservative ADC-aperture extrema,
+interior source-timing witnesses and native-recording hashes. Firmware source is
+`cf07a4d22a676b86c76cd80e61a6e120f9524d92`; no portable detector change was needed.
+Each result is one observed run, not a universal utilization limit:
+
+| Block size | Padding | Invalid observations | Missed slots | Qualification during the sweep |
+|---:|---:|---:|---:|---|
+| 16 | 0% | 0 | 0 | Responsive |
+| 16 | 25% | 0 | 0 | Responsive |
+| 16 | 50% | 298 | 0 | Responsive with interruptions |
+| 16 | 70% | 12,005 | 3,996 | Starved; recovered empty after load |
+| 48 | 0% | 0 | 0 | Responsive |
+| 48 | 25% | 2,505 | 0 | Responsive with interruptions |
+| 48 | 50% | 14,296 | 179 | Starved; recovered empty after load |
+| 48 | 70% | 8,002 | 7,997 | Starved; recovered empty after load |
+| 96 | 0% | 0 | 0 | Responsive |
+| 96 | 25% | 6,267 | 182 | Starved; recovered empty after load |
+| 96 | 50% | 6,932 | 4,151 | Starved; recovered empty after load |
+| 96 | 70% | 7,997 | 8,002 | Starved; recovered empty after load |
+
+The two audio-disabled baselines each had 20,000 observations, no invalid or
+missed observations, and the expected insertion/removal pair. Audio deadline
+checks alone would have missed the six starved profiles. A 96-sample callback
+at 48 kHz spans 2 ms; 25% padding already occupies approximately the entire
+500 us observation period, before settling and conversion. This is evidence for
+budgeting maximum interruption length as well as utilization, not for weakening
+validity checks. The three sustained-clamp tests all qualified insertion after
+70% padding stopped, about 256.0–256.2 ms after measured audio stop, then
+qualified removal. Invalidity preserved published state and reset partial progress.
+
+All four 25 ms fault comparisons also recovered under the responsive load.
+Each ADC gap produced 50 injected invalid observations; each foreground pause
+skipped 50 slots and invalidated one recovery observation. Pending insertion
+then needed 512 fresh valid observations and pending removal needed 64. The
+logged ADC-gap endpoints span 24,993 us between observed samples; foreground
+pauses span 25,000 us. These are not claims of calibrated absolute timing.
+Across all 21 cases: 399,398 observations, 44,602 missed slots, 86,408 invalid
+observations and 276,078 independently checked audio callbacks. No ADC
+conversion failures, audio deadline failures or false presence transitions were
+observed. The six starved sweep cases are operating limits, not responsive passes.
+
+One original review rejected the 48-sample/70% capture because full-aperture
+ambiguities left source-transition brackets 24.145/11.148 ms wide. The same
+retained native recording was reviewed with the separate interior witness,
+yielding 5.016/3.016 ms brackets. All 2,277 full-aperture ambiguities remain.
+The original rejection and source revisions are recorded in the campaign;
+no signal was rerecorded or relabeled to erase it. An earlier MSO setup attempt
+used an invalid digital port/channel and stopped before any stimulus; corrected
+mapping is documented above.
+
+### Scheduled jack acquisition results
+
+Protocol 5 replaces the foreground settle/conversion waits with a 50 us TIM7
+phase interrupt and a single-conversion ADC1 completion interrupt. Both run at
+preemption priority 0; SAI1 DMA runs at priority 1. Only one conversion can be
+outstanding. Probe settling starts after the GPIO write, and the completed
+conversion still has to meet the original 500 us slot deadline. The handlers
+do not poll the ADC, transmit USB data, or run catch-up conversions. A missing
+completion fails the run after 500 us. This is a Seed3 example adapter, not a
+new portable library API or a guarantee for arbitrary interrupt priorities.
+The implementation uses the pinned SDK's clock setup and the
+[STM32H750 timer/ADC registers](https://www.st.com/resource/en/reference_manual/rm0433-stm32h742-stm32h743753-and-stm32h750-value-line-advanced-armbased-32bit-mcus-stmicroelectronics.pdf).
+
+The audio busy budget excludes measured acquisition-handler body time, so
+preemption does not silently replace the requested CPU padding. Exception
+entry/exit overhead is not subtracted. The D4 waveform still measures the full
+callback duration, including preemption. Checksummed `JACQ` records report both
+interrupt counts, their maximum body durations, total body time, and peripheral
+fault counts. The load reviewer requires each handler body below 50 us, combined
+body time below 10% of the run, complete timer coverage, no late ADC results,
+and no missed slots beyond the deliberately injected pause. These are test
+acceptance budgets; measured costs are below.
+
+Fault 1 still withholds ADC evidence. Fault 2 now explicitly suspends acquisition
+while timer and audio interrupts continue; a foreground-only pause would no
+longer suspend acquisition. Its missing slots and first invalid recovery sample
+remain visible. This change in meaning is versioned rather than attributed to
+the earlier foreground-pause recordings. Operator finish publishes its deadline
+with acquisition masked and drains any in-flight conversion. Protocol 5 uses a
+strictly future slot boundary, including when a request lands exactly on the
+500 us boundary, so an already-started slot cannot fall outside the saved trace.
+
+The same 14 load comparisons, three sustained-clamp cases, and four qualification
+fault cases were repeated without rewiring or changing the generator firmware.
+Use a protocol-5 manifest with the commands above and new output directories.
+Every loaded protocol-5 case must qualify insertion while audio is active and
+removal after the electrical clamp is released, while also passing the audio
+deadline checks. The original 21 recordings remain unchanged. Host simulations exercise
+114 fault schedules plus timeout, missed-service and finish-drain cases; they
+do not establish real interrupt timing.
+
+The [final measured campaign](../tests/measured/daisy/2026-10-19-jack-scheduled/campaign.json)
+contains all 21 complete wire/digital/derived-analog/generator replays. All twelve
+load profiles now qualify both states, including the six previously starved
+profiles. No conversion missed its slot deadline, no unplanned slot was lost,
+and no audio deadline/size failure or false presence transition was observed.
+The final firmware source is `4d6f68b37af56376c410405ef21c72e8d5834077`.
+
+| Audio block | Padding profiles | Missed slots across four profiles | Invalid observations | Maximum measured callback duration |
+|---:|---|---:|---:|---:|
+| 16 | 0/25/50/70% | 0 | 0 | 237.44 us |
+| 48 | 0/25/50/70% | 0 | 0 | 709.54 us |
+| 96 | 0/25/50/70% | 0 | 0 | 1417.79 us |
+
+Across the 21 cases: **443,900 observations**, **100 deliberately
+skipped slots**, **102 invalid observations**, and **276,078 independently
+checked audio callbacks**. Each 25 ms ADC gap invalidated 50 observations; each
+25 ms acquisition pause skipped 50 slots and invalidated the first recovered
+observation. Insertion/removal then required 512/64 fresh observations. All
+three sustained-clamp cases qualified insertion during load, rather than waiting
+for audio to stop.
+
+The longest timer and ADC handler bodies measured **1.208 us** and
+**1.283 us**, respectively. Combined measured body time was
+**1.138–1.219%** of each run. These are device-clock measurements;
+exception entry/exit overhead is excluded. The scope independently checks every
+probe/service/presence edge and audio callback, including callback wall time
+with preemption. The new CPU-padding convention is deliberately documented;
+these percentages are not an exact workload-equivalence claim for the earlier
+foreground experiment.
+
+Two additional stationary recordings tested operator finish without audio and
+at 96 samples/70% padding. Both shortened a ten-second acquisition, drained the
+last conversion, preserved complete analog/digital coverage, and passed audio
+checks. A review during the preliminary 14-case sweep found a possible race in
+publishing the finish deadline; it was fixed before these checks and the full
+final campaign. All 14 preliminary load comparisons passed and their complete
+native recordings remain archived separately. The public manifest records their
+hashes. A Windows-only boolean/integer warning in a new host test was also fixed.
+
+One recovery-stage attempt stopped before acquisition or stimulus because the
+capture service could not enumerate the scope. Both boards and the scope were
+rechecked; all three recovery cases then passed in a fresh directory. The
+interrupted attempt remains in the native archive and its manifest hash is
+recorded in the public campaign.
+
+[Measured regressions](../tests/test_daisy_jack_scheduled_measured.py) rerun the
+independent reviewers on all 23 final recordings. Portable library headers are
+unchanged: the fix is the board adapter's acquisition schedule and ownership.
+These results do not qualify a protected production front end, real DSP and
+other DMA/bus traffic, long globally masked sections, or arbitrary higher-priority
+interrupts. Preserve invalidity and measure both domains on the target system.
+
+The flashed protocol 3 image passed three
+[stationary empty-jack preflights](../tests/measured/daisy/2026-10-19-jack-transition-preflight):
+baseline (6,000 observations), ADC gap (6,000 observations, exactly 50 injected
+invalid readings) and foreground pause (5,950 observations, 50 missed slots,
+one invalid recovery reading). Both fault intervals measured 25,000 us in the
+firmware clock. The independent service waveform agrees with the logged pause;
+relative interval disagreement stays below 0.297 us across these captures.
+All complete digital timelines, probe timing and analog plateau comparisons
+pass, with no ADC failures or false patched outputs. These runs use the default
+elapsed-time trigger; they verify the installed timing path and fixture, not
+faults during insertion/removal or calibrated absolute time.
+
+Two [ordinary insertion/withdrawal recordings](../tests/measured/daisy/2026-10-19-jack-transition)
+with the open-ended cable passed complete physical review. Trigger 2 fired one
+observation before pending patched qualification. A 25 ms ADC gap retained
+68,627 observations and invalidated exactly 50; a 25 ms foreground pause
+retained 72,661 observations, skipped exactly 50 slots and invalidated the first
+recovery reading. In both cases, partial qualification was discarded while the
+published state stayed unpatched. Exactly 512 fresh valid observations were
+then needed to publish patched. Each subsequent withdrawal produced one return
+to unpatched, with exactly two independently measured output changes overall.
+Complete probe/service timing, analog apertures and stationary dwells agree;
+there were no ADC failures, ambiguous apertures or stable voltage contradictions.
+These runs validate recovery at one qualification boundary on this fixture,
+without an audio workload. They do not time mechanical insertion or establish
+behavior at the other fault phases.
+
+The paired removal recordings in the same dataset also passed. Trigger 5 fired
+one observation before candidate unpatched qualification. The ADC gap retained
+101,711 observations with 50 injected invalids and no missed slots; the pause
+retained 82,871 observations, skipped 50 slots and invalidated one recovery
+reading. Both held the published patched state through invalid evidence,
+discarded partial progress, and required 64 fresh matching observations before
+publishing unpatched. Each full cycle produced exactly two physical output
+changes. All complete waveform and dwell checks pass, with no ADC failures or
+stable voltage contradictions. One digital crossing aperture in the removal
+ADC case remains identified as such; it is not counted as stable agreement.
+
+Together these four 25 ms cases cover both sides of the asymmetric qualification
+rule: 512 fresh valid observations to confirm patched after interruption, 64 to
+confirm unpatched. They are evidence for preserving published state while
+discarding incomplete evidence, not universal timing recommendations. Faults
+after publication and other offsets/durations are covered separately by the
+electrical-substitution matrix above. Audio/interrupt workloads and a protected
+production input circuit remain unqualified by these recordings.
+
+For manual tests, a generous maximum should not force the operator to wait after
+finishing. With protocol 2 or 3, a second process can run
+`python3 examples/daisy/jack_capture.py finish <capture-directory>`; it writes a
+token-bound request for the existing serial owner, without opening another port.
+`acquisition-complete.json` acknowledges the end of sampling; only the final
+checksum/replay can mark the download complete. Protocol 1 recordings remain
+replayable but do not support this finish command.
+
+`examples/daisy/jack_session.py` pairs this with the official
+[headless MSO automation preview](https://discuss.saleae.com/t/headless-logic2-automartion-support-for-logic-mso/3798).
+It requires explicit serial-port and scope identities and uses manual capture
+with no trimming or glitch filtering. After the fixture acknowledges acquisition
+end, it records another half-second before stopping the scope and retaining
+native waveforms while the Daisy downloads. The margin does not replace complete
+coverage checks. It never flashes. Call
+`jack_capture.py finish <session-directory>/fixture` when done. A successful
+collection is still marked **physical review pending**. The new scope path
+passed a 6,000-observation stationary comparison with the existing firmware;
+three [flashed protocol 2 checks](../tests/measured/daisy/2026-10-19-jack-finish)
+then passed complete wire, digital and analog review. An operator finish ended a
+300-second maximum at 2.2525 seconds (4,505 observations); an immediate request
+honored the one-second minimum (2,000 observations); a three-second run reached
+its maximum normally (6,000 observations). There were no missing slots, invalid
+readings, ADC failures or patched outputs. The scope stop calls took 59–62 ms;
+this is measured API-call duration, not end-to-end operator latency. Acquisition
+ends before the checksummed download and file export finish.
+
+One attempted run encountered delayed instrument discovery before acquisition
+or serial opening. The host now waits up to 20 seconds for the exact requested
+physical scope; it never substitutes another device. That failure remains in the
+operator's archive, and the subsequent minimum-duration retry passed. These
+checks qualify the stationary stop/save workflow, not insertion behavior.
+
+Three accepted three-second preflights cover the empty-jack baseline, 25 ms of
+invalidated ADC evidence, and a requested 25 ms foreground pause. They retain
+17,949 observations, all four digital timelines and one analog plateau sample
+per observation. There were no ADC failures or false patched states. Complete
+native analog waveforms are archived separately; the public plateau samples and
+extrema do not exclude glitches between those samples. All three first published
+ready-and-unpatched at observation 63, about 31.8 ms after acquisition began.
+Maximum service fit/interval/width disagreement was 0.187/0.288/0.200 us; probe
+timing disagreement was below 0.618 us. These compare two clocks, not calibrated
+absolute timing or voltage.
+
+The ADC-evidence gap invalidated 50 observations while real conversions continued.
+The requested foreground pause lasted 25,950 us on the firmware clock and skipped
+51 slots. Its first two recovery conversions completed past their slot deadlines:
+2,026,240 us versus 2,026,000 us, then 2,026,530 us versus 2,026,500 us. Both were
+invalid; the following conversion completed within its slot. The published
+unpatched state held throughout. **Check every probe/conversion deadline during
+recovery:** discarding a fixed single observation is not sufficient in this trace.
+The existing firmware already does this; the measurement corrected the new
+reviewer's assumption that recovery would produce exactly one invalid observation.
+
+An earlier baseline with a flat-low physical probe channel remains a rejected
+capture in the corpus, even though firmware replay and the other channels agree.
+Reseating that probe preceded the accepted baseline. A second checker correction
+uses the logged acquisition end for the final probe return to low, instead of the
+last conversion end; the final partial slot is real recorded time. Original
+rejections are preserved. Regressions reject missing/extra digital edges, altered
+probe timing, the wrong terminal-edge reference, and mismatched analog samples.
+The physical timing limits were not widened to accept unexplained edges.
+
+A fully inserted mono cable with its far end unconnected held the sense input
+low while the probe continued switching. Initial qualification published patched
+at observation 511, 255,789 us after acquisition began, as expected from eight
+64-observation bad windows. This is **command-start qualification**, not measured
+mechanical insertion latency. The baseline had 6,000 valid observations and no
+missed slots. A second run invalidated 50 ADC observations without changing the
+published patched state. A third run paused foreground service for 25,219 us,
+skipping 50 slots. Its first recovery observation was invalidated; subsequent
+conversions met their deadlines, and the patched state held. Across these three
+runs, 17,950 observations had zero ADC failures or false unpatched states.
+Complete digital traces and sampled analog plateaus agree; the native analog
+extrema across these runs were approximately −0.037 to +0.052 V, without a
+calibrated voltage-accuracy claim.
+
+Repeating the three cases with the cable's far end plugged into the passive
+second jack (tip through 1k to ground) also passed: 17,950 observations, zero ADC
+failures and no false unpatched states. Qualification again occurred at observation
+511. The ADC gap invalidated 50 observations; the foreground pause lasted 25,322 us,
+missed 50 slots and invalidated the first recovery observation. The sense input
+stayed low, with native analog extrema approximately −0.037 to +0.042 V. The
+far-end termination is a declared fixture fact; constant-low traces alone cannot
+distinguish it from the open-ended cable with this fixture's pull-down resistor.
+This passive termination does not qualify powered external module outputs.
+
+**Analog connection follow-up:** a later
+[empty-jack preflight](../tests/measured/daisy/2026-10-19-jack-analog-disagreement)
+had a near-zero analog trace even while the ADC and independent digital sense
+channel followed the high/low probe. That preflight remains rejected. The operator
+subsequently found the analog probe tip disconnected; after reseating it, a new
+6,000-observation empty-jack challenge passed all digital/ADC/analog comparisons,
+with zero missed slots, invalid observations or ADC failures. When the tip
+disconnected is unknown. The inserted-cable captures above retain their complete
+digital/replay evidence, but their near-zero analog readings alone cannot verify
+probe attachment. Their earlier voltage evidence remains unconfirmed pending
+repeat measurements. Challenge an analog measurement path with both known levels
+before and after a run whose expected value is constant low.
+
+The stationary inserted-cable checker requires a continuously low sense input
+and exactly one qualification transition after the corresponding ADC conversion.
+When a previous run left the presence output high, it also requires the command's
+reset transition at acquisition start, including when the new run starts empty.
+Missing/extra edges, early qualification,
+misplaced reset edges and contradictory analog voltage are rejected. The exporter
+checks the declared fixture case before publishing an allowlisted record.
+
+The first [ordinary insertion/withdrawal recording](../tests/measured/daisy/2026-10-19-jack-motion)
+contains three cycles with the passive far-end termination. All 600,000
+observations replay, with zero missed slots or ADC failures; all 1,200,000
+sampling-marker transitions and all probe/output transitions match. The output
+changes exactly six times and finishes unpatched. Global relative-clock fit,
+interval and pulse-width errors are 1.240, 0.325 and 0.138 us respectively.
+
+There are 1,494 invalid readings, all inside the ADC's ambiguous voltage band.
+Of these, 555 occur while the published state is already patched: that state
+holds through the ambiguity. The native analog waveform has 1,495 apertures
+whose extrema cannot establish a stable high or low; these remain explicitly
+ambiguous. Stable analog and digital apertures have no contradictory ADC codes.
+Known high/low empty-jack challenges pass before, between and after actions;
+inserted dwell intervals remain low. The public payload retains every wire
+record and digital transition plus analog extrema bracketing each aperture.
+Complete native analog files are separately identified by hashes. This is
+bounded evidence for invalid-input handling and qualification on one jack/cable,
+not a timestamp of mechanical seating or a universal insertion latency.
+
+Controlled partial withdrawal and broader repeatability across cables and
+sockets still need evidence. Subsequent slow-insertion and two-cable open-ended
+recordings are described below.
+Record all probe, sense, sampling and presence transitions, plus analog voltage.
+Compare complete sampling coverage, probe sequence, voltage and qualified
+changes before accepting a run. Software replay alone is not physical evidence.
+
+A subsequent [attempted slow/partial two-cycle recording](../tests/measured/daisy/2026-10-19-jack-motion/slow-partial-silent.json)
+ended cleanly on request at 116.5445 seconds, retaining all 233,089 observations.
+Replay and all four digital timelines agree: four output transitions, no missing
+slots or ADC failures, and 10,150 invalid readings. The operator reported that
+withdrawal force made pauses partway out difficult; precise partial positions
+and their durations were not established.
+
+**The complete physical review rejected this recording.** There are 41,328
+stable analog apertures that contradict the ADC, starting at 71.09365 seconds;
+later the analog signal stays near zero while the digital sense and ADC still
+follow the probe. The operator subsequently found the analog probe connection
+loose; its exact disconnection time was not independently observed. All original
+evidence is retained, and a regression requires this disagreement to remain a rejection. Correct
+digital state transitions cannot establish analog-probe continuity. Check the
+analog connection and restore a stationary high/low challenge before another
+manual test; do not trim the disagreeing tail or infer controlled partial
+withdrawal from the requested actions.
+
+After the operator secured the analog connection, a separate
+[stationary high/low challenge](../tests/measured/daisy/2026-10-19-jack-analog-disagreement/after-motion-reconnected.json)
+passed all 6,000 observations and complete digital timing checks. It had no
+invalid readings, missed slots, ADC failures or patched states; analog voltage
+ranged from -0.107 to 3.347 V. This establishes restored agreement for that
+stationary run. The preceding motion recording remains rejected, and neither
+record establishes probe continuity during a future movement.
+
+The next [slow-insertion attempt](../tests/measured/daisy/2026-10-19-jack-motion/slow-insertion-missing-tail.json)
+finished on request at 59.641 seconds with 119,282 firmware observations, four
+expected output transitions, 3,785 invalid readings and no missing slots or ADC
+failures. **Its full physical review also rejected it:** the scope retained only
+119,253 sampling pulses, missing the final 29, and its analog coverage ended
+early too. Re-exporting the original native capture produced byte-identical
+binary data on all five channels, so it did not recover the tail.
+
+The available prefix has no stable analog/ADC or digital/ADC contradictions,
+but that diagnostic never changes the complete-recording rejection. This led to
+a host capture change: keep the scope recording for half a second after the
+fixture acknowledges acquisition end, then stop/save normally. The fixture's
+operator finish remains immediate; the scope margin is independent. The cause
+inside the preview capture pipeline is not established, and every future run
+must still pass complete physical coverage checks.
+
+With that margin, six [stationary physical comparisons](../tests/measured/daisy/2026-10-19-jack-postroll)
+passed all wire, digital and analog checks across 257,356 observations. They
+covered the one-second minimum, two short operator finishes, a three-second
+natural finish, a 60-second natural finish and a 60.188-second operator finish.
+All retained the complete scope tail, with no invalid readings, missing slots,
+ADC failures or false patched states. This verifies the margin for those cases;
+it does not qualify the rejected motion recording or replace a new motion test.
+
+A new [two-cycle motion recording](../tests/measured/daisy/2026-10-19-jack-motion/slow-insertion-postroll.json)
+with the scope margin passes full physical review. The operator was asked to
+insert slowly with a pause partway, fully seat, then withdraw normally. It ended
+on request at 73.1985 seconds with 146,397 complete observations, all 292,794
+sampling-marker transitions, four qualified output changes and no missed slots
+or ADC failures. The scope retains the full acquisition tail. All probe and
+presence transitions match; stable analog/digital apertures have no ADC
+contradictions. There are 2,052 invalid readings, all inside the ADC's ambiguous
+band while the published state is unpatched, and 2,052 ambiguous analog
+apertures. This extends the accepted evidence to the requested slow-insertion
+sequence on this fixture; the exact plug position and pause timing were not
+independently measured. The two preceding rejected recordings remain rejected.
+
+A separate [ordinary two-cycle recording with the far end open](../tests/measured/daisy/2026-10-19-jack-motion/ordinary-open.json)
+also passes full physical review. The cable's free end rested on insulation;
+the fixture's existing 100k sense pulldown remained in place. Operator finish at
+46.971 seconds retained all 93,942 observations, 187,884 sampling-marker edges
+and four output changes. There were no missed slots, ADC failures, invalid
+readings, ambiguous analog apertures or stable analog/digital contradictions.
+The scope tail, probe sequence and dwell checks all pass. This adds open-ended
+motion evidence on the same cable and jack; it does not establish behavior
+across different cables, sockets or powered sources. These ordinary movements
+were not speed-matched to the earlier slow-insertion recording.
+
+A [second open-ended cable recording](../tests/measured/daisy/2026-10-19-jack-motion/ordinary-open-second-cable.json)
+passes the same complete checks. The operator described this cable as about
+four feet long and the preceding cable as about six inches; these are estimates,
+not independently measured dimensions. Two ordinary cycles finished on request
+at 39.2425 seconds: 78,485 observations, all 156,970 sampling-marker edges, four
+output changes and no missed slots, ADC failures or invalid ADC readings. One
+analog aperture was ambiguous, and two digital apertures contained a transition;
+they remain counted as such. Stable analog/digital apertures did not contradict
+the ADC. This establishes repeatability for those two cables on one jack, not a
+general cable-length limit, tolerance to all cable capacitances or protection
+against powered external signals. Firmware and library headers were unchanged.
+
+An external signal correlated with the probe can look unpatched; a prolonged
+partial insertion can qualify a state. Neither is ruled out by this mechanism.
+These command-start tests do not validate boot-time rail or initialization behavior.
+
 ## Daisy Seed3 control bench
 
 The [firmware](../examples/daisy/main.cpp), [builder](../examples/daisy/build.py)

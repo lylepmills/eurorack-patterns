@@ -1,0 +1,153 @@
+{
+  "schema": 1,
+  "evidence": "measured on hardware",
+  "status": "pass",
+  "build": {
+    "build_id": "c3a3acff313df127ea766ede",
+    "source_commit": "1fd5f20a93eff5643d8c00d7ca49072ae68f4674",
+    "sdk_revision": "e1f740a5a7fe38e6d6d41281bf99fe7a2bb3827b",
+    "binary_sha256": "2646b105e8c570a2f3f0c647608e7bce52adf7d71dda9c273db0bb347cf0dcfb"
+  },
+  "fixture": {
+    "board": "Seed3",
+    "case": "manual-transition-fault",
+    "jack": "switched mono; insertion/withdrawal with a triggered fault; unpowered far end",
+    "probe_series_ohms": 1000,
+    "sense_pulldown_ohms": 100000,
+    "scope_probe": "10x; sense node",
+    "analog_rate_hz": 250000.0
+  },
+  "run": {
+    "token": 3061860792,
+    "duration_ms": 300000,
+    "fault": 1,
+    "policy": 1,
+    "count": 101711,
+    "missed": 0,
+    "adc_failures": 0,
+    "elapsed_us": 50855500,
+    "fault_begin_us": 38655650,
+    "fault_end_us": 38680650,
+    "finish_reason": "operator",
+    "finish_request_us": 50855290,
+    "acquisition_limit_us": 50855500,
+    "trigger": 5,
+    "fault_delay_slots": 0,
+    "fault_duration_us": 25000,
+    "trigger_seq": 77310,
+    "trigger_us": 38655289,
+    "fault_due_us": 38655500
+  },
+  "review": {
+    "schema": 1,
+    "status": "pass",
+    "case": "insertion/withdrawal",
+    "samples": 101711,
+    "cycles": 1,
+    "run": {
+      "token": 3061860792,
+      "duration_ms": 300000,
+      "fault": 1,
+      "policy": 1,
+      "count": 101711,
+      "missed": 0,
+      "adc_failures": 0,
+      "elapsed_us": 50855500,
+      "fault_begin_us": 38655650,
+      "fault_end_us": 38680650,
+      "finish_reason": "operator",
+      "finish_request_us": 50855290,
+      "acquisition_limit_us": 50855500,
+      "trigger": 5,
+      "fault_delay_slots": 0,
+      "fault_duration_us": 25000,
+      "trigger_seq": 77310,
+      "trigger_us": 38655289,
+      "fault_due_us": 38655500
+    },
+    "state_changes": [
+      {
+        "seq": 63,
+        "time_us": 31789,
+        "ready": true,
+        "patched": false
+      },
+      {
+        "seq": 64639,
+        "time_us": 32319789,
+        "ready": true,
+        "patched": true
+      },
+      {
+        "seq": 77424,
+        "time_us": 38712289,
+        "ready": true,
+        "patched": false
+      }
+    ],
+    "service_alignment": {
+      "clock_scale_ppm": 39.88089682382956,
+      "max_fit_residual_us": 0.622077428677585,
+      "max_interval_error_us": 0.31294044614691074,
+      "max_work_width_error_us": 0.5000000004031904,
+      "pre_application_high_intervals_s": []
+    },
+    "probe_max_error_us": 0.7749821335778506,
+    "terminal_release_error_us": null,
+    "sense_edges": 44270,
+    "presence_edges": 2,
+    "invalid_observations": 50,
+    "ambiguous_analog_apertures": 0,
+    "digital_transition_apertures": 1,
+    "dwell_checks": [
+      {
+        "begin_us": 0,
+        "end_us": 1000000,
+        "patched": false,
+        "samples": 2000
+      },
+      {
+        "begin_us": 49855500,
+        "end_us": 50855500,
+        "patched": false,
+        "samples": 2000
+      },
+      {
+        "begin_us": 15675789,
+        "end_us": 16675789,
+        "patched": false,
+        "samples": 2000
+      },
+      {
+        "begin_us": 35016039,
+        "end_us": 36016039,
+        "patched": true,
+        "samples": 2000
+      },
+      {
+        "begin_us": 44283894,
+        "end_us": 45283894,
+        "patched": false,
+        "samples": 2000
+      }
+    ],
+    "raw_sha256": "06715c7e768f9bd7cba7b19d9cfae6ae972ccde0a3044235c32334152b6aea3b",
+    "limitation": "One fixture/cable and operator-declared motion; no mechanical seating timestamp or universal insertion latency. Aperture extrema do not resolve voltage inside a conversion or qualify glitches between observations. No external powered source or audio load."
+  },
+  "native_scope_sha256": {
+    "analog_0.bin": "be14769cf1b82530b1437b85cb76320684db8ae10b6775d175ffbbbecd9954f0",
+    "settings.json": "8294e3c19c5592f6a6df2992da3cba22bcd2c56afcf8f493b274952f667e0926",
+    "capture.sal": "ee4e960784c587e097db5a445ada1ae34d8fbce475e8eeb6a46b3c2190248bff",
+    "digital_1_2.bin": "483dfa94a9202896aff67702da7efdaadb459fe3cf56b7375e3fcd11dadb0b83",
+    "digital_1_3.bin": "b9531f880df1dcbbab8649674ef97f204e0f14d621f06647c08f6b019ad1304d",
+    "digital_1_1.bin": "5e055db68550c0739725bcf0bb79dc2e1e9d972d767b96b35e9473bf2b58ade2",
+    "digital_1_0.bin": "4c5fc2b43aac16d17f2b052bb6ed8b7c8ff680e9e9d390e133d27c74b5342572"
+  },
+  "limitation": "One fixture/cable and operator-declared motion; no mechanical seating timestamp or universal insertion latency. Aperture extrema do not resolve voltage inside a conversion or qualify glitches between observations. No external powered source or audio load. All acquired digital transitions and complete wire evidence; analog payload contains extrema over captured service apertures, not the full waveform.",
+  "raw_sha256": "06715c7e768f9bd7cba7b19d9cfae6ae972ccde0a3044235c32334152b6aea3b",
+  "raw_compressed_sha256": "861892fb17d11339faa06ebe4c3d2957714cf57b808ea9fef218c6ec7eff2040",
+  "channels_sha256": "70d1ae5d8e226e4a5ff0547ffd69d5002ba7741261b7913806c9ed8bb80da1ae",
+  "channels_compressed_sha256": "e0782159a36320584369ab1cfd2f61159254334c14b9f664e506c30434a18fcf",
+  "analog_sha256": "f32c8faae5d3ff8ed4c0390edf20da35a3db7ceea382d7754305c40af6499bb4",
+  "analog_compressed_sha256": "6c77b42d8450f58707f9d3d4c5e54141777ee276def7a8107779147469c9e060"
+}

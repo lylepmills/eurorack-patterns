@@ -58,6 +58,21 @@ a sequence that increments only when decoding is called cannot, by itself,
 prove that an upstream acquisition was lost.
 The portable detector has no sequence counter because transports differ.
 
+Budget the longest interruption of acquisition, not only average CPU use. In
+the [Daisy load campaign](validation.md#jack-audiointerrupt-load-results), 25%
+padding in 16-sample audio callbacks preserved every 500 us observation slot;
+the same nominal percentage in 96-sample callbacks prevented qualification.
+The longer uninterrupted callback exceeded the foreground acquisition budget.
+Invalidating those observations prevented false progress, but could not make
+the detector responsive. All three heavy-load recovery tests recognized a
+sustained insertion after the load stopped. Measure consecutive valid
+observations and recovery as well as audio deadlines. A faster acquisition
+path, DMA, or different scheduling needs its own evidence; accepting late or
+duplicated samples to hide starvation would break this contract.
+Holding the published state is not a freshness guarantee: it can become stale
+while the cable changes. The host can monitor time since a completed valid
+window and choose an explicit stale-state indication or routing policy.
+
 The synthetic presence fixtures cover startup invalid data, a first-window
 decision, partial insertion chatter, unplug/reinsert, sustained bad windows,
 and adapter-labeled missing/duplicate observations. They do not claim

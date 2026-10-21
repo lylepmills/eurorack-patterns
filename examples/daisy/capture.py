@@ -237,7 +237,7 @@ class LineReader:
         self.port, self.raw = port, raw
         self.pending = bytearray()
 
-    def read_line(self, deadline):
+    def read_line(self, deadline, poll=None):
         while True:
             newline = self.pending.find(b'\n')
             size = newline + 1 if newline >= 0 else len(self.pending)
@@ -248,6 +248,8 @@ class LineReader:
                 return line
             if time.monotonic() >= deadline:
                 raise TimeoutError('No complete response before timeout; raw data preserved')
+            if poll is not None:
+                poll()
             # pyserial.read_until performs a separate read for every byte.
             # Buffered draining avoids that overhead during multi-megabyte
             # downloads. A one-byte read waits when no bytes are ready.

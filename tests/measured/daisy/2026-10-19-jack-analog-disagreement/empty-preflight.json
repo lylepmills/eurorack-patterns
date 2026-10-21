@@ -1,0 +1,52 @@
+{
+  "schema": 1,
+  "evidence": "measured on hardware",
+  "status": "analog-disagreement",
+  "build": {
+    "build_id": "f664ea4c86ad208d6560e955",
+    "source_commit": "22bbd3edbb1658342bd237687cf34ec3ed81ad1f",
+    "sdk_revision": "e1f740a5a7fe38e6d6d41281bf99fe7a2bb3827b",
+    "binary_sha256": "efd245b0e5376eeb87427f9e5f5587f4c4d8ba80965a838789370293eafd56e0"
+  },
+  "fixture": {
+    "board": "Seed3",
+    "case": "empty",
+    "jack": "switched mono; empty jack",
+    "probe_series_ohms": 1000,
+    "sense_pulldown_ohms": 100000,
+    "scope_probe": "10x; sense node",
+    "analog_rate_hz": 1000000.0
+  },
+  "run": {
+    "token": 709008038,
+    "duration_ms": 3000,
+    "fault": 0,
+    "policy": 1,
+    "count": 6000,
+    "missed": 0,
+    "adc_failures": 0,
+    "elapsed_us": 3000000,
+    "fault_begin_us": 0,
+    "fault_end_us": 0
+  },
+  "review": null,
+  "native_scope_sha256": {
+    "record_result.json": "e2c07a4b9595bc307be1a418421aeda1d05c47a2ded8f8e0fbab3d6f85b9aff9",
+    "analog_0.bin": "42c06569e32e477526a95714075391053fd8afc0aa832859f70bf5f7a557e68b",
+    "digital_1.bin": "38de872fbd995861454b397eeb1dc409efbae835e5dbff35d74a2bc6d6286730",
+    "digital_0.bin": "85f385796e545594051d4a2c3e4c4bc3d5f0f33e39b78a89b01707d684eaab70",
+    "digital_2.bin": "2349e83b61af83f886e749d7cfc5fb81e5fd2d8d0436dcd2c69917d41f2ba6a8",
+    "digital_3.bin": "e43b232ec5e8bc6b54e709fb4748c36f41b4a7bd8c3f8e3f5c0c05b44a972693",
+    "capture_stdout.txt": "a84909f4908348cb00f3038e857a3d374687781f9fc0eeb1f1c5b0b16f09f6bd",
+    "capture_config_full.json": "351807b411d40ff9d9556b441124ef295f81d8c23e6a2a8cdbabef1b252f1061",
+    "record_options.json": "234275ff86d222c17862891e801e656ee6d45d71caa9387cfe1638243a9788c8"
+  },
+  "limitation": "Complete digital timelines and wire records; analog export is one plateau sample per observation plus extrema, not the full waveform. No insertion or external-module voltage qualification.",
+  "rejection": "Analog plateaus disagree with the independently recorded digital sense and ADC; cause unresolved, not a hardware pass.",
+  "raw_sha256": "690dfb7af95dee1626ef6f8830f23295eb0df5fae3c33cfb100aa7c8f6c67f7f",
+  "raw_compressed_sha256": "a3d3e6741181edc2b31370d900eb27b1530a8b1341ef1fa2083c709b445a4e69",
+  "channels_sha256": "6e1c3276507910b5e461ad631dd9b5f0a17aa0dc7e51cb68eda89735a0b136d0",
+  "channels_compressed_sha256": "8b1f6fe7dc9b454e0d8e5c117faa69d87a00470bbc32eef90a90d8f6290c65fa",
+  "analog_sha256": "671e7ebc3004e1cf9396995332928f773b23190025e2f60df7bb472cef229dd9",
+  "analog_compressed_sha256": "ce38127184f63b79654b5cd50bff12884f0823baceacf454f212795e2fbb349a"
+}

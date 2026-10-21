@@ -1,0 +1,221 @@
+{
+  "schema": 1,
+  "evidence": "measured on hardware",
+  "status": "pass",
+  "build": {
+    "build_id": "fdddf7dae7383f425b8fbf08",
+    "source_commit": "cf07a4d22a676b86c76cd80e61a6e120f9524d92",
+    "sdk_revision": "e1f740a5a7fe38e6d6d41281bf99fe7a2bb3827b",
+    "binary_sha256": "659e1b3b6328d5ae6b26961e704fee3456d7d5aa52fca42dfbe2bc2af0b4286c"
+  },
+  "fixture": {
+    "board": "Seed3",
+    "case": "automated-electrical-clamp",
+    "jack": "switched mono; empty jack with independent open-drain clamp on tip/sense; no cable movement",
+    "probe_series_ohms": 1000,
+    "sense_pulldown_ohms": 100000,
+    "scope_probe": "10x; sense node",
+    "analog_rate_hz": 250000.0
+  },
+  "run": {
+    "token": 3965413811,
+    "duration_ms": 10000,
+    "fault": 0,
+    "policy": 1,
+    "count": 20000,
+    "missed": 0,
+    "adc_failures": 0,
+    "elapsed_us": 10000000,
+    "fault_begin_us": 0,
+    "fault_end_us": 0,
+    "finish_reason": "duration",
+    "finish_request_us": 0,
+    "acquisition_limit_us": 10000000,
+    "trigger": 0,
+    "fault_delay_slots": 0,
+    "fault_duration_us": 25000,
+    "trigger_seq": 4294967295,
+    "trigger_us": 0,
+    "fault_due_us": 0,
+    "audio": {
+      "block": 16,
+      "permille": 0,
+      "off_ms": 8000,
+      "end_us": 8000000,
+      "callbacks": 24007,
+      "max_work_ticks": 128,
+      "max_interval_ticks": 80072,
+      "over_budget": 0,
+      "late_intervals": 0,
+      "bad_size": 0,
+      "period_ticks": 80000,
+      "timer_hz": 240000000
+    }
+  },
+  "review": {
+    "schema": 1,
+    "status": "pass",
+    "case": "automated jack audio load",
+    "samples": 20000,
+    "run": {
+      "token": 3965413811,
+      "duration_ms": 10000,
+      "fault": 0,
+      "policy": 1,
+      "count": 20000,
+      "missed": 0,
+      "adc_failures": 0,
+      "elapsed_us": 10000000,
+      "fault_begin_us": 0,
+      "fault_end_us": 0,
+      "finish_reason": "duration",
+      "finish_request_us": 0,
+      "acquisition_limit_us": 10000000,
+      "trigger": 0,
+      "fault_delay_slots": 0,
+      "fault_duration_us": 25000,
+      "trigger_seq": 4294967295,
+      "trigger_us": 0,
+      "fault_due_us": 0,
+      "audio": {
+        "block": 16,
+        "permille": 0,
+        "off_ms": 8000,
+        "end_us": 8000000,
+        "callbacks": 24007,
+        "max_work_ticks": 128,
+        "max_interval_ticks": 80072,
+        "over_budget": 0,
+        "late_intervals": 0,
+        "bad_size": 0,
+        "period_ticks": 80000,
+        "timer_hz": 240000000
+      }
+    },
+    "qualification": "responsive",
+    "first_ready_us": 31789,
+    "patched_while_audio_active": true,
+    "late_adc_observations": 0,
+    "state_changes": [
+      {
+        "seq": 63,
+        "time_us": 31789,
+        "ready": true,
+        "patched": false
+      },
+      {
+        "seq": 6527,
+        "time_us": 3263789,
+        "ready": true,
+        "patched": true
+      },
+      {
+        "seq": 13119,
+        "time_us": 6559792,
+        "ready": true,
+        "patched": false
+      }
+    ],
+    "audio": {
+      "callbacks": 24007,
+      "independent_marker": "verified every callback",
+      "minimum_work_us": 0.42698296864630797,
+      "maximum_work_us": 0.6319747922930673,
+      "maximum_interval_us": 333.63269232487994,
+      "measured_end_us": 8000000
+    },
+    "generator": {
+      "schema": 1,
+      "status": "software timing passed; physical verification pending",
+      "info": {
+        "protocol": 1,
+        "kind": "daisy-pulse-generator",
+        "board": "seed3",
+        "build_id": "4e68efce89b64d686cf11c63",
+        "timer_hz": 240000000,
+        "armed": false,
+        "released": true,
+        "max_edges": 64,
+        "max_us": 30000000,
+        "max_late_us": 25
+      },
+      "token": 1274437000,
+      "edges": [
+        {
+          "seq": 0,
+          "due_us": 3000000,
+          "before_us": 3000000,
+          "after_us": 3000000,
+          "pressed": 1
+        },
+        {
+          "seq": 1,
+          "due_us": 6500000,
+          "before_us": 6500000,
+          "after_us": 6500000,
+          "pressed": 0
+        }
+      ],
+      "end_us": 6500000,
+      "max_lateness_us": 0,
+      "raw_sha256": "002e0a18376f9b240d70746ae728c80d1c94af4b6066672c4145319161e87741"
+    },
+    "service_alignment": {
+      "clock_scale_ppm": 39.88720380965205,
+      "max_fit_residual_us": 0.5491876375162974,
+      "max_interval_error_us": 0.7080563963517648,
+      "max_work_width_error_us": 0.7160000005933398,
+      "pre_application_high_intervals_s": []
+    },
+    "probe_max_error_us": 0.9220229664208546,
+    "terminal_release_error_us": 0.3104161994116339,
+    "clamp_onset_bounds_s": [
+      3.8950816819999994,
+      3.8960976819999993
+    ],
+    "clamp_release_bounds_s": [
+      7.394721682,
+      7.396237681999999
+    ],
+    "source_timing_evidence": "Three interior native analog samples per service pulse, checked against digital sense; full ADC aperture review unchanged",
+    "physical_clamp_duration_bounds_s": [
+      3.498624000000001,
+      3.5011559999999995
+    ],
+    "invalid_observations": 0,
+    "ambiguous_analog_apertures": 0,
+    "digital_transition_apertures": 0,
+    "recovery_tail_samples": 2000,
+    "raw_sha256": "4b550c81821eff84b2edc55a2ef7a4f32f00e57b82f4fd0e5eb71f829b301bb4",
+    "limitation": "One passive electrical-clamp fixture; silent SAI DMA callbacks with measured busy padding. Not DSP/audio quality, mechanical motion, calibrated absolute latency, arbitrary IRQ priorities or protected-input qualification."
+  },
+  "native_scope_sha256": {
+    "analog_0.bin": "3d812d144b580fc276466fe47fc55bac337357959dec3f343595a0649d1c7bd2",
+    "settings.json": "5d6d91b658c08457a42e2f1ca06cb05b8942b54dd0c081d8daec4b0665a08087",
+    "capture.sal": "70c9f75e43206b227f597f1f4db7b4cab90b596cdf79c3580a9fbcb16a3bed80",
+    "digital_2_0.bin": "ad4f4a6f627e85c701d17991ded178713dd7469f6a5ec2f52e8b8a275f1aaa63",
+    "digital_1_2.bin": "f792b2f91a0bc81f656946c470ab90e81d918d4bb954ba5b0c4a927079ec2426",
+    "digital_1_3.bin": "bd2cde58e30f809ab65366d2ee1e5f09989735bebc1f73a93d77a29e30bb3c01",
+    "digital_1_1.bin": "21a39b992e4bdc3cade1837f415502baa3e79e341ba21a922641be2d51aa078b",
+    "digital_1_0.bin": "78c09c74b627708cb94c1224888020f7a62bc43b09221c34084a667c3da549f0"
+  },
+  "limitation": "One passive electrical-clamp fixture; silent SAI DMA callbacks with measured busy padding. Not DSP/audio quality, mechanical motion, calibrated absolute latency, arbitrary IRQ priorities or protected-input qualification. All acquired digital transitions and complete wire evidence; analog payload contains extrema over captured service apertures, not the full waveform.",
+  "generator_times_us": [
+    3000000,
+    6500000
+  ],
+  "generator_build": {
+    "build_id": "4e68efce89b64d686cf11c63",
+    "source_commit": "3dab3a483c103928898a13bf91fd1844e23790d2",
+    "sdk_revision": "e1f740a5a7fe38e6d6d41281bf99fe7a2bb3827b",
+    "binary_sha256": "2f132cc4c0bd65dbff4430799ab20bf2386f7520122ceb66b85f4609de89693c"
+  },
+  "raw_sha256": "4b550c81821eff84b2edc55a2ef7a4f32f00e57b82f4fd0e5eb71f829b301bb4",
+  "raw_compressed_sha256": "0960f0877942d295e3ea6956b4186c3ae8322c6d98ae90dd421f8a8ef43284dc",
+  "channels_sha256": "9053abafe77c1f7b94f6f6da601daa74f9eec77f352d84a6981acbda22f76505",
+  "channels_compressed_sha256": "4e16b38bd31f7a1878e11d279b339dd84dad28f636a4d6a95576135ae56b86a6",
+  "analog_sha256": "a3718c0c36d2e0a4cada0a768c8c6a1a95acb72db22e8f2e16497ecdb9065ca7",
+  "analog_compressed_sha256": "1d27eb66bc3e9f446c4a6c7258495bd906d33a6af87ab852b1bbe57b9b5842dd",
+  "generator_sha256": "002e0a18376f9b240d70746ae728c80d1c94af4b6066672c4145319161e87741",
+  "generator_compressed_sha256": "3f75e1d74d21aa4e3f3befb955c7f28c14a6a81dd78b4de0594636737fd1b46f"
+}

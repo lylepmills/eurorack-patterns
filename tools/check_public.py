@@ -13,6 +13,9 @@ import subprocess
 from urllib.parse import unquote, urlsplit
 
 ROOT = Path(__file__).resolve().parents[1]
+# A complete five-minute bench wire trace is larger than 16 MiB. Scan it in
+# full; retain a bounded decompression limit and reject, never skip, excess.
+MAX_COMPRESSED_TEXT = 64 * 1024 * 1024
 
 def git(*args):
     return subprocess.check_output(['git', '-C', str(ROOT), *args])
@@ -38,8 +41,8 @@ def main():
         try:
             if path.name.endswith('.txt.gz'):
                 with gzip.open(path, 'rt', encoding='utf-8') as stream:
-                    text = stream.read(16 * 1024 * 1024 + 1)
-                if len(text) > 16 * 1024 * 1024:
+                    text = stream.read(MAX_COMPRESSED_TEXT + 1)
+                if len(text) > MAX_COMPRESSED_TEXT:
                     problems.append(name + ': compressed text exceeds review limit')
                     continue
             else:

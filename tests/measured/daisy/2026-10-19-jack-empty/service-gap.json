@@ -1,0 +1,107 @@
+{
+  "schema": 1,
+  "evidence": "measured on hardware",
+  "status": "pass",
+  "build": {
+    "build_id": "f664ea4c86ad208d6560e955",
+    "source_commit": "22bbd3edbb1658342bd237687cf34ec3ed81ad1f",
+    "sdk_revision": "e1f740a5a7fe38e6d6d41281bf99fe7a2bb3827b",
+    "binary_sha256": "efd245b0e5376eeb87427f9e5f5587f4c4d8ba80965a838789370293eafd56e0"
+  },
+  "fixture": {
+    "board": "Seed3",
+    "jack": "switched mono; empty throughout",
+    "probe_series_ohms": 1000,
+    "sense_pulldown_ohms": 100000,
+    "scope_probe": "10x; sense node",
+    "analog_rate_hz": 1000000.0
+  },
+  "run": {
+    "token": 2219298951,
+    "duration_ms": 3000,
+    "fault": 2,
+    "policy": 1,
+    "count": 5949,
+    "missed": 51,
+    "adc_failures": 0,
+    "elapsed_us": 3000000,
+    "fault_begin_us": 2000000,
+    "fault_end_us": 2025950
+  },
+  "review": {
+    "schema": 1,
+    "status": "pass",
+    "case": "empty jack",
+    "samples": 5949,
+    "run": {
+      "token": 2219298951,
+      "duration_ms": 3000,
+      "fault": 2,
+      "policy": 1,
+      "count": 5949,
+      "missed": 51,
+      "adc_failures": 0,
+      "elapsed_us": 3000000,
+      "fault_begin_us": 2000000,
+      "fault_end_us": 2025950
+    },
+    "raw_sha256": "e2a3919415668f44769b7f37eaee2908da5135d81f12ca447611d0bf8b0798b8",
+    "service_alignment": {
+      "clock_scale_ppm": 40.00223655142854,
+      "max_fit_residual_us": 0.18623653752729297,
+      "max_interval_error_us": 0.28799888145232444,
+      "max_work_width_error_us": 0.10000000061373271,
+      "pre_application_high_intervals_s": []
+    },
+    "probe_edges": 3006,
+    "probe_max_error_us": 0.6170003357119924,
+    "terminal_release_error_us": null,
+    "propagation_min_us": 0.033999998372280515,
+    "propagation_max_us": 0.04000000020099037,
+    "invalid_observations": 2,
+    "state_changes": [
+      {
+        "seq": 63,
+        "time_us": 31789,
+        "ready": true,
+        "patched": false
+      }
+    ],
+    "analog_min_volts": -0.1166195422410965,
+    "analog_max_volts": 3.336615800857544,
+    "limitation": "One empty-jack fixture, no audio load, insertion/withdrawal, calibrated voltage or absolute time qualification. Analog plateau samples cannot exclude between-sample glitches."
+  },
+  "native_scope_sha256": {
+    "record_result.json": "d477790a4c07777e45cac5337860ea5f0dfa342b3e4c0ad18ad2dd71262778eb",
+    "analog_0.bin": "4149f242580b1c871f0297210afce3f97d9cd0f53212c3a49f2e207c9a4db364",
+    "digital_1.bin": "e9b6b9598bcf56d3edf7f4af31e23ca3e4a0f9df45b048347f3b38b538a491e4",
+    "digital_0.bin": "d78b91325cd409b1eb00ed1f738831bd2835d3982f930ddd3e757a5c63389905",
+    "digital_2.bin": "9b9fcc75b3450ed64c747a8e72cda3c8bc038c442dccb31b2fd81c155b17d84a",
+    "digital_3.bin": "b8ed866143422280d617691842dbb1438b2a87c9c7b3a76b2cb92be374fe969d",
+    "capture_stdout.txt": "3ba74987417a6ed81f4851d587e5cc3f11460132bde2e6975123add494073822",
+    "capture_config_full.json": "351807b411d40ff9d9556b441124ef295f81d8c23e6a2a8cdbabef1b252f1061",
+    "record_options.json": "aa2ee13ae798ddc1d3821cf4926d9d72a50a5be85af683fccf0a8456a07ab550"
+  },
+  "limitation": "Complete digital timelines and wire records; analog export is one plateau sample per observation plus extrema, not the full waveform. No insertion or external-module voltage qualification.",
+  "raw_sha256": "e2a3919415668f44769b7f37eaee2908da5135d81f12ca447611d0bf8b0798b8",
+  "raw_compressed_sha256": "9b4b8e09c3a22ea609d2736fd6ae23c9689248fd5cf1c9cd8acab5fdc65e3c7b",
+  "channels_sha256": "a129fa6a3f9e157522c3cfb240d93479a10628d922cedd35a10ca90bed1b68a9",
+  "channels_compressed_sha256": "be3f155069db047ba18ba4f3b0ca4f9f9cffc6de2c7e151ba5563a403343b0d5",
+  "analog_sha256": "32bbe9f730ee4bd23aa53849a209e6e245dee1722748b24d10631dc9a8692730",
+  "analog_compressed_sha256": "939d141f2e1c22bd3434c47952cd37632c21aca42d27bf76df053cdc3c84fe88",
+  "original_checker_rejection": {
+    "reason": "Original private checker assumed exactly one invalid recovery read; actual slot deadlines invalidate the first two.",
+    "observed_invalid_sequences": [
+      4000,
+      4001
+    ],
+    "observed_adc_end_us": [
+      2026240,
+      2026530
+    ],
+    "slot_deadlines_us": [
+      2026000,
+      2026500
+    ]
+  }
+}

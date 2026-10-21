@@ -2,6 +2,28 @@
   "schema_version": 1,
   "download_base": "https://github.com/lylepmills/eurorack-patterns/releases/download/evidence-daisy-2026-10-20",
   "original_source_head": "077d816dd94322a421468d98086fb14601c2ecbd",
+  "source_history": {
+    "source_commit": "077d816dd94322a421468d98086fb14601c2ecbd",
+    "bundle_sha256": "f1cbcd5d2285173232f56b84aefdf73d1f3d4e356b344e553011d3f72138c36a",
+    "size": 2030334148,
+    "parts": [
+      {
+        "name": "source-history.bundle.part01",
+        "size": 943718400,
+        "sha256": "a57bccfbf4b85b240896fdb1912fa718e79ae08ec682fbc3b86c0f2d821ec152"
+      },
+      {
+        "name": "source-history.bundle.part02",
+        "size": 943718400,
+        "sha256": "7021daac372c18c8d5ba80cead136de7ad91646e5c787b6814ee85cb9ee9e009"
+      },
+      {
+        "name": "source-history.bundle.part03",
+        "size": 142897348,
+        "sha256": "e08303f02af56a3f3cb0d1c23ea3e7cde29374000e7e50a49e3411879c76da7f"
+      }
+    ]
+  },
   "archives": [
     {
       "name": "daisy-2026-10-14.tar",
@@ -834,28 +856,1857 @@
           "sha256": "bcf650c51cbc1a29dcbe41ac7185842f1307f18df726ff4a622d1ece6f882758"
         }
       ]
+    },
+    {
+      "name": "daisy-2026-10-19-jack-analog-disagreement.tar",
+      "campaign": "2026-10-19-jack-analog-disagreement",
+      "size": 686080,
+      "sha256": "fd375575888d4d999f15ac15d15f7687af74dddffcc820f779e174f4546c14d5",
+      "files": [
+        {
+          "path": "tests/measured/daisy/2026-10-19-jack-analog-disagreement/after-motion-reconnected-analog.txt.gz",
+          "size": 21651,
+          "sha256": "90cc5d9b70c1636e1bedb68295196f014883aebcfd37d2a40a3304fe959fbac3"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-19-jack-analog-disagreement/after-motion-reconnected-channels.txt.gz",
+          "size": 97393,
+          "sha256": "2c42117c7c715422827bcac5115d60eb258ccd1375d379aa9b8a263ae7c730df"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-19-jack-analog-disagreement/after-motion-reconnected-raw.txt.gz",
+          "size": 107457,
+          "sha256": "37d663acabebf06c503cf7e676d81acea57144a754d9df6018d3589af77f953f"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-19-jack-analog-disagreement/empty-preflight-analog.txt.gz",
+          "size": 12268,
+          "sha256": "ce38127184f63b79654b5cd50bff12884f0823baceacf454f212795e2fbb349a"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-19-jack-analog-disagreement/empty-preflight-channels.txt.gz",
+          "size": 96466,
+          "sha256": "8b1f6fe7dc9b454e0d8e5c117faa69d87a00470bbc32eef90a90d8f6290c65fa"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-19-jack-analog-disagreement/empty-preflight-raw.txt.gz",
+          "size": 106993,
+          "sha256": "a3d3e6741181edc2b31370d900eb27b1530a8b1341ef1fa2083c709b445a4e69"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-19-jack-analog-disagreement/reconnected-analog.txt.gz",
+          "size": 21507,
+          "sha256": "e53ddce36995f892d9b2d5f07b88bc9a23ce7b7415b7150a384d7987a6245966"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-19-jack-analog-disagreement/reconnected-channels.txt.gz",
+          "size": 98566,
+          "sha256": "c997b226296f594f65e8bf0dabbad2dfb71c2f8466372477c4bf7efa6897ceee"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-19-jack-analog-disagreement/reconnected-raw.txt.gz",
+          "size": 107485,
+          "sha256": "a50387e2916eed89894f23f236a1a673909e8ef57a9a8489d8fbcc99ecb96f8b"
+        }
+      ]
+    },
+    {
+      "name": "daisy-2026-10-19-jack-audio.tar",
+      "campaign": "2026-10-19-jack-audio",
+      "size": 20398080,
+      "sha256": "d1c45414505a0a6ffd6d484767f4eac2befadfd53fe32e732ab4be030acc4593",
+      "files": [
+        {
+          "path": "tests/measured/daisy/2026-10-19-jack-audio/audio-b16-p0-analog.txt.gz",
+          "size": 195069,
+          "sha256": "1d27eb66bc3e9f446c4a6c7258495bd906d33a6af87ab852b1bbe57b9b5842dd"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-19-jack-audio/audio-b16-p0-channels.txt.gz",
+          "size": 546994,
+          "sha256": "4e16b38bd31f7a1878e11d279b339dd84dad28f636a4d6a95576135ae56b86a6"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-19-jack-audio/audio-b16-p0-generator.txt.gz",
+          "size": 238,
+          "sha256": "3f75e1d74d21aa4e3f3befb955c7f28c14a6a81dd78b4de0594636737fd1b46f"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-19-jack-audio/audio-b16-p0-raw.txt.gz",
+          "size": 349340,
+          "sha256": "0960f0877942d295e3ea6956b4186c3ae8322c6d98ae90dd421f8a8ef43284dc"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-19-jack-audio/audio-b16-p250-analog.txt.gz",
+          "size": 202777,
+          "sha256": "fed7dfbea41dcd6481b56e4771780b9afc10e2d913616b84cac8e0c2597b2716"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-19-jack-audio/audio-b16-p250-channels.txt.gz",
+          "size": 569417,
+          "sha256": "48f041462fecd7df8da3d23ffabaf81bf2e792576f2f5d22c263de1c7a3ec8f6"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-19-jack-audio/audio-b16-p250-generator.txt.gz",
+          "size": 239,
+          "sha256": "97bad31882064f015d5fb5cc0493251f6fad4a8f15ec91c33546924b21684fde"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-19-jack-audio/audio-b16-p250-raw.txt.gz",
+          "size": 346427,
+          "sha256": "26f139f7b0cf08ea564036193077ed6cb21cc269ff3f22949552cb0b728bf097"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-19-jack-audio/audio-b16-p500-analog.txt.gz",
+          "size": 203266,
+          "sha256": "7240f624ce67710382d65d3e06696806e4b896db182f4cb5d2589bd83829a110"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-19-jack-audio/audio-b16-p500-channels.txt.gz",
+          "size": 584700,
+          "sha256": "42668be4c8835dc506ba8d03df983e2f564a9c556dc4a72fed70006b84d2a887"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-19-jack-audio/audio-b16-p500-generator.txt.gz",
+          "size": 239,
+          "sha256": "1d19e0bfe82faa9fd3ee6612af992bca9067f171c13526b3c7970e2a1d20d0d3"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-19-jack-audio/audio-b16-p500-raw.txt.gz",
+          "size": 346702,
+          "sha256": "e426b352f4cab3bca0e590fa0ca6017db563ec04e843ba8358a10ea923c8530f"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-19-jack-audio/audio-b16-p700-analog.txt.gz",
+          "size": 166633,
+          "sha256": "2531e5d84c93db2a554692b4e7cc0b6ee15f59571feb67e3e77968d1ce8a9be4"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-19-jack-audio/audio-b16-p700-channels.txt.gz",
+          "size": 527021,
+          "sha256": "02dc8e64a7f537c39a13d6a5934606f10dbfd614beedfa71da7ff7716d59a55e"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-19-jack-audio/audio-b16-p700-generator.txt.gz",
+          "size": 237,
+          "sha256": "774d2311f1830bbebfba05b5d77c87fc3acc664fa5823d36e5af4398e3c02187"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-19-jack-audio/audio-b16-p700-raw.txt.gz",
+          "size": 299213,
+          "sha256": "eb5a697025e9c75c47d0dd3bb1a3e8558c8608bb43df518d553617bc8c52f87a"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-19-jack-audio/audio-b48-p0-analog.txt.gz",
+          "size": 195003,
+          "sha256": "c487a523377067283b9b5037a5ac500766dcb79bc2eebe681fddf1e11998ef00"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-19-jack-audio/audio-b48-p0-channels.txt.gz",
+          "size": 385065,
+          "sha256": "11f3f9206fe658dd619300b43dae9f03ee519a21ee165c8d96279388682e9f83"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-19-jack-audio/audio-b48-p0-generator.txt.gz",
+          "size": 238,
+          "sha256": "43d60d8781b04f814535047f3e916df6e138208475246355704b31118f8985b3"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-19-jack-audio/audio-b48-p0-raw.txt.gz",
+          "size": 347899,
+          "sha256": "3688c07c77281cc8c6beb416475df355ad3078c52b16b240346e4e1b87c426d5"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-19-jack-audio/audio-b48-p250-analog.txt.gz",
+          "size": 204081,
+          "sha256": "3b7e608113648a10e5b23712867a7ad616c4933374237955ee13fd4f2f09c6e7"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-19-jack-audio/audio-b48-p250-channels.txt.gz",
+          "size": 408769,
+          "sha256": "bff2e6ccc41226273241719c0ed685ca10e945664445b8b866e2da3a5a722e21"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-19-jack-audio/audio-b48-p250-generator.txt.gz",
+          "size": 238,
+          "sha256": "433289fd5ffc50c33b6b313468b867d54b9783f9ec9c2954ee7686e0dbaf622c"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-19-jack-audio/audio-b48-p250-raw.txt.gz",
+          "size": 347108,
+          "sha256": "36e70286d84b3441ea91f516f3e82b1f53722229d302d082e44727c10b3b1a6c"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-19-jack-audio/audio-b48-p500-analog.txt.gz",
+          "size": 201752,
+          "sha256": "30f2238773a6213d3c87e7320edd8384f0015d60ac92bd85921d6568e9e8e376"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-19-jack-audio/audio-b48-p500-channels.txt.gz",
+          "size": 399537,
+          "sha256": "1ce3ae1040487b1a59e49928133706f0eb7886abb5b7603706ec34089120f7a6"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-19-jack-audio/audio-b48-p500-generator.txt.gz",
+          "size": 239,
+          "sha256": "c6f032a207efb22d4ed6fd0aac08085f0c509b4dc5fd099c5fe4a25b979b88e7"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-19-jack-audio/audio-b48-p500-raw.txt.gz",
+          "size": 340137,
+          "sha256": "41c6aca33a9e32cc2d6721f923344c302c8282088651c53fa9e27f01df479163"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-19-jack-audio/audio-b48-p700-analog.txt.gz",
+          "size": 119359,
+          "sha256": "2c28db86f40d522380f6234e56712fb71439bc9302fc4556faba45d8a76326b0"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-19-jack-audio/audio-b48-p700-channels.txt.gz",
+          "size": 288991,
+          "sha256": "608bc832006b82546f11ed6592baeaf3518bcac561e132ae7f6a86163b1ef1ec"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-19-jack-audio/audio-b48-p700-generator.txt.gz",
+          "size": 239,
+          "sha256": "8d503aa0447de1cbe1a680a826d8fdae3c01ffa15d81957d30b258589ad7a57d"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-19-jack-audio/audio-b48-p700-raw.txt.gz",
+          "size": 213704,
+          "sha256": "123a3bb6ca9d9f80361179b3b8309862eb389c600eaf5f4f4a513db7adc6c2c3"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-19-jack-audio/audio-b96-p0-analog.txt.gz",
+          "size": 197410,
+          "sha256": "a78c933576d95dfed8d3b748a061b0dd2dc2e2e03662d4dd22bbff07f9efd95a"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-19-jack-audio/audio-b96-p0-channels.txt.gz",
+          "size": 338782,
+          "sha256": "f2b4f6afb48d2d5e3894b37cf6319e153ea85a0c04a9ab8ae9c163be30d736b5"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-19-jack-audio/audio-b96-p0-generator.txt.gz",
+          "size": 239,
+          "sha256": "dc3796fd5e83e6b23c9d25577341b67bbbe13c5798aeac9cd447cc881a22b994"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-19-jack-audio/audio-b96-p0-raw.txt.gz",
+          "size": 349591,
+          "sha256": "9ff5764aa97be6e94c10594124692331622538892f75e35a0a6f4297549ca34c"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-19-jack-audio/audio-b96-p250-analog.txt.gz",
+          "size": 206399,
+          "sha256": "16af04e619afdff8be144fd9c44f3ec24d6fdd21a54a6f2aa6ba741a417cebb3"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-19-jack-audio/audio-b96-p250-channels.txt.gz",
+          "size": 348104,
+          "sha256": "309e8cabc81718a5283d58291133f437d4adaab1bf6df04e5dff77eb73b7e20d"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-19-jack-audio/audio-b96-p250-generator.txt.gz",
+          "size": 239,
+          "sha256": "346bd3c4526c76e6614b946ae4628ba94572d019e1096aaba741ea2f90c78862"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-19-jack-audio/audio-b96-p250-raw.txt.gz",
+          "size": 364531,
+          "sha256": "90912f6b4e8bf9a6b75c4064a6fffc0bd06439f07be9589716ac35c67765a843"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-19-jack-audio/audio-b96-p500-analog.txt.gz",
+          "size": 167921,
+          "sha256": "056efaa78dc210b4400ead35b089beedf3b2dff0b57adb4ef98c6fea7c0b7ce6"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-19-jack-audio/audio-b96-p500-channels.txt.gz",
+          "size": 294781,
+          "sha256": "4a15338fe12de3735631b9ab42298b7b59039a92f5189da0cd740c599130c5bf"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-19-jack-audio/audio-b96-p500-generator.txt.gz",
+          "size": 239,
+          "sha256": "03ba4f5ce5dc4ec611b9e45a24e518d156da2b1822dcbcd816d0bbe22d29dbb5"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-19-jack-audio/audio-b96-p500-raw.txt.gz",
+          "size": 307610,
+          "sha256": "788d56bd01884d8abe1d7da92dc783e449d77ddc0b3099ef01e4013d921bc779"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-19-jack-audio/audio-b96-p700-analog.txt.gz",
+          "size": 126166,
+          "sha256": "a051fe71f299133dfec0a84c4fe3083b5a3c169481bd9df4edd0ef1e5ca2269c"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-19-jack-audio/audio-b96-p700-channels.txt.gz",
+          "size": 245590,
+          "sha256": "31cdc8084e7aad37b91bb78afba7090c762ab1447ee15ae4852eac1a6cc23243"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-19-jack-audio/audio-b96-p700-generator.txt.gz",
+          "size": 239,
+          "sha256": "72f0af7103f41ec010fc3e1963967cfbe42402b71154650b711e2abceacea2d1"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-19-jack-audio/audio-b96-p700-raw.txt.gz",
+          "size": 221488,
+          "sha256": "14c05fb9915209d2804292f6400efb1c2524f4a3001c37ffc5be008d9e154f75"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-19-jack-audio/baseline-after-analog.txt.gz",
+          "size": 193624,
+          "sha256": "09f347eebc19f97ae3dd078b0eff0da33efe93e6dceb6d167c369a37d040e4d7"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-19-jack-audio/baseline-after-channels.txt.gz",
+          "size": 313157,
+          "sha256": "466ea3a8e24d6a1139b0f790c3cc79a11059f55711e5e8b10c85c8414a714ab1"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-19-jack-audio/baseline-after-generator.txt.gz",
+          "size": 239,
+          "sha256": "ac3e84e9eb5dfd580047401d5f5f13cc51986ebad6ed86896e864a64c3d50f04"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-19-jack-audio/baseline-after-raw.txt.gz",
+          "size": 349972,
+          "sha256": "94dfe37b2c12e2e34ece7b263cfde77066601dc8726189467ba54a25edb62521"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-19-jack-audio/baseline-before-analog.txt.gz",
+          "size": 193011,
+          "sha256": "e3a9a501aeccf6f57ac6513cafa0bde615beccc9eef1e30c4b58cffeee184e66"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-19-jack-audio/baseline-before-channels.txt.gz",
+          "size": 300787,
+          "sha256": "9f3a8bf4201268d557fd47379d5e06d31e3a5b04d21f7044c2115c867d41d741"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-19-jack-audio/baseline-before-generator.txt.gz",
+          "size": 239,
+          "sha256": "d552189d7655168eddfac3fea63929d687fcd6f60b53b45e31848b1d928a6bb9"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-19-jack-audio/baseline-before-raw.txt.gz",
+          "size": 349277,
+          "sha256": "697a642d4f1c696224dcfefd8079ab6261075696b7e84b76d59a0cffe93ed1ef"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-19-jack-audio/loaded-t2-f1-analog.txt.gz",
+          "size": 203838,
+          "sha256": "7ab7cf612a6aaf8049ad146e85ba1e87826c8953b86e6018edf1df367f7ed73c"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-19-jack-audio/loaded-t2-f1-channels.txt.gz",
+          "size": 562331,
+          "sha256": "9581db30e24343f861a056575a8775b956fba61a0a5ad050cfb2eca70383180c"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-19-jack-audio/loaded-t2-f1-generator.txt.gz",
+          "size": 237,
+          "sha256": "dccf332eff901dbaa1d3b043a372b0171bd8bb5ef093d6c244fc106a9a5d26ea"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-19-jack-audio/loaded-t2-f1-raw.txt.gz",
+          "size": 346923,
+          "sha256": "0c2b0be0a71bf6718eb22f7c88d67362b417a7bb83f485e9540a126fcb79b325"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-19-jack-audio/loaded-t2-f2-analog.txt.gz",
+          "size": 203790,
+          "sha256": "d2c4103e4d8c2c1f12fb2de0c77eb1f5673d35333331a0f26c525ed01534e4bb"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-19-jack-audio/loaded-t2-f2-channels.txt.gz",
+          "size": 582512,
+          "sha256": "215910dba817520962f8d93e476e39c6d51f87445820628e51d0046bc90f384f"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-19-jack-audio/loaded-t2-f2-generator.txt.gz",
+          "size": 239,
+          "sha256": "9dd69fc94caaf0c26fd8b675b1e571c0a97b15cd35e3fe8282146e44c53c5c2e"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-19-jack-audio/loaded-t2-f2-raw.txt.gz",
+          "size": 360076,
+          "sha256": "430ec9757bde89447712495ed6d1e4d32d1fc58cb2af5289526a16b0418eff7b"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-19-jack-audio/loaded-t5-f1-analog.txt.gz",
+          "size": 203414,
+          "sha256": "079cfc9d5a233676c6645e9e6f8be4cbbb79e7fba1810cb61aa2f6663136aebf"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-19-jack-audio/loaded-t5-f1-channels.txt.gz",
+          "size": 582467,
+          "sha256": "f2af39bb248e2d27a4b3648a388577c86824f38ee84ca3a9ca933d3a1a3f3c48"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-19-jack-audio/loaded-t5-f1-generator.txt.gz",
+          "size": 237,
+          "sha256": "4daa28bef9582bb9d83ab708136ff7e9b267dd3dcaa3fe3d55d1bfd54babb2c9"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-19-jack-audio/loaded-t5-f1-raw.txt.gz",
+          "size": 346364,
+          "sha256": "cae7eb3559a96c8b1ec7061114aba399e51f550390186b7beeccfbf7fe193a60"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-19-jack-audio/loaded-t5-f2-analog.txt.gz",
+          "size": 204306,
+          "sha256": "216144d14e5031d85390075a9c4f5e21be4c066f2c1007f62040d100ad623145"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-19-jack-audio/loaded-t5-f2-channels.txt.gz",
+          "size": 582006,
+          "sha256": "4f92b81139815c3db2743fa50aedbfd01217dcc95b775836a55db4132e3ae132"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-19-jack-audio/loaded-t5-f2-generator.txt.gz",
+          "size": 238,
+          "sha256": "49233b59360782d6750e6288054c5f4354719c7943bbb90b2e63f5b1e0d2cfaf"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-19-jack-audio/loaded-t5-f2-raw.txt.gz",
+          "size": 351353,
+          "sha256": "2da56efd44ffa2bdf58891343c7a55c113e851b37300bc928483dc736fbba88b"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-19-jack-audio/recovery-b16-p700-analog.txt.gz",
+          "size": 238444,
+          "sha256": "3e06f76aceefb1bad6c06cf83852f65cd921faf08b62c2de8ab89773064d975b"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-19-jack-audio/recovery-b16-p700-channels.txt.gz",
+          "size": 595351,
+          "sha256": "49f67e627176d960a1c3f182eaf60341646320b7825ac28f2a6b4866ea8c6d7b"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-19-jack-audio/recovery-b16-p700-generator.txt.gz",
+          "size": 240,
+          "sha256": "491088dbdf0453c7143f8da2f8dbc96d82053154ffba4249ab73e14d52fe54c2"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-19-jack-audio/recovery-b16-p700-raw.txt.gz",
+          "size": 445889,
+          "sha256": "b69997da35de0531a2ade356c72fb0533835852db6d7cd2c71732a2d1712033f"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-19-jack-audio/recovery-b48-p700-analog.txt.gz",
+          "size": 191404,
+          "sha256": "bdc9f9e2cd84aa078276ba4e822ec6352663e6ce0bf21ac45393949164d10203"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-19-jack-audio/recovery-b48-p700-channels.txt.gz",
+          "size": 379717,
+          "sha256": "3e27b00c0adad2b69805f3ce3028bc08e69e692631c7216701f786126e5deeda"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-19-jack-audio/recovery-b48-p700-generator.txt.gz",
+          "size": 239,
+          "sha256": "3731d14a25e43e981f84eedb7ce2886e17b2cde207d12534ed78ce8b4df0f961"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-19-jack-audio/recovery-b48-p700-raw.txt.gz",
+          "size": 361304,
+          "sha256": "818c3cb13c4d07598c2a6db576192ed0e7ea09c7c3afd3f2b9881d09e2c52644"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-19-jack-audio/recovery-b96-p700-analog.txt.gz",
+          "size": 196909,
+          "sha256": "5461a1e6a7ea1c5a8b918104b7fe5c293768718661f20a814302905a10fefb6b"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-19-jack-audio/recovery-b96-p700-channels.txt.gz",
+          "size": 359131,
+          "sha256": "763b000c6761d31e511c363a9fde9a034e39095d632aba220d0d0ab82184d226"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-19-jack-audio/recovery-b96-p700-generator.txt.gz",
+          "size": 239,
+          "sha256": "6999b9a6cd2fa1ed24aeeb0b2ac3afa5ebb5af81cc1f9904973f7cd62e3a89fc"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-19-jack-audio/recovery-b96-p700-raw.txt.gz",
+          "size": 367954,
+          "sha256": "1b44c8870803d20821def98033fe1a7eb7bd93f40d48ecf86c817aca8870a42a"
+        }
+      ]
+    },
+    {
+      "name": "daisy-2026-10-19-jack-empty.tar",
+      "campaign": "2026-10-19-jack-empty",
+      "size": 901120,
+      "sha256": "e0a8e8211e4332880bbf03de3bed6eddcf26196dc79f9a7c94834fb3492e2ca9",
+      "files": [
+        {
+          "path": "tests/measured/daisy/2026-10-19-jack-empty/adc-gap-analog.txt.gz",
+          "size": 20577,
+          "sha256": "f2875b46f8a92f7e5baa62e8c8cbeb9626be8f5131229b38cd16adb99069607a"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-19-jack-empty/adc-gap-channels.txt.gz",
+          "size": 97833,
+          "sha256": "35d4c536795aa0ff93c46afdf4aa175c7bfffcfce00b9e453061c1da7c1b991e"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-19-jack-empty/adc-gap-raw.txt.gz",
+          "size": 107189,
+          "sha256": "d13c8247c98bc55afae2a29db5c9c418d98671a7e4440e9a637e178ff7ea16b0"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-19-jack-empty/baseline-analog.txt.gz",
+          "size": 20678,
+          "sha256": "5fec4be7305846252a98fb92dbcf07a5463bc1a2dc540a913fef0a4326f735fa"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-19-jack-empty/baseline-channels.txt.gz",
+          "size": 100366,
+          "sha256": "c11193c495cb37742f1dbf373186ef9dd1ade3a67dbc14c240bd0d0960fc3a10"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-19-jack-empty/baseline-raw.txt.gz",
+          "size": 107140,
+          "sha256": "4bd94f539aaf189c6a3abfddc473c4962a907cdfa1e956263c41b90717596ff5"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-19-jack-empty/missing-probe-analog.txt.gz",
+          "size": 20953,
+          "sha256": "c25af9e3b1168864bb986ce96f2c4bf30e44bd36e679cb084a4521559416b264"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-19-jack-empty/missing-probe-channels.txt.gz",
+          "size": 83083,
+          "sha256": "36056f15c11fa3d5bb2ffcc61e452d10dd238dbcc02184ea7960be41bf2360f4"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-19-jack-empty/missing-probe-raw.txt.gz",
+          "size": 106984,
+          "sha256": "d24e8d1701fde0300df7006356bc9ca0490eb029da82627480af2f672b308bd5"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-19-jack-empty/service-gap-analog.txt.gz",
+          "size": 20313,
+          "sha256": "939d141f2e1c22bd3434c47952cd37632c21aca42d27bf76df053cdc3c84fe88"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-19-jack-empty/service-gap-channels.txt.gz",
+          "size": 97121,
+          "sha256": "be3f155069db047ba18ba4f3b0ca4f9f9cffc6de2c7e151ba5563a403343b0d5"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-19-jack-empty/service-gap-raw.txt.gz",
+          "size": 107956,
+          "sha256": "9b4b8e09c3a22ea609d2736fd6ae23c9689248fd5cf1c9cd8acab5fdc65e3c7b"
+        }
+      ]
+    },
+    {
+      "name": "daisy-2026-10-19-jack-finish.tar",
+      "campaign": "2026-10-19-jack-finish",
+      "size": 491520,
+      "sha256": "0c0c76c2b515bdc904385394f293e7c9d3988a3b9e53b02c08ff563a10d82849",
+      "files": [
+        {
+          "path": "tests/measured/daisy/2026-10-19-jack-finish/duration-analog.txt.gz",
+          "size": 22097,
+          "sha256": "637de87603e6e441bb90aa37bc6b9dcb817ebec7b8c31a83eb9c23bb72acbc8d"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-19-jack-finish/duration-channels.txt.gz",
+          "size": 100030,
+          "sha256": "2a497837f828e5fa1604709924ee7a938ece3ef695bc3d61eda0a9b644dd72e3"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-19-jack-finish/duration-raw.txt.gz",
+          "size": 107885,
+          "sha256": "58d4ce2a7cceaaaf8fd58ac46d77f0a18838929b5ed911650c2665ff3a843b57"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-19-jack-finish/early-analog.txt.gz",
+          "size": 16695,
+          "sha256": "3e98bdde05ed79bdc72c2243417ea454f4054f726b40e0041b6989c39b92eaab"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-19-jack-finish/early-channels.txt.gz",
+          "size": 74567,
+          "sha256": "8336627f1a75bdda8709bf97ebff82612ffd0303f59b1102a79f063c3d5959e6"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-19-jack-finish/early-raw.txt.gz",
+          "size": 80848,
+          "sha256": "483bc0ba2b764a8a75116f3af15072d262f989105f1a8c8adc9c39c36d200d9e"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-19-jack-finish/minimum-analog.txt.gz",
+          "size": 8074,
+          "sha256": "4cc096913fb0cb97e567e97bfd792d96f4a4731bc9c40f1f4f7f1c6c42a5a056"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-19-jack-finish/minimum-channels.txt.gz",
+          "size": 32679,
+          "sha256": "e3a55545666bc7f74ce0d4027e2262950f19f342fdc707acd444c76112b82358"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-19-jack-finish/minimum-raw.txt.gz",
+          "size": 35273,
+          "sha256": "a24ad5b8acf4a22131138471dea5ff10680cdc687b86f7f6b76091911462f12f"
+        }
+      ]
+    },
+    {
+      "name": "daisy-2026-10-19-jack-inserted-open.tar",
+      "campaign": "2026-10-19-jack-inserted-open",
+      "size": 614400,
+      "sha256": "15986e464c5ef88494f0a423ade4f569a1bf65223018de87d9262d69d907ebd1",
+      "files": [
+        {
+          "path": "tests/measured/daisy/2026-10-19-jack-inserted-open/adc-gap-analog.txt.gz",
+          "size": 12613,
+          "sha256": "28c4230dedddf3db73b6796f7ee2ee82fd7a6605a905036c79e3a52448b49c62"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-19-jack-inserted-open/adc-gap-channels.txt.gz",
+          "size": 82690,
+          "sha256": "f401380bebbdcd782b64993aeaabe050a82d877b4b5cf9a6ea04bd9fd3e2d714"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-19-jack-inserted-open/adc-gap-raw.txt.gz",
+          "size": 105710,
+          "sha256": "50de7c60207d6dfa863b40fc2e5b5da0aa22bdb0feecdc919b7428fb4200de7c"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-19-jack-inserted-open/baseline-analog.txt.gz",
+          "size": 12699,
+          "sha256": "a46c915458dd2d92099c6eb4810c08ef0edab3fb3528f1ba9d5d5b24d03a12d0"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-19-jack-inserted-open/baseline-channels.txt.gz",
+          "size": 83318,
+          "sha256": "4b0b0cd85f4b65b0bf748a2ac5f7cdfe397cd0425420e0e1f4104e4d81525688"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-19-jack-inserted-open/baseline-raw.txt.gz",
+          "size": 105582,
+          "sha256": "d8cca86e479167af9bcddd1ce9a9372858887116844723a78b64d4f3b4001369"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-19-jack-inserted-open/service-gap-analog.txt.gz",
+          "size": 12447,
+          "sha256": "e23f1d388b19c68ab692ef4f4b8e4eed4850fa0856e83cb0956eb6f872d6e1d8"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-19-jack-inserted-open/service-gap-channels.txt.gz",
+          "size": 80950,
+          "sha256": "1a66161bb4931249384a6b46606f1f7bcea9c499d11c7a42ac46f9dad40f89dd"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-19-jack-inserted-open/service-gap-raw.txt.gz",
+          "size": 107081,
+          "sha256": "1f2d7cd2c181c9b5f702a742aedbbb13825aef0b7d2b4e2122ad99ecce4bf2c5"
+        }
+      ]
+    },
+    {
+      "name": "daisy-2026-10-19-jack-inserted-silent.tar",
+      "campaign": "2026-10-19-jack-inserted-silent",
+      "size": 604160,
+      "sha256": "7e6742e8e3c642ad716468d7990b266c64ae7ba2d8483c6ddad8776717e1d5b4",
+      "files": [
+        {
+          "path": "tests/measured/daisy/2026-10-19-jack-inserted-silent/adc-gap-analog.txt.gz",
+          "size": 12220,
+          "sha256": "a309ff67951cdcf085648f2eb562d01c66a3afc24d5d8f6464c55938826c94ad"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-19-jack-inserted-silent/adc-gap-channels.txt.gz",
+          "size": 76872,
+          "sha256": "8d8dafb35b41a2f1e761c310189ccb02cd7461e2c7bdf3457c02095c8dd6ea51"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-19-jack-inserted-silent/adc-gap-raw.txt.gz",
+          "size": 104487,
+          "sha256": "06516892a01a02e10d8221ca733b12198eeebbcf063bfadf40c08042975e7263"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-19-jack-inserted-silent/baseline-analog.txt.gz",
+          "size": 12331,
+          "sha256": "5e28b0e701a7821bb533db952683f78890841aeb5dd72336ebb8c2eebf7ba885"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-19-jack-inserted-silent/baseline-channels.txt.gz",
+          "size": 77818,
+          "sha256": "a1853c75f7517ba568c8dd6f2e11b6b2a2b23aa859f58b378306b02ca9ae3a38"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-19-jack-inserted-silent/baseline-raw.txt.gz",
+          "size": 104661,
+          "sha256": "068ef167c55d2f7ea24223c21352b4c5e675f48974b3e82f2bbf6ac27c56fecf"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-19-jack-inserted-silent/service-gap-analog.txt.gz",
+          "size": 12371,
+          "sha256": "9e5360b82e5d288f8b29d0da09f54e7c4b3db03ad3f128c81e1a0f6454adab57"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-19-jack-inserted-silent/service-gap-channels.txt.gz",
+          "size": 79732,
+          "sha256": "ee1b2232297d16361a16877cc4e222896a715f36e95f5e1499473919325b90d2"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-19-jack-inserted-silent/service-gap-raw.txt.gz",
+          "size": 105994,
+          "sha256": "e96f95e02fc2f10d6df21025f1490530258bd154e2d631937977049bf8d47696"
+        }
+      ]
+    },
+    {
+      "name": "daisy-2026-10-19-jack-matrix.tar",
+      "campaign": "2026-10-19-jack-matrix",
+      "size": 14069760,
+      "sha256": "4495570c21eed2dcbb2d62b23239a7abf0c44e96e37b09f02699b646bad011a4",
+      "files": [
+        {
+          "path": "tests/measured/daisy/2026-10-19-jack-matrix/baseline-after-analog.txt.gz",
+          "size": 118964,
+          "sha256": "bc62fce1143084f44a9f1bb4b1880854603e3641ae39dc35c83226d22c90ee58"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-19-jack-matrix/baseline-after-channels.txt.gz",
+          "size": 295892,
+          "sha256": "62bf961d1c591dcc63e62054fca46a305125d169bedd54028cfca0fe4845f477"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-19-jack-matrix/baseline-after-generator.txt.gz",
+          "size": 239,
+          "sha256": "19369d4bcee158c459d999430e52bf5204132eee68b838fe6d5d449706b0d786"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-19-jack-matrix/baseline-after-raw.txt.gz",
+          "size": 348729,
+          "sha256": "f2625f079cfc0879ae2742281e34eddb2cd98b93eb5d0e4b993c2700559588ce"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-19-jack-matrix/baseline-before-analog.txt.gz",
+          "size": 119351,
+          "sha256": "dd2fb4b518b2bfc3ef1f86da96ece609dd24c279668d10b5a13e35dd9b71acab"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-19-jack-matrix/baseline-before-channels.txt.gz",
+          "size": 292702,
+          "sha256": "1e30d8fd69ac9e6d5065e2b346d650056e716ce035f0f89a7462491ab0cfc2d3"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-19-jack-matrix/baseline-before-generator.txt.gz",
+          "size": 238,
+          "sha256": "c0a5271d373fc79f5c7d47bd59437d51bfcab4522cd46d6f210332655f8a1323"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-19-jack-matrix/baseline-before-raw.txt.gz",
+          "size": 348500,
+          "sha256": "d7b449e08a96e083feba60f70184e4eebb8995dd81373272d39ec25cb6cd6ada"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-19-jack-matrix/t1-f1-us100000-d00-analog.txt.gz",
+          "size": 119475,
+          "sha256": "792bc302359cbf0708dc20cc1abdcd6b302bf7ffa274fac044a5c965ea71a836"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-19-jack-matrix/t1-f1-us100000-d00-channels.txt.gz",
+          "size": 310155,
+          "sha256": "57efbd349c91af1964a0e310c3f97b8d0fb2d6814fc92e3481bd46ba2325b964"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-19-jack-matrix/t1-f1-us100000-d00-generator.txt.gz",
+          "size": 239,
+          "sha256": "9b29c97e639ae8bd940d7da6c3cd52b3d05141873b2c31d58c31a43282cd3a37"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-19-jack-matrix/t1-f1-us100000-d00-raw.txt.gz",
+          "size": 349004,
+          "sha256": "c5e9aa1e3bdb34bf9d580aa5fcb612119b99e7b2e9c020f04e65f1df4c6155fd"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-19-jack-matrix/t1-f2-us100000-d00-analog.txt.gz",
+          "size": 118906,
+          "sha256": "5bc852502551a3c68594e805f1f6f703d9f8e225ca3a1c9b2090f9b29d39f72e"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-19-jack-matrix/t1-f2-us100000-d00-channels.txt.gz",
+          "size": 305164,
+          "sha256": "c734dda46ade8fbafb55d83616e326d9fbfd03dc7d0b5092c835d55bedb5d595"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-19-jack-matrix/t1-f2-us100000-d00-generator.txt.gz",
+          "size": 236,
+          "sha256": "ba9263d2562fdafaba81baf2c2f615d5bfe478027ef27de1961d50422dc301be"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-19-jack-matrix/t1-f2-us100000-d00-raw.txt.gz",
+          "size": 359328,
+          "sha256": "6bb470b52b42681e4af7f42da49d4471d22d6e86c0e95619d6313579e5ad7746"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-19-jack-matrix/t2-f1-us000500-d01-analog.txt.gz",
+          "size": 118876,
+          "sha256": "3eb44637734bc9876559e1dbe16f4abd3614f4b48312767d166cde8bcea2dc1c"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-19-jack-matrix/t2-f1-us000500-d01-channels.txt.gz",
+          "size": 313933,
+          "sha256": "2432d2df46d85dc83591e449704ac7854543cea5015edb0024578c4f372865fb"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-19-jack-matrix/t2-f1-us000500-d01-generator.txt.gz",
+          "size": 239,
+          "sha256": "a95a37070644717dcb0662d77638e296829171edd4a5ed89dafad3c3116636d1"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-19-jack-matrix/t2-f1-us000500-d01-raw.txt.gz",
+          "size": 349754,
+          "sha256": "cc521d473e64922213f70077a8ea2b3d4d84f3d606103c2dbdded6ba862360df"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-19-jack-matrix/t2-f1-us100000-d00-analog.txt.gz",
+          "size": 119329,
+          "sha256": "edf261d20a71c34ed48a4c16818b1e21ae99df67ad80f8d71660da28d66816fd"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-19-jack-matrix/t2-f1-us100000-d00-channels.txt.gz",
+          "size": 310739,
+          "sha256": "b1324d88affe9dbded61c33cc837f2bf86e1e57b5dafcbc7d089d135b1597c68"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-19-jack-matrix/t2-f1-us100000-d00-generator.txt.gz",
+          "size": 237,
+          "sha256": "add80066703b8cd0ce02dd1b4368919d8eacf033f86889d698c3c931b6e7bfef"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-19-jack-matrix/t2-f1-us100000-d00-raw.txt.gz",
+          "size": 348668,
+          "sha256": "e2fb792795942e8b065ad82af166092ecad891f97444e439ceff4ec0b86958b3"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-19-jack-matrix/t2-f2-us000500-d01-analog.txt.gz",
+          "size": 117361,
+          "sha256": "6fd8eb7b6153b5232df2c5844c7a6a0e311a588d848a35ab19b5c3d08dfebc19"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-19-jack-matrix/t2-f2-us000500-d01-channels.txt.gz",
+          "size": 312384,
+          "sha256": "251da90ee131b7c6afe5680d73b28f012d99af08bd815f87f4f7c39b23000cb0"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-19-jack-matrix/t2-f2-us000500-d01-generator.txt.gz",
+          "size": 239,
+          "sha256": "2497830d2adc9ee05828038847f0d6cc6e0dd0b875d988c13e2fc028c60fcc35"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-19-jack-matrix/t2-f2-us000500-d01-raw.txt.gz",
+          "size": 359884,
+          "sha256": "20fb87b2c9f51908b8b3ac3b3a2d8ae60768e4e7e31c7839416e317f41e62735"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-19-jack-matrix/t2-f2-us100000-d00-analog.txt.gz",
+          "size": 117631,
+          "sha256": "cec2be8564257597948e9cf9aebf9a9f4d315c4495454d6b32ffbfa7657c39e6"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-19-jack-matrix/t2-f2-us100000-d00-channels.txt.gz",
+          "size": 308517,
+          "sha256": "fee29b9df37557fe6e0b47bb3ac410eb722622da840e89c9013e2eab8f79f923"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-19-jack-matrix/t2-f2-us100000-d00-generator.txt.gz",
+          "size": 238,
+          "sha256": "12cdc0d0d4a3ad4aefb72134357e67c39ef0b97b4274b47ad8535fbfa03e5ecf"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-19-jack-matrix/t2-f2-us100000-d00-raw.txt.gz",
+          "size": 357994,
+          "sha256": "e0e828df44e23401e039f62ace9d1880dadc07c8ad59dc6b89631ee8a0c7b794"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-19-jack-matrix/t3-f1-us100000-d00-analog.txt.gz",
+          "size": 120347,
+          "sha256": "ab4e1bb76e2b57ced68dabe5bcb2ba81fd228e9f80915a59e8dd965ead019a51"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-19-jack-matrix/t3-f1-us100000-d00-channels.txt.gz",
+          "size": 309582,
+          "sha256": "7da6984d0ed5bf62505fa5891305f6ae94615ba0e2d11d3e65cca148d84a80e7"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-19-jack-matrix/t3-f1-us100000-d00-generator.txt.gz",
+          "size": 237,
+          "sha256": "60f0f625e8c06303424da27c6dec00d2d771edee716c896e7ceef47ee41b385f"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-19-jack-matrix/t3-f1-us100000-d00-raw.txt.gz",
+          "size": 348627,
+          "sha256": "b010fb4d29be73c03bcd309bcc06d91196b96388c6491318a2b12061e863c711"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-19-jack-matrix/t3-f2-us100000-d00-analog.txt.gz",
+          "size": 118292,
+          "sha256": "a0a28c4b3d5c403086f4d8d2f7bf6abde34ba8c929d4da1d492486d9d29af817"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-19-jack-matrix/t3-f2-us100000-d00-channels.txt.gz",
+          "size": 310119,
+          "sha256": "b35a4b3ec623a2892ccf1ea0ae19d923bf32b58b86f5550cf218481fb9cce1d7"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-19-jack-matrix/t3-f2-us100000-d00-generator.txt.gz",
+          "size": 237,
+          "sha256": "5f62c74f118bc53fc0407e875da83c616f09c59bfd0e2bc2b5defda84e665908"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-19-jack-matrix/t3-f2-us100000-d00-raw.txt.gz",
+          "size": 357820,
+          "sha256": "384295c15438205c5c659b5c77fb0794e03cdcd1865e77bfc9656c0f393c15b0"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-19-jack-matrix/t4-f1-us100000-d00-analog.txt.gz",
+          "size": 118202,
+          "sha256": "e7ff0249ee0947f6f2b47b8749b789a382ec1fc094fe746b170d4d906e7441ce"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-19-jack-matrix/t4-f1-us100000-d00-channels.txt.gz",
+          "size": 311000,
+          "sha256": "52c6653ca7287e7b31a8c97dfb574710b902ebcbf534e283dd47cde7b8fe7113"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-19-jack-matrix/t4-f1-us100000-d00-generator.txt.gz",
+          "size": 238,
+          "sha256": "da01babd3ff3401ac737f82cbaf33c4b00ac11c8082a5567888fee4c9c9899e4"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-19-jack-matrix/t4-f1-us100000-d00-raw.txt.gz",
+          "size": 348567,
+          "sha256": "832b23d3be81f232e584c2417066acf645c098c5b4670691e0492caf98d5a12c"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-19-jack-matrix/t4-f2-us100000-d00-analog.txt.gz",
+          "size": 118604,
+          "sha256": "33f2d93e26b243fbe61f429394944ab712d84119ea63c76d5b5381dacba44904"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-19-jack-matrix/t4-f2-us100000-d00-channels.txt.gz",
+          "size": 308743,
+          "sha256": "367b66b86083a2ba4e708c571cccc50774e21498809f542a0f23eef8569c7433"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-19-jack-matrix/t4-f2-us100000-d00-generator.txt.gz",
+          "size": 238,
+          "sha256": "9bc7c0fd0f779afe27b4be862d293c5903f7108e6a4bbd807520bfbce7663dd6"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-19-jack-matrix/t4-f2-us100000-d00-raw.txt.gz",
+          "size": 350033,
+          "sha256": "8ff177afb887b1cd63691f77d0bb04e4bfd20678695143570612b462a4e6b8bf"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-19-jack-matrix/t5-f1-us000500-d01-analog.txt.gz",
+          "size": 119245,
+          "sha256": "7fcdae0bca79f47b4e9b0c9dddf0e65b5b21124b8403362d6db92ae261d4d889"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-19-jack-matrix/t5-f1-us000500-d01-channels.txt.gz",
+          "size": 313427,
+          "sha256": "6f3900141d809584a6b05192af581bb0f72173d0ebae25a0cf0f73c31468b98c"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-19-jack-matrix/t5-f1-us000500-d01-generator.txt.gz",
+          "size": 238,
+          "sha256": "53c2779cfceeb3ee7523b30d4b463ba5d34815d6d33b52595e602da7933dbe79"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-19-jack-matrix/t5-f1-us000500-d01-raw.txt.gz",
+          "size": 348403,
+          "sha256": "2b4060d51860eca18fc1141e8325dbdea728b2b5c1be91852ee3565d9f4b5285"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-19-jack-matrix/t5-f1-us100000-d00-analog.txt.gz",
+          "size": 119086,
+          "sha256": "2ad25bd73d27b9ef8a03ad9721b6411ee244cb16f0ac70ea521b4ba87e81218a"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-19-jack-matrix/t5-f1-us100000-d00-channels.txt.gz",
+          "size": 313789,
+          "sha256": "bbb77a9f6af9c88241602ed46cbbbb5f535a551d4475a3f694a9d59d85719b9e"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-19-jack-matrix/t5-f1-us100000-d00-generator.txt.gz",
+          "size": 238,
+          "sha256": "99c32ce30f8eba01244234e023c2551d104b93ee75874b15eed5d40d4eb91ce0"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-19-jack-matrix/t5-f1-us100000-d00-raw.txt.gz",
+          "size": 347937,
+          "sha256": "76ab86f1ffb2f3b96a4def84b3cbb7e7e5daac072c047329835da397d5286e9d"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-19-jack-matrix/t5-f2-us000500-d01-analog.txt.gz",
+          "size": 119208,
+          "sha256": "419c62ac1142e4a418df1b7e0fabade315da31afa6469f53d701544d0d2b4058"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-19-jack-matrix/t5-f2-us000500-d01-channels.txt.gz",
+          "size": 304037,
+          "sha256": "50ed292734c3c0dc3d602cac365f8ee8c6f095c5669d22bd0ac2cd11d12aef2a"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-19-jack-matrix/t5-f2-us000500-d01-generator.txt.gz",
+          "size": 239,
+          "sha256": "42a444272de46ec3f14cd46e324b6ca61b49971a70e0ce7c13b16deba5a761b4"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-19-jack-matrix/t5-f2-us000500-d01-raw.txt.gz",
+          "size": 353946,
+          "sha256": "0a1351e596164de9eacfb70ea5c3fe3a11bd0eeafb5bba72fa4014fe8028a9af"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-19-jack-matrix/t5-f2-us100000-d00-analog.txt.gz",
+          "size": 118013,
+          "sha256": "17cd9165453600c47df11127bfe634af5550088429c79b4d6525795588753c2e"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-19-jack-matrix/t5-f2-us100000-d00-channels.txt.gz",
+          "size": 306046,
+          "sha256": "0366a3bf8839dcd9f8e34b1b44a32d8593a191b47f1307b60d50db4192b2351e"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-19-jack-matrix/t5-f2-us100000-d00-generator.txt.gz",
+          "size": 238,
+          "sha256": "ac7dafc72cf326a32cfab872e427350367fbba2eb9205805a87a96fe496000c1"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-19-jack-matrix/t5-f2-us100000-d00-raw.txt.gz",
+          "size": 350242,
+          "sha256": "2d094f968940bbd84d5116014987cf876b3d353ab5fe6ad1dc095227edd3e598"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-19-jack-matrix/t6-f1-us100000-d00-analog.txt.gz",
+          "size": 120265,
+          "sha256": "50f62ca40ecf7cbc98d85e0f11e6c879090237796aa1a6208ab5c600b27f99db"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-19-jack-matrix/t6-f1-us100000-d00-channels.txt.gz",
+          "size": 306564,
+          "sha256": "9b5d64fcd3bde2956e4bf479310f0a65b33c3f3ec729963a18d56174a006bd6f"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-19-jack-matrix/t6-f1-us100000-d00-generator.txt.gz",
+          "size": 238,
+          "sha256": "4d411336f81e3ba5b215747d1ed8878e882591b38766b917d9967273c2792987"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-19-jack-matrix/t6-f1-us100000-d00-raw.txt.gz",
+          "size": 348071,
+          "sha256": "8c39dd864962c7ee82c0d721643848fa4296a5f2ddb69344f7be4930bd0e0344"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-19-jack-matrix/t6-f2-us100000-d00-analog.txt.gz",
+          "size": 118457,
+          "sha256": "246b07f5ae79ffe35bb05fcaba950348727d9b1728119f220d9374185e355f47"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-19-jack-matrix/t6-f2-us100000-d00-channels.txt.gz",
+          "size": 308746,
+          "sha256": "b743c6bca54d6e346d17e8b5957b0c59388979dcc0cd4bf5f2af3dd601b54637"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-19-jack-matrix/t6-f2-us100000-d00-generator.txt.gz",
+          "size": 239,
+          "sha256": "e0f8ecb4495f5ded2717c4ad4823456181c81894820cd1d16e5985ab79d99af0"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-19-jack-matrix/t6-f2-us100000-d00-raw.txt.gz",
+          "size": 350235,
+          "sha256": "fa174660e6db8671e76755fdfeccab35922b2310b551f6ecade4c03da400b5e2"
+        }
+      ]
+    },
+    {
+      "name": "daisy-2026-10-19-jack-motion.tar",
+      "campaign": "2026-10-19-jack-motion",
+      "size": 51169280,
+      "sha256": "41b3238d2a4dd2b3c6c0d64161254d5bfd41871b1c976efa89cf13e8ea0de235",
+      "files": [
+        {
+          "path": "tests/measured/daisy/2026-10-19-jack-motion/ordinary-open-analog.txt.gz",
+          "size": 534476,
+          "sha256": "0275534ad92da5b694fc59d3478d3f2500ae05265dc76d3351096326f5923c96"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-19-jack-motion/ordinary-open-channels.txt.gz",
+          "size": 1432923,
+          "sha256": "1ec26447d011c997ee8d32552b7af6f3675819ebf40c71537004369c7c261437"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-19-jack-motion/ordinary-open-raw.txt.gz",
+          "size": 1739029,
+          "sha256": "ed04726554516124430ec18237b815cf30e640fc52ec4690ba653dfe3bdab90b"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-19-jack-motion/ordinary-open-second-cable-analog.txt.gz",
+          "size": 442925,
+          "sha256": "197dde1d7f06dacdd545ce00e4e58687b31fb8da4dec6910802385c92081726c"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-19-jack-motion/ordinary-open-second-cable-channels.txt.gz",
+          "size": 1208733,
+          "sha256": "148118c638dfea5e5e85d4f8e6e4f25222fce54e8180def74c404582e8cc107a"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-19-jack-motion/ordinary-open-second-cable-raw.txt.gz",
+          "size": 1449081,
+          "sha256": "feea7913393c2ef409b5ae9c13d3b9f0e5fb068041a204d1ae2a07d267218f67"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-19-jack-motion/ordinary-silent-analog.txt.gz",
+          "size": 3418286,
+          "sha256": "821b240164962fbdd6ca0c31dffaf1f325a03a3df8eb4e7ff0900c3171823cee"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-19-jack-motion/ordinary-silent-channels.txt.gz",
+          "size": 9610631,
+          "sha256": "dae9f19cb08ce59f1352405717b35a49e857fe68292fc4298d5f37d2d58dd41c"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-19-jack-motion/ordinary-silent-raw.txt.gz",
+          "size": 11260382,
+          "sha256": "9bfbf23552679f713c53c76d83dca64c28f522e27c2e09246cbbef9846cfbbd6"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-19-jack-motion/slow-insertion-missing-tail-analog.txt.gz",
+          "size": 661725,
+          "sha256": "0f92d967835e4b54276fbb33b95693b1fa3763f8b2f67c1e809f68cb610b433f"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-19-jack-motion/slow-insertion-missing-tail-channels.txt.gz",
+          "size": 1966622,
+          "sha256": "39b4e19d6ee6754354e434499c80615eaa373c593e74ec00023fe4546662bae0"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-19-jack-motion/slow-insertion-missing-tail-raw.txt.gz",
+          "size": 2190865,
+          "sha256": "571fdde2da40fba493f56c6a05454d6e283aa734f514ff13c75bf9e472af496f"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-19-jack-motion/slow-insertion-postroll-analog.txt.gz",
+          "size": 813532,
+          "sha256": "e42b74f9d2764a177aaf5f130ea1bed860189952a019b1405e575bdc2795ce76"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-19-jack-motion/slow-insertion-postroll-channels.txt.gz",
+          "size": 2283053,
+          "sha256": "7ff50e9dcfd23720d57277b8b6dd25ca3cd9fba7fa7784dcbc0e3147aab5186e"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-19-jack-motion/slow-insertion-postroll-raw.txt.gz",
+          "size": 2698333,
+          "sha256": "836436299bd78d94bf3b4264752c8dcf9a41926102f33be65a8b174abc6b006b"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-19-jack-motion/slow-partial-silent-analog.txt.gz",
+          "size": 1193106,
+          "sha256": "ae7961ed2f0d58d302b59fac52cfc3f5af1f17675a0d3af8303dccb36907ff77"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-19-jack-motion/slow-partial-silent-channels.txt.gz",
+          "size": 3937674,
+          "sha256": "0789289e17f199f4a37eb5553328676531fa6e2d839097c3fc5fad4ed92d828b"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-19-jack-motion/slow-partial-silent-raw.txt.gz",
+          "size": 4312405,
+          "sha256": "183e0c7c9f766b416f7f66ea2216c56d4ec69a303c0b43f85d825d2ed547dad3"
+        }
+      ]
+    },
+    {
+      "name": "daisy-2026-10-19-jack-postroll.tar",
+      "campaign": "2026-10-19-jack-postroll",
+      "size": 9707520,
+      "sha256": "8583fa7b83115d67d60dde1277e4d313bdadc48b414ddc346859e8093a33fec8",
+      "files": [
+        {
+          "path": "tests/measured/daisy/2026-10-19-jack-postroll/duration-analog.txt.gz",
+          "size": 21193,
+          "sha256": "d583bc9cf9ae6b36c95d1d2a58b301d45fccd5e7401b70f2199893cb00e8cc4d"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-19-jack-postroll/duration-channels.txt.gz",
+          "size": 98902,
+          "sha256": "ca43356c20242dba7a1648139ba44f6a37f203bdc90dad97c6ea022630d693b9"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-19-jack-postroll/duration-raw.txt.gz",
+          "size": 107630,
+          "sha256": "e30860da0ad4a991fb6170f7df9ec8581218526f0ae5b5e1bd5b30a9c5531c92"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-19-jack-postroll/early-analog.txt.gz",
+          "size": 16042,
+          "sha256": "74416e7c725dba03389defafc3e8ac25a0663b008f2f2eea38b7128f0b9a1f54"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-19-jack-postroll/early-channels.txt.gz",
+          "size": 70467,
+          "sha256": "ee6b424b9f726f8631ff1194e99772c8bce1fcca5a51df1b2f4667486ef063b6"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-19-jack-postroll/early-phase-analog.txt.gz",
+          "size": 16164,
+          "sha256": "f96307e539caf4a61ae38fd94f134b1b8ad677e6d11c1055edacba54e67a7d1f"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-19-jack-postroll/early-phase-channels.txt.gz",
+          "size": 74545,
+          "sha256": "e7127d467897748b05d08e78c8fdc4111435e2ed9dea8a1d9883458208bbf957"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-19-jack-postroll/early-phase-raw.txt.gz",
+          "size": 80106,
+          "sha256": "d803718edb9300083788d07b129193bc91362f39a3ec49f12fd73460e946629d"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-19-jack-postroll/early-raw.txt.gz",
+          "size": 80495,
+          "sha256": "11d3f89154cd569d1939d48ff7d9403207dc437b5b173be26c9381ca4e1364a8"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-19-jack-postroll/long-duration-analog.txt.gz",
+          "size": 370586,
+          "sha256": "8e5a5447119ec849ab98e4dedb068df1ef4e82ca3cfdd3696a91176b2bed7ec7"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-19-jack-postroll/long-duration-channels.txt.gz",
+          "size": 1906237,
+          "sha256": "8b557736b50b9a9b7f8f12d73eda694181fb945165c841f382fa148069d26526"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-19-jack-postroll/long-duration-raw.txt.gz",
+          "size": 2241538,
+          "sha256": "bf0a06f91a53fd7d6b3580e368dfe1c815773f141697ad6ef7dd44f2b8393c6e"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-19-jack-postroll/long-early-analog.txt.gz",
+          "size": 371601,
+          "sha256": "2954cc9380d821d8e1bdea75889bc5e8b70de9a77c2e9e9c5ecfffcb3bd9921f"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-19-jack-postroll/long-early-channels.txt.gz",
+          "size": 1905980,
+          "sha256": "a703423c15ad19de53dcfeb21f630a4f135e6eca71f50fbff0a2c8a42c90c284"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-19-jack-postroll/long-early-raw.txt.gz",
+          "size": 2247931,
+          "sha256": "67a3e440110927273f7fddf6fdc8916a0f67dce274be3de5141c8d12386abb42"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-19-jack-postroll/minimum-analog.txt.gz",
+          "size": 7624,
+          "sha256": "a34e6f5222ef4716a6424f6eb0897883ca40d6a8a8ca1f77e902034b17370b13"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-19-jack-postroll/minimum-channels.txt.gz",
+          "size": 33672,
+          "sha256": "ef869fa5bc17244feb0b236e78c90061adae48169af08d572cebe7bb8f35fe5f"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-19-jack-postroll/minimum-raw.txt.gz",
+          "size": 35132,
+          "sha256": "9f804ba924ec6221788a7e21e5df134e8ef6640dc00071d4354b4fed956b4a56"
+        }
+      ]
+    },
+    {
+      "name": "daisy-2026-10-19-jack-scheduled.tar",
+      "campaign": "2026-10-19-jack-scheduled",
+      "size": 22312960,
+      "sha256": "4ee1fc84d2549ebd511fcf68947a5dd9c54464f739a648a85a89229d29631dcb",
+      "files": [
+        {
+          "path": "tests/measured/daisy/2026-10-19-jack-scheduled/audio-b16-p0-analog.txt.gz",
+          "size": 193684,
+          "sha256": "cdff0a7b289dbf70d7bc3e4fe97ba642d6afa3c3b21ae1c3ad06b2bbb0b1d923"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-19-jack-scheduled/audio-b16-p0-channels.txt.gz",
+          "size": 551418,
+          "sha256": "169d3b18bb3d735aff3efc040699423e93d68e7e1e574c9445d5272cd099c8b5"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-19-jack-scheduled/audio-b16-p0-generator.txt.gz",
+          "size": 239,
+          "sha256": "012cd2609b5847d275007a6e736f980bd7ed2f17e52816d8b591042a40b119f7"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-19-jack-scheduled/audio-b16-p0-raw.txt.gz",
+          "size": 349187,
+          "sha256": "7933a3d306975580219e99acaaf8187207959d20f9ec1c51a1e004e45c83e281"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-19-jack-scheduled/audio-b16-p250-analog.txt.gz",
+          "size": 192000,
+          "sha256": "27fc6183e1d813cd7bb376c1d491dca693c67cb6f8a5295453a90643964bda20"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-19-jack-scheduled/audio-b16-p250-channels.txt.gz",
+          "size": 560628,
+          "sha256": "9f8aa43ecb56a760c2e229dcfa1aee7d92ff9bb55b2a1af4f542d25b65efd302"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-19-jack-scheduled/audio-b16-p250-generator.txt.gz",
+          "size": 238,
+          "sha256": "d8ec4fe900c3c721db207a152d29a88babd89963594cf00403250e8c40548414"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-19-jack-scheduled/audio-b16-p250-raw.txt.gz",
+          "size": 347709,
+          "sha256": "4899298612f7d9bf136252801d59e2632329959c64374817effb5b20365c2f62"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-19-jack-scheduled/audio-b16-p500-analog.txt.gz",
+          "size": 190383,
+          "sha256": "06337d75b63efef92a70c1e0b9c850e91a0880ab738134af5d6a04606eea4099"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-19-jack-scheduled/audio-b16-p500-channels.txt.gz",
+          "size": 569718,
+          "sha256": "f49e9724967120f97ac2ea8fc5d7bc68147dafec3c579cdaff51219e11387565"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-19-jack-scheduled/audio-b16-p500-generator.txt.gz",
+          "size": 239,
+          "sha256": "7f5b9e76381cdc541cf21bb9bbbc59ed6e81be16c2eccb904733a6783489fdef"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-19-jack-scheduled/audio-b16-p500-raw.txt.gz",
+          "size": 347124,
+          "sha256": "0c0afd3b6f12c35c3749e1768b5078f590dd1aeccfd55b2e6d57b2e7982bb188"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-19-jack-scheduled/audio-b16-p700-analog.txt.gz",
+          "size": 192682,
+          "sha256": "b3301077e6fcaf9c6e7cbe6e2c7189cc502f55b73885466dc099da477e4077f4"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-19-jack-scheduled/audio-b16-p700-channels.txt.gz",
+          "size": 572570,
+          "sha256": "509570c9acace3640132173895a3061315cede46585185a480ba9d59f5a8dcb1"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-19-jack-scheduled/audio-b16-p700-generator.txt.gz",
+          "size": 239,
+          "sha256": "a40043786757ebaab1895d3b64424d7a181f1a19ebc86a77f4765d6833f902e9"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-19-jack-scheduled/audio-b16-p700-raw.txt.gz",
+          "size": 349003,
+          "sha256": "1afefcc908535363bdd2de52e554b317eee87b880f662826db0251a6bd85d6b8"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-19-jack-scheduled/audio-b48-p0-analog.txt.gz",
+          "size": 189451,
+          "sha256": "1962025d789f5dc4074c7469c63bb7c7395e20e9fa79af3cf5a8f3d6677c25f4"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-19-jack-scheduled/audio-b48-p0-channels.txt.gz",
+          "size": 396153,
+          "sha256": "fc65b083682951de16a645ee7bd30d1147877d3fab1545a4c1f82a808c0acff2"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-19-jack-scheduled/audio-b48-p0-generator.txt.gz",
+          "size": 238,
+          "sha256": "d63697352ae8d6641ee0dd0e51ae217602bb7bbf2d8209bb17643182fd5b3ce1"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-19-jack-scheduled/audio-b48-p0-raw.txt.gz",
+          "size": 346684,
+          "sha256": "0c090d19c83848dd297bf6dbdfa2ce67b4e21b44a8c00e3cf465bcffa58c6943"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-19-jack-scheduled/audio-b48-p250-analog.txt.gz",
+          "size": 190097,
+          "sha256": "47246a3296bdad3d8b65e365ae0945f69391bf74d1eb4c71a8be009bd65530a5"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-19-jack-scheduled/audio-b48-p250-channels.txt.gz",
+          "size": 401594,
+          "sha256": "75dfd8c7b2757ac137f8727cef8624de1c56477128f3daea08257b059ad86530"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-19-jack-scheduled/audio-b48-p250-generator.txt.gz",
+          "size": 238,
+          "sha256": "edc195c0c2d2b64597a75852676ca80b63dcdc8527773b1ac092b17390c851e8"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-19-jack-scheduled/audio-b48-p250-raw.txt.gz",
+          "size": 348557,
+          "sha256": "2b308b3d0d156141698e1e39e6726aa866676f07b5ab46e2fae759aaa2350d26"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-19-jack-scheduled/audio-b48-p500-analog.txt.gz",
+          "size": 189846,
+          "sha256": "80b7366f69ec041fc9506d7273e057cda0c7008b61b0e908783a1869d8f0b3cb"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-19-jack-scheduled/audio-b48-p500-channels.txt.gz",
+          "size": 403792,
+          "sha256": "8e24d5943e7aa85390d105c4cf4c38f3f88e0e23e4aaae17657b915696c98aae"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-19-jack-scheduled/audio-b48-p500-generator.txt.gz",
+          "size": 239,
+          "sha256": "df5ef03508100c4f876c5c2a892bef75c1a95cc3cc33b673fb52e58ebd8fb554"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-19-jack-scheduled/audio-b48-p500-raw.txt.gz",
+          "size": 346923,
+          "sha256": "e7ffe34277769ebc69fb84686ed8e48e041780938456b61cdf2281edd02ed8ce"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-19-jack-scheduled/audio-b48-p700-analog.txt.gz",
+          "size": 192912,
+          "sha256": "0fccc122d1998d69bab5fc5888d46a0e1810f6746ec8992f4bbf75c5d5e5be11"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-19-jack-scheduled/audio-b48-p700-channels.txt.gz",
+          "size": 400183,
+          "sha256": "06fb9955d311125c17650c4a7eb96eda0e2690f2c52d5fb21d6d5e10e74c2ff5"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-19-jack-scheduled/audio-b48-p700-generator.txt.gz",
+          "size": 239,
+          "sha256": "272a496649d30103e23fde99811a2676a785975da54815b4369a581130d2f270"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-19-jack-scheduled/audio-b48-p700-raw.txt.gz",
+          "size": 348792,
+          "sha256": "097fea3ee7d7babf233f91af609ea9bcf6bc81043576acd0be2c3355aba25001"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-19-jack-scheduled/audio-b96-p0-analog.txt.gz",
+          "size": 192488,
+          "sha256": "48d57d2a32adce7a589ec886274a658f019c1bc615c8b685ea47e7d640362ad1"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-19-jack-scheduled/audio-b96-p0-channels.txt.gz",
+          "size": 356952,
+          "sha256": "c19698420a00538b2da02964c986344079f4b7682cf82b26b88bbb389175d6aa"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-19-jack-scheduled/audio-b96-p0-generator.txt.gz",
+          "size": 239,
+          "sha256": "ef06ed51d68bb40c6f7091a5ede421289484748a28d411a965c144cfdb694d84"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-19-jack-scheduled/audio-b96-p0-raw.txt.gz",
+          "size": 348357,
+          "sha256": "86da576caadee8d510c7eb62cc415ab30995b18d44ac2eeebfffb26aba6e3f89"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-19-jack-scheduled/audio-b96-p250-analog.txt.gz",
+          "size": 191333,
+          "sha256": "3dd44ce44f679730bbfebb0b67ad4de48d35513899db9fe160eb130de12b3b12"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-19-jack-scheduled/audio-b96-p250-channels.txt.gz",
+          "size": 356071,
+          "sha256": "099868b784f48b3624438cc4bafffc54796efc4f594bb3edaf4f2aea9f437c10"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-19-jack-scheduled/audio-b96-p250-generator.txt.gz",
+          "size": 239,
+          "sha256": "3785fdfe2a66638606af6c8297b35df4a70fe3d5af3d6229b45b4db67bd7b5ca"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-19-jack-scheduled/audio-b96-p250-raw.txt.gz",
+          "size": 346750,
+          "sha256": "f1978643761d0cad27afd7b871237a8ba8f6911b6a47bf802f109d41a7f73668"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-19-jack-scheduled/audio-b96-p500-analog.txt.gz",
+          "size": 192371,
+          "sha256": "c9fab26b8de3982bf6ccd7f71cc471599e033854710a36905a0eb5bd429d9825"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-19-jack-scheduled/audio-b96-p500-channels.txt.gz",
+          "size": 357455,
+          "sha256": "f149e8f1f20da1e94e83b1a8731439ffeb296cfb5c82a37a251f8cbba7ebe741"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-19-jack-scheduled/audio-b96-p500-generator.txt.gz",
+          "size": 238,
+          "sha256": "93238cd2d7332d8506fd8c6afcf93bad778b4b946e42a46d6e66af5ab40a6bb9"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-19-jack-scheduled/audio-b96-p500-raw.txt.gz",
+          "size": 346322,
+          "sha256": "1734ed8048e7afb2b9602d8aa236f316eac6747b7201db1046e199665bef8c0c"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-19-jack-scheduled/audio-b96-p700-analog.txt.gz",
+          "size": 192322,
+          "sha256": "1b91058e84b4f34388c65560dba3e4a979d7b9f9960c6b0bcae4c707612e1d97"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-19-jack-scheduled/audio-b96-p700-channels.txt.gz",
+          "size": 358494,
+          "sha256": "3e6825ce9d908de923290941b1bdc5e73cf1f14e482f58c218aabc84d78a4e5b"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-19-jack-scheduled/audio-b96-p700-generator.txt.gz",
+          "size": 239,
+          "sha256": "1ca492ff7fedf04066619223299ce786add38b15e36c5f3fc04271cbb9717941"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-19-jack-scheduled/audio-b96-p700-raw.txt.gz",
+          "size": 347260,
+          "sha256": "ba6aaa50b79b8c8b0c20ff25b785eda96839bc1d73c5525ab20c6e50ab368528"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-19-jack-scheduled/baseline-after-analog.txt.gz",
+          "size": 191785,
+          "sha256": "ff175c04882f4f5ee768b96b3c2fcfb198d0142c7b75500c8a852b3da9e66e77"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-19-jack-scheduled/baseline-after-channels.txt.gz",
+          "size": 309897,
+          "sha256": "af5ae193514bc663c8a26b15c8f56894a4f3ad9e1fa8c4b99d4dd3c2f019ab1f"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-19-jack-scheduled/baseline-after-generator.txt.gz",
+          "size": 238,
+          "sha256": "3393f87498b1e98ed3a26e4b4714035c8480914e78165f49b51fe24f9c6a5e14"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-19-jack-scheduled/baseline-after-raw.txt.gz",
+          "size": 348688,
+          "sha256": "2d889771c5ce378bd05a9b0590ed5cc142dd7d8c4449c8cf7b8f72c9c7c735f9"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-19-jack-scheduled/baseline-before-analog.txt.gz",
+          "size": 189047,
+          "sha256": "735f0613df99246da9ce3d235455105faa216cab0b6e89d86842aea07aa148b3"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-19-jack-scheduled/baseline-before-channels.txt.gz",
+          "size": 301548,
+          "sha256": "3459058ae30b50c3cea66fa73d7f6de6cc680a03781b69e5a456c0105083f8e6"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-19-jack-scheduled/baseline-before-generator.txt.gz",
+          "size": 239,
+          "sha256": "61e9bf446b88b37bcfc91d22c3d42dd5b3d6cc389a94fa33405cfbb0fecd02f7"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-19-jack-scheduled/baseline-before-raw.txt.gz",
+          "size": 348504,
+          "sha256": "7c5fac43ff5a5a9b9d795c40b97a40dd9ab27e0766e20abf0d0e61c5499c24e2"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-19-jack-scheduled/finish-loaded-analog.txt.gz",
+          "size": 70675,
+          "sha256": "81dd3d15d2136db0de83474e95f7cd7e11d810ef5a8b68c8af7bf410f2497754"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-19-jack-scheduled/finish-loaded-channels.txt.gz",
+          "size": 132641,
+          "sha256": "206e71991e10064abdc20bb9caf769f375954a814d0d0f12e2eded0954576a3e"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-19-jack-scheduled/finish-loaded-raw.txt.gz",
+          "size": 124253,
+          "sha256": "5a30b18166f8a81c66139dd95cbb6e184056fbc61299b0eb05ead9a834f5f32f"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-19-jack-scheduled/finish-unloaded-analog.txt.gz",
+          "size": 30650,
+          "sha256": "15632bca91897da4dd1a1c706d5f15d2a57740215cbdbe2c16c7da4094851b4d"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-19-jack-scheduled/finish-unloaded-channels.txt.gz",
+          "size": 47001,
+          "sha256": "bde070cecbcd46109dc753e706bd89f90755fdc3701c79c557864983b481bc96"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-19-jack-scheduled/finish-unloaded-raw.txt.gz",
+          "size": 50996,
+          "sha256": "1678ee7683382c91588c858bee515e038e4c9b9d4f76bbbd3a94ddd66cac393d"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-19-jack-scheduled/loaded-t2-f1-analog.txt.gz",
+          "size": 194998,
+          "sha256": "95cd8d16eabf80a08254e4c74a8cc780f606326184455f56227815df773b2bdc"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-19-jack-scheduled/loaded-t2-f1-channels.txt.gz",
+          "size": 551939,
+          "sha256": "3abd9c22c89297572745634b6c48ed0f3d4683ea3b0418b97e7bc6bddcadf8d7"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-19-jack-scheduled/loaded-t2-f1-generator.txt.gz",
+          "size": 239,
+          "sha256": "81d584e76be2cb9a73a5cb589ecb664ce9e618de0f9919750f85f0a75646437f"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-19-jack-scheduled/loaded-t2-f1-raw.txt.gz",
+          "size": 349977,
+          "sha256": "9443358404eb10b3828df34fd4b26b09f9dfb5c63e6ab4b7974a1b365e94792f"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-19-jack-scheduled/loaded-t2-f2-analog.txt.gz",
+          "size": 194934,
+          "sha256": "abcdf0f500c8b1b8f189a05a85a211a2863158a71a94606d35fed599ab04e153"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-19-jack-scheduled/loaded-t2-f2-channels.txt.gz",
+          "size": 557166,
+          "sha256": "c5d734c64a2a65a7b143616c4172688c08884b13eee3046bddde965d6f26e908"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-19-jack-scheduled/loaded-t2-f2-generator.txt.gz",
+          "size": 239,
+          "sha256": "bd60b61b18226bc04e43a9539a6830d5257ec0066f58ba956e8d5528c4d288a3"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-19-jack-scheduled/loaded-t2-f2-raw.txt.gz",
+          "size": 363645,
+          "sha256": "737dca3940f0362088d281e00a26f2b679267c44e4962b4df36a92f70f1e1f54"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-19-jack-scheduled/loaded-t5-f1-analog.txt.gz",
+          "size": 193947,
+          "sha256": "a869b6517eb6746693e031f18947700c5f8af481a3f5f033605e31d38e1bc0e9"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-19-jack-scheduled/loaded-t5-f1-channels.txt.gz",
+          "size": 560861,
+          "sha256": "1e50cd4f34caafda39d5ba756d79b6f2d9ab32f01cb59aa0a684fe2d0d48417f"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-19-jack-scheduled/loaded-t5-f1-generator.txt.gz",
+          "size": 237,
+          "sha256": "e36ae3e58d992a2070851f3fa18b6fb4eff026b00351a74bd825c8c778a8fd57"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-19-jack-scheduled/loaded-t5-f1-raw.txt.gz",
+          "size": 349618,
+          "sha256": "5ca20f0c42b99dcbe1b19330578b7d67924c609f9a64d4252b4a2d03568662ec"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-19-jack-scheduled/loaded-t5-f2-analog.txt.gz",
+          "size": 195119,
+          "sha256": "4fd1b36fa170925affec19de96c26c641f8fcc838e26b86b6028d5efac4ffc13"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-19-jack-scheduled/loaded-t5-f2-channels.txt.gz",
+          "size": 574395,
+          "sha256": "e6afe3aa013600c8048e4c93807b5a8091860aab7ca55b573520e2da22badd6e"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-19-jack-scheduled/loaded-t5-f2-generator.txt.gz",
+          "size": 238,
+          "sha256": "be2a82db4c818b94f95d866afa04b944e444dd577f124a0cbf20e4303749709c"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-19-jack-scheduled/loaded-t5-f2-raw.txt.gz",
+          "size": 355700,
+          "sha256": "a047d33bb77afa5341dcb6fbd7820210d496f52937955f6c3f6d9ec29b761de8"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-19-jack-scheduled/recovery-b16-p700-analog.txt.gz",
+          "size": 262134,
+          "sha256": "cbd9af8147be19f6fd41e8b6fc7a4014e27459dc87090299b48b27cc31c9b020"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-19-jack-scheduled/recovery-b16-p700-channels.txt.gz",
+          "size": 664355,
+          "sha256": "99744369a3410cb40a6da3df17c9612cc7997d830cd162323dfa31901a810a94"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-19-jack-scheduled/recovery-b16-p700-generator.txt.gz",
+          "size": 238,
+          "sha256": "5845b760fcd7881514b1a29607e1683dbf8d8ddeb39e0c5c2f6ad493025e7907"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-19-jack-scheduled/recovery-b16-p700-raw.txt.gz",
+          "size": 488426,
+          "sha256": "2fe871afa6809b11cd7de6410ee1abcbe6cf7dd6a33f2c4f5a3a7340184b9466"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-19-jack-scheduled/recovery-b48-p700-analog.txt.gz",
+          "size": 262630,
+          "sha256": "2b46185b523e52d67e02668bce74dd23349ba15c4e2532918ab73967157f9603"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-19-jack-scheduled/recovery-b48-p700-channels.txt.gz",
+          "size": 509177,
+          "sha256": "cb5012ecf20586dc4849d4b945351adcc01e4ebd3ba6f73e73f74218e1668697"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-19-jack-scheduled/recovery-b48-p700-generator.txt.gz",
+          "size": 240,
+          "sha256": "b784ebd17de7284de524ece648a6789a5cfabe66377ee0c08a0b4a0d62206025"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-19-jack-scheduled/recovery-b48-p700-raw.txt.gz",
+          "size": 488965,
+          "sha256": "60df2814b88cc21d637e45d098c33ed38e56d580146ce6ef1bd78e2a005f9c89"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-19-jack-scheduled/recovery-b96-p700-analog.txt.gz",
+          "size": 261528,
+          "sha256": "d0f23effafd62104f46171eca17fbdd5bed421887b3085615d2a2bb9bb1bfd51"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-19-jack-scheduled/recovery-b96-p700-channels.txt.gz",
+          "size": 465179,
+          "sha256": "e44bd5d84c2dbc12a9531511417cac14bbda1cd366a18704a198e4d68309e416"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-19-jack-scheduled/recovery-b96-p700-generator.txt.gz",
+          "size": 238,
+          "sha256": "f8c35272f2a2b7e00e3781e86d23c9a5d3f3ad16ea94e9ab9deb0e674ff7ed44"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-19-jack-scheduled/recovery-b96-p700-raw.txt.gz",
+          "size": 488065,
+          "sha256": "5450541ea87ed54670233a362ebe87963ed62f1ed8316a723878c2d0a5393051"
+        }
+      ]
+    },
+    {
+      "name": "daisy-2026-10-19-jack-transition.tar",
+      "campaign": "2026-10-19-jack-transition",
+      "size": 13004800,
+      "sha256": "dab2b95b90ee230f45755e41047f31492413bb14b96bdfbcd549ab32e470f510",
+      "files": [
+        {
+          "path": "tests/measured/daisy/2026-10-19-jack-transition/insert-adc-before-analog.txt.gz",
+          "size": 391104,
+          "sha256": "fb699a362d10cb7ede35cdbe2a6f2f1966d3b465c433058752b6404496bd103a"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-19-jack-transition/insert-adc-before-channels.txt.gz",
+          "size": 1084235,
+          "sha256": "3c9c1b093507a991c69af6b666dae8ed34607a7e40164bd424cc0f731093fc41"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-19-jack-transition/insert-adc-before-raw.txt.gz",
+          "size": 1265353,
+          "sha256": "de132657f68790a33198d0277d40a062aaef10f94e895b669641d051f621a716"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-19-jack-transition/insert-service-before-analog.txt.gz",
+          "size": 414159,
+          "sha256": "0f99d83e888f5701cb4a512df78cc1b412e30b6931937165b4ca21f9f353e11d"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-19-jack-transition/insert-service-before-channels.txt.gz",
+          "size": 1137042,
+          "sha256": "29d7fa3d8dc73033bb0131f1ebdad329a9ebf38d30b42cdcffdf7208d9034c83"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-19-jack-transition/insert-service-before-raw.txt.gz",
+          "size": 1367537,
+          "sha256": "92e4e96b9d98dcc05eff6d479085ece3f52594b8d6f6e4f886caa268b59d9842"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-19-jack-transition/remove-adc-before-analog.txt.gz",
+          "size": 582870,
+          "sha256": "6c77b42d8450f58707f9d3d4c5e54141777ee276def7a8107779147469c9e060"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-19-jack-transition/remove-adc-before-channels.txt.gz",
+          "size": 1577142,
+          "sha256": "e0782159a36320584369ab1cfd2f61159254334c14b9f664e506c30434a18fcf"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-19-jack-transition/remove-adc-before-raw.txt.gz",
+          "size": 1887306,
+          "sha256": "861892fb17d11339faa06ebe4c3d2957714cf57b808ea9fef218c6ec7eff2040"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-19-jack-transition/remove-service-before-analog.txt.gz",
+          "size": 471511,
+          "sha256": "4e313414d78c9c1518756c0540aaf7d4dcaea3f987becfc3ee8235bbd42dbecd"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-19-jack-transition/remove-service-before-channels.txt.gz",
+          "size": 1270339,
+          "sha256": "d50101ddb07b7c0103e0ce0ce76a8fccbdfe7bf1b60c8ca750cea583de5baa39"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-19-jack-transition/remove-service-before-raw.txt.gz",
+          "size": 1545872,
+          "sha256": "fed0ae36ac731baf492a876641ea69f9de68260ffe92fd90c8ba180bf7bcea3f"
+        }
+      ]
+    },
+    {
+      "name": "daisy-2026-10-19-jack-transition-preflight.tar",
+      "campaign": "2026-10-19-jack-transition-preflight",
+      "size": 696320,
+      "sha256": "a23632959e86304e47825cfee530376f99a6be7ea6ac65ef296f75f47bf280a6",
+      "files": [
+        {
+          "path": "tests/measured/daisy/2026-10-19-jack-transition-preflight/adc-gap-analog.txt.gz",
+          "size": 21967,
+          "sha256": "d9e36876ebd3b9b52a549e87ff78c4c82c98c18416c2a89c78d175a6c936364d"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-19-jack-transition-preflight/adc-gap-channels.txt.gz",
+          "size": 100416,
+          "sha256": "e822aadedd427189390093425cd34f02f87c85694701e172e5b640e2c92e54ce"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-19-jack-transition-preflight/adc-gap-raw.txt.gz",
+          "size": 107325,
+          "sha256": "1827aebe6cfeb034056310fffc2fd131c979a2977e7563b9e8a7f31d21f0935c"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-19-jack-transition-preflight/baseline-analog.txt.gz",
+          "size": 21587,
+          "sha256": "58d354c20e188108e5ea9e03ed1914e6649ab8c0af525c35c058d17eb5861ac5"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-19-jack-transition-preflight/baseline-channels.txt.gz",
+          "size": 96601,
+          "sha256": "4f5b0d607514a9514628a40561db0f7a62e2ac2fee8e347ba271f3e1181d0a31"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-19-jack-transition-preflight/baseline-raw.txt.gz",
+          "size": 107158,
+          "sha256": "470f1c8324e419c483b64470dc8b2b539b6609bf87cdf8b756ccffabfb160c3e"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-19-jack-transition-preflight/service-gap-analog.txt.gz",
+          "size": 21489,
+          "sha256": "6155aa14ea22aab81822998d0bc3990dcde147e4020833d73e1ec1b9d229ebae"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-19-jack-transition-preflight/service-gap-channels.txt.gz",
+          "size": 93957,
+          "sha256": "19c025db39b7e50aedff4f75d6793272316eeac431f2dce9c69f4c1a5ba51633"
+        },
+        {
+          "path": "tests/measured/daisy/2026-10-19-jack-transition-preflight/service-gap-raw.txt.gz",
+          "size": 108361,
+          "sha256": "57fc5d24406985cdd148eee3f5af64001b71840368bade8482e33eba655f5a61"
+        }
+      ]
     }
-  ],
-  "source_history": {
-    "source_commit": "077d816dd94322a421468d98086fb14601c2ecbd",
-    "bundle_sha256": "f1cbcd5d2285173232f56b84aefdf73d1f3d4e356b344e553011d3f72138c36a",
-    "size": 2030334148,
-    "parts": [
-      {
-        "name": "source-history.bundle.part01",
-        "size": 943718400,
-        "sha256": "a57bccfbf4b85b240896fdb1912fa718e79ae08ec682fbc3b86c0f2d821ec152"
-      },
-      {
-        "name": "source-history.bundle.part02",
-        "size": 943718400,
-        "sha256": "7021daac372c18c8d5ba80cead136de7ad91646e5c787b6814ee85cb9ee9e009"
-      },
-      {
-        "name": "source-history.bundle.part03",
-        "size": 142897348,
-        "sha256": "e08303f02af56a3f3cb0d1c23ea3e7cde29374000e7e50a49e3411879c76da7f"
-      }
-    ]
-  }
+  ]
 }

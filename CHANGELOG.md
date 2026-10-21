@@ -2,6 +2,17 @@
 
 ## Unreleased
 
+- Fix the measured jack-acquisition starvation in the Seed3 example with short
+  timer/ADC interrupts and explicit ownership. All 21 load/recovery/fault reruns
+  pass, including six previously starved profiles; two independent early-finish
+  checks pass after an atomic deadline fix. Preserve complete measured replays
+  and acquisition/audio timing budgets. Portable library headers are unchanged.
+- Add a 21-case jack audio/IRQ campaign with full measured replay: 14 load
+  comparisons, three sustained-insertion recovery cases and four faults under
+  load. Retain six scheduling-starvation counterexamples alongside responsive
+  cases. Independently verify every audio callback and keep source-timing
+  witnesses separate from conservative ADC-aperture evidence. Portable headers
+  are unchanged; no production-voltage or DSP-quality qualification is implied.
 - Preserve four complete interaction recordings under audio/USB load (240,000
   observations): taps and holds during motion, re-armed pickup and quick
   reversals. Physical-stimulus regressions retain the earlier stationary-hold

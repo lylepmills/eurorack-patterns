@@ -14,6 +14,7 @@ A cable should not change routing repeatedly while being inserted. A slow knob m
 - **Use the C++ library:** follow the [shared-knob walkthrough](docs/quickstart.md), then build the optional [Raspberry Pi Pico adapter](examples/pico/README.md).
 - **Measure controls on hardware:** use the [Daisy Seed3 bench and capture tools](docs/validation.md#daisy-seed3-control-bench). Complete recorded regressions cover control movement, active faults, target changes and selected reset/power-on cases on one fixture.
 - **Measure load behavior:** the [audio/USB load and continuous-soak tools](docs/validation.md#audiousb-load-and-continuous-soak) include paired stationary traces, gestures during knob movement and quick reversals. Results apply to the recorded fixture and synthetic workload; broader qualification remains open.
+- **Measure jack detection under load:** the [21-case audio/IRQ campaign](docs/validation.md#jack-audiointerrupt-load-results) records both responsive operation and qualification starvation, plus recovery and fault comparisons.
 - **Contribute evidence:** report a [bug, source correction or measured trace](https://github.com/lylepmills/eurorack-patterns/issues/new/choose), or pick a [bounded contribution task](https://github.com/lylepmills/eurorack-patterns/issues?q=is%3Aissue%20is%3Aopen%20label%3A%22help%20wanted%22).
 
 ## Three small improvements

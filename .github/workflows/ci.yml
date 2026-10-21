@@ -62,6 +62,8 @@ jobs:
           arm-none-eabi-size build-daisy/patterns_daisy.elf
           python3 examples/daisy/build.py --libdaisy "$RUNNER_TEMP/libDaisy" --out build-generator --role pulse-generator
           arm-none-eabi-size build-generator/patterns_pulse_generator.elf
+          python3 examples/daisy/build.py --libdaisy "$RUNNER_TEMP/libDaisy" --out build-jack --role jack-bench
+          arm-none-eabi-size build-jack/patterns_jack.elf
   public-content:
     runs-on: ubuntu-latest
     steps:
