@@ -226,7 +226,7 @@ The [scheduled-acquisition follow-up](bench/daisy.md#scheduled-jack-acquisition-
 
 ### E02 Latch disruptive selection CV at the musical event
 
-*Code.* **Observed:** Plaits captures engine CV at the trigger edge; without a trigger cable it follows continuously. **Reuse:** event-sample mode/algorithm choices that should remain consistent during a note. **Tradeoff/test:** ongoing CV changes become deferred; test modulation around the trigger boundary and patch/unpatch behavior. [Engine CV capture](https://github.com/pichenettes/eurorack/blob/f4cfa7697095a28d292bff758beb51deb49b5a86/plaits/dsp/voice.cc#L102-L124).
+*Code.* **Observed:** Plaits captures engine CV at the trigger edge; without a trigger cable it follows continuously. **Reuse:** event-sample mode/algorithm choices that should remain consistent during a note. **Tradeoff/test:** ongoing CV changes become deferred; test modulation around the trigger boundary and patch/unpatch behavior. **Tradeoff (proposed, no product cited):** a fixed latch-on-trigger for every disruptive CV is one policy; a per-input user toggle that defaults to live following lets the player choose which CVs are sampled at the event, at the cost of one more setting to explain and a test matrix that doubles per input. [Engine CV capture](https://github.com/pichenettes/eurorack/blob/f4cfa7697095a28d292bff758beb51deb49b5a86/plaits/dsp/voice.cc#L102-L124).
 
 ### E03 Give inferred events a refractory interval
 

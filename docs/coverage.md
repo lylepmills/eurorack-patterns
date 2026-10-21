@@ -107,7 +107,7 @@ the portable API and hardware-validation scope are unchanged.
 | D12 | Recipe | Keep edit/play targets separate, render mismatch and define unlock/mode-exit behavior. |
 | D13 | Recipe | Preserve stable focus identity across rebuild; choose fallback when the target disappears. |
 | E01 | Primitive: trigger delay + measure | Delay mechanism exists; choose CV/gate skew budget and verify actual acquisition on hardware. |
-| E02 | Recipe | Latch mode CV at note events; define behavior with trigger disconnected. |
+| E02 | Recipe | Latch mode CV at note events; define behavior with trigger disconnected; decide whether latching is fixed or a per-input toggle. |
 | E03 | Recipe + measure | Set source-specific refractory time; test flams and fast attacks. |
 | E04 | Recipe | Define reset/clock precedence at one processing boundary. |
 | E05 | Recipe | Maintain pending/active rhythmic state and commit at a chosen boundary. |
