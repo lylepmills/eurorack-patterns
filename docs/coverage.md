@@ -53,6 +53,11 @@ See [research scope and unresolved reports](research-pass-2.md) and [executed ch
 
 The [shared-knob walkthrough](quickstart.md) and optional [Pico adapter](../examples/pico/README.md) compose pickup and motion acceptance with explicit validity and ownership. Host checks cover the application policy; ARM compile/link checks cover the example's build boundary. The [Daisy control bench](bench/daisy.md#daisy-seed3-control-bench) adds fresh ADC acquisition, buffered traces, gesture/gap policies and host replay. These add no hardware-qualified catalog entries.
 
+The [stepped-destination example](pickup.md#one-stepped-destination-policy) adds
+finite-set membership, pickup after snapping, readback and explicit recovery for
+one five-step destination. An independent synthetic oracle checks that policy;
+the portable API and hardware-validation scope are unchanged.
+
 ## Per-pattern map
 
 “Primitive” names the relevant family only; it does not claim an exact copy of the cited behavior. “Recipe” and “Measure” point to the evidence and test in the catalog. Implementation work should start with the portable primitive rows, then prioritize application policies and measurements by the intended product.
@@ -85,7 +90,7 @@ The [shared-knob walkthrough](quickstart.md) and optional [Pico adapter](../exam
 | C10 | Primitive: gestures (partial) | Consume navigation modifier; channel selection and transport behavior remain host work. |
 | C11 | Recipe | Decide which guard states persist with presets. |
 | C12 | Recipe | Build every quantizer region from allowed membership; test negative/positive octaves and empty mask. |
-| C13 | Primitive: pickup | Supply true effective bounds; handle snapped destinations, feedback and recovery explicitly. |
+| C13 | Primitive: pickup + five-step example | Supply true effective bounds/membership; choose feedback, readback and recovery for the actual destination. The example does not cover arbitrary quantizers. |
 | C14 | Primitive: pickup (partial) | Caller must identify target/owner changes and explicitly re-arm. |
 | D01 | Recipe | Render panel-selected and CV-effective state separately. |
 | D02 | Recipe | Render stored, physical, and overridden ownership distinctly. |

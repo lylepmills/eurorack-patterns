@@ -70,6 +70,8 @@ if (pickup.Observe(mapped_knob_sample, sample_valid)) {
 
 The [complete example](examples/pickup_workflow.cpp) adds initialization, validity before motion filtering, ownership changes and reset. `Observe` returns permission to apply a sample, not a changed-value event. The [walkthrough](docs/quickstart.md) explains the ordering and policies.
 
+For a discrete destination, see the [five-step pickup example](docs/pickup.md#one-stepped-destination-policy). It checks actual membership and destination readback, with explicit recovery for an unreachable saved value.
+
 Use `controls.h`'s lower-level predicates and percent convenience functions when your application already manages pickup state/history. They remain supported; they do not automatically break crossing history across invalid gaps. Numeric tolerances are configurable demonstration values.
 
 CMake projects can use a pinned dependency:

@@ -51,6 +51,9 @@ are demonstration settings, not measurements or hardware recommendations. It
 assumes a continuous, monotone linear mapping. Restricted, reversed, nonlinear or
 stepped mappings need their own bounds and destination policy; see the
 [pickup contract](pickup.md). Test actual ADC noise and musician control feel.
+For a destination with discrete values, the separate
+[five-step example](pickup.md#one-stepped-destination-policy) shows one policy
+for membership, pickup after snapping, readback and explicit recovery.
 
 ## Put the library in a firmware build
 
