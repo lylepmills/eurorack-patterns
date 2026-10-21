@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="920" height="302" viewBox="0 0 920 302" role="img" aria-labelledby="title desc">
+<title id="title">Count one press for one bouncing contact</title><desc id="desc">Synthetic cumulative presses at 1 ms samples. Bounce at 4-8 ms and 18-22 ms; 5 ms qualification is illustrative. Orange: Raw contact closures. Blue: Debounced state.</desc>
+<rect width="920" height="302" rx="12" fill="#f7f8fa"/>
+<g font-family="system-ui, sans-serif" fill="#172334">
+<text x="28" y="34" font-size="21" font-weight="650">Count one press for one bouncing contact</text>
+<path d="M28 62h24" stroke="#a84b19" stroke-width="3" stroke-dasharray="6 4"/><text x="60" y="67" font-size="14">Raw contact closures</text>
+<path d="M450 62h24" stroke="#006d96" stroke-width="3"/><text x="482" y="67" font-size="14">Debounced state</text>
+<path d="M68 104H870 M68 230H870" stroke="#d5dce3" fill="none"/>
+<text x="27" y="109" font-size="13">5</text><text x="35" y="235" font-size="13">0</text>
+<path d="M68.00 230.00 H95.66 V230.00 H123.31 V230.00 H150.97 V230.00 H178.62 V204.80 H206.28 V204.80 H233.93 V179.60 H261.59 V179.60 H289.24 V154.40 H316.90 V154.40 H344.55 V154.40 H372.21 V154.40 H399.86 V154.40 H427.52 V154.40 H455.17 V154.40 H482.83 V154.40 H510.48 V154.40 H538.14 V154.40 H565.79 V154.40 H593.45 V129.20 H621.10 V129.20 H648.76 V104.00 H676.41 V104.00 H704.07 V104.00 H731.72 V104.00 H759.38 V104.00 H787.03 V104.00 H814.69 V104.00 H842.34 V104.00 H870.00 V104.00" fill="none" stroke="#a84b19" stroke-width="3" stroke-dasharray="6 4"/>
+<path d="M68.00 230.00 H95.66 V230.00 H123.31 V230.00 H150.97 V230.00 H178.62 V230.00 H206.28 V230.00 H233.93 V230.00 H261.59 V230.00 H289.24 V230.00 H316.90 V230.00 H344.55 V230.00 H372.21 V230.00 H399.86 V230.00 H427.52 V204.80 H455.17 V204.80 H482.83 V204.80 H510.48 V204.80 H538.14 V204.80 H565.79 V204.80 H593.45 V204.80 H621.10 V204.80 H648.76 V204.80 H676.41 V204.80 H704.07 V204.80 H731.72 V204.80 H759.38 V204.80 H787.03 V204.80 H814.69 V204.80 H842.34 V204.80 H870.00 V204.80" fill="none" stroke="#006d96" stroke-width="3"/>
+<text x="68" y="252" font-size="12">Sample 0</text><text x="815" y="252" font-size="12">29</text>
+<text x="28" y="284" font-size="13">Synthetic cumulative presses at 1 ms samples. Bounce at 4-8 ms and 18-22 ms; 5 ms qualification is illustrative.</text>
+</g></svg>

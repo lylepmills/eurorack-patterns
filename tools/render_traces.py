@@ -7,17 +7,28 @@ from pathlib import Path
 import subprocess
 
 ROOT = Path(__file__).resolve().parents[1]
+# name: (title, naive label, component label, y limit, caption, x-axis unit)
 SPECS = {
     'presence': ('Qualify jack presence before changing routing', 'Individual probe mismatch', 'Qualified presence', 1,
-                 'Synthetic probe decisions: 4 per window; 2 bad windows required. Not an electrical trace.'),
+                 'Synthetic probe decisions: 4 per window; 2 bad windows required. Not an electrical trace.', 'Sample'),
     'pickup': ('Hold the stored value until the knob reaches it', 'Apply every knob sample', 'Apply after pickup', 100,
-               'Synthetic travel in percent. Stored target: 30. A coarse move crosses it at sample 6.'),
+               'Synthetic travel in percent. Stored target: 30. A coarse move crosses it at sample 6.', 'Sample'),
     'gesture': ('A consumed modifier gesture performs one action', 'Edit plus release action', 'Consumed release suppressed', 2,
-                'Synthetic cumulative action count. Press at 1; modifier edit at 3; release at 4.'),
+                'Synthetic cumulative action count. Press at 1; modifier edit at 3; release at 4.', 'Sample'),
+    'trigger_delay': ('Keep each delayed trigger until its own deadline', 'One shared pending mask', 'Per-deadline buckets', 2,
+                      'Synthetic cumulative deliveries. A at tick 0, B at tick 1, both delayed 3 ticks; not a timing measurement.', 'Tick'),
+    'events': ('Count edges at the acquisition rate, drain them later', 'Level polled every third sample', 'Pending edge count', 4,
+               'Synthetic cumulative events seen by the consumer. Four 2-sample pulses; the consumer reads every third sample.', 'Sample'),
+    'hysteresis': ('Hold a selection on a noisy bin boundary', 'Plain truncation', 'Hysteretic selector', 3,
+                   'Synthetic 4-step selector index. Readings hover within 0.03 of the 0.5 boundary, then move to 0.65. Dead band 0.2 step.', 'Sample'),
+    'debounce': ('Count one press for one bouncing contact', 'Raw contact closures', 'Debounced state', 5,
+                 'Synthetic cumulative presses at 1 ms samples. Bounce at 4-8 ms and 18-22 ms; 5 ms qualification is illustrative.', 'Sample'),
+    'transitions': ('Finish the running fade, then fade to the newest request', 'Restart the fade on every request', 'Latest request only', 2,
+                    'Synthetic cumulative completed fades. Six requests at ticks 0-10, 5-tick fades; restarting finishes nothing while they arrive.', 'Tick'),
 }
 
 def render(rows, spec):
-    title, before, after, limit, caption = spec
+    title, before, after, limit, caption, unit = spec
     x0, x1, y0, y1 = 68, 870, 104, 230
     def path(key):
         out = []
@@ -37,7 +48,7 @@ def render(rows, spec):
 <text x="27" y="{y0+5}" font-size="13">{limit}</text><text x="35" y="{y1+5}" font-size="13">0</text>
 <path d="{path('direct')}" fill="none" stroke="#a84b19" stroke-width="3" stroke-dasharray="6 4"/>
 <path d="{path('qualified')}" fill="none" stroke="#006d96" stroke-width="3"/>
-<text x="{x0}" y="252" font-size="12">Sample 0</text><text x="815" y="252" font-size="12">{len(rows)-1}</text>
+<text x="{x0}" y="252" font-size="12">{html.escape(unit)} 0</text><text x="815" y="252" font-size="12">{len(rows)-1}</text>
 <text x="28" y="284" font-size="13">{html.escape(caption)}</text>
 </g></svg>
 '''
@@ -59,6 +70,6 @@ def main():
                 raise SystemExit('Stale trace: ' + str(dest.relative_to(ROOT)))
         else:
             dest.write_text(result)
-    print('PASS: three synthetic illustrations match executable traces')
+    print(f'PASS: {len(SPECS)} synthetic illustrations match executable traces')
 if __name__ == '__main__':
     main()

@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="920" height="302" viewBox="0 0 920 302" role="img" aria-labelledby="title desc">
+<title id="title">Hold a selection on a noisy bin boundary</title><desc id="desc">Synthetic 4-step selector index. Readings hover within 0.03 of the 0.5 boundary, then move to 0.65. Dead band 0.2 step. Orange: Plain truncation. Blue: Hysteretic selector.</desc>
+<rect width="920" height="302" rx="12" fill="#f7f8fa"/>
+<g font-family="system-ui, sans-serif" fill="#172334">
+<text x="28" y="34" font-size="21" font-weight="650">Hold a selection on a noisy bin boundary</text>
+<path d="M28 62h24" stroke="#a84b19" stroke-width="3" stroke-dasharray="6 4"/><text x="60" y="67" font-size="14">Plain truncation</text>
+<path d="M450 62h24" stroke="#006d96" stroke-width="3"/><text x="482" y="67" font-size="14">Hysteretic selector</text>
+<path d="M68 104H870 M68 230H870" stroke="#d5dce3" fill="none"/>
+<text x="27" y="109" font-size="13">3</text><text x="35" y="235" font-size="13">0</text>
+<path d="M68.00 188.00 H102.87 V188.00 H137.74 V188.00 H172.61 V188.00 H207.48 V146.00 H242.35 V188.00 H277.22 V146.00 H312.09 V146.00 H346.96 V188.00 H381.83 V146.00 H416.70 V188.00 H451.57 V146.00 H486.43 V188.00 H521.30 V146.00 H556.17 V188.00 H591.04 V146.00 H625.91 V188.00 H660.78 V146.00 H695.65 V146.00 H730.52 V188.00 H765.39 V146.00 H800.26 V146.00 H835.13 V146.00 H870.00 V146.00" fill="none" stroke="#a84b19" stroke-width="3" stroke-dasharray="6 4"/>
+<path d="M68.00 188.00 H102.87 V188.00 H137.74 V188.00 H172.61 V188.00 H207.48 V188.00 H242.35 V188.00 H277.22 V188.00 H312.09 V188.00 H346.96 V188.00 H381.83 V188.00 H416.70 V188.00 H451.57 V188.00 H486.43 V188.00 H521.30 V188.00 H556.17 V188.00 H591.04 V188.00 H625.91 V188.00 H660.78 V188.00 H695.65 V188.00 H730.52 V188.00 H765.39 V146.00 H800.26 V146.00 H835.13 V146.00 H870.00 V146.00" fill="none" stroke="#006d96" stroke-width="3"/>
+<text x="68" y="252" font-size="12">Sample 0</text><text x="815" y="252" font-size="12">23</text>
+<text x="28" y="284" font-size="13">Synthetic 4-step selector index. Readings hover within 0.03 of the 0.5 boundary, then move to 0.65. Dead band 0.2 step.</text>
+</g></svg>

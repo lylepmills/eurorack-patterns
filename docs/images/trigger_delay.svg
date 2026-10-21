@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="920" height="302" viewBox="0 0 920 302" role="img" aria-labelledby="title desc">
+<title id="title">Keep each delayed trigger until its own deadline</title><desc id="desc">Synthetic cumulative deliveries. A at tick 0, B at tick 1, both delayed 3 ticks; not a timing measurement. Orange: One shared pending mask. Blue: Per-deadline buckets.</desc>
+<rect width="920" height="302" rx="12" fill="#f7f8fa"/>
+<g font-family="system-ui, sans-serif" fill="#172334">
+<text x="28" y="34" font-size="21" font-weight="650">Keep each delayed trigger until its own deadline</text>
+<path d="M28 62h24" stroke="#a84b19" stroke-width="3" stroke-dasharray="6 4"/><text x="60" y="67" font-size="14">One shared pending mask</text>
+<path d="M450 62h24" stroke="#006d96" stroke-width="3"/><text x="482" y="67" font-size="14">Per-deadline buckets</text>
+<path d="M68 104H870 M68 230H870" stroke="#d5dce3" fill="none"/>
+<text x="27" y="109" font-size="13">2</text><text x="35" y="235" font-size="13">0</text>
+<path d="M68.00 230.00 H201.67 V230.00 H335.33 V230.00 H469.00 V230.00 H602.67 V167.00 H736.33 V167.00 H870.00 V167.00" fill="none" stroke="#a84b19" stroke-width="3" stroke-dasharray="6 4"/>
+<path d="M68.00 230.00 H201.67 V230.00 H335.33 V230.00 H469.00 V167.00 H602.67 V104.00 H736.33 V104.00 H870.00 V104.00" fill="none" stroke="#006d96" stroke-width="3"/>
+<text x="68" y="252" font-size="12">Tick 0</text><text x="815" y="252" font-size="12">6</text>
+<text x="28" y="284" font-size="13">Synthetic cumulative deliveries. A at tick 0, B at tick 1, both delayed 3 ticks; not a timing measurement.</text>
+</g></svg>

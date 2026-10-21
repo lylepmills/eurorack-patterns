@@ -6,9 +6,9 @@ Small, reusable building blocks for predictable Eurorack controls and firmware, 
 
 The library is `include/eurorack_patterns/`: nine header-only C++11 components. The Daisy bench (`examples/daisy/` for the adapter and firmware, `bench/daisy/` for its host tests and measured reports) is optional measurement apparatus, not part of the library; `tests/` holds the library's own tests.
 
-## Three bugs the components prevent
+## Six bugs the components prevent
 
-Each picture is generated from an executable-checked **synthetic** sequence in the [trace program](examples/behavior_traces.cpp), not a hardware recording. Counts, thresholds and delays are illustrative; see the [validation limits](docs/validation.md).
+Each picture is generated from an executable-checked **synthetic** sequence in the [trace program](examples/behavior_traces.cpp), not a hardware recording. Counts, thresholds and delays are illustrative; see the [validation limits](docs/validation.md). The [gallery](docs/gallery.md) collects all eight pictures, adding the debounce and latest-request ones.
 
 **Routing flips while a cable is still going in.** `presence.h` qualifies presence over complete evidence windows, so individual probe mismatches do not change routing.
 
@@ -21,6 +21,18 @@ Each picture is generated from an executable-checked **synthetic** sequence in t
 **A modifier edit also fires the button's release action.** `gestures.h` gives each press one role; consuming the gesture suppresses its release.
 
 ![A modifier edit followed by release causes two naive actions; consuming the gesture leaves one action.](docs/images/gesture.svg)
+
+**A later trigger overwrites an earlier one that is still waiting.** `trigger_delay.h` keeps one bucket per deadline, so each delayed input is delivered on its own tick.
+
+![A at tick 0 and B at tick 1, both delayed three ticks; one shared pending mask delivers only B, the trigger delay delivers both on their own ticks.](docs/images/trigger_delay.svg)
+
+**A slow consumer polls the level and misses short pulses.** `events.h` counts rising edges at the acquisition rate and holds them in a bounded pending count until the consumer drains it.
+
+![Four short pulses with a consumer reading every third sample; level polling sees two, the pending edge count delivers all four.](docs/images/events.svg)
+
+**A noisy reading on a bin boundary flickers between two choices.** `controls.h`'s `SelectHysteretic` adds a dead band around each boundary, so the selection holds through noise and still follows a deliberate move.
+
+![Readings hovering on the boundary between steps 1 and 2 make plain truncation flicker; the hysteretic selector holds step 1 and follows the later move to step 2.](docs/images/hysteresis.svg)
 
 ## Pick your path
 
