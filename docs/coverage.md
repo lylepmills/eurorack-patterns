@@ -1,6 +1,6 @@
 # Coverage and validation
 
-The [catalog](catalog.md) contains 88 patterns. This table describes the public library's scope, not the status of any instrument. **Primitive** means a portable operation relevant to the entry exists in a header; the entry's full musical behavior still needs integration. **Recipe** means the catalog documents a design choice without a library implementation. **Measure** means the useful claim depends on a circuit, firmware schedule, UI, storage backend, or hardware test. A row can have a primitive and still require measurement. None of these rows asserts hardware qualification.
+The [catalog](catalog.md) contains 89 patterns. This table describes the public library's scope, not the status of any instrument. **Primitive** means a portable operation relevant to the entry exists in a header; the entry's full musical behavior still needs integration. **Recipe** means the catalog documents a design choice without a library implementation. **Measure** means the useful claim depends on a circuit, firmware schedule, UI, storage backend, or hardware test. A row can have a primitive and still require measurement. None of these rows asserts hardware qualification.
 
 | Family | Public header | Contract available |
 | --- | --- | --- |
@@ -75,9 +75,10 @@ the portable API and hardware-validation scope are unchanged.
 | B01 | Recipe + measure | Design per-role filters and measure response at the actual update rate. |
 | B02 | Measure | Choose ADC topology and measure small CV after software attenuation. |
 | B03 | Primitive: controls | Endpoints bypass motion rejection; other filters and endpoint remaps remain host work. |
-| B04 | Measure | Characterize ADC settling at worst source impedance and mux jumps. |
+| B04 | Measure | Characterize ADC settling at worst source impedance and mux jumps; evaluate a park step against scan bandwidth. |
 | B05 | Measure | Calibrate gain/offset separately from noise reduction; verify intermediate points. |
 | B06 | Recipe + measure | Provide raw per-path diagnostics in the host/factory protocol. |
+| B07 | Recipe + measure | Chain timer, ADC and DMA in the host; measure frame rate against the schedule, count missed frames, invalidate probe pairing on half-buffer misalignment. |
 | C01 | Primitive: controls | Neutral plateau mapping exists; choose physical tolerance and transfer law. |
 | C02 | Recipe + measure | Define musical landing zones and test monotonicity/fine adjustment. |
 | C03 | Primitive: controls | Stateful step hysteresis exists; choose scale and thresholds for the control. |

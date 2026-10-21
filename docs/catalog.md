@@ -1,6 +1,6 @@
 # Eurorack micro-pattern catalog
 
-Research snapshot: 13 October 2026. A catalog of 88 small design choices that can make a module feel predictable while patching, playing, editing and recovering from mistakes. The emphasis is on reusable behavior rather than synthesis algorithms.
+Research snapshot: 13 October 2026. A catalog of 89 small design choices that can make a module feel predictable while patching, playing, editing and recovering from mistakes. The emphasis is on reusable behavior rather than synthesis algorithms.
 
 The strongest common principle is to separate **what the user or signal is doing** from **when it is safe and musically appropriate to act on it**. Jack presence, gate edges, knob movement, clock acquisition and preset loading need different policies. A blanket “debounce everything” or “smooth everything” rule breaks useful behavior.
 
@@ -24,7 +24,7 @@ These are candidates for reusable contracts. See [coverage](coverage.md) for the
 ## Browse by problem
 
 - [Jack presence and trigger capture](#jack-presence-and-trigger-capture) — A01–A08
-- [Analogue acquisition and filtering](#analogue-acquisition-and-filtering) — B01–B06
+- [Analogue acquisition and filtering](#analogue-acquisition-and-filtering) — B01–B07
 - [Knobs and gestures](#knobs-and-gestures) — C01–C14
 - [Visible state and reversible actions](#visible-state-and-reversible-actions) — D01–D13
 - [Musical timing and synchronization](#musical-timing-and-synchronization) — E01–E14
@@ -92,7 +92,7 @@ The [scheduled-acquisition follow-up](bench/daisy.md#scheduled-jack-acquisition-
 
 ### B04 Budget acquisition time at the worst source impedance
 
-*Maker account.* Thea Flowers explains ADC sample-capacitor settling and the pot's maximum source impedance near midpoint. **Reuse:** validate settling across mux channel jumps, not just static endpoints. Check alternating minimum/maximum channels with the pot at center; longer acquisition costs scan bandwidth. [SAM D21 ADC, Input impedance](https://blog.thea.codes/getting-the-most-out-of-the-samd21-adc/#input-impedance).
+*Maker account.* Thea Flowers explains ADC sample-capacitor settling and the pot's maximum source impedance near midpoint. **Reuse:** validate settling across mux channel jumps, not just static endpoints. Check alternating minimum/maximum channels with the pot at center; longer acquisition costs scan bandwidth. [SAM D21 ADC, Input impedance](https://blog.thea.codes/getting-the-most-out-of-the-samd21-adc/#input-impedance). **Tradeoff (proposed check; vendor application notes):** ST relates the same settling to a time constant (RADC + RAIN) × CADC that the sampling time must cover, and TI notes that on some ADC architectures the sampling capacitor starts near the previously converted channel's voltage, so an under-settled channel reads as memory cross-talk from its neighbour. TI's mitigation converts a fixed reference (zero-scale in its example) immediately before the sensitive channel, which turns a neighbour-dependent error into a repeatable gain error that calibration can remove, at the cost of a conversion slot and latency per protected channel. A “park step” of this kind in a pot scan makes each pot's settling error depend on its own position rather than its neighbour's; it is proposed here, not measured. Check: read one pot with each neighbour at both extremes, with and without the park step, and weigh the error against the scan bandwidth lost. [AN2834 Rev 10, §3.2.7 Effect of the analog signal source resistance](https://www.st.com/resource/en/application_note/an2834-how-to-get-the-best-adc-accuracy-in-stm32-microcontrollers-stmicroelectronics.pdf), [SPRACW9A, §1 and §5.1–5.2 Pre-Sampling VREFLO](https://www.ti.com/lit/pdf/spracw9).
 
 ### B05 Treat averaging and calibration as different tools
 
@@ -101,6 +101,10 @@ The [scheduled-acquisition follow-up](bench/daisy.md#scheduled-jack-acquisition-
 ### B06 Keep input paths separately observable
 
 *Maker account.* MI notes that separate acquisition makes pot, attenuverter and CV independently testable. **Reuse:** factory diagnostics should expose each raw input as well as the combined parameter, so a bad pot cannot masquerade as a CV fault. Check one deliberately fixed input at a time. [MI CV inputs, Advantages](https://pichenettes.github.io/mutable-instruments-documentation/tech_notes/cv_inputs/#advantages).
+
+### B07 Let a timer and DMA own the acquisition frame
+
+*Code.* **Observed:** Beads scans its seven multiplexed pots from a hardware timer: the timer's trigger output starts each ADC conversion, one DMA stream writes each result into the value array, and a second DMA stream driven by the same timer's update event writes the next multiplexer select word to the GPIO port. The CPU's only per-step work is a timer interrupt that counts the remaining steps and stops the timer after the last one; the audio callback reads the completed values and restarts the scan once per block. The step period is fixed at initialization (a 5 kHz full-cycle rate for the seven pots). **Reuse:** when hardware paces the scan and DMA moves the data, a long audio callback delays the consumer but not the acquisition, so the scan cannot be starved the way a foreground-polled scan can; per-step settling becomes a timer period rather than a software wait, and the chain can be arranged so the CPU takes one interrupt per completed frame instead of one per step. **Tradeoff/check (proposed):** a fixed schedule must budget the worst settling case at every step (B04) and cannot adapt to a slow source; measure the frame rate against the schedule, count missed or late frames, and invalidate any probe-to-conversion pairing whenever a DMA half-buffer boundary is found misaligned with the frame. The [scheduled-acquisition follow-up](bench/daisy.md#scheduled-jack-acquisition-results) under A01 measured the interrupt-phased alternative; neither approach was measured against the other here. [Triggered ADC and DMA setup](https://github.com/pichenettes/eurorack/blob/f4cfa7697095a28d292bff758beb51deb49b5a86/beads/drivers/pots_adc.cc#L161-L223), [timer and select-word DMA](https://github.com/pichenettes/eurorack/blob/f4cfa7697095a28d292bff758beb51deb49b5a86/beads/drivers/pots_adc.cc#L225-L291), [scan start and per-step interrupt](https://github.com/pichenettes/eurorack/blob/f4cfa7697095a28d292bff758beb51deb49b5a86/beads/drivers/pots_adc.cc#L293-L361), [restart from the audio callback](https://github.com/pichenettes/eurorack/blob/f4cfa7697095a28d292bff758beb51deb49b5a86/beads/cv_reader.cc#L88-L97).
 
 ## Knobs and gestures
 
@@ -426,4 +430,4 @@ Each entry is a design recipe and a proposed check, not a claim that this librar
 
 The linked code examples pin the inspected revisions: Mutable Instruments `f4cfa7697095a28d292bff758beb51deb49b5a86`; 4ms DLD `dfc4295fc9ca71be6243217ab544c2ef71705e3b`; monome crow `b340579d94e57e2b43336611b2c4037cff74bb80`; Winterbloom Castor & Pollux `652b28c950ed04ca41f0d8aa98d9b1be2f310f76`. Manual links identify versions where available; behavior can differ across firmware versions. The page numbers distinguish printed and PDF numbering when needed. [Attribution](../ATTRIBUTION.md) explains provenance and licensing.
 
-These examples span Mutable Instruments, 4ms, Befaco, Intellijel, Xaoc Devices, Instruō, ALM, Make Noise, Noise Engineering, Expert Sleepers, Ornament & Crime, monome, Winterbloom and Doepfer. Maker technical accounts and release notes complement manuals. This is a curated set, not a complete survey.
+These examples span Mutable Instruments, 4ms, Befaco, Intellijel, Xaoc Devices, Instruō, ALM, Make Noise, Noise Engineering, Expert Sleepers, Ornament & Crime, monome, Winterbloom and Doepfer. Maker technical accounts and release notes complement manuals; vendor datasheets and application notes (Raspberry Pi, STMicroelectronics, Texas Instruments) are cited where a limit is electrical rather than musical. This is a curated set, not a complete survey.

@@ -4,13 +4,13 @@
 
 Small, reusable building blocks for predictable Eurorack controls and firmware, with an attributed catalog of design ideas from existing instruments.
 
-**[Read the 88-pattern catalog](docs/catalog.md)** · **[Source and bug-history research](docs/research-pass-2.md)** · **[See implementation coverage](docs/coverage.md)** · **[Attribution](ATTRIBUTION.md)** · **[Contribute](CONTRIBUTING.md)**
+**[Read the 89-pattern catalog](docs/catalog.md)** · **[Source and bug-history research](docs/research-pass-2.md)** · **[See implementation coverage](docs/coverage.md)** · **[Attribution](ATTRIBUTION.md)** · **[Contribute](CONTRIBUTING.md)**
 
 A cable should not change routing repeatedly while being inserted. A slow knob movement should eventually register. A modifier gesture should not also fire an unrelated release action. This project collects those details and provides portable implementations where the behavior can be specified and tested independently of a particular module.
 
 ## Start here
 
-- **Explore design ideas:** browse the [88-pattern catalog](docs/catalog.md) by problem, then check its source and limits. A catalog entry is not necessarily an implemented component.
+- **Explore design ideas:** browse the [89-pattern catalog](docs/catalog.md) by problem, then check its source and limits. A catalog entry is not necessarily an implemented component.
 - **Use the C++ library:** follow the [shared-knob walkthrough](docs/quickstart.md), then build the optional [Raspberry Pi Pico adapter](examples/pico/README.md).
 - **Understand the integration contracts:** read the [reusable lessons and validation limits](docs/validation.md). Freshness, ownership, recovery and acquisition deadlines belong in every adapter.
 - **Use measured evidence:** the [Daisy code map](examples/daisy/README.md) and [bench record](docs/bench/daisy.md) preserve bounded control/jack results and failed cases. The campaign is closed; its separate clock investigation remains unresolved.
