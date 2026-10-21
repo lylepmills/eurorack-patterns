@@ -83,11 +83,11 @@ the portable API and hardware-validation scope are unchanged.
 | C02 | Recipe + measure | Define musical landing zones and test monotonicity/fine adjustment. |
 | C03 | Primitive: controls | Stateful step hysteresis exists; choose scale and thresholds for the control. |
 | C04 | Recipe | Implement hidden-edit entry threshold and stored secondary value in the UI. |
-| C05 | Recipe | Relative catch-up is described; controls.h offers crossing pickup, a distinct policy. |
-| C06 | Primitive: controls | Pickup exists; LEDs, CV target semantics, and mode transitions are host policy. |
+| C05 | Recipe | Relative catch-up is described; controls.h offers crossing pickup, a distinct policy whose dead travel needs a visible waiting value. |
+| C06 | Primitive: controls | Pickup exists; LEDs, the waiting-value indicator, CV target semantics, and mode transitions are host policy. |
 | C07 | Primitive: controls (partial) | Motion rejection exists; the source's active tracking window is not implemented. |
 | C08 | Primitive: gestures | Role consumption exists; timing and modifier precedence remain host policy. |
-| C09 | Recipe | Expose and validate configurable hold timing in the product UI. |
+| C09 | Recipe | Expose and validate configurable hold timing in the product UI, or fix and state one verified hold time. |
 | C10 | Primitive: gestures (partial) | Consume navigation modifier; channel selection and transport behavior remain host work. |
 | C11 | Recipe | Decide which guard states persist with presets. |
 | C12 | Recipe | Build every quantizer region from allowed membership; test negative/positive octaves and empty mask. |

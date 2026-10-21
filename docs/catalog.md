@@ -126,11 +126,11 @@ The [scheduled-acquisition follow-up](bench/daisy.md#scheduled-jack-acquisition-
 
 ### C05 Rejoin the original parameter smoothly after a hidden edit
 
-*Code.* **Observed:** Beads returns through relative catch-up: movement adjusts the stored main value with a bounded direction-dependent ratio until physical and stored positions meet. **Reuse:** avoid a parameter jump when a shared knob resumes its primary role. **Tradeoff/test:** temporary non-1:1 feel; test near endpoints and repeated enter/exit cycles. [Catch-up](https://github.com/pichenettes/eurorack/blob/f4cfa7697095a28d292bff758beb51deb49b5a86/beads/pot_controller.h#L126-L144).
+*Code.* **Observed:** Beads returns through relative catch-up: movement adjusts the stored main value with a bounded direction-dependent ratio until physical and stored positions meet. **Reuse:** avoid a parameter jump when a shared knob resumes its primary role. **Tradeoff/test:** temporary non-1:1 feel; test near endpoints and repeated enter/exit cycles. **Tradeoff (proposed):** crossing pickup, paired with an on-screen indicator of the value waiting to be picked up, removes the temporary non-1:1 feel entirely; its cost is a knob that does nothing until it crosses the stored value, so the indicator must be visible from the playing position. [Catch-up](https://github.com/pichenettes/eurorack/blob/f4cfa7697095a28d292bff758beb51deb49b5a86/beads/pot_controller.h#L126-L144).
 
 ### C06 Guide soft takeover
 
-*Manual.* **Befaco Oneiroi.** **Observed:** Catch mode waits for the knob to reach the parameter value; LEDs indicate direction and acknowledge capture. **Reuse:** prevent jumps after page changes or randomization. **Caveat:** define the pickup target under CV. **Test:** approach from both directions with noisy knobs and active modulation. (§15.1) [Oneiroi manual](https://befaco.org/docs/Oneiroi/Oneiroi_User_Manual.pdf).
+*Manual.* **Befaco Oneiroi.** **Observed:** Catch mode waits for the knob to reach the parameter value; LEDs indicate direction and acknowledge capture. **Reuse:** prevent jumps after page changes or randomization. **Caveat:** define the pickup target under CV. **Tradeoff (proposed):** against relative catch-up (C05), a crossing policy leaves the knob inert until it reaches the waiting value; an indicator of that value is what makes the dead travel acceptable. **Test:** approach from both directions with noisy knobs and active modulation. (§15.1) [Oneiroi manual](https://befaco.org/docs/Oneiroi/Oneiroi_User_Manual.pdf).
 
 ### C07 Once movement is intentional, keep following small increments
 
@@ -142,7 +142,7 @@ The [scheduled-acquisition follow-up](bench/daisy.md#scheduled-jack-acquisition-
 
 ### C09 Make gesture timing adjustable
 
-*Manual.* **ALM Pamela’s PRO Workout.** **Observed:** the Enc Hold Time setting adjusts how long the program knob must remain pressed before a hold is recognized. **Reuse:** accommodate different playing styles and dexterity. **Caveat:** §6.4 gives no numeric range or recommended duration; keep a reliable distinction between press and hold. **Test:** the shortest/longest supported settings, near-threshold releases, and repeated quick clicks. [Pamela’s PRO operation manual](https://assets.busycircuits.com/docs/alm034-manual.pdf#page=21), **v0.4 / firmware 131**, dated 2026-10-01, **§6.4 Enc Hold Time, printed/PDF p.21**; checked 2026-10-21.
+*Manual.* **ALM Pamela’s PRO Workout.** **Observed:** the Enc Hold Time setting adjusts how long the program knob must remain pressed before a hold is recognized. **Reuse:** accommodate different playing styles and dexterity. **Caveat:** §6.4 gives no numeric range or recommended duration; keep a reliable distinction between press and hold. **Caveat (proposed):** the Reuse line is not unconditional. A module whose menu policy forbids extra settings can instead fix one conservative hold time, state it, and verify it with players of differing dexterity; the test then covers that single value. **Test:** the shortest/longest supported settings, near-threshold releases, and repeated quick clicks. [Pamela’s PRO operation manual](https://assets.busycircuits.com/docs/alm034-manual.pdf#page=21), **v0.4 / firmware 131**, dated 2026-10-01, **§6.4 Enc Hold Time, printed/PDF p.21**; checked 2026-10-21.
 
 ### C10 Navigate laterally across channels
 
