@@ -5,6 +5,10 @@
 
 No board, serial port or measurement application is opened by this tool.
 Use --check for an offline integrity check, or --from-dir for local archives.
+
+Published archives and the manifest name members under the historical
+``tests/measured/`` prefix; those members install under ``bench/daisy/measured/``.
+An archive published after the move may use the new prefix directly.
 """
 import argparse
 import hashlib
@@ -16,7 +20,9 @@ import tempfile
 import urllib.request
 
 ROOT = Path(__file__).resolve().parents[1]
-MANIFEST = ROOT / 'tests/measured/manifest.json'
+INSTALL_DIR = PurePosixPath('bench/daisy/measured')
+ARCHIVE_PREFIXES = (PurePosixPath('tests/measured'), INSTALL_DIR)
+MANIFEST = ROOT / INSTALL_DIR / 'manifest.json'
 
 
 def digest(path):
@@ -28,12 +34,15 @@ def digest(path):
 
 
 def relative_path(value):
+    """Validate an archive member name and return its install path under ROOT."""
     path = PurePosixPath(value)
     if (path.is_absolute() or '..' in path.parts or '\\' in value
-            or ':' in value or str(path) != value
-            or path.parts[:2] != ('tests', 'measured')):
+            or ':' in value or str(path) != value):
         raise ValueError('unsafe evidence path')
-    return path
+    for prefix in ARCHIVE_PREFIXES:
+        if path.parts[:len(prefix.parts)] == prefix.parts and len(path.parts) > len(prefix.parts):
+            return INSTALL_DIR / path.relative_to(prefix)
+    raise ValueError('unsafe evidence path')
 
 
 def matches(path, record):
@@ -123,7 +132,8 @@ def main():
         if not missing:
             continue
         if args.check:
-            raise SystemExit('Missing or changed evidence: ' + missing[0]['path']
+            raise SystemExit('Missing or changed evidence: '
+                             + destination(ROOT, missing[0]['path']).relative_to(ROOT).as_posix()
                              + '\nRun python3 tools/fetch_evidence.py to restore it.')
         if args.from_dir:
             install_archive(args.from_dir / record['name'], record, ROOT)

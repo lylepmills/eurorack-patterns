@@ -2,7 +2,7 @@
 
 The normal build tests portable contracts with synthetic traces and reference
 models. It does not download recordings or operate hardware. Reports from the
-Daisy campaign remain in `tests/measured/daisy/`; the larger, lossless trace
+Daisy campaign remain in `bench/daisy/measured/daisy/`; the larger, lossless trace
 files are separate release assets. Failed recordings remain failures.
 
 ## Download and replay
@@ -24,10 +24,12 @@ For an offline machine, download the same release archives elsewhere, then use
 `--from-dir ARCHIVE_DIRECTORY`. Downloaded files are ignored by Git. They can be
 removed and restored without changing the reports or library.
 
-The [manifest](../tests/measured/manifest.json) pins archive sizes and SHA-256
+The [manifest](../bench/daisy/measured/manifest.json) pins archive sizes and SHA-256
 digests, plus the exact size and hash of every extracted trace. The downloader
 verifies both layers, rejects unsafe paths and links, and installs only verified
-files. Configuration fails if measured tests are requested with missing or
+files. The published archives and manifest still name members under the
+historical `tests/measured/` prefix; the downloader installs them under
+`bench/daisy/measured/` without altering the immutable release assets. Configuration fails if measured tests are requested with missing or
 changed evidence; missing data never silently turns a measured test into a pass.
 
 ## Provenance and development history

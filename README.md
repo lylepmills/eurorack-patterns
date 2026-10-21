@@ -4,7 +4,7 @@
 
 Small, reusable building blocks for predictable Eurorack controls and firmware, with an attributed catalog of design ideas from existing instruments. A cable should not change routing repeatedly while being inserted. A slow knob movement should eventually register. A modifier gesture should not also fire an unrelated release action. This project collects those details and provides portable implementations where the behavior can be specified and tested independently of a particular module.
 
-The library is `include/eurorack_patterns/`: nine header-only C++11 components. The Daisy bench (`examples/daisy/`, the `test_daisy_*` files and `tests/measured/`) is optional measurement apparatus, not part of the library.
+The library is `include/eurorack_patterns/`: nine header-only C++11 components. The Daisy bench (`examples/daisy/` for the adapter and firmware, `bench/daisy/` for its host tests and measured reports) is optional measurement apparatus, not part of the library; `tests/` holds the library's own tests.
 
 ## Three bugs the components prevent
 
