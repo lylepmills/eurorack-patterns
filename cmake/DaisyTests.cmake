@@ -48,39 +48,24 @@ add_test(NAME test_daisy_dma_placement COMMAND ${Python3_EXECUTABLE}
 add_test(NAME test_daisy_dma_alignment COMMAND ${Python3_EXECUTABLE}
   ${CMAKE_CURRENT_SOURCE_DIR}/tests/test_daisy_dma_alignment.py $<TARGET_FILE:test_daisy_jack_acquisition> $<TARGET_FILE:test_daisy_dsp>)
 
-
-
-
 add_test(NAME test_daisy_clock COMMAND ${Python3_EXECUTABLE}
   ${CMAKE_CURRENT_SOURCE_DIR}/tests/test_daisy_clock.py $<TARGET_FILE:test_daisy_jack_acquisition> $<TARGET_FILE:test_daisy_dsp>)
-
-
-
-
-
-
-
-
 
 add_test(NAME test_daisy_button_campaign COMMAND ${Python3_EXECUTABLE}
   ${CMAKE_CURRENT_SOURCE_DIR}/tests/test_daisy_button_campaign.py)
 
-
 add_test(NAME test_daisy_scope COMMAND ${Python3_EXECUTABLE}
   ${CMAKE_CURRENT_SOURCE_DIR}/tests/test_daisy_scope.py)
-
 
 add_test(NAME test_daisy_load_capture COMMAND ${Python3_EXECUTABLE}
   ${CMAKE_CURRENT_SOURCE_DIR}/tests/test_daisy_load_capture.py $<TARGET_FILE:daisy_replay>)
 add_test(NAME test_daisy_diagnostic_capture COMMAND ${Python3_EXECUTABLE}
   ${CMAKE_CURRENT_SOURCE_DIR}/tests/test_daisy_diagnostic_capture.py $<TARGET_FILE:test_daisy_diagnostics> $<TARGET_FILE:daisy_replay>)
 
-
-
-
-
-
+get_property(ep_tests_before_measured DIRECTORY PROPERTY TESTS)
 if(EURORACK_PATTERNS_BUILD_MEASURED_TESTS)
+  add_test(NAME test_daisy_scope_measured COMMAND ${Python3_EXECUTABLE}
+    ${CMAKE_CURRENT_SOURCE_DIR}/tests/test_daisy_scope_measured.py)
   add_test(NAME test_daisy_jack_measured COMMAND ${Python3_EXECUTABLE}
     ${CMAKE_CURRENT_SOURCE_DIR}/tests/test_daisy_jack_measured.py)
   add_test(NAME test_daisy_dma_alignment_measured COMMAND ${Python3_EXECUTABLE}
@@ -132,5 +117,7 @@ get_property(ep_bench_tests DIRECTORY PROPERTY TESTS)
 list(REMOVE_ITEM ep_bench_tests ${ep_tests_before_bench})
 set_tests_properties(${ep_bench_tests} PROPERTIES LABELS "bench")
 if(EURORACK_PATTERNS_BUILD_MEASURED_TESTS)
-  set_tests_properties(test_daisy_jack_measured test_daisy_dma_alignment_measured test_daisy_dma_placement_measured test_daisy_firmware_comparison_measured test_daisy_dma_memory_measured test_daisy_reference test_daisy_clock_reference test_daisy_clock_reference_measured test_daisy_hse_measured test_daisy_jack_audio_measured test_daisy_jack_scheduled_measured test_daisy_jack_dsp_measured test_daisy_jack_matrix_measured test_daisy_jack_motion test_daisy_automated_measured test_daisy_measured test_daisy_timing_investigation test_daisy_fault_measured test_daisy_load_measured test_daisy_timing_measured test_daisy_manual_load_measured test_daisy_interaction_measured test_daisy_loaded_fault_measured PROPERTIES LABELS "bench;measured")
+  get_property(ep_measured_tests DIRECTORY PROPERTY TESTS)
+  list(REMOVE_ITEM ep_measured_tests ${ep_tests_before_measured})
+  set_tests_properties(${ep_measured_tests} PROPERTIES LABELS "bench;measured")
 endif()

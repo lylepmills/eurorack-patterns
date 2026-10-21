@@ -13,7 +13,7 @@ A cable should not change routing repeatedly while being inserted. A slow knob m
 - **Explore design ideas:** browse the [88-pattern catalog](docs/catalog.md) by problem, then check its source and limits. A catalog entry is not necessarily an implemented component.
 - **Use the C++ library:** follow the [shared-knob walkthrough](docs/quickstart.md), then build the optional [Raspberry Pi Pico adapter](examples/pico/README.md).
 - **Understand the integration contracts:** read the [reusable lessons and validation limits](docs/validation.md). Freshness, ownership, recovery and acquisition deadlines belong in every adapter.
-- **Use measured evidence:** the [Daisy code map](examples/daisy/README.md) and [bench record](docs/bench/daisy.md) preserves bounded control/jack results and failed cases. The campaign is closed; its separate clock investigation remains unresolved.
+- **Use measured evidence:** the [Daisy code map](examples/daisy/README.md) and [bench record](docs/bench/daisy.md) preserve bounded control/jack results and failed cases. The campaign is closed; its separate clock investigation remains unresolved.
 - **Contribute evidence:** report a [bug, source correction or measured trace](https://github.com/lylepmills/eurorack-patterns/issues/new/choose), or pick a [bounded contribution task](https://github.com/lylepmills/eurorack-patterns/issues?q=is%3Aissue%20is%3Aopen%20label%3A%22help%20wanted%22).
 
 ## Three small improvements
