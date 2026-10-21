@@ -6,6 +6,7 @@ on:
       - 'include/**'
       - 'examples/daisy/**'
       - 'tests/**'
+      - 'bench/**'
       - 'tools/**'
       - 'cmake/**'
       - 'CMakeLists.txt'

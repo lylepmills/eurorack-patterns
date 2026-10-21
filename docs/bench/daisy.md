@@ -29,10 +29,10 @@ point; they do not reopen the campaign.
 
 The separate `jack-bench` firmware and `jack_capture.py` exercise the existing
 `PresenceDetector` through a real switched jack. The
-[empty-jack preflights](../../tests/measured/daisy/2026-10-19-jack-empty) and
-[stationary open-ended cable](../../tests/measured/daisy/2026-10-19-jack-inserted-open)
+[empty-jack preflights](../../bench/daisy/measured/daisy/2026-10-19-jack-empty) and
+[stationary open-ended cable](../../bench/daisy/measured/daisy/2026-10-19-jack-inserted-open)
 are measured, along with a
-[passive far-end termination](../../tests/measured/daisy/2026-10-19-jack-inserted-silent).
+[passive far-end termination](../../bench/daisy/measured/daisy/2026-10-19-jack-inserted-silent).
 Ordinary and slow insertion/withdrawal have also passed complete physical review,
 including ordinary motion with two open-ended cables; the measurements and
 rejected attempts are detailed below. These tests do not change the public
@@ -207,7 +207,7 @@ and protected production inputs. Passing this finite matrix closes this fixture'
 planned timing round; a failure calls for a targeted diagnosis, not automatic
 expansion into more manual repetitions.
 
-The [complete campaign manifest](../../tests/measured/daisy/2026-10-19-jack-matrix/campaign.json)
+The [complete campaign manifest](../../bench/daisy/measured/daisy/2026-10-19-jack-matrix/campaign.json)
 records all 110 physical passes: 2,195,482 observations,
 4,518 deliberately missed slots, 4,572 invalid readings and
 220 expected presence edges. There were no ADC failures, extra output
@@ -231,7 +231,7 @@ These counts describe this configuration, not recommended universal jack delays.
 The public dataset includes 18 complete wire/digital/derived-analog/generator
 replay fixtures: both baselines, all six phases and both fault types at the
 100 ms duration with zero extra slots, plus the four 500 us one-extra-slot
-qualification-boundary cases. [Measured regressions](../../tests/test_daisy_jack_matrix_measured.py)
+qualification-boundary cases. [Measured regressions](../../bench/daisy/tests/test_daisy_jack_matrix_measured.py)
 recheck these full records. The other 92 cases have individual results and
 hashes in the manifest; all 110 complete native scope recordings remain in the
 operator's archive. Full native waveforms are not embedded in the repository.
@@ -299,7 +299,7 @@ bracket wider than 10 ms. Retained captures can be re-extracted into a new
 directory without overwriting their original review. `--case` accepts exact,
 comma-separated names to continue unstarted cases in a new campaign directory.
 
-The [21-case measured campaign](../../tests/measured/daisy/2026-10-19-jack-audio/campaign.json)
+The [21-case measured campaign](../../bench/daisy/measured/daisy/2026-10-19-jack-audio/campaign.json)
 retains full wire records, every digital edge, conservative ADC-aperture extrema,
 interior source-timing witnesses and native-recording hashes. Firmware source is
 `cf07a4d22a676b86c76cd80e61a6e120f9524d92`; no portable detector change was needed.
@@ -391,7 +391,7 @@ deadline checks. The original 21 recordings remain unchanged. Host simulations e
 114 fault schedules plus timeout, missed-service and finish-drain cases; they
 do not establish real interrupt timing.
 
-The [final measured campaign](../../tests/measured/daisy/2026-10-19-jack-scheduled/campaign.json)
+The [final measured campaign](../../bench/daisy/measured/daisy/2026-10-19-jack-scheduled/campaign.json)
 contains all 21 complete wire/digital/derived-analog/generator replays. All twelve
 load profiles now qualify both states, including the six previously starved
 profiles. No conversion missed its slot deadline, no unplanned slot was lost,
@@ -436,7 +436,7 @@ rechecked; all three recovery cases then passed in a fresh directory. The
 interrupted attempt remains in the native archive and its manifest hash is
 recorded in the public campaign.
 
-[Measured regressions](../../tests/test_daisy_jack_scheduled_measured.py) rerun the
+[Measured regressions](../../bench/daisy/tests/test_daisy_jack_scheduled_measured.py) rerun the
 independent reviewers on all 23 final recordings. Portable library headers are
 unchanged: the fix is the board adapter's acquisition schedule and ownership.
 These results do not qualify a protected production front end, real DSP and
@@ -446,7 +446,7 @@ interrupts. Preserve invalidity and measure both domains on the target system.
 ## Recorded jack transition and motion evidence
 
 The flashed protocol 3 image passed three
-[stationary empty-jack preflights](../../tests/measured/daisy/2026-10-19-jack-transition-preflight):
+[stationary empty-jack preflights](../../bench/daisy/measured/daisy/2026-10-19-jack-transition-preflight):
 baseline (6,000 observations), ADC gap (6,000 observations, exactly 50 injected
 invalid readings) and foreground pause (5,950 observations, 50 missed slots,
 one invalid recovery reading). Both fault intervals measured 25,000 us in the
@@ -457,7 +457,7 @@ pass, with no ADC failures or false patched outputs. These runs use the default
 elapsed-time trigger; they verify the installed timing path and fixture, not
 faults during insertion/removal or calibrated absolute time.
 
-Two [ordinary insertion/withdrawal recordings](../../tests/measured/daisy/2026-10-19-jack-transition)
+Two [ordinary insertion/withdrawal recordings](../../bench/daisy/measured/daisy/2026-10-19-jack-transition)
 with the open-ended cable passed complete physical review. Trigger 2 fired one
 observation before pending patched qualification. A 25 ms ADC gap retained
 68,627 observations and invalidated exactly 50; a 25 ms foreground pause
@@ -509,7 +509,7 @@ coverage checks. It never flashes. Call
 `jack_capture.py finish <session-directory>/fixture` when done. A successful
 collection is still marked **physical review pending**. The new scope path
 passed a 6,000-observation stationary comparison with the existing firmware;
-three [flashed protocol 2 checks](../../tests/measured/daisy/2026-10-19-jack-finish)
+three [flashed protocol 2 checks](../../bench/daisy/measured/daisy/2026-10-19-jack-finish)
 then passed complete wire, digital and analog review. An operator finish ended a
 300-second maximum at 2.2525 seconds (4,505 observations); an immediate request
 honored the one-second minimum (2,000 observations); a three-second run reached
@@ -579,7 +579,7 @@ distinguish it from the open-ended cable with this fixture's pull-down resistor.
 This passive termination does not qualify powered external module outputs.
 
 **Analog connection follow-up:** a later
-[empty-jack preflight](../../tests/measured/daisy/2026-10-19-jack-analog-disagreement)
+[empty-jack preflight](../../bench/daisy/measured/daisy/2026-10-19-jack-analog-disagreement)
 had a near-zero analog trace even while the ADC and independent digital sense
 channel followed the high/low probe. That preflight remains rejected. The operator
 subsequently found the analog probe tip disconnected; after reseating it, a new
@@ -599,7 +599,7 @@ Missing/extra edges, early qualification,
 misplaced reset edges and contradictory analog voltage are rejected. The exporter
 checks the declared fixture case before publishing an allowlisted record.
 
-The first [ordinary insertion/withdrawal recording](../../tests/measured/daisy/2026-10-19-jack-motion)
+The first [ordinary insertion/withdrawal recording](../../bench/daisy/measured/daisy/2026-10-19-jack-motion)
 contains three cycles with the passive far-end termination. All 600,000
 observations replay, with zero missed slots or ADC failures; all 1,200,000
 sampling-marker transitions and all probe/output transitions match. The output
@@ -625,7 +625,7 @@ Record all probe, sense, sampling and presence transitions, plus analog voltage.
 Compare complete sampling coverage, probe sequence, voltage and qualified
 changes before accepting a run. Software replay alone is not physical evidence.
 
-A subsequent [attempted slow/partial two-cycle recording](../../tests/measured/daisy/2026-10-19-jack-motion/slow-partial-silent.json)
+A subsequent [attempted slow/partial two-cycle recording](../../bench/daisy/measured/daisy/2026-10-19-jack-motion/slow-partial-silent.json)
 ended cleanly on request at 116.5445 seconds, retaining all 233,089 observations.
 Replay and all four digital timelines agree: four output transitions, no missing
 slots or ADC failures, and 10,150 invalid readings. The operator reported that
@@ -644,14 +644,14 @@ manual test; do not trim the disagreeing tail or infer controlled partial
 withdrawal from the requested actions.
 
 After the operator secured the analog connection, a separate
-[stationary high/low challenge](../../tests/measured/daisy/2026-10-19-jack-analog-disagreement/after-motion-reconnected.json)
+[stationary high/low challenge](../../bench/daisy/measured/daisy/2026-10-19-jack-analog-disagreement/after-motion-reconnected.json)
 passed all 6,000 observations and complete digital timing checks. It had no
 invalid readings, missed slots, ADC failures or patched states; analog voltage
 ranged from -0.107 to 3.347 V. This establishes restored agreement for that
 stationary run. The preceding motion recording remains rejected, and neither
 record establishes probe continuity during a future movement.
 
-The next [slow-insertion attempt](../../tests/measured/daisy/2026-10-19-jack-motion/slow-insertion-missing-tail.json)
+The next [slow-insertion attempt](../../bench/daisy/measured/daisy/2026-10-19-jack-motion/slow-insertion-missing-tail.json)
 finished on request at 59.641 seconds with 119,282 firmware observations, four
 expected output transitions, 3,785 invalid readings and no missing slots or ADC
 failures. **Its full physical review also rejected it:** the scope retained only
@@ -667,7 +667,7 @@ operator finish remains immediate; the scope margin is independent. The cause
 inside the preview capture pipeline is not established, and every future run
 must still pass complete physical coverage checks.
 
-With that margin, six [stationary physical comparisons](../../tests/measured/daisy/2026-10-19-jack-postroll)
+With that margin, six [stationary physical comparisons](../../bench/daisy/measured/daisy/2026-10-19-jack-postroll)
 passed all wire, digital and analog checks across 257,356 observations. They
 covered the one-second minimum, two short operator finishes, a three-second
 natural finish, a 60-second natural finish and a 60.188-second operator finish.
@@ -675,7 +675,7 @@ All retained the complete scope tail, with no invalid readings, missing slots,
 ADC failures or false patched states. This verifies the margin for those cases;
 it does not qualify the rejected motion recording or replace a new motion test.
 
-A new [two-cycle motion recording](../../tests/measured/daisy/2026-10-19-jack-motion/slow-insertion-postroll.json)
+A new [two-cycle motion recording](../../bench/daisy/measured/daisy/2026-10-19-jack-motion/slow-insertion-postroll.json)
 with the scope margin passes full physical review. The operator was asked to
 insert slowly with a pause partway, fully seat, then withdraw normally. It ended
 on request at 73.1985 seconds with 146,397 complete observations, all 292,794
@@ -688,7 +688,7 @@ apertures. This extends the accepted evidence to the requested slow-insertion
 sequence on this fixture; the exact plug position and pause timing were not
 independently measured. The two preceding rejected recordings remain rejected.
 
-A separate [ordinary two-cycle recording with the far end open](../../tests/measured/daisy/2026-10-19-jack-motion/ordinary-open.json)
+A separate [ordinary two-cycle recording with the far end open](../../bench/daisy/measured/daisy/2026-10-19-jack-motion/ordinary-open.json)
 also passes full physical review. The cable's free end rested on insulation;
 the fixture's existing 100k sense pulldown remained in place. Operator finish at
 46.971 seconds retained all 93,942 observations, 187,884 sampling-marker edges
@@ -699,7 +699,7 @@ motion evidence on the same cable and jack; it does not establish behavior
 across different cables, sockets or powered sources. These ordinary movements
 were not speed-matched to the earlier slow-insertion recording.
 
-A [second open-ended cable recording](../../tests/measured/daisy/2026-10-19-jack-motion/ordinary-open-second-cable.json)
+A [second open-ended cable recording](../../bench/daisy/measured/daisy/2026-10-19-jack-motion/ordinary-open-second-cable.json)
 passes the same complete checks. The operator described this cable as about
 four feet long and the preceding cable as about six inches; these are estimates,
 not independently measured dimensions. Two ordinary cycles finished on request
@@ -735,7 +735,7 @@ commit `cc730b48d3284561ea4cbf9fde907be3acf4f98c`, build ID
 
 Twelve selected complete paired runs contained 199,974 serviced observations.
 Six complete windows (136,000 observations) are included as
-[losslessly compressed wire traces](../../tests/measured/daisy/2026-10-14), with
+[losslessly compressed wire traces](../../bench/daisy/measured/daisy/2026-10-14), with
 allowlisted provenance and scope-derived button/action edges beside each file.
 These are recorded inputs; the ADC gap is explicitly a software injection.
 
@@ -765,7 +765,7 @@ of native scope source files are recorded. Device identifiers, local paths and
 operator notes are excluded. Full native originals remain retained privately;
 the public edge extracts are a subset, not a complete analog recording.
 
-[The measured regression](../../tests/test_daisy_measured.py) verifies hashes,
+[The measured regression](../../bench/daisy/tests/test_daisy_measured.py) verifies hashes,
 replays the recorded input, and checks explicit outcomes and scope timing
 bounds established in the bench review. Replay tests the application adapter;
 it does not replace independent physical observations. These measurements do
@@ -776,7 +776,7 @@ To export another reviewed capture, use an environment containing
 `saleae-mso-api` 0.5.8; the exporter reads saved files and never opens hardware:
 
 ```sh
-python tools/export_daisy_trace.py --capture CAPTURE_DIRECTORY --out-prefix tests/measured/daisy/DATE/CASE
+python tools/export_daisy_trace.py --capture CAPTURE_DIRECTORY --out-prefix bench/daisy/measured/daisy/DATE/CASE
 ```
 
 The exporter accepts the reviewed protocol 1/2 identity and fixture fields only.
@@ -787,7 +787,7 @@ extending the allowlist; add independent expectations before treating a trace as
 ### Active fault and startup measurements
 
 Measured on 2026-10-15 and 2026-10-16 in America/Los_Angeles, on the same Seed3,
-B100k pot and normally open button fixture. The [second corpus](../../tests/measured/daisy/2026-10-16)
+B100k pot and normally open button fixture. The [second corpus](../../bench/daisy/measured/daisy/2026-10-16)
 contains nine complete runs totaling 609,923 observations. Each file identifies
 its actual acquisition timestamp, firmware commit/build and binary hash. The
 fault-button runs used firmware commit `9b5442910fd9f4e9851c56b5a80e07e1f245137f`;
@@ -807,7 +807,7 @@ All nine runs have verified transport and C++ replay, complete application
 service-pulse coverage and sampled button agreement, with no unexpected skipped
 slots or ADC failures. Gaps are deliberate software invalidation or foreground
 stalls; they do not establish physical disconnection detection or audio/IRQ-load
-behavior. The [new measured checks](../../tests/test_daisy_fault_measured.py) preserve
+behavior. The [new measured checks](../../bench/daisy/tests/test_daisy_fault_measured.py) preserve
 these expectations alongside the first-pass regressions.
 
 Reset and power-on captures included a roughly 2.287-second high service-marker
@@ -1002,8 +1002,8 @@ those separately if the question concerns earlier electrical/startup behavior.
 ### Audio/USB load and continuous soak
 
 Three complete paired stationary traces from the first load pass are available
-in [the measured corpus](../../tests/measured/daisy/2026-10-16-load), with
-[replay and physical-evidence checks](../../tests/test_daisy_load_measured.py).
+in [the measured corpus](../../bench/daisy/measured/daisy/2026-10-16-load), with
+[replay and physical-evidence checks](../../bench/daisy/tests/test_daisy_load_measured.py).
 Each contains 10,000 observations on the same Seed3/B100k fixture, with the pot
 near its midpoint and button released. All service pulses matched; no missed
 slots, ADC failures, unexpected actions or callback timing flags occurred.
@@ -1188,9 +1188,9 @@ Maximum observed start/end guards were 0.467/0.450 us, and retention bookkeeping
 reached 17.883 us, including possible interrupt preemption. These maxima describe
 this run, not worst-case execution guarantees.
 
-The [timing corpus](../../tests/measured/daisy/2026-10-17-timing) preserves the
+The [timing corpus](../../bench/daisy/measured/daisy/2026-10-17-timing) preserves the
 complete short and long wire recordings plus declared selected scope pulses.
-Its [regression checks](../../tests/test_daisy_timing_measured.py) validate the
+Its [regression checks](../../bench/daisy/tests/test_daisy_timing_measured.py) validate the
 extended counters and recalculate selected same-event physical comparisons.
 **The older disagreement was not reproduced and remains unexplained.**
 Instrumentation changed between the runs, so this does not establish that the
@@ -1201,9 +1201,9 @@ separate validation work.
 Three complete manual recordings now cover **360,000 observations under combined
 load**: 650/1000 audio callback padding, 16-frame blocks and requested 500 USB
 packets/s. They use the same firmware as the diagnostic soak, with full trace
-recording and individual-sample C++ replay. The [manual load corpus](../../tests/measured/daisy/2026-10-18-manual-load)
+recording and individual-sample C++ replay. The [manual load corpus](../../bench/daisy/measured/daisy/2026-10-18-manual-load)
 retains complete wire recordings, physical button/action edges and derived analog
-medians. [Measured regressions](../../tests/test_daisy_manual_load_measured.py) check
+medians. [Measured regressions](../../bench/daisy/tests/test_daisy_manual_load_measured.py) check
 behavior independently of replay agreement:
 
 | Physical sequence | Observed result |
@@ -1236,9 +1236,9 @@ service edge. That setup falling edge is retained explicitly and checked
 separately from actions during acquisition.
 
 These first recordings cover isolated gestures and one slow sweep per direction
-on one fixture. A subsequent [interaction corpus](../../tests/measured/daisy/2026-10-18-interaction-load)
+on one fixture. A subsequent [interaction corpus](../../bench/daisy/measured/daisy/2026-10-18-interaction-load)
 adds four complete 60-second recordings (**240,000 observations**) using the same
-firmware and combined load. Its [regressions](../../tests/test_daisy_interaction_measured.py)
+firmware and combined load. Its [regressions](../../bench/daisy/tests/test_daisy_interaction_measured.py)
 check physical button/action timing and analog trajectories alongside full C++
 replay, including the distinction between intended and observed stimulus:
 
@@ -1331,7 +1331,7 @@ baseline, DMA-only and combined-load captures on each new firmware build before
 the hands-on fault sequences. No wiring change is required for these injected
 faults; they do not establish real disconnection or brownout behavior.
 
-The [first loaded press-stall recording](../../tests/measured/daisy/2026-10-18-fault-load)
+The [first loaded press-stall recording](../../bench/daisy/measured/daisy/2026-10-18-fault-load)
 retains 59,974 observations over 60 seconds with 650/1000 callback padding,
 16-frame blocks and requested 500 USB packets/s. The scope recorded one
 26.993 ms service interruption during a 2.590-second held press. Its 26 skipped
@@ -1340,7 +1340,7 @@ act. A fresh tap then changed the target once, 11.249 ms after its final release
 That release included an observed brief open/closed bounce, preserved in the
 edge evidence. The initial held-at-start button was also consumed. All physical
 pulses/input samples and the complete C++ replay agreed, with no unrelated
-ADC, callback or USB failures. [Measured assertions](../../tests/test_daisy_loaded_fault_measured.py)
+ADC, callback or USB failures. [Measured assertions](../../bench/daisy/tests/test_daisy_loaded_fault_measured.py)
 check the actual sequence and keep this claim limited to one fixture and run.
 
 A second 60-second recording on the same firmware/load covers the hold deadline.
@@ -1414,7 +1414,7 @@ disagreement remain separate unresolved measurement questions.
 An [offline timing inspector](../../tools/inspect_daisy_timing.py) now reports
 global fit, adjacent-interval and pulse-width failures separately. Optional
 one-second fits are diagnostics only; they cannot make a failed global fit pass.
-The [complete timing projection](../../tests/measured/daisy/2026-10-18-timing-review)
+The [complete timing projection](../../bench/daisy/measured/daisy/2026-10-18-timing-review)
 retains all 150,000 firmware timestamp/width pairs and 300,000 physical edges
 from the failed descending run, with original source hashes. Its local residuals
 stay below 0.614 us while the global residual reaches 5.642 us. That supports a
@@ -1436,7 +1436,7 @@ excerpt covering all nine failures, checked against the complete original
 firmware aggregates. All nine remain rejected in regression. This excerpt does
 not stand in for the privately retained complete physical recording.
 
-A later [ordinary 30-minute repeat](../../tests/measured/daisy/2026-10-18-timing-review/ordinary-soak-30m.json)
+A later [ordinary 30-minute repeat](../../bench/daisy/measured/daisy/2026-10-18-timing-review/ordinary-soak-30m.json)
 on firmware `d30437a4`, with timing diagnostics disabled, passed at the same
 650/1000 callback padding, 16-frame block and 500 Hz requested USB traffic.
 All 1,800,000 service pulses and every second's extrema agreed; maximum interval
@@ -1667,7 +1667,7 @@ Initial observations with the internal button pull-up and the two-board wiring:
 
 Complete wire records and all three continuous digital channels for the
 baseline and failed press-stall case are retained in
-`tests/measured/daisy/2026-10-18-auto-button/`. Tests replay the controls, re-run
+`bench/daisy/measured/daisy/2026-10-18-auto-button/`. Tests replay the controls, re-run
 physical matching, reject missing/shifted scope edges, and require the failed
 source to remain rejected. No edges were filtered out to make it pass.
 
@@ -1787,7 +1787,7 @@ to the action marker. Accepted captures contain 175,525 observations and 90
 physical button edges, with zero sampled-button disagreements; all 475 missed
 slots belong to injected stalls.
 Complete wire records and all three digital timelines are retained under
-`tests/measured/daisy/2026-10-18-auto-button/timing-*`; regression tests replay
+`bench/daisy/measured/daisy/2026-10-18-auto-button/timing-*`; regression tests replay
 and physically match each accepted capture. These counts describe accepted
 records, not a claim that all attempts passed.
 

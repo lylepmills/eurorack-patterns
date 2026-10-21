@@ -36,8 +36,8 @@ audible codec problem or a portable rule to place DMA buffers at low addresses.
 
 The final sixteen-capture plan completed with identical achieved work per run.
 Six full receiver comparisons and ten short analog windows have different
-coverage. The [final reports](../../tests/measured/daisy/2026-10-20-clock-waveform/summary.json)
-and [native digest inventory](../../tests/measured/daisy/2026-10-20-clock-waveform/native-digests.json)
+coverage. The [final reports](../../bench/daisy/measured/daisy/2026-10-20-clock-waveform/summary.json)
+and [native digest inventory](../../bench/daisy/measured/daisy/2026-10-20-clock-waveform/native-digests.json)
 record their limits. The short analog windows cannot qualify the remainder of
 each firmware run. Original failures remain in the measured regressions;
 multi-gigabyte native voltage recordings are archived separately by hash.
@@ -122,7 +122,7 @@ blocks. The runner makes no real-cable, production-voltage, arbitrary-DSP or
 long-soak qualification claim. Portable library headers are unchanged.
 
 On 2026-10-20 UTC, firmware source `a6cee8ec6e570d0468f74f8537f8578fb390d020`
-produced these [measured partial results](../../tests/measured/daisy/2026-10-20-jack-dsp).
+produced these [measured partial results](../../bench/daisy/measured/daisy/2026-10-20-jack-dsp).
 At that stage the campaign was **incomplete**: one combined profile failed,
 and seventeen planned comparisons had not run. Those original records do not
 qualify combined fault recovery; the later explicit M-mode campaign below
@@ -157,7 +157,7 @@ are rejected by normal capture/review, so the two marker meanings cannot
 silently share an acceptance path.
 
 Seven subsequent recordings produced these
-[hardware-clock results](../../tests/measured/daisy/2026-10-20-jack-hse): two normal
+[hardware-clock results](../../bench/daisy/measured/daisy/2026-10-20-jack-hse): two normal
 early-finish checks passed, bracketing three short clock diagnostics; a
 ten-second combined-load diagnostic and unloaded repeat followed. All 58,000
 diagnostic observations were present, with exact DSP signatures and verified
@@ -221,7 +221,7 @@ outside measured `K` callbacks, including before and after acquisition; the
 probe therefore never depends on a floating idle pin. Normal `J` mode and its
 existing marker stay unchanged.
 
-Five subsequent [simultaneous-clock/audio recordings](../../tests/measured/daisy/2026-10-20-jack-hse-audio)
+Five subsequent [simultaneous-clock/audio recordings](../../bench/daisy/measured/daisy/2026-10-20-jack-hse-audio)
 verified this extension. Both bracketing normal-mode early finishes passed,
 including the loaded finish with 4,285 independently observed callbacks and
 1,427 verified DMA transfers. The three diagnostics retained all 32,000
@@ -287,7 +287,7 @@ the separate scheduling checks.
 
 All **18 remaining comparisons now pass scheduling and jack behavior** on
 firmware source `08fcb82`: 14 load/baseline cases and four transition-fault cases.
-The [complete measured replays](../../tests/measured/daisy/2026-10-20-jack-clock-reference)
+The [complete measured replays](../../bench/daisy/measured/daisy/2026-10-20-jack-clock-reference)
 retain 359,900 acquisition observations, 228,064 independently checked
 audio callbacks and 97,740 verified SDRAM DMA transfers. Together with the five
 original full passes, every planned profile has completed; the original failed
@@ -350,13 +350,13 @@ The original external timing rejection remains unchanged.
 
 An additional independent-generator diagnostic on the shared sense node
 was rejected for nine brief 5–9 ns excursions around probe transitions.
-The [complete sense/probe/service waveforms and generator record](../../tests/measured/daisy/2026-10-20-clock-investigation)
+The [complete sense/probe/service waveforms and generator record](../../bench/daisy/measured/daisy/2026-10-20-clock-investigation)
 are retained as a counterexample. The new independent-reference inspector
 requires a unique nonuniform-timetable mapping, explains every occluded edge,
 and checks the entire wired-AND waveform. It does not filter these extra
 transitions into a pass.
 
-The subsequent [five independent-reference comparisons](../../tests/measured/daisy/2026-10-20-independent-clock-reference)
+The subsequent [five independent-reference comparisons](../../bench/daisy/measured/daisy/2026-10-20-independent-clock-reference)
 observe the generator on its own 4.7 kΩ pulled-up node, disconnected from the
 fixture sense input. Two preliminary recordings were rejected for 12 and 22
 extra transitions. Three clean voltage snapshots did not establish reliability
@@ -428,7 +428,7 @@ whether both regions can sustain the same requested rate.
 
 On 2026-10-20, protocol-7 source `0cc9d0d64642e9b2d53270421bc0469e59f5f5ec`
 completed three early-finish checks and the twelve-case plan above. The
-[complete digital and serial traces](../../tests/measured/daisy/2026-10-20-dma-memory/campaign.json)
+[complete digital and serial traces](../../bench/daisy/measured/daisy/2026-10-20-dma-memory/campaign.json)
 retain all 249,826 observations. Across the full ten-second comparisons,
 240,070 audio callbacks and 43,959 DMA transfers passed timing/data checks;
 early finishes retained another 9,832 callbacks and 2,862 verified transfers.
@@ -461,7 +461,7 @@ Raw D0 retained 68–88 edges per recording instead of 64; all twelve raw-receiv
 rejections remain explicit and are not converted into passes.
 
 The comparison uses one image for both memory choices, but that image differs
-from the earlier failing build. [ELF symbol inspection](../../tests/measured/daisy/2026-10-20-dma-memory/layout-comparison.json) shows that its SDRAM copy pair
+from the earlier failing build. [ELF symbol inspection](../../bench/daisy/measured/daisy/2026-10-20-dma-memory/layout-comparison.json) shows that its SDRAM copy pair
 moved from `0xc1d77400`/`0xc1d7b400` to `0xc0000000`/`0xc0004000`, and DSP delay
 storage moved from `0xc0000000` to `0xc0008000`. Code layout also changed. These
 are confounds for an old-versus-new comparison, not evidence of a physical
@@ -486,7 +486,7 @@ A subsequent eighteen-capture experiment on 2026-10-20 restored the **exact
 archived binaries**, with identities checked before and after each stage.
 Current source `0cc9d0d64642e9b2d53270421bc0469e59f5f5ec` bracketed previous
 source `08fcb8204e917cf8af8d1601710e56e765b9f59b`. No firmware was rebuilt.
-[Complete serial and digital evidence](../../tests/measured/daisy/2026-10-20-firmware-comparison/campaign.json)
+[Complete serial and digital evidence](../../bench/daisy/measured/daisy/2026-10-20-firmware-comparison/campaign.json)
 retains every clock period and both reference receivers, including failures.
 
 Each stage used 60 seconds of idle settling, then the same six ten-second
@@ -551,9 +551,9 @@ load and two-second recovery as before. Every transfer is verified; completion
 counts and skipped requests remain explicit because identical requested rates
 can produce different achieved work. Three early-stop checks precede the plan.
 All captures are complete; the
-[full serial and digital evidence](../../tests/measured/daisy/2026-10-20-sdram-placement/campaign.json)
+[full serial and digital evidence](../../bench/daisy/measured/daisy/2026-10-20-sdram-placement/campaign.json)
 includes every clock period and the failed raw reference receiver records.
-The [complete replay](../../tests/test_daisy_dma_placement_measured.py) independently
+The [complete replay](../../bench/daisy/tests/test_daisy_dma_placement_measured.py) independently
 checks the data and retains all four external clock failures.
 
 | Requested DMA cadence | Low-address external residuals | High-address external residuals | Verified copies per run |
@@ -631,8 +631,8 @@ skips. Count matching is still measured, never assumed. Three early-finish
 checks precede this plan. All three checks and thirty comparisons completed on
 2026-10-20 using source `4a6f288f4cc723917bc06e95f1346a0f174ad283`, protocol 9
 build `efb2237905e88d4bbaba81f8`.
-The [complete serial/digital records](../../tests/measured/daisy/2026-10-20-sdram-alignment/campaign.json)
-and [independent replay](../../tests/test_daisy_dma_alignment_measured.py) preserve
+The [complete serial/digital records](../../bench/daisy/measured/daisy/2026-10-20-sdram-alignment/campaign.json)
+and [independent replay](../../bench/daisy/tests/test_daisy_dma_alignment_measured.py) preserve
 every clock period and all measured receiver/clock failures.
 
 | Byte offset | Low-range residual, forward / reverse | High-range residual, forward / reverse |
@@ -706,7 +706,7 @@ probe bandwidth. A waveform at the MCO output includes the output and measuremen
 paths; it does not isolate the underlying oscillator.
 
 All sixteen planned captures are complete. The
-[diagnostic reports](../../tests/measured/daisy/2026-10-20-clock-waveform/summary.json)
+[diagnostic reports](../../bench/daisy/measured/daisy/2026-10-20-clock-waveform/summary.json)
 retain the receiver failures separately from valid clock observations. The
 ten 50 ms voltage windows gave these short-cycle counts at 1.65 V; both digital
 receivers agree with the analog counts and match every interior rising edge:
@@ -751,7 +751,7 @@ below probe/instrument bandwidth.
 
 Native voltage samples, digital timelines, firmware logs and instrument sessions
 are retained separately by hash. The linked reports and
-[digest inventory](../../tests/measured/daisy/2026-10-20-clock-waveform/native-digests.json) are
+[digest inventory](../../bench/daisy/measured/daisy/2026-10-20-clock-waveform/native-digests.json) are
 compact published findings, not a standalone replay corpus for the raw analog
 waveforms. No portable detector policy, absolute clock accuracy or audible codec
 quality is qualified by this experiment. A useful next physical comparison is
@@ -763,7 +763,7 @@ standard host tests do not. Run its separate synthetic checks in an environment
 with NumPy installed:
 
 ```sh
-python3 tests/test_daisy_clock_waveform.py
+python3 bench/daisy/tests/test_daisy_clock_waveform.py
 python3 tools/inspect_daisy_clock_waveform.py --analog CAPTURE/analog_1.bin \
   --digital CAPTURE/digital_2_0.bin --derived CAPTURE/digital_1.bin \
   --out NEW_WAVEFORM_REVIEW.json

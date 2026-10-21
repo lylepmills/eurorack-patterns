@@ -33,7 +33,9 @@ class EvidenceTests(unittest.TestCase):
             root = Path(temp)
             archive, record = self.archive(root, [('tests/measured/example/trace.txt.gz', b'abc', tarfile.REGTYPE)])
             fetch.install_archive(archive, record, root)
-            self.assertTrue(fetch.matches(root / record['files'][0]['path'], record['files'][0]))
+            self.assertTrue(fetch.matches(fetch.destination(root, record['files'][0]['path']), record['files'][0]))
+            self.assertTrue((root / 'bench/daisy/measured/example/trace.txt.gz').is_file())
+            self.assertFalse((root / 'tests').exists())
             fetch.install_archive(archive, record, root)  # Idempotent restoration.
 
     def test_wrong_archive_hash_cannot_install(self):
@@ -43,7 +45,7 @@ class EvidenceTests(unittest.TestCase):
             record['sha256'] = '0' * 64
             with self.assertRaisesRegex(ValueError, 'archive size or SHA'):
                 fetch.install_archive(archive, record, root)
-            self.assertFalse((root / 'tests').exists())
+            self.assertFalse((root / 'bench').exists())
 
     def test_bad_later_member_does_not_partially_install(self):
         with tempfile.TemporaryDirectory() as temp:
@@ -53,11 +55,12 @@ class EvidenceTests(unittest.TestCase):
             record['files'][1]['sha256'] = '0' * 64
             with self.assertRaisesRegex(ValueError, 'member SHA'):
                 fetch.install_archive(archive, record, root)
-            self.assertFalse((root / 'tests').exists())
+            self.assertFalse((root / 'bench').exists())
 
     def test_paths_links_and_duplicate_members_are_rejected(self):
         cases = [('../outside', tarfile.REGTYPE), ('/absolute', tarfile.REGTYPE),
                  ('tests/measured/../../outside', tarfile.REGTYPE),
+                 ('tests/measured', tarfile.REGTYPE), ('tests/other/a', tarfile.REGTYPE),
                  ('tests/measured/link', tarfile.SYMTYPE)]
         for name, kind in cases:
             with self.subTest(name=name), tempfile.TemporaryDirectory() as temp:
@@ -76,13 +79,13 @@ class EvidenceTests(unittest.TestCase):
             root = Path(temp)
             (root / 'outside').mkdir()
             try:
-                (root / 'tests').symlink_to(root / 'outside', target_is_directory=True)
+                (root / 'bench').symlink_to(root / 'outside', target_is_directory=True)
             except OSError:
                 self.skipTest('Creating symlinks requires platform permission')
             archive, record = self.archive(root, [('tests/measured/a', b'a', tarfile.REGTYPE)])
             with self.assertRaisesRegex(ValueError, 'symlink'):
                 fetch.install_archive(archive, record, root)
-            self.assertFalse((root / 'outside/measured').exists())
+            self.assertFalse((root / 'outside/daisy/measured').exists())
 
     def test_previous_revision_can_select_a_subset_of_an_archive(self):
         with tempfile.TemporaryDirectory() as temp:
@@ -91,8 +94,16 @@ class EvidenceTests(unittest.TestCase):
                                                  ('tests/measured/b', b'b', tarfile.REGTYPE)])
             record['files'] = record['files'][:1]
             fetch.install_archive(archive, record, root)
-            self.assertTrue((root / 'tests/measured/a').is_file())
-            self.assertFalse((root / 'tests/measured/b').exists())
+            self.assertTrue((root / 'bench/daisy/measured/a').is_file())
+            self.assertFalse((root / 'bench/daisy/measured/b').exists())
+
+    def test_archives_published_after_the_move_install_to_the_same_place(self):
+        with tempfile.TemporaryDirectory() as temp:
+            root = Path(temp)
+            archive, record = self.archive(root, [('bench/daisy/measured/a', b'a', tarfile.REGTYPE)])
+            fetch.install_archive(archive, record, root)
+            self.assertTrue((root / 'bench/daisy/measured/a').is_file())
+            self.assertEqual(fetch.destination(root, 'tests/measured/a'), fetch.destination(root, 'bench/daisy/measured/a'))
 
 
 if __name__ == '__main__':
