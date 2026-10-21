@@ -14,7 +14,7 @@ from export_daisy_trace import check_identity, public_identity
 
 class MeasuredExportPrivacyTests(unittest.TestCase):
     def test_new_identity_fields_require_review(self):
-        path = Path(__file__).resolve().parent/'measured/daisy/2026-10-16-load/baseline.txt.gz'
+        path = Path(__file__).resolve().parents[3]/'bench/daisy/measured/daisy/2026-10-16-load/baseline.txt.gz'
         info = json.loads(gzip.decompress(path.read_bytes()).splitlines()[0][5:])
         check_identity(info, load=True)
         check_identity(dict(info, timing_diagnostics=1), load=True)
