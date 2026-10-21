@@ -32,6 +32,7 @@ These are candidates for reusable contracts. See [coverage](coverage.md) for the
 - [Startup storage and recovery](#startup-storage-and-recovery) — G01–G11
 - [Electrical boundaries](#electrical-boundaries) — H01–H03
 
+<!-- catalog-index:begin -->
 All 88 entries, in catalog order:
 
 | ID | Pattern |
@@ -132,6 +133,8 @@ All 88 entries, in catalog order:
 | H01 | [Distinguish working range from survival range](#h01-distinguish-working-range-from-survival-range) |
 | H02 | [Expect temporary output shorts while patching](#h02-expect-temporary-output-shorts-while-patching) |
 | H03 | [Measure pitch voltage at the loaded jack](#h03-measure-pitch-voltage-at-the-loaded-jack) |
+
+<!-- catalog-index:end -->
 
 ## What the Beads jack detector actually does
 
