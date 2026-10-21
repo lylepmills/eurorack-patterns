@@ -32,6 +32,107 @@ These are candidates for reusable contracts. See [coverage](coverage.md) for the
 - [Startup storage and recovery](#startup-storage-and-recovery) — G01–G11
 - [Electrical boundaries](#electrical-boundaries) — H01–H03
 
+All 88 entries, in catalog order:
+
+| ID | Pattern |
+| --- | --- |
+| **Jack presence and trigger capture** | |
+| A01 | [Preserve normalization through tentative insertion](#a01-preserve-normalization-through-tentative-insertion) |
+| A02 | [Test the first cable between separate cases](#a02-test-the-first-cable-between-separate-cases) |
+| A03 | [Make the common patch work with one cable](#a03-make-the-common-patch-work-with-one-cable) |
+| A04 | [Separate gate-on and gate-off thresholds](#a04-separate-gate-on-and-gate-off-thresholds) |
+| A05 | [Preserve brief events across slower processing domains](#a05-preserve-brief-events-across-slower-processing-domains) |
+| A06 | [Keep button debounce out of high-rate clock paths](#a06-keep-button-debounce-out-of-high-rate-clock-paths) |
+| A07 | [Keep logical jack identity separate from physical pins](#a07-keep-logical-jack-identity-separate-from-physical-pins) |
+| A08 | [Keep aggregate presence until the last source leaves](#a08-keep-aggregate-presence-until-the-last-source-leaves) |
+| **Analogue acquisition and filtering** | |
+| B01 | [Give each signal role its own filter budget](#b01-give-each-signal-role-its-own-filter-budget) |
+| B02 | [Read CV at useful resolution before attenuating it](#b02-read-cv-at-useful-resolution-before-attenuating-it) |
+| B03 | [Make filtered controls reach both endpoints](#b03-make-filtered-controls-reach-both-endpoints) |
+| B04 | [Budget acquisition time at the worst source impedance](#b04-budget-acquisition-time-at-the-worst-source-impedance) |
+| B05 | [Treat averaging and calibration as different tools](#b05-treat-averaging-and-calibration-as-different-tools) |
+| B06 | [Keep input paths separately observable](#b06-keep-input-paths-separately-observable) |
+| **Knobs and gestures** | |
+| C01 | [Make an attenuverter's zero easy to find](#c01-make-an-attenuverters-zero-easy-to-find) |
+| C02 | [Give important continuous values broad landing zones](#c02-give-important-continuous-values-broad-landing-zones) |
+| C03 | [Quantize with memory of the current bin](#c03-quantize-with-memory-of-the-current-bin) |
+| C04 | [Require intentional motion before entering a hidden edit](#c04-require-intentional-motion-before-entering-a-hidden-edit) |
+| C05 | [Rejoin the original parameter smoothly after a hidden edit](#c05-rejoin-the-original-parameter-smoothly-after-a-hidden-edit) |
+| C06 | [Guide soft takeover](#c06-guide-soft-takeover) |
+| C07 | [Once movement is intentional, keep following small increments](#c07-once-movement-is-intentional-keep-following-small-increments) |
+| C08 | [Consume a gesture once its meaning is established](#c08-consume-a-gesture-once-its-meaning-is-established) |
+| C09 | [Make gesture timing adjustable](#c09-make-gesture-timing-adjustable) |
+| C10 | [Navigate laterally across channels](#c10-navigate-laterally-across-channels) |
+| C11 | [Separate performance guards from preset content](#c11-separate-performance-guards-from-preset-content) |
+| C12 | [Apply quantizer membership in every octave and direction](#c12-apply-quantizer-membership-in-every-octave-and-direction) |
+| C13 | [Tell the user when pickup cannot reach its target](#c13-tell-the-user-when-pickup-cannot-reach-its-target) |
+| C14 | [Re-arm when another owner changes the pickup target](#c14-re-arm-when-another-owner-changes-the-pickup-target) |
+| **Visible state and reversible actions** | |
+| D01 | [Show the panel-selected state and CV-effective state separately](#d01-show-the-panel-selected-state-and-cv-effective-state-separately) |
+| D02 | [Show who owns each value](#d02-show-who-owns-each-value) |
+| D03 | [Encode important states with more than hue](#d03-encode-important-states-with-more-than-hue) |
+| D04 | [Make exploration reversible](#d04-make-exploration-reversible) |
+| D05 | [Provide an explicit return to panel](#d05-provide-an-explicit-return-to-panel) |
+| D06 | [Expose and cancel pending changes](#d06-expose-and-cancel-pending-changes) |
+| D07 | [Cancel arming without destroying existing material](#d07-cancel-arming-without-destroying-existing-material) |
+| D08 | [Reset behavior independently from content](#d08-reset-behavior-independently-from-content) |
+| D09 | [Offer a temporary map of current controls](#d09-offer-a-temporary-map-of-current-controls) |
+| D10 | [Commit expensive changes explicitly](#d10-commit-expensive-changes-explicitly) |
+| D11 | [Refresh the edit target even when the clock is stopped](#d11-refresh-the-edit-target-even-when-the-clock-is-stopped) |
+| D12 | [Separate the pattern being edited from the pattern playing](#d12-separate-the-pattern-being-edited-from-the-pattern-playing) |
+| D13 | [Restore focus by stable identity after rebuilding a list](#d13-restore-focus-by-stable-identity-after-rebuilding-a-list) |
+| **Musical timing and synchronization** | |
+| E01 | [Allow a gate to arrive slightly before its CV](#e01-allow-a-gate-to-arrive-slightly-before-its-cv) |
+| E02 | [Latch disruptive selection CV at the musical event](#e02-latch-disruptive-selection-cv-at-the-musical-event) |
+| E03 | [Give inferred events a refractory interval](#e03-give-inferred-events-a-refractory-interval) |
+| E04 | [Define simultaneous event precedence](#e04-define-simultaneous-event-precedence) |
+| E05 | [Commit rhythmic edits at a musical boundary](#e05-commit-rhythmic-edits-at-a-musical-boundary) |
+| E06 | [Separate clock acquisition from transport state](#e06-separate-clock-acquisition-from-transport-state) |
+| E07 | [Choose clock smoothing for the musical job](#e07-choose-clock-smoothing-for-the-musical-job) |
+| E08 | [Hold the last tempo until deliberate takeover](#e08-hold-the-last-tempo-until-deliberate-takeover) |
+| E09 | [Treat a clock restart as a distinct event](#e09-treat-a-clock-restart-as-a-distinct-event) |
+| E10 | [Require sustained evidence before switching input interpretation](#e10-require-sustained-evidence-before-switching-input-interpretation) |
+| E11 | [Earn estimator trust slowly; withdraw it quickly](#e11-earn-estimator-trust-slowly-withdraw-it-quickly) |
+| E12 | [Keep trigger pulses separate at high rates](#e12-keep-trigger-pulses-separate-at-high-rates) |
+| E13 | [Specify whether retriggers extend a level or create new edges](#e13-specify-whether-retriggers-extend-a-level-or-create-new-edges) |
+| E14 | [Preserve trigger identity throughout an acquisition delay](#e14-preserve-trigger-identity-throughout-an-acquisition-delay) |
+| **Audio transitions and runtime isolation** | |
+| F01 | [Let dependent detectors settle before unmuting](#f01-let-dependent-detectors-settle-before-unmuting) |
+| F02 | [Serialize transitions and keep the latest requested destination](#f02-serialize-transitions-and-keep-the-latest-requested-destination) |
+| F03 | [Keep enough tail to resume recording gracefully](#f03-keep-enough-tail-to-resume-recording-gracefully) |
+| F04 | [Classify state changes by what really needs resetting](#f04-classify-state-changes-by-what-really-needs-resetting) |
+| F05 | [Protect recorded material during exploration](#f05-protect-recorded-material-during-exploration) |
+| F06 | [Choose transition behavior by musical intent](#f06-choose-transition-behavior-by-musical-intent) |
+| F07 | [Capture events briefly and run their handlers later](#f07-capture-events-briefly-and-run-their-handlers-later) |
+| F08 | [Rank interrupts by audible deadlines](#f08-rank-interrupts-by-audible-deadlines) |
+| F09 | [Save a coherent state without disrupting music](#f09-save-a-coherent-state-without-disrupting-music) |
+| F10 | [Keep the executing action stable during a scene switch](#f10-keep-the-executing-action-stable-during-a-scene-switch) |
+| F11 | [Keep required side effects outside diagnostic macros](#f11-keep-required-side-effects-outside-diagnostic-macros) |
+| F12 | [Capture delayed execution context deliberately](#f12-capture-delayed-execution-context-deliberately) |
+| F13 | [A due callback's slot is not yet free](#f13-a-due-callbacks-slot-is-not-yet-free) |
+| F14 | [Silence a voice without unnecessarily rewriting its pitch](#f14-silence-a-voice-without-unnecessarily-rewriting-its-pitch) |
+| F15 | [Stop new users and finish current users before teardown](#f15-stop-new-users-and-finish-current-users-before-teardown) |
+| F16 | [Advance last-queued state only after enqueue succeeds](#f16-advance-last-queued-state-only-after-enqueue-succeeds) |
+| F17 | [Define what disconnected transports discard](#f17-define-what-disconnected-transports-discard) |
+| F18 | [Remove every derived route when deleting its source mapping](#f18-remove-every-derived-route-when-deleting-its-source-mapping) |
+| F19 | [Revalidate relationships when an object is replaced in place](#f19-revalidate-relationships-when-an-object-is-replaced-in-place) |
+| **Startup storage and recovery** | |
+| G01 | [Give malformed user data a usable fallback](#g01-give-malformed-user-data-a-usable-fallback) |
+| G02 | [Explain degraded startup while remaining usable](#g02-explain-degraded-startup-while-remaining-usable) |
+| G03 | [Keep user resets separate from factory calibration](#g03-keep-user-resets-separate-from-factory-calibration) |
+| G04 | [Migrate and validate persisted fields independently](#g04-migrate-and-validate-persisted-fields-independently) |
+| G05 | [Panic must stop producers and clear outputs](#g05-panic-must-stop-producers-and-clear-outputs) |
+| G06 | [Wait for valid power before running fast](#g06-wait-for-valid-power-before-running-fast) |
+| G07 | [Verify recovery protection in the factory](#g07-verify-recovery-protection-in-the-factory) |
+| G08 | [Use electrical polarity protection as well as connector cues](#g08-use-electrical-polarity-protection-as-well-as-connector-cues) |
+| G09 | [Finalize partial packed settings and verify encoded sizes](#g09-finalize-partial-packed-settings-and-verify-encoded-sizes) |
+| G10 | [Discover a journal's first valid generation before ordering it](#g10-discover-a-journals-first-valid-generation-before-ordering-it) |
+| G11 | [Preserve semantic identifiers across enum changes](#g11-preserve-semantic-identifiers-across-enum-changes) |
+| **Electrical boundaries** | |
+| H01 | [Distinguish working range from survival range](#h01-distinguish-working-range-from-survival-range) |
+| H02 | [Expect temporary output shorts while patching](#h02-expect-temporary-output-shorts-while-patching) |
+| H03 | [Measure pitch voltage at the loaded jack](#h03-measure-pitch-voltage-at-the-loaded-jack) |
+
 ## What the Beads jack detector actually does
 
 Beads tests the expected probe sequence in 64-decision windows. A window with at most two mismatches counts as unpatched and immediately clears the bad-window streak; eight bad windows establish patched state. Initialization deliberately starts as patched and seeds a bad first window. [Decision and initialization](https://github.com/pichenettes/eurorack/blob/f4cfa7697095a28d292bff758beb51deb49b5a86/beads/normalization_detector.cc#L38-L81), [constants](https://github.com/pichenettes/eurorack/blob/f4cfa7697095a28d292bff758beb51deb49b5a86/beads/normalization_detector.h#L88-L100).
