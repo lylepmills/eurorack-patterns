@@ -1,6 +1,10 @@
 # Changelog
 
-## Unreleased
+## Unreleased — on `main` after 0.2.1, not yet tagged
+
+Everything in this section is documentation, example, test and bench work. The
+nine public headers are unchanged since 0.2.0, and no release carries these
+changes yet; pin a tagged release, not `main`.
 
 - Add B07, hardware-timed acquisition (a timer-triggered, DMA-chained pot scan
   inspected in Beads), and cross-link it from A01 and the validation guide.
