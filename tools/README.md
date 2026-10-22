@@ -6,7 +6,7 @@ documentation, optional recorded-evidence replay, or the historical Daisy bench.
 | Tool or family | Purpose |
 | --- | --- |
 | `check_public.py` | Review local links, private paths and commit-message content; optional private terms stay local |
-| `render_traces.py` | Recreate the README's explicitly synthetic illustrations |
+| `render_traces.py` | Recreate the README's and [gallery's](../docs/gallery.md) explicitly synthetic illustrations |
 | `fetch_evidence.py` | Download and verify optional measured traces; `--list` and `--check` are offline |
 | `export_daisy_*` | Produce public, allowlisted reports and lossless traces from saved captures |
 | `review_daisy_buttons.py`, `review_daisy_jacks.py`, `review_daisy_jack_*` | Check observed behavior and independent electrical evidence against declared acceptance limits |

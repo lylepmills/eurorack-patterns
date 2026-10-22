@@ -40,7 +40,9 @@ different tolerance must be finite and positive. `SelectHysteretic` takes a
 normalized 0..1 input, positive step count, previous index (or -1 at startup),
 and hysteresis in step units. A negative hysteresis disables hysteresis;
 otherwise it must be less than 0.5. Invalid input returns the previous index.
-Keep one previous index per independent selector.
+Keep one previous index per independent selector. The
+[gallery](gallery.md#hysteretic-selection) plots a noisy reading on a bin
+boundary against plain truncation.
 
 `gestures.h`'s `RoleLatch<Role>` is owned by one button's event handler.
 Choose a typed role from the current UI state on `Press`. Duplicate presses

@@ -103,7 +103,9 @@ edge from a stale level across a gap. A real edge that occurred in that gap
 cannot be reconstructed. `Observe` returns true only when it enqueued an event.
 
 `pending()` is a bounded **count**, so several acquired low/high pulses can
-survive a slower consumer. `Consume(maximum)` removes at most that many events;
+survive a slower consumer; the [gallery](gallery.md#edge-events) plots four
+short pulses against a consumer that polls the level every third sample.
+`Consume(maximum)` removes at most that many events;
 zero is a no-op. At capacity, new events are dropped and `overflowed()` latches
 true. `Consume` does not clear overflow; use `ClearOverflow()` after the owner
 has handled the loss indication. Overflow says that at least one event was

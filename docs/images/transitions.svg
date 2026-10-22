@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="920" height="302" viewBox="0 0 920 302" role="img" aria-labelledby="title desc">
+<title id="title">Finish the running fade, then fade to the newest request</title><desc id="desc">Synthetic cumulative completed fades. Six requests at ticks 0-10, 5-tick fades; restarting finishes nothing while they arrive. Orange: Restart the fade on every request. Blue: Latest request only.</desc>
+<rect width="920" height="302" rx="12" fill="#f7f8fa"/>
+<g font-family="system-ui, sans-serif" fill="#172334">
+<text x="28" y="34" font-size="21" font-weight="650">Finish the running fade, then fade to the newest request</text>
+<path d="M28 62h24" stroke="#a84b19" stroke-width="3" stroke-dasharray="6 4"/><text x="60" y="67" font-size="14">Restart the fade on every request</text>
+<path d="M450 62h24" stroke="#006d96" stroke-width="3"/><text x="482" y="67" font-size="14">Latest request only</text>
+<path d="M68 104H870 M68 230H870" stroke="#d5dce3" fill="none"/>
+<text x="27" y="109" font-size="13">2</text><text x="35" y="235" font-size="13">0</text>
+<path d="M68.00 230.00 H125.29 V230.00 H182.57 V230.00 H239.86 V230.00 H297.14 V230.00 H354.43 V230.00 H411.71 V230.00 H469.00 V230.00 H526.29 V230.00 H583.57 V230.00 H640.86 V230.00 H698.14 V230.00 H755.43 V230.00 H812.71 V230.00 H870.00 V230.00" fill="none" stroke="#a84b19" stroke-width="3" stroke-dasharray="6 4"/>
+<path d="M68.00 230.00 H125.29 V230.00 H182.57 V230.00 H239.86 V230.00 H297.14 V230.00 H354.43 V167.00 H411.71 V167.00 H469.00 V167.00 H526.29 V167.00 H583.57 V167.00 H640.86 V104.00 H698.14 V104.00 H755.43 V104.00 H812.71 V104.00 H870.00 V104.00" fill="none" stroke="#006d96" stroke-width="3"/>
+<text x="68" y="252" font-size="12">Tick 0</text><text x="815" y="252" font-size="12">14</text>
+<text x="28" y="284" font-size="13">Synthetic cumulative completed fades. Six requests at ticks 0-10, 5-tick fades; restarting finishes nothing while they arrive.</text>
+</g></svg>

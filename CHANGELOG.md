@@ -6,6 +6,11 @@ Everything in this section is documentation, example, test and bench work. The
 nine public headers are unchanged since 0.2.0, and no release carries these
 changes yet; pin a tagged release, not `main`.
 
+- Add five more executable-checked synthetic bug pictures: trigger-delay
+  identity, edge capture under a slow consumer, hysteretic selection, mechanical
+  debounce and latest-request transitions. The README now shows six pictures and
+  the [gallery](docs/gallery.md) all eight; `render_traces.py --check` guards
+  every one, and the trace program asserts each plotted value.
 - Move the Daisy bench's host tests and measured reports from `tests/` to
   `bench/daisy/tests/` and `bench/daisy/measured/`, so `tests/` holds only the
   library's own tests. The evidence downloader installs the unchanged, immutable

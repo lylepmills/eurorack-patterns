@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="920" height="302" viewBox="0 0 920 302" role="img" aria-labelledby="title desc">
+<title id="title">Count edges at the acquisition rate, drain them later</title><desc id="desc">Synthetic cumulative events seen by the consumer. Four 2-sample pulses; the consumer reads every third sample. Orange: Level polled every third sample. Blue: Pending edge count.</desc>
+<rect width="920" height="302" rx="12" fill="#f7f8fa"/>
+<g font-family="system-ui, sans-serif" fill="#172334">
+<text x="28" y="34" font-size="21" font-weight="650">Count edges at the acquisition rate, drain them later</text>
+<path d="M28 62h24" stroke="#a84b19" stroke-width="3" stroke-dasharray="6 4"/><text x="60" y="67" font-size="14">Level polled every third sample</text>
+<path d="M450 62h24" stroke="#006d96" stroke-width="3"/><text x="482" y="67" font-size="14">Pending edge count</text>
+<path d="M68 104H870 M68 230H870" stroke="#d5dce3" fill="none"/>
+<text x="27" y="109" font-size="13">4</text><text x="35" y="235" font-size="13">0</text>
+<path d="M68.00 230.00 H115.18 V230.00 H162.35 V198.50 H209.53 V198.50 H256.71 V198.50 H303.88 V198.50 H351.06 V198.50 H398.24 V198.50 H445.41 V198.50 H492.59 V198.50 H539.76 V198.50 H586.94 V167.00 H634.12 V167.00 H681.29 V167.00 H728.47 V167.00 H775.65 V167.00 H822.82 V167.00 H870.00 V167.00" fill="none" stroke="#a84b19" stroke-width="3" stroke-dasharray="6 4"/>
+<path d="M68.00 230.00 H115.18 V230.00 H162.35 V198.50 H209.53 V198.50 H256.71 V198.50 H303.88 V198.50 H351.06 V198.50 H398.24 V198.50 H445.41 V167.00 H492.59 V167.00 H539.76 V167.00 H586.94 V135.50 H634.12 V135.50 H681.29 V135.50 H728.47 V135.50 H775.65 V135.50 H822.82 V135.50 H870.00 V104.00" fill="none" stroke="#006d96" stroke-width="3"/>
+<text x="68" y="252" font-size="12">Sample 0</text><text x="815" y="252" font-size="12">17</text>
+<text x="28" y="284" font-size="13">Synthetic cumulative events seen by the consumer. Four 2-sample pulses; the consumer reads every third sample.</text>
+</g></svg>
