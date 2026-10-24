@@ -20,9 +20,13 @@ CMake `SameMinorVersion` package policy. Patch releases preserve public contract
    the Pico link build, and `python3 tools/render_traces.py
    build/example_behavior_traces --check`. See CI for the exact commands. No
    hardware qualification follows from a successful cross-build.
-4. Push the audited branch and require every Host tests workflow job to pass on
-   the exact candidate SHA. Land it on main without unrelated changes; verify
-   main's checks as well. Review generated illustrations and local doc links.
+4. Push the audited branch and open a pull request. `main` is protected by a
+   repository ruleset with no bypass: force pushes and deletion are refused,
+   every change arrives through a pull request, and the five Host tests jobs
+   (the three OS test matrices, `embedded` and `public-content`) must pass on
+   the exact candidate SHA before it can merge. Land it without unrelated
+   changes; verify main's checks as well. Review generated illustrations and
+   local doc links.
 5. Verify repository release immutability is enabled before publication. Create
    a draft release at the tested commit, stage all intended assets, and review
    its notes. Include the full commit ID, a copyable dependency pin, test results,

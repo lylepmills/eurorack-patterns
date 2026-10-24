@@ -1,7 +1,7 @@
 # Evidence and validation
 
 Use this guide to decide what the library supplies and what your firmware still
-needs to establish. The [coverage map](coverage.md) distinguishes the 88 catalog
+needs to establish. The [coverage map](coverage.md) distinguishes the 89 catalog
 patterns from the nine implemented component families. Source confidence,
 implementation correctness and product qualification are separate claims.
 
